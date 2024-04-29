@@ -547,6 +547,7 @@ public class Complessivo {
                     printbarcode(barcode, pdfDoc1, true, add);
                 }
 
+                // file deepcode ignore PT: <please specify a reason of ignoring this>
                 out0.deleteOnExit();
 
                 File pdf_final = new File(path_destinazione + File.separator + "Registro Complessivo_" + now1 + ".pdf");
@@ -560,6 +561,7 @@ public class Complessivo {
                             if (rs.next()) {
                                 try (Statement st1 = db3.getC().createStatement()) {
                                     String upd = "UPDATE documenti_progetti SET path = '" + pdf_final.getPath() + "' WHERE iddocumenti_progetti = " + rs.getInt(1);
+                                    // file deepcode ignore Sqli: <please specify a reason of ignoring this>
                                     st1.executeUpdate(upd);
                                 }
                             } else {

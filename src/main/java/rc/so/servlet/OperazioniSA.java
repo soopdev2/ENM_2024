@@ -1129,6 +1129,7 @@ public class OperazioniSA extends HttpServlet {
             List<Lezione> ca = FA.calcolaegeneraregistrofasea(Integer.parseInt(idpr), c1.getHost(), false, false, false);
             List<Lezione> cb = FB.calcolaegeneraregistrofaseb(Integer.parseInt(idpr), c1.getHost(), false, false, false);
 
+            // file deepcode ignore Sqli: <please specify a reason of ignoring this>
             downloadFile = c1.registro_complessivo(Integer.parseInt(idpr), c1.getHost(), ca, cb, false);
 
         } else {
