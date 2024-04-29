@@ -115,6 +115,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.commons.text.StringEscapeUtils;
@@ -180,6 +181,18 @@ public class Utility {
 
     public static final String APP = "ENM_TOSCANA";
     public static final Logger LOGAPP = Logger.getLogger(APP);
+    
+    
+    public static String checkAttribute(HttpSession session, String attribute) {
+        try {
+            if (session.getAttribute(attribute) != null) {
+                return String.valueOf(session.getAttribute(attribute));
+            }
+        } catch (Exception e) {
+        }
+        return "";
+    }
+
 
     private static String sanitizePath(String path) {
         return path.replaceAll("[^a-zA-Z0-9-_./]", "");

@@ -1,4 +1,5 @@
 
+<%@page import="rc.so.util.Utility"%>
 <%@page import="java.util.List"%>
 <%@page import="rc.so.domain.ProgettiFormativi"%>
 <%@page import="rc.so.domain.User"%>
@@ -16,7 +17,7 @@
         if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
             response.sendRedirect(request.getContextPath() + "/page_403.jsp");
         } else {
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
             Entity e = new Entity();
             List<ProgettiFormativi> progetti = e.getProgettiToExtract();
             e.close();

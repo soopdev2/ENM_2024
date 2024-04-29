@@ -4,6 +4,7 @@
     Author     : agodino
 --%>
 
+<%@page import="rc.so.util.Utility"%>
 <%@page import="rc.so.domain.Docenti"%>
 <%@page import="java.util.List"%>
 <%@page import="rc.so.domain.ProgettiFormativi"%>
@@ -20,7 +21,7 @@
         if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
             response.sendRedirect(request.getContextPath() + "/page_403.jsp");
         } else {
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
             Entity e = new Entity();
             ProgettiFormativi p = e.getEm().find(ProgettiFormativi.class, Long.parseLong(request.getParameter("id")));
             List<Docenti> docenti = e.getActiveDocenti_bySA(us.getSoggettoAttuatore());

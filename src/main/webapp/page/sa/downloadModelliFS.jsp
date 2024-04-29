@@ -1,3 +1,4 @@
+<%@page import="rc.so.util.Utility"%>
 <%@page import="rc.so.db.Entity"%>
 <%@page import="rc.so.domain.User"%>
 <%@page import="rc.so.db.Action"%>
@@ -13,7 +14,7 @@
         if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
             response.sendRedirect(request.getContextPath() + "/page_403.jsp");
         } else {
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
             Entity en = new Entity();
             int tipo = Integer.parseInt(en.getPath("MaterialeDidattico_Modelli"));
             en.close();

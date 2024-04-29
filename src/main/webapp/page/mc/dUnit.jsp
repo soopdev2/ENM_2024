@@ -22,7 +22,7 @@
             List<UnitaDidattiche> ud = e.getUD();
             List<String> fasi = e.getFasi_UD();
             e.close();
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
 %>
 <html>
     <head>
@@ -366,7 +366,7 @@
                                                     <div class="kt-section__body"><br>
                                                         <div class="form-group row">
                                                             <div class="col-lg-4">
-                                                                <label for="codiceud">Unità didattica</label>
+                                                                <label class="active" for="codiceud">Unità didattica</label>
                                                                 <div class="dropdown bootstrap-select form-control kt-" id="codiceud_div" style="padding: 0;height: 35px;">
                                                                     <select class="form-control kt-select2-general" id="codiceud" name="codiceud"  style="width: 100%">
                                                                         <option value="-">Seleziona Unità didattica</option>
@@ -377,7 +377,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
-                                                                <label for="fase">Fase Progetto</label>
+                                                                <label class="active" for="fase">Fase Progetto</label>
                                                                 <div class="dropdown bootstrap-select form-control kt-" id="fase_div" style="padding: 0;height: 35px;">
                                                                     <select class="form-control kt-select2-general" id="fase" name="fase"  style="width: 100%">
                                                                         <option value="-">Seleziona fase</option>

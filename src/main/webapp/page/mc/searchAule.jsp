@@ -1,4 +1,6 @@
 
+<%@page import="org.apache.commons.text.StringEscapeUtils"%>
+<%@page import="rc.so.util.Utility"%>
 <%@page import="rc.so.entity.Item"%>
 <%@page import="rc.so.db.Entity"%>
 <%@page import="java.util.List"%>
@@ -23,7 +25,7 @@
             Entity e = new Entity();
             List<Item> regioni = e.listaRegioni();
             e.close();
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
             
 
 
@@ -436,7 +438,7 @@
                                                         </div>
                                                         <div class="form-group row">
                                                             <div class="col-lg-4">
-                                                                <label>Regione</label>
+                                                                <label class="active">Regione</label>
                                                                 <div class="dropdown bootstrap-select form-control kt- " id="regione_div" style="padding: 0;height: 35px;">
                                                                     <select class="form-control kt-select2-general obbligatory" id="regione" name="regione"  style="width: 100%">
                                                                         <option value="-">Seleziona Regione</option>
@@ -447,7 +449,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-4">
-                                                                <label>Provincia</label>
+                                                                <label class="active">Provincia</label>
                                                                 <div class="dropdown bootstrap-select form-control kt-" id="provincia_div" style="padding: 0;height: 35px;">
                                                                     <select class="form-control kt-select2-general obbligatory" id="provincia" name="provincia"  style="width: 100%;">
                                                                         <option value="-">Seleziona Provincia</option>
@@ -455,7 +457,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-4">
-                                                                <label>Comune</label>
+                                                                <label class="active">Comune</label>
                                                                 <div class="dropdown bootstrap-select form-control kt-" id="comune_div" style="padding: 0;height: 35px;">
                                                                     <select class="form-control kt-select2-general obbligatory" id="comune" name="comune"  style="width: 100%;">
                                                                         <option value="-">Seleziona Comune</option>
@@ -469,7 +471,7 @@
                                                             <div class="row">
                                                                 <div class="offset-lg-6 col-lg-6 kt-align-right">
                                                                     <a onclick="refresh();" href="javascript:void(0);" class="btn btn-io"><font color='white'>Cerca</font></a>
-                                                                    <a href="<%=pageName_%>" class="btn btn-io-n"><font color='white'>Reset</font></a>
+                                                                    <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-io-n"><font color='white'>Reset</font></a>
                                                                 </div>
                                                             </div>
                                                         </div>

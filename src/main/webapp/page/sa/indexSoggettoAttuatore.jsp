@@ -36,7 +36,7 @@
             response.sendRedirect(request.getContextPath() + "/page_403.jsp");
         } else {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
             Date today = new Date();
             Date todaynotime = Date.from(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS).atZone(ZoneId.systemDefault()).toInstant());
             List<ProgettiFormativi> FA = new ArrayList();

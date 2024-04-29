@@ -1,4 +1,5 @@
 
+<%@page import="rc.so.util.Utility"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="rc.so.domain.FadMicro"%>
@@ -23,7 +24,7 @@
             FadMicro fad = e.getEm().find(FadMicro.class, Long.parseLong(request.getParameter("idFad")));
             e.close();
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
 %>
 <html>
     <head>

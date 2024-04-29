@@ -27,7 +27,7 @@
             List<CPI> cpi = e.listaCPI();
             List<SoggettiAttuatori> sa_list = e.findAll(SoggettiAttuatori.class);
             e.close();
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
 %>
 <html>
     <head>
@@ -358,7 +358,7 @@
                                                     <div class="kt-section__body"><br>
                                                         <div class="form-group row">
                                                             <div class="col-lg-3">
-                                                                <label>Soggetto Esecutore</label>
+                                                                <label class="active">Soggetto Esecutore</label>
                                                                 <div class="dropdown bootstrap-select form-control kt-" id="soggettoattuatore_div" style="padding: 0;height: 35px;">
                                                                     <select class="form-control kt-select2-general" id="soggettoattuatore" name="soggettoattuatore"  style="width: 100%">
                                                                         <option value="-">Seleziona Soggetto Esecutore</option>

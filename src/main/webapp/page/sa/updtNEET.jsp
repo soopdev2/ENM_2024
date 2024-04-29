@@ -1,4 +1,5 @@
 
+<%@page import="rc.so.util.Utility"%>
 <%@page import="rc.so.domain.Motivazione"%>
 <%@page import="rc.so.domain.Canale"%>
 <%@page import="rc.so.domain.Nazioni_rc"%>
@@ -25,7 +26,7 @@
         if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
             response.sendRedirect(request.getContextPath() + "/page_403.jsp");
         } else {
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
             Entity e = new Entity();
             Allievi a = e.getEm().find(Allievi.class, Long.parseLong(request.getParameter("id")));
             List<Nazioni_rc> cittadinanza = e.findAll(Nazioni_rc.class);

@@ -30,7 +30,7 @@
         if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
             response.sendRedirect(request.getContextPath() + "/page_403.jsp");
         } else {
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
             Entity e = new Entity();
             List<Nazioni_rc> cittadinanza = e.findAll(Nazioni_rc.class);
             List<Nazioni_rc> nascitaconCF = e.listaNazioni_rc();

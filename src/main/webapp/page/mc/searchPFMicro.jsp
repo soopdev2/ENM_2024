@@ -27,7 +27,7 @@
             List<StatiPrg> stati = e.getStatiPrg_R();
             int min_allievi = Integer.parseInt(e.getPath("min_allievi"));
             e.close();
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
             String istato = request.getParameter("tipo") != null ? request.getParameter("tipo") : "";
             String icip = request.getParameter("icip") != null ? request.getParameter("icip") : "";
             idsa = request.getParameter("sa") != null ? Long.parseLong(request.getParameter("sa")) : idsa;
@@ -381,7 +381,7 @@
                                                     <div class="kt-section__body"><br>
                                                         <div class="form-group row">
                                                             <div class="col-lg-3">
-                                                                <label>Soggetto Attuatore</label>
+                                                                <label class="active">Soggetto Attuatore</label>
                                                                 <div class="dropdown bootstrap-select form-control kt-" id="soggettoattuatore_div" style="padding: 0;height: 35px;">
                                                                     <select class="form-control kt-select2-general" id="soggettoattuatore" name="soggettoattuatore"  style="width: 100%">
                                                                         <option value="-">Seleziona Soggetto Esecutore</option>

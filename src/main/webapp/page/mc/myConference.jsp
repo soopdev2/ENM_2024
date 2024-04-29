@@ -23,7 +23,7 @@
             if (request.getParameter("idsa") != null) {
                 idsa = Long.parseLong(request.getParameter("idsa"));
             }
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
 %>
 <html>
     <head>

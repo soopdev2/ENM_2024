@@ -22,7 +22,7 @@
             List<StatiPrg> stati = e.getStatiPrg();
             int max_ore_day = Integer.parseInt(e.getPath("max_ore_day"));
             e.close();
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
             String icip = StringEscapeUtils.escapeHtml4(request.getParameter("icip")) != null ? StringEscapeUtils.escapeHtml4(request.getParameter("icip")) : "";
 %>
 <html>

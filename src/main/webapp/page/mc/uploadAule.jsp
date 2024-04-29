@@ -21,7 +21,7 @@
             Entity e = new Entity();
             List<Item> regioni = e.listaRegioni();
             e.close();
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
 %>
 <html>
     <head>

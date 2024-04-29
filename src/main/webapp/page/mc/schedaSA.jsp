@@ -3,6 +3,7 @@
     Created on : 18-set-2019, 12.31.26
     Author     : agodino
 --%>
+<%@page import="rc.so.util.Utility"%>
 <%@page import="java.util.List"%>
 <%@page import="rc.so.domain.Storico_ModificheInfo"%>
 <%@page import="rc.so.db.Action"%>
@@ -21,7 +22,7 @@
         if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
             response.sendRedirect(request.getContextPath() + "/page_403.jsp");
         } else {
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
             Entity e = new Entity();
             SoggettiAttuatori sa = e.getEm().find(SoggettiAttuatori.class, Long.parseLong(request.getParameter("id")));
             e.close();

@@ -4,6 +4,7 @@
     Author     : agodino
 --%>
 
+<%@page import="rc.so.util.Utility"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.stream.Collectors"%>
 <%@page import="java.util.Date"%>
@@ -26,7 +27,7 @@
         if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
             response.sendRedirect(request.getContextPath() + "/page_403.jsp");
         } else {
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Entity e = new Entity();
             ProgettiFormativi p = e.getEm().find(ProgettiFormativi.class, Long.parseLong(request.getParameter("id")));

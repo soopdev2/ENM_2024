@@ -28,7 +28,7 @@
         if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
             response.sendRedirect(request.getContextPath() + "/page_403.jsp");
         } else {
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
             Entity e = new Entity();
             Allievi_Pregresso a = e.getEm().find(Allievi_Pregresso.class, Long.parseLong(request.getParameter("id")));
             List<TipoDoc_Allievi_Pregresso> tipo_doc_preg = e.findAll(TipoDoc_Allievi_Pregresso.class);

@@ -1,4 +1,5 @@
 
+<%@page import="rc.so.util.Utility"%>
 <%@page import="org.apache.commons.text.StringEscapeUtils"%>
 <%@page import="rc.so.db.Entity"%>
 <%@page import="java.util.List"%>
@@ -16,7 +17,8 @@
         if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
             response.sendRedirect(request.getContextPath() + "/page_403.jsp");
         } else {
-            String src = session.getAttribute("src").toString();%>
+            String src = Utility.checkAttribute(session, "src");
+%>
 <html>
     <head>
         <meta charset="utf-8" />

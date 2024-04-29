@@ -27,7 +27,7 @@
             List<SoggettiAttuatori> sa_list = e.findAll(SoggettiAttuatori.class);
             List<TipoFaq> tipi = e.findAll(TipoFaq.class);
             e.close();
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
 %>
 <html>
     <head>
@@ -368,7 +368,7 @@
                                                     <div class="kt-section__body"><br>
                                                         <div class="form-group row">
                                                             <div class="col-lg-4 col-md-6">
-                                                                <label>Soggetto Esecutore</label>
+                                                                <label class="active">Soggetto Esecutore</label>
                                                                 <div class="dropdown bootstrap-select form-control kt-" id="soggettoattuatore_div" style="padding: 0;height: 35px;">
                                                                     <select class="form-control kt-select2-general" id="soggettoattuatore" name="soggettoattuatore"  style="width: 100%">
                                                                         <option value="-">Seleziona Soggetto Esecutore</option>
@@ -383,7 +383,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-4 col-md-6">
-                                                                <label>Tipo</label>
+                                                                <label class="active">Tipo</label>
                                                                 <div class="dropdown bootstrap-select form-control kt-" id="stato_tipo" style="padding: 0;height: 35px;">
                                                                     <select class="form-control kt-select2-general" id="tipo" name="tipo" style="width: 100%">
                                                                         <option value="-">Seleziona Tipo</option>

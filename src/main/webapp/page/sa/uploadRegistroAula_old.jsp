@@ -4,6 +4,7 @@
     Author     : agodino
 --%>
 
+<%@page import="rc.so.util.Utility"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="rc.so.domain.DocumentiPrg"%>
@@ -24,7 +25,7 @@
         if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
             response.sendRedirect(request.getContextPath() + "/page_403.jsp");
         } else {
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
             Entity e = new Entity();
             ProgettiFormativi p = e.getEm().find(ProgettiFormativi.class, Long.parseLong(request.getParameter("id")));
             List<Allievi> allievi = e.getAllieviProgettiFormativi(p);

@@ -20,7 +20,7 @@
         if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
             response.sendRedirect(request.getContextPath() + "/page_403.jsp");
         } else {
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
             Entity e = new Entity();
             UnitaDidattiche u = e.getEm().find(UnitaDidattiche.class, StringEscapeUtils.escapeHtml4(request.getParameter("codice")));
             int files = Integer.parseInt(e.getPath("UD_max_files"));

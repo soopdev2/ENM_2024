@@ -1,4 +1,5 @@
 
+<%@page import="rc.so.util.Utility"%>
 <%@page import="rc.so.domain.EstensioniFile"%>
 <%@page import="rc.so.domain.TipoDoc"%>
 <%@page import="rc.so.domain.TipoDoc_Allievi"%>
@@ -21,7 +22,7 @@
             Entity e = new Entity();
             //EstensioniFile ext = e.getEm().find(EstensioniFile.class, "pdf");
             e.close();
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
             //String iva = request.getParameter("piva") != null ? request.getParameter("piva") : "";
 %>
 <html>

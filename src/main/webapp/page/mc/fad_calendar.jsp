@@ -25,7 +25,7 @@
     if (us == null) {
     } else {
 
-        String src = session.getAttribute("src").toString();
+        String src = Utility.checkAttribute(session, "src");
         Entity e = new Entity();
         ProgettiFormativi p = e.getEm().find(ProgettiFormativi.class, Long.parseLong(request.getParameter("id")));
         

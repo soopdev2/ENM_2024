@@ -22,7 +22,7 @@
             Entity e = new Entity();
             EstensioniFile ext = e.getEm().find(EstensioniFile.class, "pdf");
             e.close();
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
             String iva2 = request.getParameter("piva") != null ? request.getParameter("piva") : "";
             String iva = StringEscapeUtils.escapeHtml4(iva2);
 %>

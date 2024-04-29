@@ -26,7 +26,7 @@
             response.sendRedirect(request.getContextPath() + "/page_403.jsp");
         } else {
             String idpr = Utility.getRequestValue(request, "id");
-            String src = session.getAttribute("src").toString();
+            String src = Utility.checkAttribute(session, "src");
             Entity e = new Entity();
             ProgettiFormativi p = e.getEm().find(ProgettiFormativi.class, Long.parseLong(idpr));
             List<LezioneCalendario> lezioniCalendarioFASEA = e.getLezioniByModello(3);
