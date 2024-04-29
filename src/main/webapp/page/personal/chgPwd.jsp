@@ -4,6 +4,7 @@
     Author     : agodino
 --%>
 
+<%@page import="rc.so.util.Utility"%>
 <%@page import="org.apache.commons.text.StringEscapeUtils"%>
 <%@page import="rc.so.domain.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -17,7 +18,7 @@
         //if (!Action.isVisibile(type_, pageName_)) {
         //    response.sendRedirect(request.getContextPath() + "/page_403.jsp");
         //} else {
-        String src = session.getAttribute("src").toString();
+        String src = Utility.checkAttribute(session, "src");
 
         String active = StringEscapeUtils.escapeHtml4(request.getParameter("active")) == null ? "no" : StringEscapeUtils.escapeHtml4(request.getParameter("active"));
 %>

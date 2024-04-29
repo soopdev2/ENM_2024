@@ -3,6 +3,7 @@
     Created on : 18-set-2019, 12.31.26
     Author     : agodino
 --%>
+<%@page import="rc.so.util.Utility"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.List"%>
 <%@page import="rc.so.db.Entity"%>
@@ -19,7 +20,7 @@
         //if (!Action.isVisibile(type_, pageName_)) {
         //    response.sendRedirect(request.getContextPath() + "/page_403.jsp");
         //} else {
-        String src = session.getAttribute("src").toString();
+        String src = Utility.checkAttribute(session, "src");
         Entity e = new Entity();
         List<Item> regioni = e.listaRegioni();
         e.close();
