@@ -1,6 +1,12 @@
+<%@page import="rc.so.util.Utility"%>
 <%@page import="java.util.Date"%>
 <!-- begin:: Header -->
-<%String no_cache = "?dummy=" + String.valueOf(new Date().getTime());%>
+<%String no_cache = "?dummy=" + String.valueOf(new Date().getTime());
+
+    String guida = Utility.checkAttribute(session, "guida");
+
+
+%>
 <div id="kt_header" class="kt-header kt-grid__item  kt-header--fixed ">
 
     <!-- begin:: Header Menu -->
@@ -59,7 +65,7 @@
                             </div>
                         </div>
                     </a>
-                    <a href="<%=src%>/OperazioniGeneral?type=downloadDoc&path=<%=session.getAttribute("guida").toString()%>" class="kt-notification__item" style="margin-bottom: 0px;">
+                    <a href="<%=src%>/OperazioniGeneral?type=downloadDoc&path=<%=guida%>" class="kt-notification__item" style="margin-bottom: 0px;">
                         <div class="kt-notification__item-icon">
                             <i class="flaticon-book kt-font-io-n"></i>
                         </div>
