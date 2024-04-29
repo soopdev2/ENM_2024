@@ -80,6 +80,7 @@
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/base/style.bundle.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/resource/custom.css" rel="stylesheet" type="text/css" />
+        <link href="../../Bootstrap2024/assets/css/bootstrap-italia.min.css" rel="stylesheet" type="text/css" />
 
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
         <style type="text/css">
@@ -103,10 +104,11 @@
             }
         </script>
     </head>
-    <body class="kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed">
+    <body>
         <!-- begin:: Page -->
         <%if (fancy) {%>
         <%@ include file="menu/head1.jsp"%>
+        <%@ include file="../../Bootstrap2024/index/index_SoggettoAttuatore/Header_soggettoAttuatore.jsp"%>
         <div class="kt-grid kt-grid--hor kt-grid--root">
             <nav class="navbar navbar-expand-lg has-megamenu" aria-label="Menu principale">
                 <button type="button" aria-label="Mostra o nascondi il menu" class="custom-navbar-toggler" aria-controls="menu" aria-expanded="false" data-bs-toggle="navbarcollapsible" data-bs-target="#navbar-E">
@@ -296,7 +298,6 @@
                 </div>
             </nav>
             <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-                <%@ include file="menu/menu.jsp"%>
                 <!-- end:: Aside -->
                 <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
                     <%@ include file="menu/head.jsp"%>
@@ -357,26 +358,27 @@
                                                                 <div class="form-row">
                                                                     <div class="form-group col-lg-6">
                                                                         <div class="dropdown bootstrap-select form-control kt-" id="allievo_div" style="padding: 0;">
-                                                                        <select class="form-control kt-select2-general obbligatory" id="allievo" name="allievo"  style="width: 100%">
-                                                                            <option value="-">Seleziona</option>
-                                                                            <%for (Allievi al1 : list_allievi) {%>
-                                                                            <option value="<%=al1.getId()%>"><%=al1.getCognome()%> <%=al1.getNome()%> - <%=al1.getCodicefiscale()%></option>
-                                                                            <%}%>
-                                                                            <!--                                                                                <option value="100">ITALIA</option>
-                                                                            <option value="200">STATO UE</option>
-                                                                            <option value="300">STATO EXTRA UE</option>-->
-                                                                        </select>
+                                                                            <select class="form-control kt-select2-general obbligatory" id="allievo" name="allievo"  style="width: 100%">
+                                                                                <option value="-">Seleziona</option>
+                                                                                <%for (Allievi al1 : list_allievi) {%>
+                                                                                <option value="<%=al1.getId()%>"><%=al1.getCognome()%> <%=al1.getNome()%> - <%=al1.getCodicefiscale()%></option>
+                                                                                <%}%>
+                                                                                <!--                                                                                <option value="100">ITALIA</option>
+                                                                                <option value="200">STATO UE</option>
+                                                                                <option value="300">STATO EXTRA UE</option>-->
+                                                                            </select>
+                                                                        </div>
                                                                     </div>
-                                                                    </div>
-                                                                    
+
                                                                 </div>
 
                                                                 <h5>AUTORIZZAZIONI PRIVACY</h5>
                                                                 <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
+                                                                <br>
 
                                                                 <div class="form-row">   
                                                                     <div class="form-group col-xl-4 col-lg-6">
-                                                                        <label>Autorizzazione Privacy 1 </label><label class="kt-font-danger kt-font-boldest">*</label>
+                                                                        <label class="active">Autorizzazione Privacy 1 </label><label class="kt-font-danger kt-font-boldest">*</label>
 
                                                                         <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--primary">
                                                                             <label>
@@ -388,7 +390,7 @@
 
                                                                     </div>
                                                                     <div class="form-group col-xl-4 col-lg-6">
-                                                                        <label>Autorizzazione Privacy 2 </label>
+                                                                        <label class="active">Autorizzazione Privacy 2 </label>
                                                                         <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--primary">
                                                                             <label>
                                                                                 <input type="checkbox" class="form-control" name="prv2" id="prv2"/>
@@ -398,7 +400,7 @@
                                                                         </span>
                                                                     </div>
                                                                     <div class="form-group col-xl-4 col-lg-6">
-                                                                        <label>Autorizzazione Privacy 3</label>
+                                                                        <label class="active">Autorizzazione Privacy 3</label>
                                                                         <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--primary">
                                                                             <label>
                                                                                 <input type="checkbox" class="form-control" name="prv3" id="prv3"/>
@@ -408,13 +410,18 @@
                                                                         </span>
                                                                     </div>
                                                                 </div>
+                                                                <br>
+                                                                <br>
 
                                                                 <%if (mod_1.getModello() != null) {%>
                                                                 <h5>MODELLO 1</h5>
+                                                                <br>
                                                                 <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
                                                                 <div class="form-group row">
                                                                     <div class="form-group col-xl-6 col-lg-6">
                                                                         <label>Scaricare il modello per l'allievo selezionato per poi caricarlo firmato dall'allievo nel campo seguente.</label>
+                                                                        <br>
+                                                                        <br>
                                                                         <button class="btn btn-primary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" 
                                                                                 type="button" 
                                                                                 onclick="return model_funct('<%=mod_1.getId()%>');"
@@ -465,7 +472,7 @@
                                     </div>
                                     <%if (fancy) {%>
                                 </div>
-                                    <%@ include file="../../Bootstrap2024/index/login/Footer_login.jsp"%>
+                                <%@ include file="../../Bootstrap2024/index/login/Footer_login.jsp"%>
                                 <%}%>
                             </div>
                         </div>
@@ -490,6 +497,7 @@
         <script src="<%=src%>/assets/vendors/general/sweetalert2/dist/sweetalert2.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/utility.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/app/bundle/app.bundle.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
         <!--this page -->
         <script src="<%=src%>/assets/vendors/general/select2/dist/js/select2.full.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/select2.js" type="text/javascript"></script>
