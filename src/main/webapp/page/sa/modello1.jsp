@@ -491,7 +491,7 @@
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
-        <!--<script src="<%=src%>/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>-->
+        <script src="<%=src%>/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/jquery-form/dist/jquery.form.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/app/custom/general/components/extended/blockui1.33.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/sweetalert2/dist/sweetalert2.js" type="text/javascript"></script>

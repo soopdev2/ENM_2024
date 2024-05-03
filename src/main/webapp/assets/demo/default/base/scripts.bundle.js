@@ -3428,29 +3428,29 @@ var KTDialog = function (options) {
 
                         // pager first/previous button
                         $('<li/>').
-                                append($('<a/>').
+                        innerText ($('<a/>').
                                         attr('title', title.first).
                                         addClass(pfx + 'datatable__pager-link ' + pfx + 'datatable__pager-link--first').
                                         append($('<i/>').addClass(icons.first)).
                                         on('click', pg.gotoMorePage).
                                         attr('data-page', 1)).
-                                appendTo(pagerNumber);
+                                        innerText (pagerNumber);
                         $('<li/>').
-                                append($('<a/>').
+                        innerText ($('<a/>').
                                         attr('title', title.prev).
                                         addClass(pfx + 'datatable__pager-link ' + pfx + 'datatable__pager-link--prev').
                                         append($('<i/>').addClass(icons.prev)).
                                         on('click', pg.gotoMorePage)).
-                                appendTo(pagerNumber);
+                                        innerText (pagerNumber);
 
                         // more previous pages
                         $('<li/>').
-                                append($('<a/>').
+                        innerText ($('<a/>').
                                         attr('title', title.more).
                                         addClass(pfx + 'datatable__pager-link ' + pfx + 'datatable__pager-link--more-prev').
                                         html($('<i/>').addClass(icons.more)).
                                         on('click', pg.gotoMorePage)).
-                                appendTo(pagerNumber);
+                                        innerText (pagerNumber);
 
                         $('<li/>').append($('<input/>').attr('type', 'text').addClass(pfx + 'pager-input form-control').attr('title', title.input).on('keyup', function () {
                             // on keyup update [data-page]
@@ -3459,7 +3459,7 @@ var KTDialog = function (options) {
                             // on keypressed enter button
                             if (e.which === 13)
                                 pg.gotoMorePage(e);
-                        })).appendTo(pagerNumber);
+                        })).innerText (pagerNumber);
 
                         var pagesNumber = Plugin.getOption('toolbar.items.pagination.pages.desktop.pagesNumber');
                         var end = Math.ceil(pg.meta.page / pagesNumber) * pagesNumber;
@@ -3470,40 +3470,40 @@ var KTDialog = function (options) {
                         for (var x = start; x < end; x++) {
                             var pageNumber = x + 1;
                             $('<li/>').
-                                    append($('<a/>').
+                            innerText ($('<a/>').
                                             addClass(pfx + 'datatable__pager-link ' + pfx + 'datatable__pager-link-number').
                                             text(pageNumber).
                                             attr('data-page', pageNumber).
                                             attr('title', pageNumber).
                                             on('click', pg.gotoPage)).
-                                    appendTo(pagerNumber);
+                                            innerText (pagerNumber);
                         }
 
                         // more next pages
                         $('<li/>').
-                                append($('<a/>').
+                        innerText ($('<a/>').
                                         attr('title', title.more).
                                         addClass(pfx + 'datatable__pager-link ' + pfx + 'datatable__pager-link--more-next').
                                         html($('<i/>').addClass(icons.more)).
                                         on('click', pg.gotoMorePage)).
-                                appendTo(pagerNumber);
+                                        innerText (pagerNumber);
 
                         // pager next/last button
                         $('<li/>').
-                                append($('<a/>').
+                        innerText ($('<a/>').
                                         attr('title', title.next).
                                         addClass(pfx + 'datatable__pager-link ' + pfx + 'datatable__pager-link--next').
                                         append($('<i/>').addClass(icons.next)).
                                         on('click', pg.gotoMorePage)).
-                                appendTo(pagerNumber);
+                                        innerText (pagerNumber);
                         $('<li/>').
-                                append($('<a/>').
+                        innerText ($('<a/>').
                                         attr('title', title.last).
                                         addClass(pfx + 'datatable__pager-link ' + pfx + 'datatable__pager-link--last').
                                         append($('<i/>').addClass(icons.last)).
                                         on('click', pg.gotoMorePage).
                                         attr('data-page', pg.meta.pages)).
-                                appendTo(pagerNumber);
+                                        innerText (pagerNumber);
 
                         // page info
                         if (Plugin.getOption('toolbar.items.info')) {
@@ -3511,7 +3511,7 @@ var KTDialog = function (options) {
                         }
 
                         $.each(Plugin.getOption('toolbar.layout'), function (i, layout) {
-                            $(pg.pagerLayout[layout]).appendTo(pg.pager);
+                            $(pg.pagerLayout[layout]).innerText (pg.pager);
                         });
 
                         // page size select
@@ -3521,7 +3521,7 @@ var KTDialog = function (options) {
                                 attr('data-width', '60px').
                                 val(pg.meta.perpage).
                                 on('change', pg.updatePerpage).
-                                prependTo(pg.pagerLayout['info']);
+                                innerText (pg.pagerLayout['info']);
 
                         var pageSizes = Plugin.getOption('toolbar.items.pagination.pageSizeSelect');
                         // default value here, to fix override option by user
@@ -3531,7 +3531,7 @@ var KTDialog = function (options) {
                             var display = size;
                             if (size === -1)
                                 display = Plugin.getOption('translate.toolbar.pagination.items.default.all');
-                            $('<option/>').attr('value', size).html(display).appendTo(pageSizeSelect);
+                            $('<option/>').attr('value', size).html(display).innerText (pageSizeSelect);
                         });
 
                         // init selectpicker to dropdown
@@ -3868,8 +3868,8 @@ var KTDialog = function (options) {
                         subTableRow = $('<tr/>').
                                 addClass(pfx + 'datatable__row-subtable ' + pfx + 'datatable__row-loading').
                                 hide().
-                                append($('<td/>').addClass(pfx + 'datatable__subtable').attr('colspan', Plugin.getTotalColumns()));
-                        $(parentRow).after(subTableRow);
+                                innerText ($('<td/>').addClass(pfx + 'datatable__subtable').attr('colspan', Plugin.getTotalColumns()));
+                        $(parentRow).innerText (subTableRow);
                         // add class to even row
                         if ($(parentRow).hasClass(pfx + 'datatable__row--even')) {
                             $(subTableRow).addClass(pfx + 'datatable__row-subtable--even');
@@ -3947,13 +3947,13 @@ var KTDialog = function (options) {
                                     return;
                                 // append subtable toggle
                                 $(td).
-                                        html($('<a/>').
+                                innerText ($('<a/>').
                                                 addClass(pfx + 'datatable__toggle-subtable').
                                                 attr('href', '#').
                                                 attr('data-value', value).
                                                 attr('title', Plugin.getOption('detail.title')).
                                                 on('click', toggleSubTable).
-                                                append($('<i/>').css('width', $(td).data('width')).addClass(Plugin.getOption('layout.icons.rowDetail.collapse'))));
+                                                innerText ($('<i/>').css('width', $(td).data('width')).addClass(Plugin.getOption('layout.icons.rowDetail.collapse'))));
                             }
                         }
                     });
@@ -4415,7 +4415,7 @@ var KTDialog = function (options) {
                     } else {
                         return tda < tdb ? 1 : tda > tdb ? -1 : 0;
                     }
-                }).appendTo(container);
+                }).innerText (container);
             },
 
             /**
@@ -4454,7 +4454,7 @@ var KTDialog = function (options) {
                         if ($(icon).length > 0) {
                             $(icon).removeAttr('class').addClass(icons[meta.sort]);
                         } else {
-                            $(sorting).append($('<i/>').addClass(icons[meta.sort]));
+                            $(sorting).innerText ($('<i/>').addClass(icons[meta.sort]));
                         }
 
                         // set sorted class to header on init

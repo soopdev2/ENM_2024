@@ -23,8 +23,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="_csrf" content="4bfd1575-3ad1-4d21-96c7-4ef2d9f86721"/>
         <meta name="_csrf_header" content="X-CSRF-TOKEN"/>
-        <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'">
-        <link rel="stylesheet" href="Bootstrap2024/assets/css/global.css"/>
+        <!--<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'">-->
         <link href="https://fonts.cdnfonts.com/css/titillium-web" rel="stylesheet">
 
         <!--begin::Fonts -->
@@ -69,7 +68,7 @@
 
 
     </head>
-    <body class="kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading">
+    <body>
         <%@include file="Bootstrap2024/index/login/Header_login.jsp" %>
 
         <div class="kt-grid kt-grid--ver kt-grid--root">
@@ -147,7 +146,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <script type="text/javascript">
+                                <!--<script type="text/javascript">
                                     var img = document.getElementById('blinking_image');
                                     var interval = window.setInterval(function () {
                                         if (img.style.visibility === 'hidden') {
@@ -156,7 +155,7 @@
                                             img.style.visibility = 'hidden';
                                         }
                                     }, 500);
-                                </script>
+                                </script>-->
 
                             </div>
                             <div class="kt-login__forgot">
