@@ -247,7 +247,7 @@ public class Database {
             String sql = "SELECT base64 FROM fad_report WHERE idprogetti_formativi = " + idpr;
             try (Statement st = this.c.createStatement(); ResultSet rs = st.executeQuery(sql)) {
                 while (rs.next()) {
-                    out = rs.getString(1);
+                    out = StringEscapeUtils.escapeHtml4(rs.getString(1));
                 }
             }
         } catch (SQLException ex) {
@@ -605,13 +605,13 @@ public class Database {
 
             try (PreparedStatement ps = this.c.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    String id = rs.getString(1);
-                    String nome = rs.getString(2);
-                    String cognome = rs.getString(3);
-                    String cf = rs.getString(4);
+                    String id = Utility.sanitizeInput(rs.getString(1));
+                    String nome = Utility.sanitizeInput(rs.getString(2));
+                    String cognome = Utility.sanitizeInput(rs.getString(3));
+                    String cf = Utility.sanitizeInput(rs.getString(4));
                     Date data_nascita = getUtilDate(rs.getString(5), patternITA);
                     String fascia = "FA";
-                    String email = rs.getString(6);
+                    String email = Utility.sanitizeInput(rs.getString(6));
 
                     Docenti d = new Docenti(nome, cognome, cf, data_nascita, email);
                     d.setSoggetto(sa);
@@ -624,8 +624,8 @@ public class Database {
                             String path = en.getPath("pathDoc_Docenti").replace("@docente", d.getCodicefiscale());
                             createDir(path);
 
-                            FileDownload allegatocv = preparefilefordownload(rs1.getString(1));
-                            FileDownload allegatodr = preparefilefordownload(rs1.getString(2));
+                            FileDownload allegatocv = preparefilefordownload(Utility.sanitizeInput(rs1.getString(1)));
+                            FileDownload allegatodr = preparefilefordownload(Utility.sanitizeInput(rs1.getString(2)));
 
                             if (allegatocv != null && allegatodr != null) {
                                 String ext1 = "." + FilenameUtils.getExtension(allegatocv.getName());

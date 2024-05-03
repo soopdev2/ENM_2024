@@ -43,6 +43,8 @@ import static rc.so.util.Utility.redirect;
  * @author dolivo
  */
 public class OperazioniGeneral extends HttpServlet {
+    
+    
 
     private static String sanitizePath(String path) {
         // Rimuovi tutti i caratteri non validi dal percorso
@@ -222,7 +224,7 @@ public class OperazioniGeneral extends HttpServlet {
 
     protected void excelfad(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String idpr = request.getParameter("idpr");
+        String idpr = Utility.sanitizeInput(request.getParameter("idpr"));
         Database db1 = new Database(false);
         String base64 = db1.getBase64Report(Integer.parseInt(idpr));
         db1.closeDB();
