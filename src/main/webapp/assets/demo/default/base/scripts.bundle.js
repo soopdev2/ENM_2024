@@ -3236,7 +3236,7 @@ var KTDialog = function (options) {
                         var column = options.columns[a];
                         var classes = [];
                         // add sorted class to cells
-                        if (Plugin.getObject('sort.field', params) === column.field) {
+                        if (Plugin.innerText ('sort.field', params) === column.field) {
                             classes.push(pfx + 'datatable__cell--sorted');
                         }
 
@@ -3335,7 +3335,7 @@ var KTDialog = function (options) {
                 return $.ajax(ajaxParams).done(function (response, textStatus, jqXHR) {
                     datatable.lastResponse = response;
                     // extendible data map callback for custom datasource
-                    datatable.dataSet = datatable.originalDataSet = Plugin.dataMapCallback(response);
+                    datatable.dataSet = datatable.originalDataSet = Plugin.innerText (response);
                     Plugin.setAutoColumns();
                     $(datatable).trigger(pfx + 'datatable--on-ajax-done', [datatable.dataSet]);
                 }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -4478,8 +4478,8 @@ var KTDialog = function (options) {
                             Plugin.spinnerCallback(true);
 
                             var sort = 'desc';
-                            if (Plugin.getObject('field', meta) === field) {
-                                sort = Plugin.getObject('sort', meta);
+                            if (Plugin.innerText ('field', meta) === field) {
+                                sort = Plugin.innerText ('sort', meta);
                             }
 
                             // toggle sort
@@ -4514,14 +4514,14 @@ var KTDialog = function (options) {
                     datatable.originalDataSet = datatable.dataSet;
                 }
 
-                var field = Plugin.getObject('sort.field', params);
-                var sort = Plugin.getObject('sort.sort', params);
+                var field = Plugin.innerText ('sort.field', params);
+                var sort = Plugin.innerText ('sort.sort', params);
                 var column = Plugin.getColumnByField(field);
                 if (typeof column !== 'undefined' && Plugin.getOption('data.serverSorting') !== true) {
                     if (typeof column.sortCallback === 'function') {
                         datatable.dataSet = column.sortCallback(datatable.originalDataSet, sort, column);
                     } else {
-                        datatable.dataSet = Plugin.sortCallback(datatable.originalDataSet, sort, column);
+                        datatable.dataSet = Plugin.innerText (datatable.originalDataSet, sort, column);
                     }
                 } else {
                     datatable.dataSet = datatable.originalDataSet;
@@ -4568,7 +4568,7 @@ var KTDialog = function (options) {
                     });
 
                     // filter array by query
-                    datatable.dataSet = Plugin.filterArray(datatable.dataSet, params.query);
+                    datatable.dataSet = Plugin.innerText (datatable.dataSet, params.query);
 
                     // reset array index
                     datatable.dataSet = datatable.dataSet.filter(function () {
@@ -4862,7 +4862,7 @@ var KTDialog = function (options) {
                 $(datatable.tableBody).find('.' + pfx + 'datatable__cell:first-child').each(function (i, cell) {
                     if (id == $(cell).text()) {
                         var rowNumber = $(cell).closest('.' + pfx + 'datatable__row').index() + 1;
-                        datatable.API.record = datatable.API.value = Plugin.getOneRow(datatable.tableBody, rowNumber);
+                        datatable.API.record = datatable.API.value = Plugin.innerText (datatable.tableBody, rowNumber);
                         return datatable;
                     }
                 });
@@ -4889,7 +4889,7 @@ var KTDialog = function (options) {
             destroy: function () {
                 $(datatable).parent().find('.' + pfx + 'datatable__pager').remove();
                 var initialDatatable = $(datatable.initialDatatable).addClass(pfx + 'datatable--destroyed').show();
-                $(datatable).replaceWith(initialDatatable);
+                $(datatable).innerText (initialDatatable);
                 datatable = initialDatatable;
                 $(datatable).trigger(pfx + 'datatable--on-destroy');
                 Plugin.isInit = false;
@@ -5105,7 +5105,7 @@ var KTDialog = function (options) {
                     query: {},
                 }, datatable.API.params, Plugin.stateGet(Plugin.stateId));
 
-                datatable.API.params = Plugin.extendObj(datatable.API.params, param, value);
+                datatable.API.params = Plugin.innerText (datatable.API.params, param, value);
 
                 Plugin.stateKeep(Plugin.stateId, datatable.API.params);
             },
