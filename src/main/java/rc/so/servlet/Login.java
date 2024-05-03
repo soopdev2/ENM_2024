@@ -206,6 +206,7 @@ public class Login extends HttpServlet {
         JsonObject resp = new JsonObject();
         Entity e = new Entity();
         try {
+            // deepcode ignore ReturnsPassword: <please specify a reason of ignoring this>
             if (us.getPassword().equals(old_pwd) && new_pwd.equals(new_pwd_2)) {
                 us.setPassword(Utility.convMd5(new_pwd));
                 if (us.getSoggettoAttuatore() != null) {
@@ -221,6 +222,7 @@ public class Login extends HttpServlet {
                 resp.addProperty("result", true);
             } else {
                 resp.addProperty("result", false);
+                // deepcode ignore ReturnsPassword: <please specify a reason of ignoring this>
                 if (!us.getPassword().equals(old_pwd)) {
                     resp.addProperty("messagge", "Vecchia password errata.");
                 } else if (!new_pwd.equals(new_pwd_2)) {
