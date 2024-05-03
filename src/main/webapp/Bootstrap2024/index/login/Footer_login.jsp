@@ -10,7 +10,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link rel="stylesheet" href="./../assets/css/bootstrap-italia.min.css"/>
     </head>
     <body>
         <footer class="it-footer">
@@ -21,7 +20,7 @@
                             <div class="col-sm-12">
                                 <div class="it-brand-wrapper">
                                     <a href="#">
-                                        <svg class="icon"><use xlink:href="/Bootstrap2024/svg/sprites.svg#it-code-circle"></use></svg>
+                                        <svg class="icon"><use xlink:href=""></use></svg>
                                         <div class="it-brand-text">
                                             <h2 class="no_toc">Regione Toscana</h2>
                                             <h3> &copy; YES I Start Up - Toscana v1.0 </h3>
@@ -162,6 +161,5 @@
                 </div>
             </div>
         </footer>
-        <script src="/Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js"></script>
     </body>
 </html>

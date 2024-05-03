@@ -3,9 +3,12 @@
     Created on : 15-ott-2019, 10.42.32
     Author     : dolivo
 --%>
+<%@page import="rc.so.util.Utility"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    String src = session.getAttribute("src") == null ? "" : session.getAttribute("src").toString() + "/";
+    
+    String src2 = Utility.checkAttribute(session, "src");
+    String src = src2 == null ? "" : src2 + "/";
 %>
 <html>
     <!-- begin::Head -->

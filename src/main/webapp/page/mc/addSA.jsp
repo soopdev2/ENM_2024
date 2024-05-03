@@ -64,7 +64,6 @@
         <link href="<%=src%>/assets/demo/default/skins/brand/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
-        <link rel="stylesheet" href="Bootstrap2024/assets/css/global.css"/>
         <link href="https://fonts.cdnfonts.com/css/titillium-web" rel="stylesheet">
         <style>
             .kt-section__title {
@@ -82,14 +81,14 @@
             <nav class="navbar navbar-expand-lg has-megamenu" aria-label="Menu principale">
                         <button type="button" aria-label="Mostra o nascondi il menu" class="custom-navbar-toggler" aria-controls="menu" aria-expanded="false" data-bs-toggle="navbarcollapsible" data-bs-target="#navbar-E">
                             <span>
-                                <svg role="img" class="icon"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-burger"></use></svg>
+                                <svg role="img" class="icon"><use href=""></use></svg>
                             </span>
                         </button>
                         <div class="navbar-collapsable" id="navbar-E">
                             <div class="overlay fade"></div>
                             <div class="close-div">
                                 <button type="button" aria-label="Chiudi il menu" class="btn close-menu">
-                                    <span><svg role="img" class="icon"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-close-big"></use></svg></span>
+                                    <span><svg role="img" class="icon"><use href=""></use></svg></span>
                                 </button>
                             </div>
                             <div class="menu-wrapper justify-content-lg-between">
@@ -99,7 +98,7 @@
                                     </li>
                                     <li class="nav-item dropdown megamenu">
                                         <button type="button" class="nav-link active dropdown-toggle px-lg-2 px-xl-3" data-bs-toggle="dropdown" aria-expanded="false" id="megamenu-base-E" data-focus-mouse="false">
-                                            <span>Soggetti Attuatori</span><svg role="img" class="icon icon-xs ms-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-expand"></use></svg>
+                                            <span>Soggetti Attuatori</span><svg role="img" class="icon icon-xs ms-1"><use href=""></use></svg>
                                         </button>
                                         <div class="dropdown-menu shadow-lg" role="region" aria-labelledby="megamenu-base-E">
                                             <div class="megamenu pb-5 pt-3 py-lg-0">
@@ -132,7 +131,7 @@
                                     </li>
                                     <li class="nav-item dropdown megamenu">
                                         <button type="button" class="nav-link dropdown-toggle px-lg-2 px-xl-3" data-bs-toggle="dropdown" aria-expanded="false" id="megamenu-base-E" data-focus-mouse="false">
-                                            <span>Sedi di Formazione</span><svg role="img" class="icon icon-xs ms-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-expand"></use></svg>
+                                            <span>Sedi di Formazione</span><svg role="img" class="icon icon-xs ms-1"><use href=""></use></svg>
                                         </button>
                                         <div class="dropdown-menu shadow-lg" role="region" aria-labelledby="megamenu-base-E">
                                             <div class="megamenu pb-5 pt-3 py-lg-0">
@@ -159,7 +158,7 @@
                                     </li>
                                     <li class="nav-item dropdown megamenu">
                                         <button type="button" class="nav-link  dropdown-toggle px-lg-2 px-xl-3" data-bs-toggle="dropdown" aria-expanded="false" id="megamenu-base-E" data-focus-mouse="false">
-                                            <span>Docenti</span><svg role="img" class="icon icon-xs ms-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-expand"></use></svg>
+                                            <span>Docenti</span><svg role="img" class="icon icon-xs ms-1"><use href=""></use></svg>
                                         </button>
                                         <div class="dropdown-menu shadow-lg" role="region" aria-labelledby="megamenu-base-E">
                                             <div class="megamenu pb-5 pt-3 py-lg-0">
@@ -186,7 +185,7 @@
                                     </li>
                                     <li class="nav-item dropdown megamenu">
                                         <button type="button" class="nav-link dropdown-toggle px-lg-2 px-xl-3" data-bs-toggle="dropdown" aria-expanded="false" id="megamenu-base-E" data-focus-mouse="false">
-                                            <span>Allievi</span><svg role="img" class="icon icon-xs ms-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-expand"></use></svg>
+                                            <span>Allievi</span><svg role="img" class="icon icon-xs ms-1"><use href=""></use></svg>
                                         </button>
                                         <div class="dropdown-menu shadow-lg" role="region" aria-labelledby="megamenu-base-E">
                                             <div class="megamenu pb-5 pt-3 py-lg-0">
@@ -219,7 +218,7 @@
                                     </li>
                                     <li class="nav-item dropdown megamenu">
                                         <button type="button" class="nav-link dropdown-toggle px-lg-2 px-xl-3" data-bs-toggle="dropdown" aria-expanded="false" id="megamenu-base-E" data-focus-mouse="false">
-                                            <span>Progetti Formativi</span><svg role="img" class="icon icon-xs ms-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-expand"></use></svg>
+                                            <span>Progetti Formativi</span><svg role="img" class="icon icon-xs ms-1"><use href=""></use></svg>
                                         </button>
                                         <div class="dropdown-menu shadow-lg" role="region" aria-labelledby="megamenu-base-E">
                                             <div class="megamenu pb-5 pt-3 py-lg-0">
@@ -258,7 +257,7 @@
                                     </li>
                                     <li class="nav-item dropdown megamenu">
                                         <button type="button" class="nav-link dropdown-toggle px-lg-2 px-xl-3" data-bs-toggle="dropdown" aria-expanded="false" id="megamenu-base-E" data-focus-mouse="false">
-                                            <span>Materiale Didattico</span><svg role="img" class="icon icon-xs ms-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-expand"></use></svg>
+                                            <span>Materiale Didattico</span><svg role="img" class="icon icon-xs ms-1"><use href=""></use></svg>
                                         </button>
                                         <div class="dropdown-menu shadow-lg" role="region" aria-labelledby="megamenu-base-E">
                                             <div class="megamenu pb-5 pt-3 py-lg-0">
@@ -291,7 +290,7 @@
                                     </li>
                                     <li class="nav-item dropdown megamenu">
                                         <button type="button" class="nav-link dropdown-toggle px-lg-2 px-xl-3" data-bs-toggle="dropdown" aria-expanded="false" id="megamenu-base-E" data-focus-mouse="false">
-                                            <span>FAQ</span><svg role="img" class="icon icon-xs ms-1"><use href="/bootstrap-italia/dist/svg/sprites.svg#it-expand"></use></svg>
+                                            <span>FAQ</span><svg role="img" class="icon icon-xs ms-1"><use href=""></use></svg>
                                         </button>
                                         <div class="dropdown-menu shadow-lg" role="region" aria-labelledby="megamenu-base-E">
                                             <div class="megamenu pb-5 pt-3 py-lg-0">

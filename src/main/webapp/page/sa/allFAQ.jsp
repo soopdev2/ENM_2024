@@ -61,7 +61,6 @@
         <link href="<%=src%>/assets/demo/default/skins/brand/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
         <link href="../../Bootstrap2024/assets/css/bootstrap-italia.min.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="Bootstrap2024/assets/css/global.css"/>
         <link href="https://fonts.cdnfonts.com/css/titillium-web" rel="stylesheet">
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
 

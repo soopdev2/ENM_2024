@@ -10,7 +10,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link rel="stylesheet" href="./../assets/css/bootstrap-italia.min.css"/>
     </head>
     <body>
 
@@ -39,7 +38,7 @@
                                     <div class="it-brand-wrapper">
                                         <a href="">
                                             <svg class="icon" aria-hidden="true">
-                                            <use href="/dist/svg/sprites.svg#it-pa"></use>
+                                            <use href=""></use>
                                             </svg>
                                             <div class="it-brand-text">
                                                 <div class="it-brand-title"><h3 class="kt-login__title kt-font-io" style="font-size:2rem; color:white !important;"><b>YES I STARTUP - Regione Toscana</b></h3></div>
@@ -104,7 +103,7 @@
                                         data-bs-toggle="navbarcollapsible"
                                         >
                                         <svg class="icon">
-                                        <use href="/dist/svg/sprites.svg#it-burger"></use>
+                                        <use href=""></use>
                                         </svg>
                                     </button>
                                     <div class="navbar-collapsable" id="nav4" style="display: none">
@@ -113,7 +112,7 @@
                                             <button class="btn close-menu" type="button">
                                                 <span class="visually-hidden">Nascondi la navigazione</span>
                                                 <svg class="icon">
-                                                <use href="/dist/svg/sprites.svg#it-close-big"></use>
+                                                <use href=""></use>
                                                 </svg>
                                             </button>
                                         </div>
@@ -170,6 +169,5 @@
                 </div>
             </div>
         </header>
-        <script src="/Bootstrap2024/assets/js/bootstrap-italia.min.js"></script>
     </body>
 </html>
