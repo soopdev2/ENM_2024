@@ -1157,7 +1157,7 @@ Licensed under the MIT license.
                             if (f) {
                                 if (f.number && val != null) {
                                     val = +val; // convert to number
-                                    if (isNaN(val))
+                                    if (Number.isNaN(val))
                                         val = null;
                                     else if (val == Infinity)
                                         val = fakeInfinity;
@@ -1474,7 +1474,7 @@ Licensed under the MIT license.
                 tickLength = first ? "full" : 5;
             }
 
-            if (!isNaN(+tickLength))
+            if (!Number.isNaN(+tickLength))
                 padding += +tickLength;
 
             if (isXAxis) {
@@ -1847,7 +1847,7 @@ Licensed under the MIT license.
                     v = +t;
                 if (label == null)
                     label = axis.tickFormatter(v, axis);
-                if (!isNaN(v))
+                if (!Number.isNaN(v))
                     axis.ticks.push({ v: v, label: label });
             }
         }
@@ -2083,7 +2083,7 @@ Licensed under the MIT license.
 
                     xoff = yoff = 0;
 
-                    if (isNaN(v) || v < axis.min || v > axis.max
+                    if (Number.isNaN(v) || v < axis.min || v > axis.max
                         // skip those lying on the axes if we got a border
                         || (t == "full"
                             && ((typeof bw == "object" && bw[axis.position] > 0) || bw > 0)
@@ -3842,7 +3842,7 @@ More detail and specific examples can be found in the included HTML file.
 
 				function drawSlice(angle, color, fill) {
 
-					if (angle <= 0 || isNaN(angle)) {
+					if (angle <= 0 || Number.isNaN(angle)) {
 						return;
 					}
 
@@ -4164,7 +4164,7 @@ More detail and specific examples can be found in the included HTML file.
 
 			function drawHighlight(series) {
 
-				if (series.angle <= 0 || isNaN(series.angle)) {
+				if (series.angle <= 0 || Number.isNaN(series.angle)) {
 					return;
 				}
 

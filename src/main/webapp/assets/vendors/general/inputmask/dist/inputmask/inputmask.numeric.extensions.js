@@ -41,7 +41,7 @@
     Inputmask.extendAliases({
         numeric: {
             mask: function(opts) {
-                if (opts.repeat !== 0 && isNaN(opts.integerDigits)) {
+                if (opts.repeat !== 0 && Number.isNaN(opts.integerDigits)) {
                     opts.integerDigits = opts.repeat;
                 }
                 opts.repeat = 0;
@@ -78,7 +78,7 @@
                 if (opts.numericInput === true) {
                     opts.positionCaretOnClick = opts.positionCaretOnClick === "radixFocus" ? "lvp" : opts.positionCaretOnClick;
                     opts.digitsOptional = false;
-                    if (isNaN(opts.digits)) opts.digits = 2;
+                    if (Number.isNaN(opts.digits)) opts.digits = 2;
                     opts.decimalProtect = false;
                 }
                 var mask = "[+]";
@@ -91,7 +91,7 @@
                     var dq = opts.digits.toString().split(",");
                     if (isFinite(dq[0]) && dq[1] && isFinite(dq[1])) {
                         mask += radixDef + ";{" + opts.digits + "}";
-                    } else if (isNaN(opts.digits) || parseInt(opts.digits) > 0) {
+                    } else if (Number.isNaN(opts.digits) || parseInt(opts.digits) > 0) {
                         if (opts.digitsOptional) {
                             mask += "[" + radixDef + ";{1," + opts.digits + "}]";
                         } else mask += radixDef + ";{" + opts.digits + "}";
@@ -141,7 +141,7 @@
                         dopost: true
                     };
                 }
-                if (isSelection === false && c === opts.radixPoint && (opts.digits !== undefined && (isNaN(opts.digits) || parseInt(opts.digits) > 0))) {
+                if (isSelection === false && c === opts.radixPoint && (opts.digits !== undefined && (Number.isNaN(opts.digits) || parseInt(opts.digits) > 0))) {
                     var radixPos = $.inArray(opts.radixPoint, buffer);
                     if (radixPos !== -1 && maskset.validPositions[radixPos] !== undefined) {
                         if (opts.numericInput === true) {
@@ -197,7 +197,7 @@
                 processValue = processValue.replace(new RegExp(Inputmask.escapeRegex(opts.groupSeparator), "g"), "");
                 processValue = processValue.replace(new RegExp("[-" + Inputmask.escapeRegex(opts.negationSymbol.front) + "]", "g"), "");
                 processValue = processValue.replace(new RegExp(Inputmask.escapeRegex(opts.negationSymbol.back) + "$"), "");
-                if (isNaN(opts.placeholder)) {
+                if (Number.isNaN(opts.placeholder)) {
                     processValue = processValue.replace(new RegExp(Inputmask.escapeRegex(opts.placeholder), "g"), "");
                 }
                 if (processValue.length > 1 && processValue.indexOf(opts.radixPoint) !== 1) {

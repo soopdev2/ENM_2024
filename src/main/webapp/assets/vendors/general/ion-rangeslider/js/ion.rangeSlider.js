@@ -1207,7 +1207,7 @@
                 return;
             }
 
-            if (this.coords.x_pointer < 0 || isNaN(this.coords.x_pointer)  ) {
+            if (this.coords.x_pointer < 0 || Number.isNaN(this.coords.x_pointer)  ) {
                 this.coords.x_pointer = 0;
             } else if (this.coords.x_pointer > this.coords.w_rs) {
                 this.coords.x_pointer = this.coords.w_rs;
@@ -1586,10 +1586,10 @@
             var o = this.options,
                 c = this.$cache,
 
-                is_from_min = typeof o.from_min === "number" && !isNaN(o.from_min),
-                is_from_max = typeof o.from_max === "number" && !isNaN(o.from_max),
-                is_to_min = typeof o.to_min === "number" && !isNaN(o.to_min),
-                is_to_max = typeof o.to_max === "number" && !isNaN(o.to_max),
+                is_from_min = typeof o.from_min === "number" && !Number.isNaN(o.from_min),
+                is_from_max = typeof o.from_max === "number" && !Number.isNaN(o.from_max),
+                is_to_min = typeof o.to_min === "number" && !Number.isNaN(o.to_min),
+                is_to_max = typeof o.to_max === "number" && !Number.isNaN(o.to_max),
 
                 from_min,
                 from_max,
@@ -2006,7 +2006,7 @@
                 for (i = 0; i < vl; i++) {
                     value = +v[i];
 
-                    if (!isNaN(value)) {
+                    if (!Number.isNaN(value)) {
                         v[i] = value;
                         value = this._prettify(value);
                     } else {
@@ -2017,11 +2017,11 @@
                 }
             }
 
-            if (typeof o.from !== "number" || isNaN(o.from)) {
+            if (typeof o.from !== "number" || Number.isNaN(o.from)) {
                 o.from = o.min;
             }
 
-            if (typeof o.to !== "number" || isNaN(o.to)) {
+            if (typeof o.to !== "number" || Number.isNaN(o.to)) {
                 o.to = o.max;
             }
 
@@ -2054,7 +2054,7 @@
 
             }
 
-            if (typeof o.step !== "number" || isNaN(o.step) || !o.step || o.step < 0) {
+            if (typeof o.step !== "number" || Number.isNaN(o.step) || !o.step || o.step < 0) {
                 o.step = 1;
             }
 
@@ -2092,11 +2092,11 @@
                 }
             }
 
-            if (typeof o.min_interval !== "number" || isNaN(o.min_interval) || !o.min_interval || o.min_interval < 0) {
+            if (typeof o.min_interval !== "number" || Number.isNaN(o.min_interval) || !o.min_interval || o.min_interval < 0) {
                 o.min_interval = 0;
             }
 
-            if (typeof o.max_interval !== "number" || isNaN(o.max_interval) || !o.max_interval || o.max_interval < 0) {
+            if (typeof o.max_interval !== "number" || Number.isNaN(o.max_interval) || !o.max_interval || o.max_interval < 0) {
                 o.max_interval = 0;
             }
 

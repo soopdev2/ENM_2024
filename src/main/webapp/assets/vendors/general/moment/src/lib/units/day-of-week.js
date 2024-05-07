@@ -76,7 +76,7 @@ function parseWeekday(input, locale) {
         return input;
     }
 
-    if (!isNaN(input)) {
+    if (!Number.isNaN(input)) {
         return parseInt(input, 10);
     }
 
@@ -92,7 +92,7 @@ function parseIsoWeekday(input, locale) {
     if (typeof input === 'string') {
         return locale.weekdaysParse(input) % 7 || 7;
     }
-    return isNaN(input) ? null : input;
+    return Number.isNaN(input) ? null : input;
 }
 
 // LOCALES

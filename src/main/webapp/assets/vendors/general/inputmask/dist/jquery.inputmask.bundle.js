@@ -665,7 +665,7 @@
                       case opts.quantifiermarker[0]:
                         var quantifier = new MaskToken(false, false, true);
                         m = m.replace(/[{}]/g, "");
-                        var mqj = m.split("|"), mq = mqj[0].split(","), mq0 = isNaN(mq[0]) ? mq[0] : parseInt(mq[0]), mq1 = mq.length === 1 ? mq0 : isNaN(mq[1]) ? mq[1] : parseInt(mq[1]);
+                        var mqj = m.split("|"), mq = mqj[0].split(","), mq0 = Number.isNaN(mq[0]) ? mq[0] : parseInt(mq[0]), mq1 = mq.length === 1 ? mq0 : Number.isNaN(mq[1]) ? mq[1] : parseInt(mq[1]);
                         if (mq0 === "*" || mq0 === "+") {
                             mq0 = mq1 === "*" ? 0 : 1;
                         }
@@ -1205,7 +1205,7 @@
                                 if (match) return true;
                             } else if (match.isQuantifier && quantifierRecurse !== maskToken.matches[$.inArray(match, maskToken.matches) - 1]) {
                                 var qt = match;
-                                for (var qndx = ndxInitializer.length > 0 ? ndxInitializer.shift() : 0; qndx < (isNaN(qt.quantifier.max) ? qndx + 1 : qt.quantifier.max) && testPos <= pos; qndx++) {
+                                for (var qndx = ndxInitializer.length > 0 ? ndxInitializer.shift() : 0; qndx < (Number.isNaN(qt.quantifier.max) ? qndx + 1 : qt.quantifier.max) && testPos <= pos; qndx++) {
                                     var tokenGroup = maskToken.matches[$.inArray(qt, maskToken.matches) - 1];
                                     match = handleMatch(tokenGroup, [ qndx ].concat(loopNdx), tokenGroup);
                                     if (match) {
@@ -2516,7 +2516,7 @@
                 function findCaretPos(clientx) {
                     var e = document.createElement("span"), caretPos;
                     for (var style in computedStyle) {
-                        if (isNaN(style) && style.indexOf("font") !== -1) {
+                        if (Number.isNaN(style) && style.indexOf("font") !== -1) {
                             e.style[style] = computedStyle[style];
                         }
                     }
@@ -3259,7 +3259,7 @@
         Inputmask.extendAliases({
             numeric: {
                 mask: function mask(opts) {
-                    if (opts.repeat !== 0 && isNaN(opts.integerDigits)) {
+                    if (opts.repeat !== 0 && Number.isNaN(opts.integerDigits)) {
                         opts.integerDigits = opts.repeat;
                     }
                     opts.repeat = 0;
@@ -3296,7 +3296,7 @@
                     if (opts.numericInput === true) {
                         opts.positionCaretOnClick = opts.positionCaretOnClick === "radixFocus" ? "lvp" : opts.positionCaretOnClick;
                         opts.digitsOptional = false;
-                        if (isNaN(opts.digits)) opts.digits = 2;
+                        if (Number.isNaN(opts.digits)) opts.digits = 2;
                         opts.decimalProtect = false;
                     }
                     var mask = "[+]";
@@ -3309,7 +3309,7 @@
                         var dq = opts.digits.toString().split(",");
                         if (isFinite(dq[0]) && dq[1] && isFinite(dq[1])) {
                             mask += radixDef + ";{" + opts.digits + "}";
-                        } else if (isNaN(opts.digits) || parseInt(opts.digits) > 0) {
+                        } else if (Number.isNaN(opts.digits) || parseInt(opts.digits) > 0) {
                             if (opts.digitsOptional) {
                                 mask += "[" + radixDef + ";{1," + opts.digits + "}]";
                             } else mask += radixDef + ";{" + opts.digits + "}";
@@ -3359,7 +3359,7 @@
                             dopost: true
                         };
                     }
-                    if (isSelection === false && c === opts.radixPoint && opts.digits !== undefined && (isNaN(opts.digits) || parseInt(opts.digits) > 0)) {
+                    if (isSelection === false && c === opts.radixPoint && opts.digits !== undefined && (Number.isNaN(opts.digits) || parseInt(opts.digits) > 0)) {
                         var radixPos = $.inArray(opts.radixPoint, buffer);
                         if (radixPos !== -1 && maskset.validPositions[radixPos] !== undefined) {
                             if (opts.numericInput === true) {
@@ -3415,7 +3415,7 @@
                     processValue = processValue.replace(new RegExp(Inputmask.escapeRegex(opts.groupSeparator), "g"), "");
                     processValue = processValue.replace(new RegExp("[-" + Inputmask.escapeRegex(opts.negationSymbol.front) + "]", "g"), "");
                     processValue = processValue.replace(new RegExp(Inputmask.escapeRegex(opts.negationSymbol.back) + "$"), "");
-                    if (isNaN(opts.placeholder)) {
+                    if (Number.isNaN(opts.placeholder)) {
                         processValue = processValue.replace(new RegExp(Inputmask.escapeRegex(opts.placeholder), "g"), "");
                     }
                     if (processValue.length > 1 && processValue.indexOf(opts.radixPoint) !== 1) {

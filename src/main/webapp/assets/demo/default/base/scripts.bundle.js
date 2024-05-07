@@ -7267,7 +7267,7 @@ var KTPortlet = function (elementId, options) {
          */
         onScrollSticky: function (e) {
             var offset = the.options.sticky.offset;
-            if (isNaN(offset))
+            if (Number.isNaN(offset))
                 return;
 
             var st = document.documentElement.scrollTop;

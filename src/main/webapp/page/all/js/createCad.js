@@ -104,16 +104,12 @@ function cotrolTime() {
     }
 }
 
-function cehckImpegni() {
+function checkImpegni() {
     var start = new Date('1970', '00', '01', $('#start').val().split(':')[0], $('#start').val().split(':')[1]);
     var end = new Date('1970', '00', '01', $('#end').val().split(':')[0], $('#end').val().split(':')[1]);
     var err = true;
     $.each(cad_json, function (i, c) {
-        if ((start > new Date(c.orariostart) && start < new Date(c.orarioend)) || (end > new Date(c.orariostart) && end < new Date(c.orarioend))) {
-            swalError("Attenzione!", "Non puoi sovrappore due colloqui");
-            $("input.time").removeClass("is-valid").addClass("is-invalid");
-            err = false;
-        } else if (start <= new Date(c.orariostart) && end >= new Date(c.orarioend)) {
+        if ((start > new Date(c.orariostart) && start < new Date(c.orarioend))  (end > new Date(c.orariostart) && end < new Date(c.orarioend))  (start <= new Date(c.orariostart) && end >= new Date(c.orarioend))) {
             swalError("Attenzione!", "Non puoi sovrappore due colloqui");
             $("input.time").removeClass("is-valid").addClass("is-invalid");
             err = false;

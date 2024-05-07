@@ -50,7 +50,7 @@
 		};
 	}
 	function isValidDate(d) {
-		return d && !isNaN(d.getTime());
+		return d && !Number.isNaN(d.getTime());
 	}
 
 	var DateArray = (function(){
@@ -978,7 +978,7 @@
 				titleFormat = dates[this.o.language].titleFormat || dates['en'].titleFormat,
 				tooltip,
 				before;
-			if (isNaN(year) || isNaN(month))
+			if (Number.isNaN(year) || Number.isNaN(month))
 				return;
 			this.picker.find('.datepicker-days .datepicker-switch')
 						.text(DPGlobal.formatDate(d, titleFormat, this.o.language));
@@ -1853,7 +1853,7 @@
 						return d.setUTCFullYear(assumeNearby ? applyNearbyYear(v, assumeNearby) : v);
 					},
 					m: function(d,v){
-						if (isNaN(d))
+						if (Number.isNaN(d))
 							return d;
 						v -= 1;
 						while (v < 0) v += 12;
@@ -1907,10 +1907,10 @@
 				var _date, s;
 				for (i=0; i < setters_order.length; i++){
 					s = setters_order[i];
-					if (s in parsed && !isNaN(parsed[s])){
+					if (s in parsed && !Number.isNaN(parsed[s])){
 						_date = new Date(date);
 						setters_map[s](_date, parsed[s]);
-						if (!isNaN(_date))
+						if (!Number.isNaN(_date))
 							date = _date;
 					}
 				}

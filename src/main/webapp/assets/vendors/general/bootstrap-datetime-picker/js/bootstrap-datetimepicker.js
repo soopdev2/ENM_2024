@@ -1657,7 +1657,7 @@
             v %= 12;
             d.setUTCMonth(v);
             while (d.getUTCMonth() !== v)
-              if (isNaN(d.getUTCMonth()))
+              if (Number.isNaN(d.getUTCMonth()))
                 return d;
               else
                 d.setUTCDate(d.getUTCDate() - 1);
@@ -1716,7 +1716,7 @@
         }
         for (var i = 0, s; i < setters_order.length; i++) {
           s = setters_order[i];
-          if (s in parsed && !isNaN(parsed[s]))
+          if (s in parsed && !Number.isNaN(parsed[s]))
             setters_map[s](date, parsed[s])
         }
       }

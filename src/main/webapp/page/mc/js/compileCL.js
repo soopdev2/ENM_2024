@@ -580,7 +580,7 @@ function load_Checklist() {
 
 
 function formatMoney(number, decPlaces, decSep, thouSep) {
-    decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
+    decPlaces = Number.isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
             decSep = typeof decSep === "undefined" ? "." : decSep;
     thouSep = typeof thouSep === "undefined" ? "," : thouSep;
     var sign = number < 0 ? "-" : "";

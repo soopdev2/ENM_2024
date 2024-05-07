@@ -139,7 +139,7 @@
             var parsedParts = some.call(flags.parsedDateParts, function (i) {
                 return i != null;
             });
-            var isNowValid = !isNaN(m._d.getTime()) &&
+            var isNowValid = !Number.isNaN(m._d.getTime()) &&
                 flags.overflow < 0 &&
                 !flags.empty &&
                 !flags.invalidMonth &&
@@ -808,7 +808,7 @@
     }
 
     function set$1 (mom, unit, value) {
-        if (mom.isValid() && !isNaN(value)) {
+        if (mom.isValid() && !Number.isNaN(value)) {
             if (unit === 'FullYear' && isLeapYear(mom.year()) && mom.month() === 1 && mom.date() === 29) {
                 mom._d['set' + (mom._isUTC ? 'UTC' : '') + unit](value, mom.month(), daysInMonth(value, mom.month()));
             }
@@ -867,7 +867,7 @@
     }
 
     function daysInMonth(year, month) {
-        if (isNaN(year) || isNaN(month)) {
+        if (Number.isNaN(year) || Number.isNaN(month)) {
             return NaN;
         }
         var modMonth = mod(month, 12);
@@ -1362,7 +1362,7 @@
             return input;
         }
 
-        if (!isNaN(input)) {
+        if (!Number.isNaN(input)) {
             return parseInt(input, 10);
         }
 
@@ -1378,7 +1378,7 @@
         if (typeof input === 'string') {
             return locale.weekdaysParse(input) % 7 || 7;
         }
-        return isNaN(input) ? null : input;
+        return Number.isNaN(input) ? null : input;
     }
 
     // LOCALES
@@ -2719,7 +2719,7 @@
 
     function isDurationValid(m) {
         for (var key in m) {
-            if (!(indexOf.call(ordering, key) !== -1 && (m[key] == null || !isNaN(m[key])))) {
+            if (!(indexOf.call(ordering, key) !== -1 && (m[key] == null || !Number.isNaN(m[key])))) {
                 return false;
             }
         }
@@ -3134,7 +3134,7 @@
         return function (val, period) {
             var dur, tmp;
             //invert the arguments, but complain about it
-            if (period !== null && !isNaN(+period)) {
+            if (period !== null && !Number.isNaN(+period)) {
                 deprecateSimple(name, 'moment().' + name  + '(period, number) is deprecated. Please use moment().' + name + '(number, period). ' +
                 'See http://momentjs.com/guides/#/warnings/add-inverted-param/ for more info.');
                 tmp = val; val = period; period = tmp;

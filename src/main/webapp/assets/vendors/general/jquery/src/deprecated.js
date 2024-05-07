@@ -92,7 +92,7 @@ jQuery.isNumeric = function( obj ) {
 		// parseFloat NaNs numeric-cast false positives ("")
 		// ...but misinterprets leading-number strings, particularly hex literals ("0x...")
 		// subtraction forces infinities to NaN
-		!isNaN( obj - parseFloat( obj ) );
+		!Number.isNaN( obj - parseFloat( obj ) );
 };
 
 } );

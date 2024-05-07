@@ -19,22 +19,27 @@ let msg_neet_excluded = "I seguenti NEET sono stati esclusi durante la creazione
 
 
 function loadLezioniM3() {
-    let temp = "";
+    let temp = [];
     $.ajax({
         type: "GET",
         async: false,
         url: context + "/QueryMicro?type=getLezioniByProgetto&idmodello=" + $('#m3Id').val(),
         success: function (resp) {
-            if (resp !== null)
+            if (resp !== null) {
                 temp = JSON.parse(resp);
-            mapLezioniModello3 = new Map(temp.map(i => [i.lezione_calendario.id, i]));
+                if (!Array.isArray(temp)) {
+                    console.error("Il valore restituito non è un array:", temp);
+                    return;
+                }
+                mapLezioniModello3 = new Map(temp.map(i => [i.lezione_calendario.id, i]));
+            }
         }
     });
     return temp;
 }
 
 function loadLezioniM4() {
-    let temp = "";
+    let temp = [];
     $.ajax({
         type: "GET",
         async: false,
@@ -42,6 +47,10 @@ function loadLezioniM4() {
         success: function (resp) {
             if (resp !== null)
                 temp = JSON.parse(resp);
+            if (!Array.isArray(temp)) {
+                console.error("Il valore restituito non è un array:", temp);
+                return;
+            }
             mapLezioniModello4 = new Map(temp.map(i => [i.lezione_calendario.id + "_" + i.gruppo_faseB, i]));
         }
     });

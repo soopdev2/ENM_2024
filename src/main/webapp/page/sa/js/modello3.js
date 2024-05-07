@@ -797,7 +797,7 @@ function buttonsControl(lezioni, calendario) {
 }
 
 function loadLezioni() {
-    let temp = "";
+    let temp = [""];
     $.ajax({
         type: "GET",
         async: false,
@@ -814,6 +814,11 @@ function loadLezioni() {
 }
 
 function filterAndGroup(options) {
+    if (!Array.isArray(options)) {
+        console.error("L'argomento non è un array:", options);
+        return [];
+    }
+
     return options.reduce(function (res, option) {
         if (new Date(new Date(option.giorno).toDateString()) >= today && res.filter(e => e.giorno === option.giorno).length === 0) {
             res.push(option);
@@ -823,7 +828,7 @@ function filterAndGroup(options) {
 }
 
 function loadCalendario() {
-    let temp = "";
+    let temp  = [""];
     $.ajax({
         type: "GET",
         async: false,
@@ -847,7 +852,7 @@ function setDateInizioFine(lez) {
         console.log(error);
     }
     //setto come data di inizio il giorno successivo a quello del giorno dell'ultima lezione (se non ci sono lezioni, da domani)
-    if (lez.length > 0) {
+    if (Array.isArray(lez) && lez.length > 0) { // Verifica se lez è un array e ha una lunghezza maggiore di 0
         dataStart = new Date(Math.max.apply(Math, lez.map(function (o) {
             return o.giorno;
         })));
@@ -863,6 +868,11 @@ function setDateInizioFine(lez) {
 }
 
 function countLezioneEffettive(l) {
+    if (!Array.isArray(l)) {
+        console.error("L'argomento non è un array:", l);
+        return 0;
+    }
+
     let cnt = l.reduce(function (values, v) {
         if (!values.set[v.lezione_calendario.lezione]) {
             values.set[v.lezione_calendario.lezione] = 1;
@@ -870,6 +880,7 @@ function countLezioneEffettive(l) {
         }
         return values;
     }, {set: {}, count: 0}).count;
+
     return cnt;
 }
 

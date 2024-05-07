@@ -68,7 +68,7 @@
 
     // Checks whether a value is numerical.
     function isNumeric(a) {
-        return typeof a === "number" && !isNaN(a) && isFinite(a);
+        return typeof a === "number" && !Number.isNaN(a) && isFinite(a);
     }
 
     // Sets a class and removes it after [duration] ms.
@@ -325,11 +325,11 @@
         // logging clear, set step explicitly. Make sure
         // not to override the 'step' setting with false.
         if (!percentage) {
-            if (!isNaN(value[1])) {
+            if (!Number.isNaN(value[1])) {
                 that.xSteps[0] = value[1];
             }
         } else {
-            that.xSteps.push(isNaN(value[1]) ? false : value[1]);
+            that.xSteps.push(Number.isNaN(value[1]) ? false : value[1]);
         }
 
         that.xHighestCompleteStep.push(0);
@@ -2159,7 +2159,7 @@
             to = scope_Spectrum.toStepping(to);
 
             // If parsing the number failed, use the current value.
-            if (to === false || isNaN(to)) {
+            if (to === false || Number.isNaN(to)) {
                 return scope_Locations[handleNumber];
             }
 

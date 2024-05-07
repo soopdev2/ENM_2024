@@ -480,7 +480,7 @@
                   case opts.quantifiermarker[0]:
                     var quantifier = new MaskToken(false, false, true);
                     m = m.replace(/[{}]/g, "");
-                    var mqj = m.split("|"), mq = mqj[0].split(","), mq0 = isNaN(mq[0]) ? mq[0] : parseInt(mq[0]), mq1 = mq.length === 1 ? mq0 : isNaN(mq[1]) ? mq[1] : parseInt(mq[1]);
+                    var mqj = m.split("|"), mq = mqj[0].split(","), mq0 = Number.isNaN(mq[0]) ? mq[0] : parseInt(mq[0]), mq1 = mq.length === 1 ? mq0 : Number.isNaN(mq[1]) ? mq[1] : parseInt(mq[1]);
                     if (mq0 === "*" || mq0 === "+") {
                         mq0 = mq1 === "*" ? 0 : 1;
                     }
@@ -1016,7 +1016,7 @@
                             if (match) return true;
                         } else if (match.isQuantifier && quantifierRecurse !== maskToken.matches[$.inArray(match, maskToken.matches) - 1]) {
                             var qt = match;
-                            for (var qndx = ndxInitializer.length > 0 ? ndxInitializer.shift() : 0; qndx < (isNaN(qt.quantifier.max) ? qndx + 1 : qt.quantifier.max) && testPos <= pos; qndx++) {
+                            for (var qndx = ndxInitializer.length > 0 ? ndxInitializer.shift() : 0; qndx < (Number.isNaN(qt.quantifier.max) ? qndx + 1 : qt.quantifier.max) && testPos <= pos; qndx++) {
                                 var tokenGroup = maskToken.matches[$.inArray(qt, maskToken.matches) - 1];
                                 match = handleMatch(tokenGroup, [ qndx ].concat(loopNdx), tokenGroup);
                                 if (match) {
@@ -2323,7 +2323,7 @@
             function findCaretPos(clientx) {
                 var e = document.createElement("span"), caretPos;
                 for (var style in computedStyle) {
-                    if (isNaN(style) && style.indexOf("font") !== -1) {
+                    if (Number.isNaN(style) && style.indexOf("font") !== -1) {
                         e.style[style] = computedStyle[style];
                     }
                 }

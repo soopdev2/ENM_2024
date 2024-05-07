@@ -17,7 +17,7 @@ import getParsingFlags from '../create/parsing-flags';
 import { isLeapYear } from '../units/year';
 
 export function daysInMonth(year, month) {
-    if (isNaN(year) || isNaN(month)) {
+    if (Number.isNaN(year) || Number.isNaN(month)) {
         return NaN;
     }
     var modMonth = mod(month, 12);

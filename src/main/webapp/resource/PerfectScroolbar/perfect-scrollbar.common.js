@@ -1167,7 +1167,7 @@ var PerfectScrollbar = function PerfectScrollbar(element, userSettings) {
   this.scrollbarXLeft = null;
   var railXStyle = get(this.scrollbarXRail);
   this.scrollbarXBottom = parseInt(railXStyle.bottom, 10);
-  if (isNaN(this.scrollbarXBottom)) {
+  if (Number.isNaN(this.scrollbarXBottom)) {
     this.isScrollbarXUsingBottom = false;
     this.scrollbarXTop = toInt(railXStyle.top);
   } else {
@@ -1195,7 +1195,7 @@ var PerfectScrollbar = function PerfectScrollbar(element, userSettings) {
   this.scrollbarYTop = null;
   var railYStyle = get(this.scrollbarYRail);
   this.scrollbarYRight = parseInt(railYStyle.right, 10);
-  if (isNaN(this.scrollbarYRight)) {
+  if (Number.isNaN(this.scrollbarYRight)) {
     this.isScrollbarYUsingRight = false;
     this.scrollbarYLeft = toInt(railYStyle.left);
   } else {

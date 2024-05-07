@@ -1475,14 +1475,14 @@ $.validator.addMethod( "vinUS", function( v ) {
 		if ( i === 8 ) {
 			cdv = d;
 		}
-		if ( !isNaN( d ) ) {
+		if ( !Number.isNaN( d ) ) {
 			d *= f;
 		} else {
 			for ( n = 0; n < LL.length; n++ ) {
 				if ( d.toUpperCase() === LL[ n ] ) {
 					d = VL[ n ];
 					d *= f;
-					if ( isNaN( cdv ) && n === 8 ) {
+					if ( Number.isNaN( cdv ) && n === 8 ) {
 						cdv = LL[ n ];
 					}
 					break;

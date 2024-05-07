@@ -160,7 +160,7 @@
                     return i != null;
                 }),
                 isNowValid =
-                    !isNaN(m._d.getTime()) &&
+                    !Number.isNaN(m._d.getTime()) &&
                     flags.overflow < 0 &&
                     !flags.empty &&
                     !flags.invalidEra &&
@@ -717,7 +717,7 @@
     }
 
     function set$1(mom, unit, value) {
-        if (mom.isValid() && !isNaN(value)) {
+        if (mom.isValid() && !Number.isNaN(value)) {
             if (
                 unit === 'FullYear' &&
                 isLeapYear(mom.year()) &&
@@ -886,7 +886,7 @@
     }
 
     function daysInMonth(year, month) {
-        if (isNaN(year) || isNaN(month)) {
+        if (Number.isNaN(year) || Number.isNaN(month)) {
             return NaN;
         }
         var modMonth = mod(month, 12);
@@ -1502,7 +1502,7 @@
             return input;
         }
 
-        if (!isNaN(input)) {
+        if (!Number.isNaN(input)) {
             return parseInt(input, 10);
         }
 
@@ -1518,7 +1518,7 @@
         if (typeof input === 'string') {
             return locale.weekdaysParse(input) % 7 || 7;
         }
-        return isNaN(input) ? null : input;
+        return Number.isNaN(input) ? null : input;
     }
 
     // LOCALES
@@ -3108,7 +3108,7 @@
                 hasOwnProp(m, key) &&
                 !(
                     indexOf.call(ordering, key) !== -1 &&
-                    (m[key] == null || !isNaN(m[key]))
+                    (m[key] == null || !Number.isNaN(m[key]))
                 )
             ) {
                 return false;
@@ -3456,7 +3456,7 @@
                 d: input._days,
                 M: input._months,
             };
-        } else if (isNumber(input) || !isNaN(+input)) {
+        } else if (isNumber(input) || !Number.isNaN(+input)) {
             duration = {};
             if (key) {
                 duration[key] = +input;
@@ -3563,7 +3563,7 @@
         return function (val, period) {
             var dur, tmp;
             //invert the arguments, but complain about it
-            if (period !== null && !isNaN(+period)) {
+            if (period !== null && !Number.isNaN(+period)) {
                 deprecateSimple(
                     name,
                     'moment().' +

@@ -3317,9 +3317,9 @@ var ExifRestore = function () {
         enc2 = (chr1 & 3) << 4 | chr2 >> 4;
         enc3 = (chr2 & 15) << 2 | chr3 >> 6;
         enc4 = chr3 & 63;
-        if (isNaN(chr2)) {
+        if (Number.isNaN(chr2)) {
           enc3 = enc4 = 64;
-        } else if (isNaN(chr3)) {
+        } else if (Number.isNaN(chr3)) {
           enc4 = 64;
         }
         output = output + this.KEY_STR.charAt(enc1) + this.KEY_STR.charAt(enc2) + this.KEY_STR.charAt(enc3) + this.KEY_STR.charAt(enc4);
