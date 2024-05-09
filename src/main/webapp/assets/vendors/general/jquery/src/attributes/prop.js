@@ -115,7 +115,7 @@ if ( !support.optSelected ) {
 
 			var parent = elem.parentNode;
 			if ( parent ) {
-				parent.selectedIndex;
+				parent.selectedIndex ='';
 
 				if ( parent.parentNode ) {
 					parent.parentNode.selectedIndex;

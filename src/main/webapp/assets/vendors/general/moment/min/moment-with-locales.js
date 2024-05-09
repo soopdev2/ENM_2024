@@ -1000,26 +1000,20 @@
         // TODO: add sorting
         // Sorting makes sure if one month (or abbr) is a prefix of another
         // see sorting in computeMonthsParse
-        for (i = 0; i < 12; i++) {
-            // make the regex if we don't have it already
+        for (i = 0; i < 12; i++) {// make the regex if we don't have it already
             mom = createUTC([2000, i]);
             if (strict && !this._longMonthsParse[i]) {
-                this._longMonthsParse[i] = new RegExp('^' + this.months(mom, '').replace('.', '') + '$', 'i');
-                this._shortMonthsParse[i] = new RegExp('^' + this.monthsShort(mom, '').replace('.', '') + '$', 'i');
+                this._longMonthsParse[i] = new RegExp('^' + this.months(mom, '').replace(/\./g, '') + '$', 'i');
+                this._shortMonthsParse[i] = new RegExp('^' + this.monthsShort(mom, '').replace(/\./g, '') + '$', 'i');
             }
             if (!strict && !this._monthsParse[i]) {
                 regex = '^' + this.months(mom, '') + '|^' + this.monthsShort(mom, '');
-                this._monthsParse[i] = new RegExp(regex.replace('.', ''), 'i');
+                this._monthsParse[i] = new RegExp(regex.replace(/\./g, ''), 'i');
             }
             // test the regex
-            if (strict && format === 'MMMM' && this._longMonthsParse[i].test(monthName)) {
-                return i;
-            } else if (strict && format === 'MMM' && this._shortMonthsParse[i].test(monthName)) {
-                return i;
-            } else if (!strict && this._monthsParse[i].test(monthName)) {
+            if (strict && format === 'MMMM' && this._longMonthsParse[i].test(monthName) || !strict && this._monthsParse[i].test(monthName)) {
                 return i;
             }
-        }
     }
 
     // MOMENTS

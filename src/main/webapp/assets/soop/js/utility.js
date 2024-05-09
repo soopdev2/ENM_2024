@@ -6,10 +6,11 @@
 
 
 function currencyFormat(num) {
-    return '&euro;' + num.toFixed(0).replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    return '&euro;' + num.toFixed(0).replace(/\./g, ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
 }
+
 function currencyFormatDecimal(num) {
-    return '&euro;' + num.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    return '&euro;' + num.toFixed(2).replace(/\./g, ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
 }
 
 function checknullField(value) {

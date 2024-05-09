@@ -1450,10 +1450,8 @@ function createDOMPurify(window = getGlobal()) {
          elements being stripped by the parser */
       body = _initDocument('<!---->');
       importedNode = body.ownerDocument.importNode(dirty, true);
-      if (importedNode.nodeType === 1 && importedNode.nodeName === 'BODY') {
+      if (importedNode.nodeType === 1 && importedNode.nodeName === 'BODY' || importedNode.nodeName === 'HTML') {
         /* Node is already a body, use as is */
-        body = importedNode;
-      } else if (importedNode.nodeName === 'HTML') {
         body = importedNode;
       } else {
         // eslint-disable-next-line unicorn/prefer-dom-node-append

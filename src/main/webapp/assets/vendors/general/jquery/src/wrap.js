@@ -24,15 +24,15 @@ jQuery.fn.extend( {
 				wrap.insertBefore( this[ 0 ] );
 			}
 
-			wrap.map( function() {
-				var elem = this;
-
-				while ( elem.firstElementChild ) {
+			wrap.map(() => {
+				let elem = this;
+			
+				while (elem.firstElementChild) {
 					elem = elem.firstElementChild;
 				}
-
+			
 				return elem;
-			} ).append( this );
+			}).append(this);
 		}
 
 		return this;
