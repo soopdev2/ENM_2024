@@ -556,7 +556,7 @@ class BootstrapSwitch {
       .on('reset.bootstrapSwitch', () => {
         window.setTimeout(() => {
           $form.find('input')
-            .filter(function () { return $(this).data('bootstrap-switch') })
+            .filter(() => $(this).data('bootstrap-switch'))
             .each(function () { return $(this).bootstrapSwitch('state', this.checked) })
         }, 1)
       })

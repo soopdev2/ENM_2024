@@ -102,29 +102,29 @@ jQuery.fn.extend( {
 			var elements = jQuery.prop( this, "elements" );
 			return elements ? jQuery.makeArray( elements ) : this;
 		} )
-		.filter( function() {
+		.filter(() => {
 			var type = this.type;
-
+		
 			// Use .is( ":disabled" ) so that fieldset[disabled] works
-			return this.name && !jQuery( this ).is( ":disabled" ) &&
-				rsubmittable.test( this.nodeName ) && !rsubmitterTypes.test( type ) &&
-				( this.checked || !rcheckableType.test( type ) );
-		} )
-		.map( function( i, elem ) {
-			var val = jQuery( this ).val();
-
-			if ( val == null ) {
+			return this.name && !jQuery(this).is(":disabled") &&
+				rsubmittable.test(this.nodeName) && !rsubmitterTypes.test(type) &&
+				(this.checked || !rcheckableType.test(type));
+		})
+		.map((i, elem) => {
+			var val = jQuery(this).val();
+		
+			if (val == null) {
 				return null;
 			}
-
-			if ( Array.isArray( val ) ) {
-				return jQuery.map( val, function( val ) {
-					return { name: elem.name, value: val.replace( rCRLF, "\r\n" ) };
-				} );
+		
+			if (Array.isArray(val)) {
+				return jQuery.map(val, (val) => {
+					return { name: elem.name, value: val.replace(rCRLF, "\r\n") };
+				});
 			}
-
-			return { name: elem.name, value: val.replace( rCRLF, "\r\n" ) };
-		} ).get();
+		
+			return { name: elem.name, value: val.replace(rCRLF, "\r\n") };
+		}).get();
 	}
 } );
 

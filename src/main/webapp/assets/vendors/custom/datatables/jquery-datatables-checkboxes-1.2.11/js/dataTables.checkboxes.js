@@ -587,29 +587,29 @@
          var ctx = self.s.ctx;
 
          // Enumerate all cells
-         dt.cells('tr', self.s.columns, opts).every(function(rowIdx, colIdx){
+         dt.cells('tr', self.s.columns, opts).every((rowIdx, colIdx) => {
             // Get cell data
             var cellData = this.data();
-
+        
             // Determine if checkbox in the cell can be selected
             var isCellSelectable = self.isCellSelectable(colIdx, cellData);
-
+        
             // If checkbox is checked
-            if(ctx.checkboxes.s.data[colIdx].hasOwnProperty(cellData)){
-               self.updateCheckbox(this, colIdx, true);
-
-               // If row selection is enabled
-               // and checkbox can be checked
-               if(ctx.aoColumns[colIdx].checkboxes.selectRow && isCellSelectable){
-                  self.updateSelect(rowIdx, true);
-               }
+            if (ctx.checkboxes.s.data[colIdx].hasOwnProperty(cellData)) {
+                self.updateCheckbox(this, colIdx, true);
+        
+                // If row selection is enabled
+                // and checkbox can be checked
+                if (ctx.aoColumns[colIdx].checkboxes.selectRow && isCellSelectable) {
+                    self.updateSelect(rowIdx, true);
+                }
             }
-
+        
             // If checkbox is disabled
-            if(!isCellSelectable){
-               $('input.dt-checkboxes', this.node()).prop('disabled', true);
+            if (!isCellSelectable) {
+                $('input.dt-checkboxes', this.node()).prop('disabled', true);
             }
-         });
+        });
       },
 
       // Handles checkbox click event

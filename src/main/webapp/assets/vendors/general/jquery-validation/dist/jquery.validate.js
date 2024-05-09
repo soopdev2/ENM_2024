@@ -647,33 +647,33 @@ $.extend( $.validator, {
 			.find( "input, select, textarea, [contenteditable]" )
 			.not( ":submit, :reset, :image, :disabled" )
 			.not( this.settings.ignore )
-			.filter( function() {
-				var name = this.name || $( this ).attr( "name" ); // For contenteditable
-				var isContentEditable = typeof $( this ).attr( "contenteditable" ) !== "undefined" && $( this ).attr( "contenteditable" ) !== "false";
-
-				if ( !name && validator.settings.debug && window.console ) {
-					console.error( "%o has no name assigned", this );
+			.filter(() => {
+				var name = this.name || $(this).attr("name"); // For contenteditable
+				var isContentEditable = typeof $(this).attr("contenteditable") !== "undefined" && $(this).attr("contenteditable") !== "false";
+			
+				if (!name && validator.settings.debug && window.console) {
+					console.error("%o has no name assigned", this);
 				}
-
+			
 				// Set form expando on contenteditable
-				if ( isContentEditable ) {
-					this.form = $( this ).closest( "form" )[ 0 ];
+				if (isContentEditable) {
+					this.form = $(this).closest("form")[0];
 					this.name = name;
 				}
-
+			
 				// Ignore elements that belong to other/nested forms
-				if ( this.form !== validator.currentForm ) {
+				if (this.form !== validator.currentForm) {
 					return false;
 				}
-
+			
 				// Select only the first element for each name, and only those with rules specified
-				if ( name in rulesCache || !validator.objectLength( $( this ).rules() ) ) {
+				if (!(name in rulesCache) || !validator.objectLength($(this).rules())) {
 					return false;
 				}
-
-				rulesCache[ name ] = true;
+			
+				rulesCache[name] = true;
 				return true;
-			} );
+			})
 		},
 
 		clean: function( selector ) {
@@ -936,9 +936,9 @@ $.extend( $.validator, {
 		},
 
 		invalidElements: function() {
-			return $( this.errorList ).map( function() {
+			return $(this.errorList).map(() => {
 				return this.element;
-			} );
+			});
 		},
 
 		showLabel: function( element, message ) {

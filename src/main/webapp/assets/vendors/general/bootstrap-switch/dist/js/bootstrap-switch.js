@@ -710,19 +710,19 @@
       value: function _formHandler() {
         var $form = this.$element.closest('form');
         if ($form.data('bootstrap-switch')) {
-          return;
+            return;
         }
-        $form.on('reset.bootstrapSwitch', function () {
-          window.setTimeout(function () {
-            $form.find('input').filter(function () {
-              return $(this).data('bootstrap-switch');
-            }).each(function () {
-              return $(this).bootstrapSwitch('state', this.checked);
-            });
-          }, 1);
+        $form.on('reset.bootstrapSwitch', () => {
+            window.setTimeout(() => {
+                $form.find('input').filter(() => {
+                    return $(this).data('bootstrap-switch');
+                }).each(() => {
+                    return $(this).bootstrapSwitch('state', this.checked);
+                });
+            }, 1);
         }).data('bootstrap-switch', true);
-      }
-    }, {
+    }}, 
+    {
       key: '_getClass',
       value: function _getClass(name) {
         return this.options.baseClass + '-' + name;

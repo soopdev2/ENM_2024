@@ -2120,12 +2120,7 @@
             decorated += num;
 
             if (o.max_postfix) {
-                if (o.values.length && num === o.p_values[o.max]) {
-                    decorated += o.max_postfix;
-                    if (o.postfix) {
-                        decorated += " ";
-                    }
-                } else if (original === o.max) {
+                if (o.values.length && num === o.p_values[o.max] || original === o.max) {
                     decorated += o.max_postfix;
                     if (o.postfix) {
                         decorated += " ";

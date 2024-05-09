@@ -57,14 +57,15 @@ jQuery.fn.extend( {
 			self = this;
 
 		if ( typeof selector !== "string" ) {
-			return this.pushStack( jQuery( selector ).filter( function() {
-				for ( i = 0; i < len; i++ ) {
-					if ( jQuery.contains( self[ i ], this ) ) {
+			return this.pushStack(jQuery(selector).filter(() => {
+				for (let i = 0; i < len; i++) {
+					if (jQuery.contains(self[i], this)) {
 						return true;
 					}
 				}
-			} ) );
+			}));
 		}
+			
 
 		ret = this.pushStack( [] );
 
