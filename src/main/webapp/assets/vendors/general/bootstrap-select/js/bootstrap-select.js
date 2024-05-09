@@ -62,7 +62,7 @@
     var _toggle = DOMTokenList.prototype.toggle;
 
     DOMTokenList.prototype.toggle = function (token, force) {
-      if (1 in arguments && !this.contains(token) === !force) {
+      if (1 in arguments && !(this.contains(token) === force)) {
         return force;
       } else {
         return _toggle.call(this, token);

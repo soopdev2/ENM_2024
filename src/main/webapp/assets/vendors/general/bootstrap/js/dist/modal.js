@@ -240,15 +240,15 @@
     };
 
     _proto.dispose = function dispose() {
-      [window, this._element, this._dialog].forEach(function (htmlElement) {
-        return $(htmlElement).off(EVENT_KEY);
+      [window, this._element, this._dialog].forEach(function(htmlElement) {
+          $(htmlElement).off(EVENT_KEY);
       });
       /**
-       * `document` has 2 events `Event.FOCUSIN` and `Event.CLICK_DATA_API`
-       * Do not move `document` in `htmlElements` array
-       * It will remove `Event.CLICK_DATA_API` event that should remain
+       * document has 2 events Event.FOCUSIN and Event.CLICK_DATA_API
+       * Do not move document in htmlElements array
+       * It will remove Event.CLICK_DATA_API event that should remain
        */
-
+  
       $(document).off(Event.FOCUSIN);
       $.removeData(this._element, DATA_KEY);
       this._config = null;
@@ -260,7 +260,7 @@
       this._ignoreBackdropClick = null;
       this._isTransitioning = null;
       this._scrollbarWidth = null;
-    };
+  };
 
     _proto.handleUpdate = function handleUpdate() {
       this._adjustDialog();

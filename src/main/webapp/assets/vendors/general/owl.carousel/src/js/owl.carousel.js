@@ -1351,17 +1351,17 @@
 			content = content.find('.' + this.settings.nestedItemSelector);
 		}
 
-		content.filter(function() {
+		content.filter(() => {
 			return this.nodeType === 1;
-		}).each($.proxy(function(index, item) {
+		}).each($.proxy((index, item) => {
 			item = this.prepare(item);
 			this.$stage.append(item);
 			this._items.push(item);
 			this._mergers.push(item.find('[data-merge]').addBack('[data-merge]').attr('data-merge') * 1 || 1);
 		}, this));
-
+		
 		this.reset(this.isNumeric(this.settings.startPosition) ? this.settings.startPosition : 0);
-
+		
 		this.invalidate('items');
 	};
 
