@@ -139,7 +139,7 @@ jQuery.each( {
 		return dir( elem, "previousSibling", until );
 	},
 	siblings: function( elem ) {
-		return siblings( ( elem.parentNode || {} ).firstChild, elem );
+		return siblings( ( elem.parentNode || {} ).firstChild );
 	},
 	children: function( elem ) {
 		return siblings( elem.firstChild );

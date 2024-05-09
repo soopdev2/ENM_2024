@@ -237,7 +237,7 @@ var KTFlotchartsDemo = function() {
         }
 
         var previousPoint = null;
-        $("#chart_2").bind("plothover", function(event, pos, item) {
+        $("#chart_2").on("plothover", function(event, pos, item) {
             $("#x").text(pos.x.toFixed(2));
             $("#y").text(pos.y.toFixed(2));
 
@@ -339,7 +339,7 @@ var KTFlotchartsDemo = function() {
             }
         }
 
-        $("#kt_flotcharts_3").bind("plothover", function(event, pos, item) {
+        $("#kt_flotcharts_3").on("plothover", function(event, pos, item) {
             latestPosition = pos;
             if (!updateLegendTimeout) updateLegendTimeout = setTimeout(updateLegend, 50);
         });

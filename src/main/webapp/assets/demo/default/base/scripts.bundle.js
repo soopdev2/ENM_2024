@@ -92,7 +92,7 @@ this.Element && function (ElementPrototype) {
 
 // Source: https://github.com/jserz/js_piece/blob/master/DOM/ParentNode/prepend()/prepend().md
 (function (arr) {
-    arr.forEach(function (item) {
+    arr.forEach(item => {
         if (item.hasOwnProperty('prepend')) {
             return;
         }
@@ -104,7 +104,7 @@ this.Element && function (ElementPrototype) {
                 var argArr = Array.prototype.slice.call(arguments),
                         docFrag = document.createDocumentFragment();
 
-                argArr.forEach(function (argItem) {
+                argArr.forEach(argItem => {
                     var isNode = argItem instanceof Node;
                     docFrag.appendChild(isNode ? argItem : document.createTextNode(String(argItem)));
                 });
@@ -114,7 +114,6 @@ this.Element && function (ElementPrototype) {
         });
     });
 })([Element.prototype, Document.prototype, DocumentFragment.prototype]);
-
 // Global variables 
 window.KTUtilElementDataStore = {};
 window.KTUtilElementDataStoreID = 0;
@@ -4041,7 +4040,6 @@ var KTDialog = function (options) {
                             } else {
                                 return diff < 0 ? 1 : diff > 0 ? -1 : 0;
                             }
-                            break;
 
                         case 'number':
                             if (isNaN(parseFloat(aField)) && aField != null) {
@@ -4057,7 +4055,6 @@ var KTDialog = function (options) {
                             } else {
                                 return aField < bField ? 1 : aField > bField ? -1 : 0;
                             }
-                            break;
 
                         case 'string':
                         default:
@@ -4066,7 +4063,6 @@ var KTDialog = function (options) {
                             } else {
                                 return aField < bField ? 1 : aField > bField ? -1 : 0;
                             }
-                            break;
                     }
                 });
             },

@@ -440,7 +440,7 @@
 				stop = function () {
 					clear();
 
-					D.unbind('.player');
+					D.off('.player');
 
 					F.player.isActive = false;
 
@@ -993,7 +993,7 @@
 					.attr('src', coming.href);
 
 			// This helps IE
-			$(coming.wrap).bind('onReset', function () {
+			$(coming.wrap).on('onReset', function () {
 				try {
 					$(this).find('iframe').hide().attr('src', '//about:blank').end().empty();
 				} catch (e) {}
@@ -1007,7 +1007,7 @@
 
 					// iOS will lose scrolling if we resize
 					if (!isTouch) {
-						$(this).bind('load.fb', F.update);
+						$(this).on('load.fb', F.update);
 					}
 
 					// Without this trick:
@@ -1757,7 +1757,7 @@
 		close : function() {
 			var scrollV, scrollH;
 
-			W.unbind('resize.overlay');
+			W.off('resize.overlay');
 
 			if (this.el.hasClass('fancybox-lock')) {
 				$('.fancybox-margin').removeClass('fancybox-margin');
@@ -1960,7 +1960,7 @@
 		index   = options.index || 0;
 
 		if (!selector || options.live === false) {
-			that.unbind('click.fb-start').bind('click.fb-start', run);
+			that.off('click.fb-start').bind('click.fb-start', run);
 
 		} else {
 			D.undelegate(selector, 'click.fb-start').delegate(selector + ":not('.fancybox-item, .fancybox-nav')", 'click.fb-start', run);

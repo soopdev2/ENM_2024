@@ -13,7 +13,7 @@ let allievi_outputs = new Map();
 let allievi_domanda = new Map();
 
 function completeOre(hh, max) {
-    hh = hh.replaceAll(/_/g, "").replace(",", ".");
+    hh = hh.replace(/_/g, "").replace(",", ".");
     if (hh === "") {
         hh += "0";
     }

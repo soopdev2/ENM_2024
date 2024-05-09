@@ -15,7 +15,7 @@ var localeFamilies = {};
 var globalLocale;
 
 function normalizeLocale(key) {
-    return key ? key.toLowerCase().replace('_', '-') : key;
+    return key ? key.toLowerCase().replace(/_/g, '-') : key;
 }
 
 // pick the locale from the array

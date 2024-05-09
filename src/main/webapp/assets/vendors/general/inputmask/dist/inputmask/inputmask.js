@@ -2724,7 +2724,6 @@
                     el.inputmask = undefined;
                 }
                 return el;
-                break;
 
               case "getmetadata":
                 if ($.isArray(maskset.metadata)) {

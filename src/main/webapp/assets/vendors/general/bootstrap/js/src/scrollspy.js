@@ -81,7 +81,7 @@ class ScrollSpy {
     this._activeTarget  = null
     this._scrollHeight  = 0
 
-    $(this._scrollElement).on(Event.SCROLL, (event) => this._process(event))
+    $(this._scrollElement).on(Event.SCROLL, (event) => this._process())
 
     this.refresh()
     this._process()

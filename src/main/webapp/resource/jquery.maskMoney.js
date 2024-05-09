@@ -32,7 +32,7 @@
             },
 		methods = {
         destroy: function () {
-            $(this).unbind(".maskMoney");
+            $(this).off(".maskMoney");
 
             if ($.browser.msie) {
                 this.onpaste = null;
@@ -233,7 +233,7 @@
                     var inputValue = $input.val();
                     if (settings.allowNegative) {
                         if (inputValue !== "" && inputValue.charAt(0) === "-") {
-                            return inputValue.replace("-", "");
+                            return inputValue.replace(/-/g, "");
                         } else {
                             return "-" + inputValue;
                         }
@@ -332,7 +332,7 @@
                         return false;
                         // +(plus) key
                     } else if (key === 43) {
-                        $input.val($input.val().replace("-", ""));
+                        $input.val($input.val().replace(/-/g, ""));
                         return false;
                         // enter key or tab key
                     } else if (key === 13 || key === 9) {
@@ -484,7 +484,7 @@
                 }
 
                 fixMobile();
-                $input.unbind(".maskMoney");
+                $input.off(".maskMoney");
                 $input.bind("keypress.maskMoney", keypressEvent);
                 $input.bind("keydown.maskMoney", keydownEvent);
                 $input.bind("blur.maskMoney", blurEvent);
@@ -501,14 +501,14 @@
     function setSymbol(value, settings) {
         var operator = "";
         if (value.indexOf("-") > -1) {
-            value = value.replace("-", "");
+            value = value.replace(/-/g, "");
             operator = "-";
         }
         if (value.indexOf(settings.prefix) > -1) {
-            value = value.replace(settings.prefix, "");
+            value = value.replace(new RegExp(settings.prefix, 'g'), "");
         }
         if (value.indexOf(settings.suffix) > -1) {
-            value = value.replace(settings.suffix, "");
+            value = value.replace(new RegExp(settings.suffix, 'g'), "");
         }
         return operator + settings.prefix + value + settings.suffix;
     }
