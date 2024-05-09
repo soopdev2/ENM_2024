@@ -1311,9 +1311,9 @@ $.validator.addMethod( "require_from_group", function( value, element, options )
 	var $fields = $( options[ 1 ], element.form ),
 		$fieldsFirst = $fields.eq( 0 ),
 		validator = $fieldsFirst.data( "valid_req_grp" ) ? $fieldsFirst.data( "valid_req_grp" ) : $.extend( {}, this ),
-		isValid = $fields.filter( function() {
-			return validator.elementValue( this );
-		} ).length >= options[ 0 ];
+		isValid = $fields.filter(() => {
+			return validator.elementValue(this);
+		}).length >= options[0];
 
 	// Store the cloned validator for future validation
 	$fieldsFirst.data( "valid_req_grp", validator );
@@ -1354,9 +1354,9 @@ $.validator.addMethod( "skip_or_fill_minimum", function( value, element, options
 	var $fields = $( options[ 1 ], element.form ),
 		$fieldsFirst = $fields.eq( 0 ),
 		validator = $fieldsFirst.data( "valid_skip" ) ? $fieldsFirst.data( "valid_skip" ) : $.extend( {}, this ),
-		numberFilled = $fields.filter( function() {
-			return validator.elementValue( this );
-		} ).length,
+		numberFilled = $fields.filter(() => {
+			return validator.elementValue(this);
+		}).length;
 		isValid = numberFilled === 0 || numberFilled >= options[ 0 ];
 
 	// Store the cloned validator for future validation
