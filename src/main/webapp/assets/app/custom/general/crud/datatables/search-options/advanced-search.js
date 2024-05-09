@@ -48,16 +48,16 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
 			],
 
 			initComplete: function() {
-				this.api().columns().every(function() {
+				this.api().columns().every(() => {
 					var column = this;
-
+			
 					switch (column.title()) {
 						case 'Country':
 							column.data().unique().sort().each(function(d, j) {
 								$('.kt-input[data-col-index="2"]').append('<option value="' + d + '">' + d + '</option>');
 							});
 							break;
-
+			
 						case 'Status':
 							var status = {
 								1: {'title': 'Pending', 'class': 'kt-badge--brand'},
@@ -72,7 +72,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
 								$('.kt-input[data-col-index="6"]').append('<option value="' + d + '">' + status[d].title + '</option>');
 							});
 							break;
-
+			
 						case 'Type':
 							var status = {
 								1: {'title': 'Online', 'state': 'danger'},
@@ -86,7 +86,6 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
 					}
 				});
 			},
-
 			columnDefs: [
 				{
 					targets: -1,

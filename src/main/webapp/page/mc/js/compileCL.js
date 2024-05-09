@@ -13,7 +13,7 @@ let allievi_outputs = new Map();
 let allievi_domanda = new Map();
 
 function completeOre(hh, max) {
-    hh = hh.replaceAll("_", "").replace(",", ".");
+    hh = hh.replaceAll(/_/g, "").replace(",", ".");
     if (hh === "") {
         hh += "0";
     }
@@ -33,13 +33,9 @@ function DotToComma(n) {
 }
 
 function CommaToDot(n) {
-
     var out = n.toString();
-    out = out.replace(".", "");
-    out = out.replace(",", ".");
+    out = out.replace(/,/g, ".");
     return Number(out).toFixed(2);
-    // n = n.toString().replace(".", "").replace(",", ".");
-    // return Number(n).toFixed(2);
 }
 
 $('.decimal_custom.ctrl[id^=fa_controllo_ore_]').on('change', function () {

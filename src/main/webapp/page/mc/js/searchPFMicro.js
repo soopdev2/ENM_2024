@@ -1672,8 +1672,6 @@ function add_excludeNeet() {
     for (let a of allieviPrg) {
         if (neetSel.includes(a.id)) {
             $('#neet_' + addInputExclusion).append('<option value="' + a.id + '">' + a.nome + " " + a.cognome + '</option>');
-        } else {
-            $('#neet_' + addInputExclusion).append('<option value="' + a.id + '">' + a.nome + " " + a.cognome + '</option>');
         }
     }
 
