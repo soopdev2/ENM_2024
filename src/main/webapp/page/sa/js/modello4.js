@@ -784,8 +784,21 @@ function loadLezioni() {
 }
 
 function filterAndGroupByG(options, group) {
+    // Assicurati che options sia un array prima di utilizzare il metodo reduce
+    if (!Array.isArray(options)) {
+        // Gestione dell'errore: se options non è un array, restituisci un messaggio di errore
+        return "Errore: options non è un array";
+    }
+    
+    // Definisci la data di oggi
+    var today = new Date();
+
     return options.reduce(function (res, option) {
-        if (new Date(new Date(option.giorno).toDateString()) >= today && option.gruppo_faseB === group && res.filter(e => e.giorno === option.giorno).length === 0) {
+        // Verifica se l'elemento option è valido per l'aggiunta al risultato
+        if (option && typeof option === "object" && 
+            new Date(new Date(option.giorno).toDateString()) >= today && 
+            option.gruppo_faseB === group && 
+            res.filter(e => e.giorno === option.giorno).length === 0) {
             res.push(option);
         }
         return res;
