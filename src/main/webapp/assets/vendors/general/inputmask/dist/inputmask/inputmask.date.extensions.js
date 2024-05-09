@@ -229,7 +229,7 @@
                         } else if (match[0] === "yyyy") {
                             date += today.getFullYear().toString();
                         } else if (match[0].charAt(0) === "y") {
-                            date += pad(today.getYear(), match[0].length);
+                            date += pad(today.getFullYear(), match[0].length);
                         }
                     }
                     input.inputmask._valueSet(date);

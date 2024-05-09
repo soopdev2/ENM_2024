@@ -450,7 +450,7 @@
 					if (F.current && (F.current.loop || F.current.index < F.group.length - 1)) {
 						F.player.isActive = true;
 
-						D.bind({
+						D.on({
 							'onCancel.player beforeClose.player' : stop,
 							'onUpdate.player'   : set,
 							'beforeLoad.player' : clear
@@ -1732,7 +1732,7 @@
 			}
 
 			if (!this.fixed) {
-				W.bind('resize.overlay', $.proxy( this.update, this) );
+				W.on('resize.overlay', $.proxy( this.update, this) );
 
 				this.update();
 			}

@@ -75,7 +75,7 @@ var KTFormWidgets = function () {
             name: 'countries',
             source: countries
         });
-        $('#kt_typeahead').bind('typeahead:select', function(ev, suggestion) {
+        $('#kt_typeahead').on('typeahead:select', function(ev, suggestion) {
             validator.element($('#kt_typeahead')); // validate element
         });
     }

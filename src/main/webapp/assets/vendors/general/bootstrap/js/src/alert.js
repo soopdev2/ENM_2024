@@ -111,7 +111,7 @@ class Alert {
     const transitionDuration = Util.getTransitionDurationFromElement(element)
 
     $(element)
-      .one(Util.TRANSITION_END, (event) => this._destroyElement(element, event))
+      .one(Util.TRANSITION_END, (event) => this._destroyElement(element))
       .emulateTransitionEnd(transitionDuration)
   }
 

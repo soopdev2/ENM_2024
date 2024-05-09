@@ -2917,7 +2917,6 @@
                         el.inputmask = undefined;
                     }
                     return el;
-                    break;
 
                   case "getmetadata":
                     if ($.isArray(maskset.metadata)) {
@@ -3696,9 +3695,11 @@
                     opts.isNegative = undefined;
                     var radixPoint = opts.radixPoint || ",";
                     if ((typeof initialValue == "number" || opts.inputType === "number") && radixPoint !== "") {
-                        initialValue = initialValue.toString().replace(".", radixPoint);
+                        initialValue = initialValue.toString().replace(/\./g, radixPoint);
                     }
-                    var valueParts = initialValue.split(radixPoint), integerPart = valueParts[0].replace(/[^\-0-9]/g, ""), decimalPart = valueParts.length > 1 ? valueParts[1].replace(/[^0-9]/g, "") : "";
+                    var valueParts = initialValue.split(radixPoint), 
+                        integerPart = valueParts[0].replace(/[^\-0-9]/g, ""), 
+                        decimalPart = valueParts.length > 1 ? valueParts[1].replace(/[^0-9]/g, "") : "";
                     initialValue = integerPart + (decimalPart !== "" ? radixPoint + decimalPart : decimalPart);
                     var digits = 0;
                     if (radixPoint !== "") {
@@ -3711,7 +3712,7 @@
                             }
                             initialValue = initialValue.replace(Inputmask.escapeRegex(radixPoint), ".");
                             if (isFinite(initialValue)) initialValue = Math.round(parseFloat(initialValue) * digitsFactor) / digitsFactor;
-                            initialValue = initialValue.toString().replace(".", radixPoint);
+                            initialValue = initialValue.toString().replace(/\./g, radixPoint);
                         }
                     }
                     if (opts.digits === 0 && initialValue.indexOf(Inputmask.escapeRegex(radixPoint)) !== -1) {

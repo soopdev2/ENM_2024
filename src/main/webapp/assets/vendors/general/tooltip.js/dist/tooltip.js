@@ -359,7 +359,7 @@ class Tooltip {
           return;
         }
         evt.usedByTooltip = true;
-        this._scheduleShow(reference, options.delay, options, evt);
+        this._scheduleShow(reference, options.delay, options);
       };
       this._events.push({ event, func });
       reference.addEventListener(event, func);

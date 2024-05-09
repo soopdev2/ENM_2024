@@ -394,7 +394,9 @@ function Animation( elem, properties, options ) {
 		}
 	}
 
-	jQuery.map( props, createTween, animation );
+	jQuery.each(props, function(index, prop) {
+		createTween.call(animation, prop, index);
+	});
 
 	if ( isFunction( animation.opts.start ) ) {
 		animation.opts.start.call( elem, animation );

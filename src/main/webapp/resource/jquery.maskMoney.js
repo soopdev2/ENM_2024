@@ -493,7 +493,7 @@
                 $input.bind("dblclick.maskMoney", doubleClickEvent);
                 $input.bind("cut.maskMoney", cutPasteEvent);
                 $input.bind("paste.maskMoney", cutPasteEvent);
-                $input.bind("mask.maskMoney", mask);
+                $input.on("mask.maskMoney", mask);
             });
         }
     };

@@ -395,11 +395,11 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
-                                                                <label>CIP</label>
+                                                                <label class="active">CIP</label>
                                                                 <input class="form-control" value="<%=StringEscapeUtils.escapeHtml4(icip)%>" name="cip" id="cip" autocomplete="off">
                                                             </div>
                                                             <div class="col-lg-3">
-                                                                <label>Stato</label>
+                                                                <label class="active">Stato</label>
                                                                 <div class="dropdown bootstrap-select form-control kt-" id="stato_div" style="padding: 0;height: 35px;">
                                                                     <select class="form-control kt-select2-general" id="stato" name="stato" style="width: 100%">
                                                                         <option value="-">Seleziona Stato</option>

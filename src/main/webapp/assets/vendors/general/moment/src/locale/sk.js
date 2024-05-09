@@ -110,8 +110,6 @@ export default moment.defineLocale('sk', {
                     return '[minulú stredu o] LT';
                 case 4:
                 case 5:
-                    return '[minulý] dddd [o] LT';
-                case 6:
                     return '[minulú sobotu o] LT';
             }
         },
