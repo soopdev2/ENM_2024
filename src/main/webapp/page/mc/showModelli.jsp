@@ -16,28 +16,28 @@
 <%@page import="rc.so.domain.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    User us = (User) session.getAttribute("user");
-    if (us == null) {
-    } else {
-        String uri_ = request.getRequestURI();
-        String pageName_ = uri_.substring(uri_.lastIndexOf("/") + 1);
-        if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
-            response.sendRedirect(request.getContextPath() + "/page_403.jsp");
+        User us = (User) session.getAttribute("user");
+        if (us == null) {
         } else {
-            String src = Utility.checkAttribute(session, "src");
-            Entity e = new Entity();
-            ProgettiFormativi p = e.getEm().find(ProgettiFormativi.class, Long.parseLong(request.getParameter("id")));
-            List<LezioneCalendario> lezioniCalendariom3 = e.getLezioniByModello(3);
-            ModelliPrg m3 = Utility.filterModello3(p.getModelli());
-            List<Lezioni_Modelli> lezionim3 = m3.getLezioni();
-            List<LezioneCalendario> grouppedByLezionem3 = Utility.grouppedByLezione(lezioniCalendariom3);
+            String uri_ = request.getRequestURI();
+            String pageName_ = uri_.substring(uri_.lastIndexOf("/") + 1);
+            if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
+                response.sendRedirect(request.getContextPath() + "/page_403.jsp");
+            } else {
+                String src = Utility.checkAttribute(session, "src");
+                Entity e = new Entity();
+                ProgettiFormativi p = e.getEm().find(ProgettiFormativi.class, Long.parseLong(request.getParameter("id")));
+                List<LezioneCalendario> lezioniCalendariom3 = e.getLezioniByModello(3);
+                ModelliPrg m3 = Utility.filterModello3(p.getModelli());
+                List<Lezioni_Modelli> lezionim3 = m3.getLezioni();
+                List<LezioneCalendario> grouppedByLezionem3 = Utility.grouppedByLezione(lezioniCalendariom3);
 
-            List<LezioneCalendario> lezioniCalendariom4 = e.getLezioniByModello(4);
-            ModelliPrg m4 = Utility.filterModello4(p.getModelli());
-            List<Lezioni_Modelli> lezionim4 = m4.getLezioni();
-            List<LezioneCalendario> grouppedByLezionem4 = Utility.grouppedByLezione(lezioniCalendariom4);
-            int gruppi = Utility.numberGroupsModello4(p);
-            boolean noloaded = true;
+                List<LezioneCalendario> lezioniCalendariom4 = e.getLezioniByModello(4);
+                ModelliPrg m4 = Utility.filterModello4(p.getModelli());
+                List<Lezioni_Modelli> lezionim4 = m4.getLezioni();
+                List<LezioneCalendario> grouppedByLezionem4 = Utility.grouppedByLezione(lezioniCalendariom4);
+                int gruppi = Utility.numberGroupsModello4(p);
+                boolean noloaded = true;
 %>
 <html>
     <head>
@@ -189,8 +189,8 @@
                                                                   title="VISUALIZZA REGISTRO PRESENZE" 
                                                                   href="calendar.jsp?idcalendar=<%=temp.getId()%>" 
                                                                   class='btn btn-icon btn-sm <%=btn%>'><i class='fa fa-calendar-alt' style='font-size: 20px;'></i></a>
-                                                                <%}else{%>
-                                                                | <a  data-container="body" data-html="true" data-toggle="kt-tooltip" 
+                                                                <%} else {%>
+                                                            | <a  data-container="body" data-html="true" data-toggle="kt-tooltip" 
                                                                   title="REGISTRO PRESENZE DA CARICARE" 
                                                                   href=""
                                                                   onclick="return false;"
@@ -370,4 +370,5 @@ data-context="<%=request.getContextPath()%>" type="text/javascript"></script>
 </body>
 </html>
 <%}
-    }%>
+        }
+%>

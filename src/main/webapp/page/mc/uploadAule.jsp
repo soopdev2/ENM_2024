@@ -9,20 +9,19 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-    
-    User us = (User) session.getAttribute("user");
-    if (us == null) {
-        response.sendRedirect(request.getContextPath() + "/login.jsp");
-    } else {
-        String uri_ = request.getRequestURI();
-        String pageName_ = uri_.substring(uri_.lastIndexOf("/") + 1);
-        if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
-            response.sendRedirect(request.getContextPath() + "/page_403.jsp");
+        User us = (User) session.getAttribute("user");
+        if (us == null) {
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
         } else {
-            Entity e = new Entity();
-            List<Item> regioni = e.listaRegioni();
-            e.close();
-            String src = Utility.checkAttribute(session, "src");
+            String uri_ = request.getRequestURI();
+            String pageName_ = uri_.substring(uri_.lastIndexOf("/") + 1);
+            if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
+                response.sendRedirect(request.getContextPath() + "/page_403.jsp");
+            } else {
+                Entity e = new Entity();
+                List<Item> regioni = e.listaRegioni();
+                e.close();
+                String src = Utility.checkAttribute(session, "src");
 %>
 <html>
     <head>
@@ -88,43 +87,43 @@
                             </div>
                         </div>
                         <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-<!--                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="kt-portlet" id="kt_portlet" data-ktportlet="true">io-background
-                                        <div class="kt-portlet__head">
-                                            <div class="kt-portlet__head-label">
-                                                <h3 class="kt-portlet__head-title" >
-                                                    Carica File Aule :
-                                                </h3>
-                                            </div>
-                                            <div class="kt-portlet__head-toolbar">
-                                                <div class="kt-portlet__head-group">
-                                                    <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down" id="toggle_search"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <form id="kt_form_file" action="/OperazioniMicro?type=addAuleFile" class="kt-form kt-form--label-right" accept-charset="ISO-8859-1" method="post">
-                                            <div class="kt-portlet__body paddig_0_t paddig_0_b">
-                                                <div class="kt-section kt-section--first">
-                                                    <div class="kt-section__body"><br>
-                                                        <div class="form-group row">
-                                                            <div class="col-xl-4 col-lg-6 col-md-8">
-                                                                <div class="custom-file">
-                                                                    <input type="file" tipo="obbligatory" class="custom-file-input" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="file" id="file" onchange="return checkFileExtAndDim(['xls', 'xlsx']);">
-                                                                    <label class="custom-file-label" id="label_file" style="text-align: left;">Scegli File</label>
+                            <!--                            <div class="row">
+                                                            <div class="col-lg-12">
+                                                                <div class="kt-portlet" id="kt_portlet" data-ktportlet="true">io-background
+                                                                    <div class="kt-portlet__head">
+                                                                        <div class="kt-portlet__head-label">
+                                                                            <h3 class="kt-portlet__head-title" >
+                                                                                Carica File Aule :
+                                                                            </h3>
+                                                                        </div>
+                                                                        <div class="kt-portlet__head-toolbar">
+                                                                            <div class="kt-portlet__head-group">
+                                                                                <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down" id="toggle_search"></i></a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <form id="kt_form_file" action="/OperazioniMicro?type=addAuleFile" class="kt-form kt-form--label-right" accept-charset="ISO-8859-1" method="post">
+                                                                        <div class="kt-portlet__body paddig_0_t paddig_0_b">
+                                                                            <div class="kt-section kt-section--first">
+                                                                                <div class="kt-section__body"><br>
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-xl-4 col-lg-6 col-md-8">
+                                                                                            <div class="custom-file">
+                                                                                                <input type="file" tipo="obbligatory" class="custom-file-input" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="file" id="file" onchange="return checkFileExtAndDim(['xls', 'xlsx']);">
+                                                                                                <label class="custom-file-label" id="label_file" style="text-align: left;">Scegli File</label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-lg-3">
+                                                                                            <a href="javascript:void(0);" id="submit_file" class="btn btn-io">Carica</a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-lg-3">
-                                                                <a href="javascript:void(0);" id="submit_file" class="btn btn-io">Carica</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>-->
+                                                        </div>-->
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="kt-portlet" id="kt_portlet" data-ktportlet="true"><!--io-background-->
@@ -377,6 +376,6 @@
     </body>
 </html>
 <%
+            }
         }
-    }
 %>

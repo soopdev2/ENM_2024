@@ -11,23 +11,23 @@
 <%@page import="rc.so.domain.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    User us = (User) session.getAttribute("user");
-    if (us == null) {
-        response.sendRedirect(request.getContextPath() + "/login.jsp");
-    } else {
-        String uri_ = request.getRequestURI();
-        String pageName_ = uri_.substring(uri_.lastIndexOf("/") + 1);
-        if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
-            response.sendRedirect(request.getContextPath() + "/page_403.jsp");
+        User us = (User) session.getAttribute("user");
+        if (us == null) {
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
         } else {
-            String src = Utility.checkAttribute(session, "src");
-            Entity e = new Entity();
-            UnitaDidattiche u = e.getEm().find(UnitaDidattiche.class, StringEscapeUtils.escapeHtml4(request.getParameter("codice")));
-            int files = Integer.parseInt(e.getPath("UD_max_files"));
-            int links = Integer.parseInt(e.getPath("UD_max_links"));
-            boolean checkUpload[] = Utility.LinksDocs_UD(u.getDocumenti_ud(), Integer.parseInt(e.getPath("UD_max_files")), Integer.parseInt(e.getPath("UD_max_links")));
-            e.close();
-            int maxfiles = links + files;
+            String uri_ = request.getRequestURI();
+            String pageName_ = uri_.substring(uri_.lastIndexOf("/") + 1);
+            if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
+                response.sendRedirect(request.getContextPath() + "/page_403.jsp");
+            } else {
+                String src = Utility.checkAttribute(session, "src");
+                Entity e = new Entity();
+                UnitaDidattiche u = e.getEm().find(UnitaDidattiche.class, StringEscapeUtils.escapeHtml4(request.getParameter("codice")));
+                int files = Integer.parseInt(e.getPath("UD_max_files"));
+                int links = Integer.parseInt(e.getPath("UD_max_links"));
+                boolean checkUpload[] = Utility.LinksDocs_UD(u.getDocumenti_ud(), Integer.parseInt(e.getPath("UD_max_files")), Integer.parseInt(e.getPath("UD_max_links")));
+                e.close();
+                int maxfiles = links + files;
 %>
 <html>
     <head>
@@ -92,8 +92,12 @@
         <!--end::Layout Skins -->
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
         <style>
-            th { font-size: 13px; }
-            td { font-size: 12px; }
+            th {
+                font-size: 13px;
+            }
+            td {
+                font-size: 12px;
+            }
             tr:hover {
                 background-color: #ffdaa2;
             }
@@ -185,15 +189,15 @@
                                                                                         <%if (us.getTipo() == 2) {%>
                                                                                 <td widht="5%"><a href="javascript:void(0);" onclick="updateDocUD(<%=doc.getId_docud()%>, '[&quot;pdf&quot;]', 'application/pdf')" class="btn" data-container="body" data-html="true" data-toggle="kt-tooltip" data-placement="top" title="<h5>Modifica documento</h5>"><i style="font-size: 15px;" class="fa fa-pen kt-font-io-n"></i></a></td>
                                                                                         <%}%>
-                                                                                <%} else {%>
+                                                                                        <%} else {%>
                                                                                 <td widht="5%"><a target="_blank" href="<%=doc.getPath()%>" class="btn" data-container="body" data-html="true" data-toggle="kt-tooltip" data-placement="top" title="<h5>Apri link in un'altra scheda</h5>"><i style="font-size: 15px;" class="fa fa-expand kt-font-io"></i></a> </td>
                                                                                         <%if (us.getTipo() == 2) {%>
                                                                                 <td widht="5%"><a href="javascript:void(0);" onclick='updateLinkUD(<%=doc.getId_docud()%>, "<%=doc.getPath()%>")' class="btn" data-container="body" data-html="true" data-toggle="kt-tooltip" data-placement="top" title="<h5>Modifica Link</h5>"><i style="font-size: 15px;" class="fa fa-pen kt-font-io-n"></i></a></td>
                                                                                         <%}%>
-                                                                                <%}%>
-                                                                                <%if (us.getTipo() == 2) {%>
+                                                                                        <%}%>
+                                                                                        <%if (us.getTipo() == 2) {%>
                                                                                 <td widht="5%"><a href="javascript:void(0);" onclick="deleteDocUD(<%=doc.getId_docud()%>)" class="btn" data-container="body" data-html="true" data-toggle="kt-tooltip" data-placement="top" title="<h5>Elimina documento</h5>"><i style="font-size: 15px;" class="fa fa-times kt-font-danger"></i></a></td>
-                                                                                <%}%>
+                                                                                        <%}%>
                                                                             </tr>
                                                                             <%}%>
                                                                         </table>
@@ -289,4 +293,6 @@
     </body>
 </html>
 <%}
-    }%>
+        }
+    }
+%>

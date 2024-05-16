@@ -20,7 +20,6 @@
 <%@page import="rc.so.domain.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    try {
         User us = (User) session.getAttribute("user");
         if (us == null) {
         } else {
@@ -238,7 +237,4 @@
 </html>
 <%}
         }
-    } catch (OutOfMemoryError e) {
-        e.printStackTrace();
-    }
 %>
