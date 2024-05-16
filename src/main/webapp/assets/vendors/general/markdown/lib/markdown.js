@@ -787,9 +787,8 @@ Markdown.dialects.Gruber.inline = {
         return [ m[1].length, m[1] ];
       }
 
-      var res;
       if ( m[2] in this.dialect.inline ) {
-        res = this.dialect.inline[ m[2] ].call(
+        var res = this.dialect.inline[ m[2] ].call(
                   this,
                   text.substr( m.index ), m, previous_nodes || [] );
       }

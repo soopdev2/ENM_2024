@@ -1341,7 +1341,6 @@
         importedNode = body.ownerDocument.importNode(dirty, true);
         if (importedNode.nodeType === 1 && importedNode.nodeName === 'BODY') {
           /* Node is already a body, use as is */
-          body = importedNode;
         } else if (importedNode.nodeName === 'HTML') {
           body = importedNode;
         } else {
