@@ -9,19 +9,20 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-    User us = (User) session.getAttribute("user");
-    if (us == null) {
-        response.sendRedirect(request.getContextPath() + "/login.jsp");
-    } else {
-        String uri_ = request.getRequestURI();
-        String pageName_ = uri_.substring(uri_.lastIndexOf("/") + 1);
-        if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
-            response.sendRedirect(request.getContextPath() + "/page_403.jsp");
+    try {
+        User us = (User) session.getAttribute("user");
+        if (us == null) {
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
         } else {
-            String src = Utility.checkAttribute(session, "src");
-            Entity e = new Entity();
-            List<FasceDocenti> fasce = e.findAll(FasceDocenti.class);
-            e.close();
+            String uri_ = request.getRequestURI();
+            String pageName_ = uri_.substring(uri_.lastIndexOf("/") + 1);
+            if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
+                response.sendRedirect(request.getContextPath() + "/page_403.jsp");
+            } else {
+                String src = Utility.checkAttribute(session, "src");
+                Entity e = new Entity();
+                List<FasceDocenti> fasce = e.findAll(FasceDocenti.class);
+                e.close();
 %>
 <html>
     <head>
@@ -311,6 +312,9 @@
     </body>
 </html>
 <%
+            }
         }
+    } catch (OutOfMemoryError e) {
+        e.printStackTrace();
     }
 %>

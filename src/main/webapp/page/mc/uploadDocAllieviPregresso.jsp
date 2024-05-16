@@ -20,25 +20,26 @@
 <%@page import="rc.so.domain.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    User us = (User) session.getAttribute("user");
-    if (us == null) {
-    } else {
-        String uri_ = request.getRequestURI();
-        String pageName_ = uri_.substring(uri_.lastIndexOf("/") + 1);
-        if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
-            response.sendRedirect(request.getContextPath() + "/page_403.jsp");
+    try {
+        User us = (User) session.getAttribute("user");
+        if (us == null) {
         } else {
-            String src = Utility.checkAttribute(session, "src");
-            Entity e = new Entity();
-            Allievi_Pregresso a = e.getEm().find(Allievi_Pregresso.class, Long.parseLong(request.getParameter("id")));
-            List<TipoDoc_Allievi_Pregresso> tipo_doc_preg = e.findAll(TipoDoc_Allievi_Pregresso.class);
-            List<Documenti_Allievi_Pregresso> documeti = e.getDoc_Pregresso(a);
-            e.close();
-            
-            for (Documenti_Allievi_Pregresso d : documeti) {
-                tipo_doc_preg.remove(d.getTipo());
-            }
-            Utility.sortDoc_Pregresso(documeti);
+            String uri_ = request.getRequestURI();
+            String pageName_ = uri_.substring(uri_.lastIndexOf("/") + 1);
+            if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
+                response.sendRedirect(request.getContextPath() + "/page_403.jsp");
+            } else {
+                String src = Utility.checkAttribute(session, "src");
+                Entity e = new Entity();
+                Allievi_Pregresso a = e.getEm().find(Allievi_Pregresso.class, Long.parseLong(request.getParameter("id")));
+                List<TipoDoc_Allievi_Pregresso> tipo_doc_preg = e.findAll(TipoDoc_Allievi_Pregresso.class);
+                List<Documenti_Allievi_Pregresso> documeti = e.getDoc_Pregresso(a);
+                e.close();
+
+                for (Documenti_Allievi_Pregresso d : documeti) {
+                    tipo_doc_preg.remove(d.getTipo());
+                }
+                Utility.sortDoc_Pregresso(documeti);
 %>
 <html>
     <head>
@@ -236,4 +237,8 @@
     </body>
 </html>
 <%}
-    }%>
+        }
+    } catch (OutOfMemoryError e) {
+        e.printStackTrace();
+    }
+%>

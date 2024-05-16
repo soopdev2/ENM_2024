@@ -9,6 +9,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
+    
     User us = (User) session.getAttribute("user");
     if (us == null) {
         response.sendRedirect(request.getContextPath() + "/login.jsp");

@@ -123,7 +123,7 @@ public class Entity {
         this.emf.close();
     }
 
-    public List findAll(Class c) {
+    public <T> List<T> findAll(Class<T> c) {
         return this.em.createQuery("Select a FROM " + c.getSimpleName() + " a", c).getResultList();
     }
 

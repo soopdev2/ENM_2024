@@ -20,32 +20,33 @@
 <%@page import="rc.so.domain.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    User us = (User) session.getAttribute("user");
-    if (us == null) {
-    } else {
-        String uri_ = request.getRequestURI();
-        String pageName_ = uri_.substring(uri_.lastIndexOf("/") + 1);
-        if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
-            response.sendRedirect(request.getContextPath() + "/page_403.jsp");
+    try {
+        User us = (User) session.getAttribute("user");
+        if (us == null) {
         } else {
-            String src = Utility.checkAttribute(session, "src");
-            Entity e = new Entity();
-            ProgettiFormativi p = e.getEm().find(ProgettiFormativi.class, Long.parseLong(request.getParameter("id")));
-            List<TipoDoc> tipo_doc_obbl = new ArrayList<>();
-            if(!p.getStato().getId().equals("FA")){//serve a non far vedere i documenti che non deve caricare il micro
-                tipo_doc_obbl = e.getTipoDoc(p.getStato());
-            }
-            List<DocumentiPrg> documeti = e.getDocPrg(p);
-            List<DocumentiPrg> registri = new ArrayList<>();
-            e.close();
-            for (DocumentiPrg d : documeti) {
-                if (d.getGiorno() != null && Action.isModifiable(d.getTipo().getModifiche_stati_micro(), p.getStato().getId())) {//prendo solo i registri
-                    registri.add(d);
+            String uri_ = request.getRequestURI();
+            String pageName_ = uri_.substring(uri_.lastIndexOf("/") + 1);
+            if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
+                response.sendRedirect(request.getContextPath() + "/page_403.jsp");
+            } else {
+                String src = Utility.checkAttribute(session, "src");
+                Entity e = new Entity();
+                ProgettiFormativi p = e.getEm().find(ProgettiFormativi.class, Long.parseLong(request.getParameter("id")));
+                List<TipoDoc> tipo_doc_obbl = new ArrayList<>();
+                if (!p.getStato().getId().equals("FA")) {//serve a non far vedere i documenti che non deve caricare il micro
+                    tipo_doc_obbl = e.getTipoDoc(p.getStato());
                 }
-            }
-            String no_cache = "?dummy=" + String.valueOf(new Date().getTime());
-            documeti.removeAll(registri);
-            Utility.sortDoc(documeti);
+                List<DocumentiPrg> documeti = e.getDocPrg(p);
+                List<DocumentiPrg> registri = new ArrayList<>();
+                e.close();
+                for (DocumentiPrg d : documeti) {
+                    if (d.getGiorno() != null && Action.isModifiable(d.getTipo().getModifiche_stati_micro(), p.getStato().getId())) {//prendo solo i registri
+                        registri.add(d);
+                    }
+                }
+                String no_cache = "?dummy=" + String.valueOf(new Date().getTime());
+                documeti.removeAll(registri);
+                Utility.sortDoc(documeti);
 %>
 <html>
     <head>
@@ -245,4 +246,7 @@
     </body>
 </html>
 <%}
+        }
+    } catch (OutOfMemoryError e) {
+        e.printStackTrace();
     }%>

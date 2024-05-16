@@ -1,3 +1,4 @@
+<%@page import="java.lang.StackOverflowError"%>
 w
 <%@page import="rc.so.domain.Estrazioni"%>
 <%@page import="java.util.ArrayList"%>
@@ -16,6 +17,7 @@ w
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
+    try{
     User us = (User) session.getAttribute("user");
     if (us == null) {
         response.sendRedirect(request.getContextPath() + "/login.jsp");
@@ -905,4 +907,8 @@ w
 <%
         }
     }
+}catch(OutOfMemoryError e){
+e.printStackTrace();
+
+}
 %>
