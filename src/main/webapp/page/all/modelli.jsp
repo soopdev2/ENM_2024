@@ -1,7 +1,7 @@
 <%-- 
     Document   : modelli
     Created on : 2-mar-2020, 12.41.15
-    Author     : agodino
+    Author     : smo
 --%>
 <%@page import="rc.so.db.Action"%>
 <%@page import="rc.so.domain.Cloud"%>

@@ -7,7 +7,7 @@ package rc.so.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
-import static rc.so.db.Action.insertTR;
+import static rc.so.util.Action.insertTR;
 import rc.so.db.Entity;
 import rc.so.domain.SoggettiAttuatori;
 import rc.so.domain.User;
@@ -20,15 +20,15 @@ import static rc.so.util.Utility.estraiEccezione;
 import static rc.so.util.Utility.redirect;
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 /**
  *
- * @author dolivo
+ * @author smo
  */
 public class Login extends HttpServlet {
 

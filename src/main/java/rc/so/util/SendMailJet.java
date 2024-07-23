@@ -25,16 +25,12 @@ import static com.mailjet.client.resource.Emailv31.Message.SUBJECT;
 import static com.mailjet.client.resource.Emailv31.Message.TO;
 import static com.mailjet.client.resource.Emailv31.resource;
 import com.mailjet.client.resource.Statcounters;
-import static rc.so.db.Action.insertTR;
+import static rc.so.util.Action.insertTR;
 import rc.so.db.Entity;
 import static rc.so.util.Utility.estraiEccezione;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import static java.nio.file.Files.probeContentType;
-import static org.apache.commons.codec.binary.Base64.encodeBase64;
 import org.apache.commons.io.FileUtils;
-import static org.apache.commons.io.IOUtils.toByteArray;
 import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -55,27 +51,17 @@ public class SendMailJet {
 
     public static boolean sendMail(String name, String[] to, String[] cc, String txt, String subject, File file) {
         try {
-            MailjetClient client;
-            MailjetRequest request;
-            MailjetResponse response;
-
-            String filename = "";
-            String content_type = "";
-            String b64 = "";
-
             Entity e = new Entity();
             String mailjet_api = e.getPath("mailjet_api");
             String mailjet_secret = e.getPath("mailjet_secret");
             String mailjet_name = e.getPath("mailjet_name");
-
-            e.close();
 
             ClientOptions options = ClientOptions.builder()
                     .apiKey(mailjet_api)
                     .apiSecretKey(mailjet_secret)
                     .build();
 
-            client = new MailjetClient(options);
+            MailjetClient client = new MailjetClient(options);
             JSONArray dest = new JSONArray();
             JSONArray ccn = new JSONArray();
             JSONArray ccj = new JSONArray();
@@ -115,11 +101,11 @@ public class SendMailJet {
                 }
             }
 
-            request = new MailjetRequest(resource)
+            MailjetRequest request = new MailjetRequest(resource)
                     .property(MESSAGES, new JSONArray()
                             .put(mail));
 
-            response = client.post(request);
+            MailjetResponse response = client.post(request);
 
             boolean ok = response.getStatus() == 200;
 

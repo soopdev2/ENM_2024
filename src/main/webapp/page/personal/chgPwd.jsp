@@ -1,7 +1,7 @@
 <%-- 
     Document   : profile
     Created on : 18-set-2019, 12.31.26
-    Author     : agodino
+    Author     : smo
 --%>
 
 <%@page import="rc.so.util.Utility"%>

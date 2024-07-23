@@ -7,11 +7,10 @@ package rc.so.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
-import static rc.so.db.Action.createFile_R;
+import static rc.so.util.Action.createFile_R;
 import rc.so.db.Database;
 import rc.so.db.Entity;
 import rc.so.domain.Allievi;
-import rc.so.domain.Attivita;
 import rc.so.domain.User;
 import rc.so.util.Utility;
 import static rc.so.util.Utility.getRequestValue;
@@ -26,13 +25,13 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.validator.routines.EmailValidator;
-import static rc.so.db.Action.insertTR;
+import static rc.so.util.Action.insertTR;
 import rc.so.domain.Email;
 import rc.so.util.SendMailJet;
 import static rc.so.util.Utility.estraiEccezione;
@@ -40,7 +39,7 @@ import static rc.so.util.Utility.redirect;
 
 /**
  *
- * @author dolivo
+ * @author smo
  */
 public class OperazioniGeneral extends HttpServlet {
     
@@ -317,19 +316,6 @@ public class OperazioniGeneral extends HttpServlet {
 
     }
 
-    private void getAttivita(HttpServletResponse response) throws ServletException, IOException {
-        Entity e = new Entity();
-        List<Attivita> list = e.getAttivitaValide();
-        e.close();
-
-        Map<String, List<Attivita>> out = list.stream().collect(Collectors.groupingBy(a -> a.getComune().getProvincia()));
-
-        response.setContentType("application/json");
-        response.setHeader("Content-Type", "application/json");
-        ObjectMapper mapper = new ObjectMapper();
-        response.getWriter().write(mapper.writeValueAsString(out));
-    }
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -372,9 +358,6 @@ public class OperazioniGeneral extends HttpServlet {
                     break;
                 case "ctrlSession":
                     ctrlSession(request, response);
-                    break;
-                case "getAttivita":
-                    getAttivita(response);
                     break;
                 case "editMailNeet":
                     editMailNeet(request, response);

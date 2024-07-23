@@ -7,16 +7,12 @@ package rc.so.db;
 
 import com.google.common.base.Splitter;
 import rc.so.domain.Allievi;
-import rc.so.domain.Allievi_Pregresso;
 import rc.so.domain.Ateco;
-import rc.so.domain.Attivita;
 import rc.so.domain.CPI;
-import rc.so.domain.Cad;
 import rc.so.domain.Comuni;
 import rc.so.domain.Docenti;
 import rc.so.domain.DocumentiPrg;
 import rc.so.domain.Documenti_Allievi;
-import rc.so.domain.Documenti_Allievi_Pregresso;
 import rc.so.domain.Email;
 import rc.so.domain.Estrazioni;
 import rc.so.domain.FadMicro;
@@ -46,7 +42,7 @@ import rc.so.domain.UnitaDidattiche;
 import rc.so.domain.User;
 import rc.so.entity.Item;
 import rc.so.domain.Cloud;
-import rc.so.domain.checklist_finale;
+import rc.so.domain.Checklist_finale;
 import rc.so.util.Utility;
 import static rc.so.util.Utility.convMd5;
 import static rc.so.util.Utility.dtz_italy;
@@ -57,11 +53,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
-import javax.servlet.http.HttpSession;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
+import jakarta.servlet.http.HttpSession;
 import static org.apache.commons.io.FilenameUtils.separatorsToSystem;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
@@ -79,9 +75,12 @@ public class Entity {
     EntityManager em;
 
     public Entity() {
-        this.emf = Persistence.createEntityManagerFactory("microcredito");
-        this.em = this.emf.createEntityManager();
-        this.em.clear();
+        try {
+            this.emf = Persistence.createEntityManagerFactory("microcredito");
+            this.em = this.emf.createEntityManager();
+            this.em.clear();
+        } catch (Exception e) {
+        }
     }
 
     public EntityManager getEm() {
@@ -105,9 +104,13 @@ public class Entity {
     }
 
     public void rollBack() {
-        if (this.em.getTransaction().isActive()) {
-            this.em.getTransaction().rollback();
+        try {
+            if (this.em.getTransaction().isActive()) {
+                this.em.getTransaction().rollback();
+            }
+        } catch (Exception e) {
         }
+
     }
 
     public void remove(Object o) {
@@ -119,8 +122,11 @@ public class Entity {
     }
 
     public void close() {
-        this.em.close();
-        this.emf.close();
+        try {
+            this.em.close();
+            this.emf.close();
+        } catch (Exception e) {
+        }
     }
 
     public <T> List<T> findAll(Class<T> c) {
@@ -151,7 +157,7 @@ public class Entity {
     }
 
     public TipoDoc_Allievi getTipoDoc_Allievi(String id) {
-        return this.em.find(TipoDoc_Allievi.class, Long.parseLong(id));
+        return this.em.find(TipoDoc_Allievi.class, Long.valueOf(id));
     }
 
     public String getPath(String id) {
@@ -949,6 +955,7 @@ public class Entity {
         TypedQuery<ProgettiFormativi> q = this.em.createNamedQuery("progetti.toRend", ProgettiFormativi.class);
         return q.getResultList().size() > 0 ? (List<ProgettiFormativi>) q.getResultList() : new ArrayList();
     }
+
     public List<Presenze_Lezioni_Allievi> getPresenzeLezioniAllievi_PR(Allievi allievo) {
         TypedQuery<Presenze_Lezioni_Allievi> q = this.em.createNamedQuery("presenzelezioni.allievo", Presenze_Lezioni_Allievi.class);
         q.setParameter("allievo", allievo);
@@ -1033,17 +1040,11 @@ public class Entity {
         return q.getResultList().isEmpty() ? 0 : (Long) q.getSingleResult();
     }
 
-    public List<Documenti_Allievi_Pregresso> getDoc_Pregresso(Allievi_Pregresso a) {
-        TypedQuery<Documenti_Allievi_Pregresso> q = em.createNamedQuery("docP.byAllievo", Documenti_Allievi_Pregresso.class)
-                .setParameter("allievo", a);
-        return q.getResultList().size() > 0 ? (List<Documenti_Allievi_Pregresso>) q.getResultList() : new ArrayList();
-    }
-
     public List<Faq> getFaqSoggetto(SoggettiAttuatori s) {
         TypedQuery<Faq> q = em.createNamedQuery("faq.BySoggetto", Faq.class)
                 .setParameter("soggetto", s)
                 .setMaxResults(maxQueryResult);
-        return q.getResultList().size() > 0 ? (List<Faq>) q.getResultList() : new ArrayList();
+        return !q.getResultList().isEmpty() ? q.getResultList() : new ArrayList();
     }
 
     public List<Faq> getFaqSoggetto(SoggettiAttuatori s, int offset, int limit) {
@@ -1139,100 +1140,6 @@ public class Entity {
         return q.getResultList().isEmpty() ? 0 : (Long) q.getSingleResult();
     }
 
-    public List<Attivita> getAttivitaValide() {
-        TypedQuery<Attivita> q = em.createNamedQuery("attivita.Valide", Attivita.class);//offset
-        return q.getResultList().size() > 0 ? (List<Attivita>) q.getResultList() : new ArrayList();
-    }
-
-    public List<Attivita> getAttivita(String nome, List<Comuni> comuni) {
-        HashMap<String, Object> param = new HashMap<>();
-
-        String sql = "SELECT a FROM Attivita a ";
-
-        if (!comuni.isEmpty()) {
-            if (comuni.size() == 1) {
-                sql += !sql.toUpperCase().contains("WHERE") ? "WHERE " : " AND ";
-                sql += "a.comune =:comune";
-                param.put("comune", comuni.get(0));
-            } else {
-                sql += !sql.toUpperCase().contains("WHERE") ? "WHERE " : " AND ";
-                sql += "a.comune IN :comune";
-                param.put("comune", comuni);
-            }
-        }
-
-        if (!nome.equals("")) {
-            sql += !sql.toUpperCase().contains("WHERE") ? "WHERE " : " AND ";
-            sql += "a.name LIKE :nome";
-            param.put("nome", "%" + nome + "%");
-        }
-
-        TypedQuery<Attivita> q = this.em.createQuery(sql, Attivita.class);
-
-        if (param.isEmpty()) {
-            q.setMaxResults(maxQueryResult);
-        }
-
-        for (HashMap.Entry<String, Object> m : param.entrySet()) {
-            q.setParameter(m.getKey(), m.getValue());
-        }
-        return q.getResultList().isEmpty() ? new ArrayList() : (List<Attivita>) q.getResultList();
-    }
-
-    public List<Cad> getCad(Date giorno, User u) {
-        HashMap<String, Object> param = new HashMap<>();
-
-        String sql = "SELECT c FROM Cad c WHERE c.stato<>2";
-
-        if (giorno != null) {
-            sql += !sql.toUpperCase().contains("WHERE") ? "WHERE " : " AND ";
-            sql += "c.giorno=:giorno";
-            param.put("giorno", giorno);
-        }
-        if (u != null) {
-            sql += !sql.toUpperCase().contains("WHERE") ? "WHERE " : " AND ";
-            sql += "c.user=:user";
-            param.put("user", u);
-        }
-
-        TypedQuery<Cad> q = this.em.createQuery(sql, Cad.class);
-
-        if (param.isEmpty()) {
-            q.setMaxResults(maxQueryResult);
-        }
-        for (HashMap.Entry<String, Object> m : param.entrySet()) {
-            q.setParameter(m.getKey(), m.getValue());
-        }
-        return q.getResultList().isEmpty() ? new ArrayList() : (List<Cad>) q.getResultList();
-    }
-
-    public List<Cad> getCadFromDate(Date giorno, User u) {
-        HashMap<String, Object> param = new HashMap<>();
-
-        String sql = "SELECT c FROM Cad c WHERE c.stato<>2";//stato 0 Aperto 1 Chiusa 2 Eliminata
-
-        if (giorno != null) {
-            sql += !sql.toUpperCase().contains("WHERE") ? "WHERE " : " AND ";
-            sql += "c.giorno>=:giorno";
-            param.put("giorno", giorno);
-        }
-        if (u != null) {
-            sql += !sql.toUpperCase().contains("WHERE") ? "WHERE " : " AND ";
-            sql += "c.user=:user";
-            param.put("user", u);
-        }
-
-        TypedQuery<Cad> q = this.em.createQuery(sql, Cad.class);
-
-        if (param.isEmpty()) {
-            q.setMaxResults(maxQueryResult);
-        }
-        for (HashMap.Entry<String, Object> m : param.entrySet()) {
-            q.setParameter(m.getKey(), m.getValue());
-        }
-        return q.getResultList().isEmpty() ? new ArrayList() : (List<Cad>) q.getResultList();
-    }
-
     public List<UnitaDidattiche> getUD() {
         TypedQuery<UnitaDidattiche> q = em.createNamedQuery("unita_didattiche.Elenco", UnitaDidattiche.class);
         return q.getResultList();
@@ -1295,9 +1202,9 @@ public class Entity {
         return q.getResultList().size() > 0 ? (List<Cloud>) q.getResultList() : new ArrayList();
     }
 
-    public checklist_finale getCheckListByPf(ProgettiFormativi p) {
-        TypedQuery q = this.em.createNamedQuery("cl.byPF", checklist_finale.class).setParameter("progetto_formativo", p);
-        return q.getResultList().isEmpty() ? null : (checklist_finale) q.getSingleResult();
+    public Checklist_finale getCheckListByPf(ProgettiFormativi p) {
+        TypedQuery q = this.em.createNamedQuery("cl.byPF", Checklist_finale.class).setParameter("progetto_formativo", p);
+        return q.getResultList().isEmpty() ? null : (Checklist_finale) q.getSingleResult();
     }
 
     public Nazioni_rc byCodiceFiscale(String cf) {
@@ -1331,14 +1238,14 @@ public class Entity {
         q.setMaxResults(1);
         return q.getResultList().isEmpty() ? null : q.getSingleResult();
     }
-    
+
     public Presenze_Lezioni getPresenzeLezione(Long idcalendar) {
         TypedQuery<Presenze_Lezioni> q = this.em.createNamedQuery("presenzelezioni.lezioni", Presenze_Lezioni.class);
         q.setParameter("lezioneriferimento", this.em.find(Lezioni_Modelli.class, idcalendar));
         q.setMaxResults(1);
         return q.getResultList().isEmpty() ? null : q.getSingleResult();
     }
-    
+
     public List<Presenze_Lezioni_Allievi> getpresenzelezioniGiornata(Presenze_Lezioni pl) {
         TypedQuery<Presenze_Lezioni_Allievi> q = this.em.createNamedQuery("presenzelezioni.giornata", Presenze_Lezioni_Allievi.class);
         q.setParameter("presenzelezioni", pl);

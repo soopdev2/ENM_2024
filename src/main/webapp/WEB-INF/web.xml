@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    <display-name>ENM_TOSCANA_Gestione</display-name>
+    <display-name>ENM_2024</display-name>
     <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>rc.so.servlet.Login</servlet-class>
@@ -52,6 +52,10 @@
         <servlet-name>ExternalLogin</servlet-name>
         <servlet-class>rc.so.servlet.ExternalLogin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Login_2</servlet-name>
+        <servlet-class>rc.so.servlet.Login_2</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>ExternalLogin</servlet-name>
         <url-pattern>/ExternalLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Login_2</servlet-name>
+        <url-pattern>/Login_2</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

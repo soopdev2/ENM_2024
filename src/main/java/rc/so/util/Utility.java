@@ -6,7 +6,6 @@
 package rc.so.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Splitter;
 import static com.google.common.base.Splitter.on;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -28,15 +27,12 @@ import com.itextpdf.layout.element.Text;
 import com.itextpdf.layout.properties.TextAlignment;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import rc.so.db.Action;
-import static rc.so.db.Action.insertTR;
+import static rc.so.util.Action.insertTR;
 import rc.so.db.Database;
-import rc.so.db.FileDownload;
+import rc.so.entity.FileDownload;
 import rc.so.domain.Allievi;
-import rc.so.domain.Docenti;
 import rc.so.domain.DocumentiPrg;
 import rc.so.domain.Documenti_Allievi;
-import rc.so.domain.Documenti_Allievi_Pregresso;
 import rc.so.domain.Documenti_UnitaDidattiche;
 import rc.so.domain.LezioneCalendario;
 import rc.so.domain.Lezioni_Modelli;
@@ -60,7 +56,6 @@ import static java.lang.Math.toRadians;
 import java.math.BigDecimal;
 import static java.math.BigDecimal.ROUND_HALF_DOWN;
 import java.math.RoundingMode;
-import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -75,15 +70,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.RequestContext;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -103,7 +93,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Locale;
 import static java.util.Locale.ITALY;
 import java.util.ResourceBundle;
@@ -111,20 +100,20 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
+import org.apache.commons.fileupload2.core.FileItem;
+import org.apache.commons.fileupload2.core.RequestContext;
+import org.apache.commons.fileupload2.jakarta.JakartaServletFileUpload;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
-import org.apache.commons.text.StringEscapeUtils;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.sax.ToTextContentHandler;
 import org.joda.time.DateTimeComparator;
 import org.joda.time.DateTimeZone;
-import org.joda.time.Interval;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
 import org.joda.time.format.DateTimeFormat;
@@ -138,14 +127,10 @@ import org.json.JSONObject;
  */
 public class Utility {
 
-    public static boolean demoversion = false;
-
     public static final ResourceBundle conf = ResourceBundle.getBundle("conf.conf");
-
     // TEST //
     public static boolean test = conf.getString("test").equals("SI");
     //////////
-
     //ADD RAF
     public static final int maxQueryResult = 5000;
     public static final String patternComplete = "yyMMddHHmmssSSS";
@@ -231,11 +216,11 @@ public class Utility {
                 System.out.println(paramName + " : " + new String(paramValue.getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
             }
         }
-        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+        
+        boolean isMultipart = JakartaServletFileUpload.isMultipartContent(request);
         if (isMultipart) {
             try {
-                FileItemFactory factory = new DiskFileItemFactory();
-                ServletFileUpload upload = new ServletFileUpload(factory);
+                JakartaServletFileUpload upload = new JakartaServletFileUpload();
                 List items = upload.parseRequest((RequestContext) request);
                 Iterator iterator = items.iterator();
                 while (iterator.hasNext()) {
@@ -415,10 +400,6 @@ public class Utility {
         documeti.sort((p1, p2) -> p1.getTipo().getId().compareTo(p2.getTipo().getId()));
     }
 
-    public static void sortDoc_Pregresso(List<Documenti_Allievi_Pregresso> documeti) {
-        documeti.sort((p1, p2) -> p1.getTipo().getId().compareTo(p2.getTipo().getId()));
-    }
-
     /**
      * CONVERTE LA DATA IN FORMATO UTILIZZABILE IN JAVA UTIL A PARTIRE DALLA
      * DATA IN INGRESSO
@@ -458,21 +439,6 @@ public class Utility {
             response.getWriter().close();
         } catch (Exception ex) {
             insertTR("E", "SERVICE", estraiEccezione(ex));
-        }
-    }
-
-    public static void setOreLezioni(Allievi a) {
-        if (a.getProgetto() != null) {
-            //ore Fase A
-            for (DocumentiPrg d : a.getProgetto().getDocumenti().stream().filter(doc -> doc.getGiorno() != null && doc.getDeleted() == 0).collect(Collectors.toList())) {
-                d.getPresenti_list().stream().filter((p) -> (a.getId() == p.getId())).forEachOrdered((p) -> {
-                    a.setOre_fa(a.getOre_fa() + p.getOre_riconosciute());
-                });
-            }
-            //ore Fase B
-            for (Documenti_Allievi d : a.getDocumenti().stream().filter(doc -> doc.getGiorno() != null && doc.getDeleted() == 0).collect(Collectors.toList())) {
-                a.setOre_fb(a.getOre_fb() + (d.getOrericonosciute() == null ? 0 : d.getOrericonosciute()));
-            }
         }
     }
 
@@ -702,9 +668,6 @@ public class Utility {
     }
 
     public static boolean invioEmailComunicazione(String stato1, String stato2) {
-        if (Utility.demoversion) {
-            return false;
-        }
         String key = stato1 + "_" + stato2;
         Set s = statiEmail();
         return s.contains(key);
@@ -758,25 +721,8 @@ public class Utility {
         return ids;
     }
 
-    public static Map<Long, Boolean> allieviM5_premialita(List<MascheraM5> m5, int idpf) {
-        Long hh64 = Long.valueOf(230400000);
-        Map<Long, Long> oreRendicontabili = Action.OreRendicontabiliAlunni(idpf);
-        Map<Long, Boolean> ids = new HashMap();
-        int i = 1;
-        for (MascheraM5 m : m5) {
-            if (oreRendicontabili.get(m.getAllievo().getId()) != null && oreRendicontabili.get(m.getAllievo().getId()).compareTo(hh64) > 0) {
-                if (m.isTabella_premialita() && m.getTabella_premialita_punteggio() > 0) {
-                    ids.put(m.getAllievo().getId(), true);
-                }
-            }
-            i++;
-        }
-        return ids;
-
-    }
-
     public static TipoDoc filterDocById(List<TipoDoc> docs, Long id) {
-        return docs.stream().filter(s -> s.getId() == id).findFirst().orElse(null);
+        return docs.stream().filter(s -> s.getId().equals(id)).findFirst().orElse(null);
     }
 
     public static Map<Allievi, Documenti_Allievi> Modello5Allievi(List<MascheraM5> m5) {
@@ -935,45 +881,6 @@ public class Utility {
         return false;
     }
 
-    public static int allieviOK(long idp, List<Allievi> l) {
-        Long hh36 = Long.valueOf(129600000);
-//        Long hh64 = new Long(230400000);
-//        Map<Long, Long> oreRendicontabili = Action.OreRendicontabiliAlunni((int) (long) idp);
-        Map<Long, Long> oreRendicontabili_faseA = Action.OreRendicontabiliAlunni_faseA((int) (long) idp);
-        int count = l.size();
-        for (Allievi a : l) {
-            if (oreRendicontabili_faseA.get(a.getId()) != null && oreRendicontabili_faseA.get(a.getId()).compareTo(hh36) < 0) {
-                count--;
-            }
-        }
-        return count;
-    }
-
-    public static List<Allievi> allievi_fa(long idp, List<Allievi> l) {
-        Long hh36 = Long.valueOf(129600000);
-        Map<Long, Long> oreRendicontabili_faseA = Action.OreRendicontabiliAlunni_faseA((int) (long) idp);
-        return l.stream().filter(a -> oreRendicontabili_faseA.get(a.getId()) != null && oreRendicontabili_faseA.get(a.getId()).compareTo(hh36) >= 0).collect(Collectors.toList());
-    }
-
-    public static List<Allievi> allievi_fb(long idp, List<Allievi> l) {
-
-        return l.stream().filter(a -> a.getGruppo_faseB() > 0).collect(Collectors.toList());
-//        
-//        Long hh64 = new Long(230400000);
-//        Map<Long, Long> oreRendicontabili_faseB = Action.OreRendicontabiliAlunni((int) (long) idp);
-//        return l.stream().filter(a -> oreRendicontabili_faseB.get(a.getId()) != null && oreRendicontabili_faseB.get(a.getId()).compareTo(hh64) > 0).collect(Collectors.toList());
-    }
-
-    public static List<Docenti> docenti_ore(long idp, List<Docenti> l) {
-        Map<Long, Long> oreRendicontabili_docenti = Action.OreRendicontabiliDocenti((int) (long) idp);
-        return l.stream().filter(a -> oreRendicontabili_docenti.get(a.getId()) != null).collect(Collectors.toList());
-    }
-
-    public static List<Docenti> docenti_ore_A(long idp, List<Docenti> l) {
-        Map<Long, Long> oreRendicontabili_docenti = Action.OreRendicontabiliDocentiFASEA((int) (long) idp);
-        return l.stream().filter(a -> oreRendicontabili_docenti.get(a.getId()) != null).collect(Collectors.toList());
-    }
-
     public static String convertToHours_R(long value1) {
         try {
             double hours = value1 / 1000.0 / 60.0 / 60.0;
@@ -1046,6 +953,9 @@ public class Utility {
 
     public static double parseDouble(String f) {
         try {
+            if(f.contains(",")){
+                f = StringUtils.replace(f, ",", ".");
+            }
             BigDecimal bigDecimal = new BigDecimal(f);
             bigDecimal = bigDecimal.setScale(2, RoundingMode.HALF_EVEN);
             return bigDecimal.doubleValue();
@@ -1178,97 +1088,6 @@ public class Utility {
                                 TextAlignment.LEFT).close();
                     }
 
-                }
-            }
-        } catch (Exception ex) {
-            insertTR("E", "SERVICE", estraiEccezione(ex));
-        }
-    }
-
-    public static void gestisciorerendicontabili(LinkedList<Presenti1> report, long ore) {
-
-        try {
-            DateTimeFormatter fmt = forPattern(timestampSQL);
-            Presenti1 docente = report.stream().filter(pr1 -> pr1.getRuolo().equalsIgnoreCase("DOCENTE")).findAny().orElse(null);
-            List<Presenti1> allievi = report.stream().filter(pr1 -> !pr1.getRuolo().equalsIgnoreCase("DOCENTE")).collect(Collectors.toList());
-
-            if (docente != null && !allievi.isEmpty()) {
-                List<Interval> accessi_docente = new ArrayList<>();
-                List<Interval> accessi_complessivi = new ArrayList<>();
-                List<String> login_docente = Splitter.on("\n").splitToList(docente.getOradilogin());
-                List<String> logout_docente = Splitter.on("\n").splitToList(docente.getOradilogout());
-                for (int x = 0; x < login_docente.size(); x++) {
-                    DateTime start1 = fmt.parseDateTime("2021-01-01 " + login_docente.get(x));
-                    DateTime end1 = fmt.parseDateTime("2021-01-01 " + logout_docente.get(x));
-                    if (end1.isAfter(start1)) {
-                        accessi_docente.add(new Interval(start1, end1));
-                    }
-                }
-
-                AtomicLong millis_rendicontabili_DOCENTE = new AtomicLong(0L);
-
-                allievi.forEach(cnsmr -> {
-                    AtomicLong millis_rendicontabili = new AtomicLong(0L);
-                    List<Interval> accessi = new ArrayList<>();
-                    List<String> login = Splitter.on("\n").splitToList(cnsmr.getOradilogin());
-                    List<String> logout = Splitter.on("\n").splitToList(cnsmr.getOradilogout());
-
-                    for (int x = 0; x < login.size(); x++) {
-                        DateTime start2 = fmt.parseDateTime("2021-01-01 " + login.get(x));
-                        DateTime end2 = fmt.parseDateTime("2021-01-01 " + logout.get(x));
-                        if (end2.isAfter(start2)) {
-                            accessi.add(new Interval(start2, end2));
-                            accessi_complessivi.add(new Interval(start2, end2));
-                        }
-                    }
-                    accessi.forEach(intervallo2 -> {
-                        accessi_docente.forEach(intervallo1 -> {
-                            if (intervallo2.overlaps(intervallo1)) {
-                                millis_rendicontabili.addAndGet(intervallo2.overlap(intervallo1).toDurationMillis());
-                            }
-                        });
-
-                    });
-
-                    if (millis_rendicontabili.get() >= ore) {
-                        cnsmr.setTotaleorerendicontabili(calcoladurata(ore));
-                        cnsmr.setMillistotaleorerendicontabili(ore);
-                    } else if (millis_rendicontabili.get() >= cnsmr.getMillistotaleore()) {
-                        cnsmr.setTotaleorerendicontabili(cnsmr.getTotaleore());
-                        cnsmr.setMillistotaleorerendicontabili(cnsmr.getMillistotaleore());
-                    } else {
-                        cnsmr.setTotaleorerendicontabili(calcoladurata(millis_rendicontabili.get()));
-                        cnsmr.setMillistotaleorerendicontabili(millis_rendicontabili.get());
-                    }
-
-                });
-
-                accessi_docente.forEach(intervallo1 -> {
-                    DateTime start = intervallo1.getStart();
-                    while (start.isBefore(intervallo1.getEnd())) {
-                        for (int i = 0; i < accessi_complessivi.size(); i++) {
-                            Interval ac1 = accessi_complessivi.get(i);
-
-                            if (ac1.getStart().isBefore(start) || ac1.getStart().isEqual(start)) {
-                                if (ac1.getEnd().isAfter(start) || ac1.getEnd().isEqual(start)) {
-                                    millis_rendicontabili_DOCENTE.addAndGet(1000);
-                                    break;
-                                }
-                            }
-                        }
-                        start = start.plusSeconds(1);
-                    }
-                });
-
-                if (millis_rendicontabili_DOCENTE.get() >= ore) {
-                    docente.setTotaleorerendicontabili(calcoladurata(ore));
-                    docente.setMillistotaleorerendicontabili(ore);
-                } else if (millis_rendicontabili_DOCENTE.get() >= docente.getMillistotaleore()) {
-                    docente.setTotaleorerendicontabili(docente.getTotaleore());
-                    docente.setMillistotaleorerendicontabili(docente.getMillistotaleore());
-                } else {
-                    docente.setTotaleorerendicontabili(calcoladurata(millis_rendicontabili_DOCENTE.get()));
-                    docente.setMillistotaleorerendicontabili(millis_rendicontabili_DOCENTE.get());
                 }
             }
         } catch (Exception ex) {

@@ -44,7 +44,6 @@ public class GoogleRecaptcha {
             wr.writeBytes(postParams);
             wr.flush();
             wr.close();
-            int responseCode = con.getResponseCode();
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     con.getInputStream()));
             String inputLine;
@@ -53,16 +52,9 @@ public class GoogleRecaptcha {
                 response.append(inputLine);
             }
             in.close();
-//            System.out.println("GoogleRecaptcha " + responseCode + " -- " + response.toString());
             CaptchaResponse capRes = new Gson().fromJson(response.toString(), CaptchaResponse.class);
             return (capRes.isSuccess() && capRes.getScore() >= 0.5);
             
-//          JSONParser parser = new JSONParser();
-//          JsonObject json = new Gson().f parser.parse(response.toString());
-//          Boolean success = (Boolean) json.get("success");
-//          Double score = (Double) json.get("score");
-//          return (success && score >= 0.5);
-
         } catch (Exception e) {
         }
         return false;

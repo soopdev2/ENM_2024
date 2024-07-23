@@ -12,24 +12,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 
 /**
  *
@@ -37,19 +37,9 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "docenti")
-@NamedQueries(value = {
-    @NamedQuery(name = "d.Active", query = "SELECT d FROM Docenti d WHERE d.stato='A' "),
-    @NamedQuery(name = "d.All", query = "SELECT d FROM Docenti d"),
-    @NamedQuery(name = "d.byProgetto", query = "SELECT d FROM Docenti d WHERE d.progetti=:progetto"),
-    @NamedQuery(name = "d.bySA", query = "SELECT d FROM Docenti d WHERE d.soggetto=:soggetto"),
-    @NamedQuery(name = "d.byCf", query = "SELECT d FROM Docenti d WHERE d.codicefiscale=:cf"),
-    @NamedQuery(name = "d.byEmail", query = "SELECT d FROM Docenti d WHERE d.email=:email AND d.soggetto=:soggetto AND d.stato <> 'R'"),
-    @NamedQuery(name = "d.byCf_SA", query = "SELECT d FROM Docenti d WHERE d.codicefiscale=:cf AND d.soggetto=:soggetto AND d.stato <> 'R'"),
-    @NamedQuery(name = "d.bySA_Active", query = "SELECT d FROM Docenti d WHERE d.soggetto=:soggetto AND d.stato = 'A'"),
-})
-    
+@NamedQueries(value = {})
 
-@JsonIgnoreProperties(value = {"progetti", "registri_aula", "registri_allievi","attivita"})
+@JsonIgnoreProperties(value = {"progetti", "registri_aula", "registri_allievi", "attivita"})
 public class Docenti implements Serializable {
 
     @Id
@@ -74,8 +64,7 @@ public class Docenti implements Serializable {
     private String richiesta_accr;
     @Column(name = "stato")
     private String stato = "DV";
-    
-    
+
     @Column(name = "scadenza_doc")
     @Temporal(TemporalType.DATE)
     private Date scadenza_doc;
@@ -89,8 +78,7 @@ public class Docenti implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "fascia")
     private FasceDocenti fascia;
-    
-    
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "idsoggetti_attuatori")
     SoggettiAttuatori soggetto;
@@ -102,18 +90,12 @@ public class Docenti implements Serializable {
     List<ProgettiFormativi> progetti;
 
     @OneToMany(mappedBy = "docente", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    List<DocumentiPrg> registri_aula;
-    @OneToMany(mappedBy = "docente", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    List<Documenti_Allievi> registri_allievi;
-
-    @OneToMany(mappedBy = "docente", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JsonIgnore
     List<Lezioni_Modelli> lezioni;
-    
+
     @Transient
     String descrizionestato;
-    
-    
+
     @Column(name = "pec")
     private String pec;
     @Column(name = "cellulare")
@@ -128,20 +110,18 @@ public class Docenti implements Serializable {
     private int area_prevalente_di_qualificazione;
     @Column(name = "inquadramento")
     private int inquadramento;
-    
+
     /*Per un eventuale rigetto del docente da parte del MC*/
     @Column(name = "motivo")
     private String motivo;
     /*Per differenziare inserimento (automatico - da accreditamento/manuale - da piattaforma) */
     @Column(name = "tipo_inserimento", columnDefinition = "VARCHAR(255) default 'ACCREDITAMENTO'")
     private String tipo_inserimento;
-    
-    
-    @OneToMany(mappedBy = "docente",fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+
+    @OneToMany(mappedBy = "docente", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JsonIgnore
     List<Attivita_Docente> attivita;
-    
-    
+
     public Docenti(String nome, String cognome, String codicefiscale, Date datanascita) {
         this.nome = nome;
         this.cognome = cognome;
@@ -166,44 +146,56 @@ public class Docenti implements Serializable {
         this.curriculum = curriculum;
         this.docId = docId;
         this.stato = stato;
-        
+
         this.progetti = progetti;
     }
 
     public Docenti() {
     }
-    
+
     public String getDescrizionestato() {
-        if(null == this.stato){
+        if (null == this.stato) {
             return "";
-        }else switch (this.stato) {
-            case "A":
-                return "ACCREDITATO";
-            case "DV":
-                return "DA VALIDARE";
-            case "W":
-                return "IN ATTESA WEBINAIR";
-            case "R":
-                return "RIGETTATO";
-            default:
-                break;
+        } else {
+            switch (this.stato) {
+                case "A" -> {
+                    return "ACCREDITATO";
+                }
+                case "DV" -> {
+                    return "DA VALIDARE";
+                }
+                case "W" -> {
+                    return "IN ATTESA WEBINAIR";
+                }
+                case "R" -> {
+                    return "RIGETTATO";
+                }
+                default -> {
+                }
+            }
         }
         return "";
     }
 
     public void setDescrizionestato() {
-        if(this.stato == null){
+        if (null == this.stato) {
             this.descrizionestato = "";
-        }else if(this.stato.equals("A")){
-            this.descrizionestato = "ACCREDITATO";
-        }else if(this.stato.equals("DV")){
-            this.descrizionestato = "DA VALIDARE";
-        }else if(this.stato.equals("R")){
-            this.descrizionestato = "RIGETTATO";
+        } else switch (this.stato) {
+            case "A":
+                this.descrizionestato = "ACCREDITATO";
+                break;
+            case "DV":
+                this.descrizionestato = "DA VALIDARE";
+                break;
+            case "R":
+                this.descrizionestato = "RIGETTATO";
+                break;
+            default:
+                break;
         }
         this.descrizionestato = "";
     }
-    
+
     public SoggettiAttuatori getSoggetto() {
         return soggetto;
     }
@@ -211,7 +203,7 @@ public class Docenti implements Serializable {
     public void setSoggetto(SoggettiAttuatori soggetto) {
         this.soggetto = soggetto;
     }
-    
+
     public Date getDatawebinair() {
         return datawebinair;
     }
@@ -239,7 +231,7 @@ public class Docenti implements Serializable {
     public void setRichiesta_accr(String richiesta_accr) {
         this.richiesta_accr = richiesta_accr;
     }
-    
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -309,22 +301,6 @@ public class Docenti implements Serializable {
 
     public void setProgetti(List<ProgettiFormativi> progetti) {
         this.progetti = progetti;
-    }
-
-    public List<DocumentiPrg> getRegistri_aula() {
-        return registri_aula;
-    }
-
-    public void setRegistri_aula(List<DocumentiPrg> registri_aula) {
-        this.registri_aula = registri_aula;
-    }
-
-    public List<Documenti_Allievi> getRegistri_allievi() {
-        return registri_allievi;
-    }
-
-    public void setRegistri_allievi(List<Documenti_Allievi> registri_allievi) {
-        this.registri_allievi = registri_allievi;
     }
 
     public FasceDocenti getFascia() {
@@ -434,7 +410,7 @@ public class Docenti implements Serializable {
     public void setTipo_inserimento(String tipo_inserimento) {
         this.tipo_inserimento = tipo_inserimento;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -478,8 +454,6 @@ public class Docenti implements Serializable {
         sb.append(", fascia=").append(fascia);
         sb.append(", soggetto=").append(soggetto);
         sb.append(", progetti=").append(progetti);
-        sb.append(", registri_aula=").append(registri_aula);
-        sb.append(", registri_allievi=").append(registri_allievi);
         sb.append(", lezioni=").append(lezioni);
         sb.append(", descrizionestato=").append(descrizionestato);
         sb.append(", pec=").append(pec);
@@ -494,7 +468,5 @@ public class Docenti implements Serializable {
         sb.append('}');
         return sb.toString();
     }
-
-    
 
 }

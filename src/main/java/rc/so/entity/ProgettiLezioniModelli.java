@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  *
- * @author dolivo
+ * @author smo
  */
 public class ProgettiLezioniModelli {
     

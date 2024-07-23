@@ -5,8 +5,6 @@
  */
 package rc.so.entity;
 
-import java.util.List;
-
 /**
  *
  * @author rcosco

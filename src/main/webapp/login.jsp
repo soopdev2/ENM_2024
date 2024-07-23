@@ -80,17 +80,11 @@
                             <hr>
                             <div class="kt-login__signin">
                                 <div class="kt-login__head">
-                                    <%if (Utility.demoversion) {%>
-                                    <div class="kt-login__title">
-                                        <img src="resource/demologo.png" alt="" height="100"/>
-                                    </div>
-                                    <%} else {%>
                                     <%if (Utility.test) {%>
                                     <br>
                                     <div class="kt-login__title">
                                         <img src="resource/beta.png" alt="" height="100"/>
                                     </div>
-                                    <%}%>
                                     <%}%>
                                     <div class="kt-login__title" style="color: #0066CC" >Accedi</div>
                                 </div>

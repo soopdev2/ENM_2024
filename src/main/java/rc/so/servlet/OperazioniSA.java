@@ -8,9 +8,8 @@ package rc.so.servlet;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.util.concurrent.AtomicDouble;
 import com.google.gson.JsonObject;
-import rc.so.cf.DataPanel;
-import rc.so.db.Action;
-import static rc.so.db.Action.insertTR;
+import rc.so.util.Action;
+import static rc.so.util.Action.insertTR;
 import rc.so.db.Database;
 import rc.so.db.Entity;
 import rc.so.domain.Allievi;
@@ -20,7 +19,6 @@ import rc.so.domain.CPI;
 import rc.so.domain.Canale;
 import rc.so.domain.Comuni;
 import rc.so.domain.Condizione_Lavorativa;
-import rc.so.domain.Condizione_Mercato;
 import rc.so.domain.Docenti;
 import rc.so.domain.DocumentiPrg;
 import rc.so.domain.Documenti_Allievi;
@@ -37,7 +35,6 @@ import rc.so.domain.Nazioni_rc;
 import rc.so.domain.NomiProgetto;
 import rc.so.domain.ProgettiFormativi;
 import rc.so.domain.SediFormazione;
-import rc.so.domain.Selfiemployment_Prestiti;
 import rc.so.domain.SoggettiAttuatori;
 import rc.so.domain.StaffModelli;
 import rc.so.domain.StatiPrg;
@@ -49,11 +46,6 @@ import rc.so.domain.TipoFaq;
 import rc.so.domain.TitoliStudio;
 import rc.so.domain.Tracking;
 import rc.so.domain.User;
-import rc.so.entity.Presenti;
-import rc.so.util.Complessivo;
-import rc.so.util.FaseA;
-import rc.so.util.FaseB;
-import rc.so.util.Lezione;
 import rc.so.util.Pdf_new;
 import static rc.so.util.Pdf_new.checkFirmaQRpdfA;
 import rc.so.util.Registro_completo;
@@ -73,7 +65,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import static java.lang.String.format;
-import java.math.BigDecimal;
 import static java.nio.file.Files.probeContentType;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
@@ -83,18 +74,14 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Random;
-import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
-import javax.persistence.PersistenceException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import jakarta.persistence.PersistenceException;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -110,7 +97,7 @@ import static rc.so.util.Utility.parseLong;
 
 /**
  *
- * @author dolivo
+ * @author smo
  */
 public class OperazioniSA extends HttpServlet {
 
@@ -470,7 +457,7 @@ public class OperazioniSA extends HttpServlet {
                     Part p = request.getPart("doc_" + modello1.getId());
 
                     if (p != null && p.getSubmittedFileName() != null && p.getSubmittedFileName().length() > 0) {
-                        a1.setStato("A");
+                        a1.setStatoallievo("A");
                         try {
                             String ext = p.getSubmittedFileName().substring(p.getSubmittedFileName().lastIndexOf("."));
                             String destpath = dir.getAbsolutePath() + File.separator + modello1.getDescrizione() + today + "_" + a1.getCodicefiscale().toUpperCase() + ext;
@@ -632,7 +619,7 @@ public class OperazioniSA extends HttpServlet {
         String today = sdf2.format(new Date());
 
         Allievi a = e.getEm().find(Allievi.class,
-                Long.parseLong(getRequestValue(request, "id")));
+                Long.valueOf(getRequestValue(request, "id")));
 
         boolean modello1OK = false;
         String erroremodello1OK = "MODELLO 1 ERRATO. CONTROLLARE.";
@@ -663,7 +650,7 @@ public class OperazioniSA extends HttpServlet {
         }
 
         if (modello1OK) {
-            a.setStato("A");
+            a.setStatoallievo("A");
             e.merge(a);
             e.flush();
             e.commit();
@@ -1000,7 +987,7 @@ public class OperazioniSA extends HttpServlet {
                     erroremodello2OK = "MODELLO 2 ERRATO. " + ex.getMessage() + ". CONTROLLARE.";
                 }
                 if (modello2OK) {
-                    if ((copyfile1 && copyfile2) || Utility.demoversion) {
+                    if (copyfile1 && copyfile2) {
                         e.flush();
                         e.commit();
                         resp.addProperty("result", true);
@@ -1120,32 +1107,16 @@ public class OperazioniSA extends HttpServlet {
         String idpr = getRequestValue(request, "idpr");
 
         File downloadFile = null;
-
-        if (Utility.demoversion) {
-            //crea registrocomplessivo;
-            FaseA FA = new FaseA(false, true);
-            FaseB FB = new FaseB(false, true);
-            Complessivo c1 = new Complessivo(FA.getHost());
-            List<Lezione> ca = FA.calcolaegeneraregistrofasea(Integer.parseInt(idpr), c1.getHost(), false, false, false);
-            List<Lezione> cb = FB.calcolaegeneraregistrofaseb(Integer.parseInt(idpr), c1.getHost(), false, false, false);
-
-            // file deepcode ignore Sqli: <please specify a reason of ignoring this>
-            downloadFile = c1.registro_complessivo(Integer.parseInt(idpr), c1.getHost(), ca, cb, false);
-
-        } else {
-            try {
-                Entity e = new Entity();
-                e.begin();
-                DocumentiPrg mod = e.getEm().find(ProgettiFormativi.class,
-                        Long.parseLong(idpr)).getDocumenti().stream().filter(d1
-                        -> d1.getTipo().getId() == 33L).findAny().orElse(null);
-                if (mod != null) {
-                    downloadFile = new File(mod.getPath());
-                }
-                e.close();
-            } catch (Exception ex) {
-                insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
+        try {
+            Entity e = new Entity();
+            DocumentiPrg mod = e.getEm().find(ProgettiFormativi.class,
+                    Long.parseLong(idpr)).getDocumenti().stream().filter(d1
+                    -> d1.getTipo().getId() == 33L).findAny().orElse(null);
+            if (mod != null) {
+                downloadFile = new File(mod.getPath());
             }
+        } catch (Exception ex) {
+            insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
         }
 
         if (downloadFile != null && downloadFile.exists()) {
@@ -1412,18 +1383,15 @@ public class OperazioniSA extends HttpServlet {
                 a.setDatanascita(sdf.parse(request.getParameter("datanascita")));
                 a.setTelefono(request.getParameter("telefono"));
                 a.setIndirizzoresidenza(conversionText(request.getParameter("indirizzores")));
-                a.setCapresidenza(request.getParameter("capres"));
                 a.setComune_residenza((Comuni) e.getEm().find(Comuni.class,
                         Long.parseLong(request.getParameter("comuneres"))));
 
                 if (request.getParameter("checkind") != null) {
                     a.setIndirizzodomicilio(conversionText(request.getParameter("indirizzores")));
                     a.setCivicodomicilio(request.getParameter("civicores").toUpperCase());
-                    a.setCapdomicilio(request.getParameter("capres"));
                     a.setComune_domicilio((Comuni) e.getEm().find(Comuni.class,
                             Long.parseLong(request.getParameter("comuneres"))));
                 } else {
-                    a.setCapdomicilio(request.getParameter("capdom"));
                     a.setIndirizzodomicilio(conversionText(request.getParameter("indirizzodom").toUpperCase()));
                     a.setCivicodomicilio(request.getParameter("civicodom").toUpperCase());
                     a.setComune_domicilio((Comuni) e.getEm().find(Comuni.class,
@@ -1432,7 +1400,7 @@ public class OperazioniSA extends HttpServlet {
 
 //                a.setDocid(path);
 //                a.setScadenzadocid(sdf.parse(request.getParameter("scadenzadoc")));
-                a.setIscrizionegg(sdf.parse(request.getParameter("iscrizionegg")));
+                a.setIscrizione(sdf.parse(request.getParameter("iscrizionegg")));
                 a.setTitoloStudio((TitoliStudio) e.getEm().find(TitoliStudio.class,
                         request.getParameter("titolo_studio")));
                 a.setCpi((CPI) e.getEm().find(CPI.class,
@@ -1441,8 +1409,6 @@ public class OperazioniSA extends HttpServlet {
                 //29-04-2020 MODIFICA - CONDIZIONE LAVORATIVA PRECEDENTE
                 a.setCondizione_lavorativa((Condizione_Lavorativa) e.getEm().find(Condizione_Lavorativa.class,
                         Integer.parseInt(request.getParameter("condizione_lavorativa"))));
-                a.setNeet(e.getEm().find(Condizione_Lavorativa.class,
-                        Integer.parseInt(request.getParameter("condizione_lavorativa"))).getDescrizione());
                 a.setEmail(request.getParameter("email"));
                 a.setSesso(Integer.parseInt(request.getParameter("codicefiscale").substring(9, 11)) > 40 ? "F" : "M");
 
@@ -1696,27 +1662,9 @@ public class OperazioniSA extends HttpServlet {
                     doc_allievo = new ArrayList<>();
                     doc_allievo.addAll(tipo_obb_all);
                     totale = 0;
-                    for (Documenti_Allievi doc : allievo.getDocumenti()) {
-                        if (allievo.getEsito().equalsIgnoreCase("Fase B")) {
-                            if (doc.getTipo().getId() == 5 && doc.getDeleted() == 0) {
-                                hh = (double) (doc.getOrarioend_mattina().getTime() - doc.getOrariostart_mattina().getTime());
-                                if (doc.getOrariostart_pom() != null && doc.getOrarioend_pom() != null) {
-                                    hh += (double) (doc.getOrarioend_pom().getTime() - doc.getOrariostart_pom().getTime());
-                                }
-                                totale += hh / 3600000;
-                            }
-                        }
-                        doc_allievo.remove(doc.getTipo());
-                    }
                     if (!doc_allievo.isEmpty()) {
                         checkdocs = false;
-                    }
-                    if (allievo.getEsito().equalsIgnoreCase("Fase B")) {
-                        if (totale < 20) {
-                            checkregistri = false;
-                            warning.append("• ").append(allievo.getCognome()).append(" ").append(allievo.getNome()).append(" (").append(String.valueOf(totale).replace(".0", "")).append("/20h)<br>");
-                        }
-                    }
+                    }                    
                 }
                 for (DocumentiPrg dprg : prg.getDocumenti()) {
                     tipo_obb.remove(dprg.getTipo());
@@ -1982,9 +1930,6 @@ public class OperazioniSA extends HttpServlet {
                             "ATB"));
                     p.setControllable(0);
                     e.persist(new Storico_Prg("Avviata Fase B", new Date(), p, p.getStato()));//storico progetto
-                    if (!checkFaseAllievi(p.getAllievi())) {
-                        p.setEnd_fb(today);//se fb non parte setta fine fb alla stessa data di FA
-                    }
                 } else if (p.getStato().getId().equals("ATB") && p.getEnd_fb() == null) {
                     p.setEnd_fb(today);//setta data fine fase FB solo se non precedentemente settata
                 }
@@ -2013,597 +1958,7 @@ public class OperazioniSA extends HttpServlet {
         response.getWriter().close();
     }
 
-    protected void setEsitoAllievo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/plain");
-        response.setCharacterEncoding("UTF-8");
-        JsonObject resp = new JsonObject();
-        Entity e = new Entity();
-        e.begin();
-
-        try {
-            Allievi a = e.getEm().find(Allievi.class,
-                    Long.parseLong(request.getParameter("id")));
-            //String stato = p.getStato().getId().replace("E", "");
-            a.setEsito(request.getParameter("esito"));
-            e.merge(a);
-            //e.persist(new Storico_Prg("Inviato a controllo", new Date(), p, p.getStato()));//storico progetto
-            e.commit();
-            resp.addProperty("result", true);
-        } catch (Exception ex) {
-            e.rollBack();
-            insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
-            resp.addProperty("result", false);
-            resp.addProperty("message", "Errore: non &egrave; stato possibile modificare l'esito dell'allievo.");
-        } finally {
-            e.close();
-        }
-        response.getWriter().write(resp.toString());
-        response.getWriter().flush();
-        response.getWriter().close();
-    }
-
-    protected void uploadRegistro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        JsonObject resp = new JsonObject();
-        Part p = request.getPart("file");
-        Entity e = new Entity();
-        try {
-            Allievi a = e.getEm().find(Allievi.class,
-                    Long.parseLong(request.getParameter("idallievo")));
-            TipoDoc_Allievi tipo = e.getEm().find(TipoDoc_Allievi.class,
-                    Long.parseLong("5"));  //da cambiare
-            List<TipoDoc_Allievi> tipo_obb = e.getTipoDocAllieviObbl(a.getProgetto().getStato());
-            List<TipoDoc> tipo_obb_prg = e.getTipoDocObbl(a.getProgetto().getStato());
-            Documenti_Allievi doc_a = new Documenti_Allievi();
-
-            Date giorno = request.getParameter("giorno") != null ? new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("giorno")) : null;
-            Date orariostart_mattina = request.getParameter("orario1_start") != null ? new SimpleDateFormat("HH:mm").parse(request.getParameter("orario1_start")) : null;
-            Date orarioend_mattina = request.getParameter("orario1_end") != null ? new SimpleDateFormat("HH:mm").parse(request.getParameter("orario1_end")) : null;
-            Date orariostart_pomeriggio = request.getParameter("orario2_start") != null && Boolean.parseBoolean(request.getParameter("check")) ? new SimpleDateFormat("HH:mm").parse(request.getParameter("orario2_start")) : null;
-            Date orarioend_pomeriggio = request.getParameter("orario2_end") != null && Boolean.parseBoolean(request.getParameter("check")) ? new SimpleDateFormat("HH:mm").parse(request.getParameter("orario2_end")) : null;
-            Docenti docente = e.getEm().find(Docenti.class,
-                    Long.parseLong(request.getParameter("docente")));
-
-            User us = (User) request.getSession().getAttribute("user");
-
-            e.begin();
-            //creao il path
-            String path = e.getPath("pathDocSA_Prg_RegistriIndividuali").replace("@rssa", us.getSoggettoAttuatore().getId().toString()).replace("@folder", a.getProgetto().getId().toString());
-            File dir = new File(path);
-            createDir(path);
-            String file_path;
-            String today = new SimpleDateFormat("yyyyMMddHHssSSS").format(new Date());
-
-            //scrivo il file su disco
-            if (p != null && p.getSubmittedFileName() != null && p.getSubmittedFileName().length() > 0) {
-                file_path = dir.getAbsolutePath() + File.separator + tipo.getDescrizione() + "_" + today + "_" + a.getCodicefiscale() + p.getSubmittedFileName().substring(p.getSubmittedFileName().lastIndexOf("."));
-                p.write(file_path);
-                doc_a.setPath(file_path);
-            }
-
-            doc_a.setTipo(tipo);
-            doc_a.setGiorno(giorno);
-            doc_a.setDocente(docente);
-            doc_a.setOrariostart_mattina(orariostart_mattina);
-            doc_a.setOrarioend_mattina(orarioend_mattina);
-            doc_a.setOrariostart_pom(orariostart_pomeriggio);
-            doc_a.setOrarioend_pom(orarioend_pomeriggio);
-            doc_a.setAllievo(a);
-            e.persist(doc_a);
-
-            e.commit();
-
-            e.begin();
-            double hh, totale;
-            boolean checkregistri = true;
-            boolean checkdocs = true;
-
-            List<TipoDoc_Allievi> doc_allievo;
-            StringBuilder msg = new StringBuilder();
-            StringBuilder warning = new StringBuilder();
-            msg.append("Sono stati caricati tutti i documenti necessari per questa fase. Ora il progetto può essere inviato al Microcredito per essere controllato.<br>");
-            warning.append("Tuttavia, i seguenti allievi non hanno effettuato le ore necessarie per la Fase B:<br>");
-            for (Allievi allievo : a.getProgetto().getAllievi()) {
-                doc_allievo = new ArrayList<>();
-                doc_allievo.addAll(tipo_obb);
-                totale = 0;
-                if (allievo.getEsito().equalsIgnoreCase("Fase B")) {
-                    for (Documenti_Allievi doc : allievo.getDocumenti()) {
-                        if (doc.getTipo().getId() == 5 && doc.getDeleted() == 0) {
-                            hh = (double) (doc.getOrarioend_mattina().getTime() - doc.getOrariostart_mattina().getTime());
-                            if (doc.getOrariostart_pom() != null && doc.getOrarioend_pom() != null) {
-                                hh += (double) (doc.getOrarioend_pom().getTime() - doc.getOrariostart_pom().getTime());
-                            }
-                            totale += hh / 3600000;
-                        }
-                        doc_allievo.remove(doc.getTipo());
-                    }
-                }
-                if (!doc_allievo.isEmpty()) {
-                    checkdocs = false;
-                }
-                if (allievo.getEsito().equalsIgnoreCase("Fase B")) {
-                    if (totale < 20) {
-                        checkregistri = false;
-                        warning.append("• ").append(allievo.getCognome()).append(" ").append(allievo.getNome()).append(" (").append(String.valueOf(totale).replace(".0", "")).append("/20h)<br>");
-                    }
-                }
-            }
-            for (DocumentiPrg dprg : a.getProgetto().getDocumenti()) {
-                tipo_obb_prg.remove(dprg.getTipo());
-            }
-            //se sono stati caricati tutti i doc obbligatori per il progetto e per gli alunni, setto il progetto come idoneo per la prossima fase
-            if (tipo_obb_prg.isEmpty() && checkdocs) {
-                a.getProgetto().setControllable(1);
-                e.merge(a.getProgetto());
-                if (checkregistri) {
-                    resp.addProperty("message", msg.toString());
-                } else {
-                    resp.addProperty("message", msg.append(warning).toString());
-                }
-            } else {
-                resp.addProperty("message", "");
-            }
-            e.commit();
-            resp.addProperty("result", true);
-
-        } catch (Exception ex) {
-            e.rollBack();
-            insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
-            resp.addProperty("result", false);
-            resp.addProperty("message", "Errore: non &egrave; stato possibile caricare il registro.");
-        } finally {
-            e.close();
-        }
-
-        response.getWriter().write(resp.toString());
-        response.getWriter().flush();
-        response.getWriter().close();
-    }
-
-    protected void modifyRegistro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        JsonObject resp = new JsonObject();
-        Part p = request.getPart("file");
-        Entity e = new Entity();
-        try {
-            Date giorno = request.getParameter("giorno") != null ? new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("giorno")) : null;
-            Date orariostart_mattina = request.getParameter("orario1_start") != null ? new SimpleDateFormat("HH:mm").parse(request.getParameter("orario1_start")) : null;
-            Date orarioend_mattina = request.getParameter("orario1_end") != null ? new SimpleDateFormat("HH:mm").parse(request.getParameter("orario1_end")) : null;
-
-            Date orariostart_pomeriggio = request.getParameter("orario2_start") != null && Boolean.parseBoolean(request.getParameter("check")) ? new SimpleDateFormat("HH:mm").parse(request.getParameter("orario2_start")) : null;
-            Date orarioend_pomeriggio = request.getParameter("orario2_end") != null && Boolean.parseBoolean(request.getParameter("check")) ? new SimpleDateFormat("HH:mm").parse(request.getParameter("orario2_end")) : null;
-            Docenti docente = e.getEm().find(Docenti.class,
-                    Long.parseLong(request.getParameter("docente")));
-
-            e.begin();
-            Documenti_Allievi doc = e.getEm().find(Documenti_Allievi.class,
-                    Long.parseLong(request.getParameter("iddocumento")));
-            List<Allievi> allieviprg = e.getAllieviProgettiFormativi(doc.getAllievo().getProgetto());
-            List<TipoDoc> tipo_obb_prg = e.getTipoDocObbl(doc.getAllievo().getProgetto().getStato());
-            //se è cambiato, scrivo il file su disco
-            if (p != null && p.getSubmittedFileName() != null && p.getSubmittedFileName().length() > 0) {
-                p.write(doc.getPath());
-            }
-            doc.setGiorno(giorno);
-            doc.setDocente(docente);
-            doc.setOrariostart_mattina(orariostart_mattina);
-            doc.setOrarioend_mattina(orarioend_mattina);
-            doc.setOrariostart_pom(orariostart_pomeriggio);
-            doc.setOrarioend_pom(orarioend_pomeriggio);
-            e.merge(doc);
-            e.commit();
-
-            e.begin();
-            double hh, totale;
-            boolean checkregistri = true;
-            boolean checkdocs = true;
-
-            List<TipoDoc_Allievi> doc_allievo;
-            StringBuilder msg = new StringBuilder();
-            StringBuilder warning = new StringBuilder();
-            msg.append("Sono stati caricati tutti i documenti necessari per questa fase. Ora il progetto può essere inviato al Microcredito per essere controllato.<br>");
-            warning.append("Tuttavia, i seguenti allievi non hanno effettuato le ore necessarie per la Fase B:<br>");
-            for (Allievi allievo : allieviprg) {
-                if (allievo.getEsito().equalsIgnoreCase("Fase B")) {
-                    doc_allievo = e.getTipoDocAllievi(allievo.getProgetto().getStato());
-                    //List<TipoDoc_Allievi> tipo_obb = e.getTipoDocAllieviObbl(a.getProgetto().getStato());
-                    totale = 0;
-                    for (Documenti_Allievi doc_a : allievo.getDocumenti()) {
-                        if (doc_a.getTipo().getId() == 5 && doc_a.getDeleted() == 0) {
-                            hh = (double) (doc_a.getOrarioend_mattina().getTime() - doc_a.getOrariostart_mattina().getTime());
-                            if (doc_a.getOrariostart_pom() != null && doc_a.getOrarioend_pom() != null) {
-                                hh += (double) (doc_a.getOrarioend_pom().getTime() - doc_a.getOrariostart_pom().getTime());
-                            }
-                            totale += hh / 3600000;
-                        }
-                        doc_allievo.remove(doc_a.getTipo());
-                    }
-                    if (!doc_allievo.isEmpty()) {
-                        checkdocs = false;
-                    }
-                    if (totale < 20) {
-                        checkregistri = false;
-                        warning.append("• ").append(allievo.getCognome()).append(" ").append(allievo.getNome()).append(" (").append(String.valueOf(totale).replace(".0", "")).append("/20h)<br>");
-                    }
-                }
-            }
-            for (DocumentiPrg dprg : doc.getAllievo().getProgetto().getDocumenti()) {
-                tipo_obb_prg.remove(dprg.getTipo());
-            }
-            //se sono stati caricati tutti i doc obbligatori per il progetto e per gli alunni, setto il progetto come idoneo per la prossima fase
-            if (tipo_obb_prg.isEmpty() && checkdocs) {
-                doc.getAllievo().getProgetto().setControllable(1);
-                e.merge(doc.getAllievo().getProgetto());
-                if (checkregistri) {
-                    resp.addProperty("message", msg.toString());
-                } else {
-                    resp.addProperty("message", msg.append(warning).toString());
-                }
-            } else {
-                resp.addProperty("message", "");
-            }
-            e.commit();
-            resp.addProperty("result", true);
-        } catch (Exception ex) {
-            e.rollBack();
-            insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
-            resp.addProperty("result", false);
-            resp.addProperty("message", "Errore: non &egrave; stato possibile modificare il registro.");
-        } finally {
-            e.close();
-        }
-
-        response.getWriter().write(resp.toString());
-        response.getWriter().flush();
-        response.getWriter().close();
-    }
-
-    protected void uploadDocPrg_FaseB(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        JsonObject resp = new JsonObject();
-
-        Part p = request.getPart("file");
-        Entity e = new Entity();
-        try {
-            Allievi a = e.getEm().find(Allievi.class,
-                    Long.parseLong(request.getParameter("idallievo")));
-            //ProgettiFormativi prg = a.getProgetto();
-            TipoDoc_Allievi tipo = e.getEm().find(TipoDoc_Allievi.class,
-                    Long.parseLong(request.getParameter("id_tipo")));
-            List<TipoDoc_Allievi> tipo_obb = e.getTipoDocAllieviObbl(a.getProgetto().getStato());
-            List<TipoDoc> tipo_obb_prg = e.getTipoDocObbl(a.getProgetto().getStato());
-            User us = (User) request.getSession().getAttribute("user");
-
-            e.begin();
-            //creao il path
-            String path = e.getPath("pathDocSA_Allievi").replace("@rssa", Utility.correctName(us.getSoggettoAttuatore().getId().toString() + "")).replace("@folder", Utility.correctName(a.getCodicefiscale()));
-            File dir = new File(path);
-            createDir(path);
-            String file_path;
-            String today = new SimpleDateFormat("yyyyMMddHHssSSS").format(new Date());
-
-            //scrivo il file su disco
-            if (p != null && p.getSubmittedFileName() != null && p.getSubmittedFileName().length() > 0) {
-                file_path = dir.getAbsolutePath() + File.separator + tipo.getDescrizione() + "_" + today + p.getSubmittedFileName().substring(p.getSubmittedFileName().lastIndexOf("."));
-                p.write(file_path);
-                Documenti_Allievi doc = new Documenti_Allievi();
-                doc.setPath(file_path);
-                doc.setTipo(tipo);
-                doc.setAllievo(a);
-                e.persist(doc);
-            }
-            //se carico il MODELLO SE setto il valore in Allievo
-            if (request.getParameter("prestiti") != null && request.getParameter("protocollo") != null) {
-                a.setProtocollo(request.getParameter("protocollo"));
-                a.setSelfiemployement((Selfiemployment_Prestiti) e.getEm().find(Selfiemployment_Prestiti.class,
-                        Long.parseLong(request.getParameter("prestiti"))));
-                e.merge(a);
-            }
-            //se carico il MODELLO 8 setto il valore in Allievo
-            if (request.getParameter("idea") != null) {
-                a.setIdea_impresa(request.getParameter("idea"));
-                e.merge(a);
-            }
-            e.commit();
-
-            e.begin();
-            double hh, totale;
-            boolean checkregistri = true;
-            boolean checkdocs = true;
-
-            List<TipoDoc_Allievi> doc_allievo;
-            StringBuilder msg = new StringBuilder();
-            StringBuilder warning = new StringBuilder();
-            msg.append("Sono stati caricati tutti i documenti necessari per questa fase. Ora il progetto può essere inviato al Microcredito per essere controllato.<br>");
-            warning.append("Tuttavia, i seguenti allievi non hanno effettuato le ore necessarie per la Fase B:<br>");
-            for (Allievi allievo : a.getProgetto().getAllievi().stream().filter(al -> al.getStatopartecipazione().getId()
-                    .equalsIgnoreCase("13") || al.getStatopartecipazione().getId()
-                    .equalsIgnoreCase("14") || al.getStatopartecipazione().getId()
-                    .equalsIgnoreCase("15")
-            ).collect(Collectors.toList())) {//solo allievi regolarmente iscritti
-                doc_allievo = new ArrayList<>();
-                doc_allievo.addAll(tipo_obb);
-                totale = 0;
-                for (Documenti_Allievi doc : allievo.getDocumenti()) {
-                    if (allievo.getEsito().equalsIgnoreCase("Fase B")) {
-                        if (doc.getTipo().getId() == 5 && doc.getDeleted() == 0) {
-                            hh = (double) (doc.getOrarioend_mattina().getTime() - doc.getOrariostart_mattina().getTime());
-                            if (doc.getOrariostart_pom() != null && doc.getOrarioend_pom() != null) {
-                                hh += (double) (doc.getOrarioend_pom().getTime() - doc.getOrariostart_pom().getTime());
-                            }
-                            totale += hh / 3600000;
-                        }
-                    }
-                    doc_allievo.remove(doc.getTipo());
-                }
-                if (!doc_allievo.isEmpty()) {
-                    checkdocs = false;
-                }
-                if (allievo.getEsito().equalsIgnoreCase("Fase B")) {
-                    if (totale < 20) {
-                        checkregistri = false;
-                        warning.append("• ").append(allievo.getCognome()).append(" ").append(allievo.getNome()).append(" (").append(String.valueOf(totale).replace(".0", "")).append("/20h)<br>");
-                    }
-                }
-            }
-
-            for (DocumentiPrg dprg : a.getProgetto().getDocumenti()) {
-                tipo_obb_prg.remove(dprg.getTipo());
-            }
-            //se sono stati caricati tutti i doc obbligatori per il progetto e per gli alunni, setto il progetto come idoneo per la prossima fase
-            if (tipo_obb_prg.isEmpty() && checkdocs) {
-                a.getProgetto().setControllable(1);
-                e.merge(a.getProgetto());
-                if (checkregistri) {
-                    resp.addProperty("message", msg.toString());
-                } else {
-                    resp.addProperty("message", msg.append(warning).toString());
-                }
-            } else {
-                resp.addProperty("message", "");
-            }
-            e.commit();
-            resp.addProperty("result", true);
-
-        } catch (Exception ex) {
-            e.rollBack();
-            insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
-            resp.addProperty("result", false);
-            resp.addProperty("message", "Errore: non &egrave; stato possibile caricare il documento.");
-        } finally {
-            e.close();
-        }
-
-        response.getWriter().write(resp.toString());
-        response.getWriter().flush();
-        response.getWriter().close();
-    }
-
-    protected void modifyDocPrg_FaseB(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        JsonObject resp = new JsonObject();
-
-        Part p = request.getPart("file");
-        Entity e = new Entity();
-        try {
-
-            e.begin();
-            //se carico il MODELLO SE setto il valore in Allievo
-            Documenti_Allievi d = e.getEm().find(Documenti_Allievi.class,
-                    Long.parseLong(request.getParameter("id")));
-            Allievi a = e.getEm().find(Allievi.class,
-                    d.getAllievo().getId());
-            if (request.getParameter("prestiti") != null && request.getParameter("protocollo") != null) {
-                a.setSelfiemployement((Selfiemployment_Prestiti) e.getEm().find(Selfiemployment_Prestiti.class,
-                        Long.parseLong(request.getParameter("prestiti"))));
-                a.setProtocollo(request.getParameter("protocollo"));
-                e.merge(a);
-            }
-            //se carico il MODELLO 8 setto il valore in Allievo
-            if (request.getParameter("idea") != null) {
-                a.setIdea_impresa(request.getParameter("idea"));
-                e.merge(a);
-            }
-            p.write(d.getPath());
-
-            e.commit();
-            resp.addProperty("result", true);
-        } catch (Exception ex) {
-            e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA modifyDocPrg_FaseB: " + ex.getMessage());
-            resp.addProperty("result", false);
-            resp.addProperty("message", "Errore: non &egrave; stato possibile aggiornare il documento.");
-        } finally {
-            e.close();
-        }
-
-        response.getWriter().write(resp.toString());
-        response.getWriter().flush();
-        response.getWriter().close();
-    }
-
-    protected void getTotalHoursRegistriByAllievo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Entity e = new Entity();
-        double totale = 0;
-        double hh;
-        JsonObject resp = new JsonObject();
-        boolean today = false;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            List<Documenti_Allievi> docs = e.getDocAllievo(e.getEm().find(Allievi.class,
-                    Long.parseLong(request.getParameter("idallievo"))));
-            for (Documenti_Allievi registro : docs) {
-                if (registro.getTipo().getId() == 5 && registro.getDeleted() == 0) {
-                    if (sdf.format(registro.getGiorno()).equals(sdf.format(new Date()))) {
-                        today = true;
-                    }
-                    hh = (double) (registro.getOrarioend_mattina().getTime() - registro.getOrariostart_mattina().getTime());
-                    if (registro.getOrariostart_pom() != null && registro.getOrarioend_pom() != null) {
-                        hh += (double) (registro.getOrarioend_pom().getTime() - registro.getOrariostart_pom().getTime());
-                    }
-                    totale += hh / 3600000;
-                }
-            }
-            resp.addProperty("today", today);
-            resp.addProperty("totale", totale);
-            response.getWriter().write(resp.toString());
-        } catch (Exception ex) {
-            insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
-        } finally {
-            e.close();
-        }
-    }
-
-    protected void uploadRegistrioAula(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Entity e = new Entity();
-        JsonObject resp = new JsonObject();
-        User us = (User) request.getSession().getAttribute("user");
-        try {
-            e.begin();
-
-            TipoDoc t = e.getEm().find(TipoDoc.class,
-                    10L);//10 id tipo registro aula.
-            ProgettiFormativi prg = e.getEm().find(ProgettiFormativi.class,
-                    Long.parseLong(request.getParameter("idprogetto")));
-            Docenti docente = e.getEm().find(Docenti.class,
-                    Long.parseLong(request.getParameter("docente")));
-            String[] date = request.getParameter("range").split("-");
-
-            SimpleDateFormat sdf_time = new SimpleDateFormat("HH:mm");
-            SimpleDateFormat sdf_date = new SimpleDateFormat("dd/MM/yyyy");
-
-            DocumentiPrg doc = new DocumentiPrg();
-
-            doc.setProgetto(prg);
-            doc.setDocente(docente);
-
-            if (date.length == 3) {
-                doc.setOrariostart(sdf_time.parse(date[1].trim()));
-                doc.setOrarioend(sdf_time.parse(date[2].trim()));
-                doc.setGiorno(sdf_date.parse(date[0].trim()));
-            } else {
-                doc.setOrariostart(sdf_time.parse(date[0].trim()));
-                doc.setOrarioend(sdf_time.parse(date[1].trim()));
-                doc.setGiorno(sdf_date.parse(request.getParameter("giorno")));
-            }
-
-            doc.setValidate(0);
-            doc.setOre((double) (doc.getOrarioend().getTime() - doc.getOrariostart().getTime()) / 3600000);//calcolo ore
-            prg.setOre(prg.getOre() + doc.getOre());
-            doc.setTipo(t);
-
-            Part p = request.getPart("registro");
-
-            if (p != null && p.getSubmittedFileName() != null && p.getSubmittedFileName().length() > 0) {
-                String path = e.getPath("pathDocSA_Prg").replace("@rssa", us.getSoggettoAttuatore().getId().toString()).replace("@folder", prg.getId().toString());
-                File dir = new File(path);
-                createDir(path);
-                String file_path = dir.getAbsolutePath() + File.separator + t.getDescrizione() + "_" + new SimpleDateFormat("yyyyMMddHHssSSS").format(new Date()) + p.getSubmittedFileName().substring(p.getSubmittedFileName().lastIndexOf("."));
-                p.write(file_path);
-                doc.setPath(file_path);
-            }
-
-            List<Presenti> presenti = new ArrayList<>();
-            Allievi a;
-            Date in, out;
-            sdf_time.setTimeZone(TimeZone.getTimeZone("CET"));//per fixare l'ora dei presenti
-            for (String s : request.getParameterValues("allievi[]")) {
-                a = e.getEm().find(Allievi.class,
-                        Long.parseLong(s));
-                in = sdf_time.parse(request.getParameter("time_start_" + a.getId()));
-                out = sdf_time.parse(request.getParameter("time_end_" + a.getId()));
-                presenti.add(new Presenti(a.getId(), a.getNome(), a.getCognome(), in, out, getHour(in, out)));
-            }
-            ObjectMapper mapper = new ObjectMapper();
-            doc.setPresenti(mapper.writeValueAsString(presenti));
-            e.persist(doc);
-            e.merge(prg);
-            /* controllo se tutti i documenti sono stati caricati per poter mandare il progetto avanti */
-            List<TipoDoc> tipo_obb = e.getTipoDocObbl(prg.getStato());
-            List<DocumentiPrg> doc_list = e.getDocPrg(prg);
-
-            for (DocumentiPrg doc_prg : doc_list) {
-                tipo_obb.remove(doc_prg.getTipo());
-            }
-            if (tipo_obb.isEmpty()) {
-                prg.setControllable(1);
-                e.merge(prg);
-                resp.addProperty("message", "Hai caricato tutti i documenti necessari per questa fase. Ora il progetto può essere inviato al Microcredito per essere controllato.");
-            } else {
-                resp.addProperty("message", "");
-            }
-
-            e.commit();
-            resp.addProperty("result", true);
-        } catch (Exception ex) {
-            e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA uploadRegistrioAula: " + ex.getMessage());
-            resp.addProperty("result", false);
-            resp.addProperty("message", "Errore: non &egrave; stato possibile caricare il registro.");
-        } finally {
-            e.close();
-        }
-
-        response.getWriter().write(resp.toString());
-        response.getWriter().flush();
-        response.getWriter().close();
-    }
-
-    protected void modifyRegistrioAula(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Entity e = new Entity();
-        JsonObject resp = new JsonObject();
-        try {
-            e.begin();
-            Docenti docente = e.getEm().find(Docenti.class,
-                    Long.parseLong(request.getParameter("docente")));
-            String[] date = request.getParameter("range").split("-");
-
-            SimpleDateFormat sdf_time = new SimpleDateFormat("HH:mm");
-            SimpleDateFormat sdf_date = new SimpleDateFormat("dd/MM/yyyy");
-
-            DocumentiPrg doc = e.getEm().find(DocumentiPrg.class,
-                    Long.parseLong(request.getParameter("iddoc")));
-
-            doc.setDocente(docente);
-            doc.setOrariostart(sdf_time.parse(date[1].trim()));
-            doc.setOrarioend(sdf_time.parse(date[2].trim()));
-            doc.setGiorno(sdf_date.parse(date[0].trim()));
-            doc.setValidate(0);
-            ProgettiFormativi prg = doc.getProgetto();
-            prg.setOre(prg.getOre() - doc.getOre());
-            doc.setOre((double) (doc.getOrarioend().getTime() - doc.getOrariostart().getTime()) / 3600000);//calcolo ore
-            prg.setOre(prg.getOre() + doc.getOre());
-            Part p = request.getPart("registro");
-
-            if (p != null && p.getSubmittedFileName() != null && p.getSubmittedFileName().length() > 0) {
-                p.write(doc.getPath());
-            }
-
-            List<Presenti> presenti = new ArrayList<>();
-            sdf_time.setTimeZone(TimeZone.getTimeZone("CET"));//per fixare l'ora dei presenti
-            Allievi a;
-            Date in, out;
-            for (String s : request.getParameterValues("allievi[]")) {
-                a = e.getEm().find(Allievi.class,
-                        Long.parseLong(s));
-                in = sdf_time.parse(request.getParameter("time_start_" + a.getId()));
-                out = sdf_time.parse(request.getParameter("time_end_" + a.getId()));
-                presenti.add(new Presenti(a.getId(), a.getNome(), a.getCognome(), in, out, getHour(in, out)));
-            }
-            ObjectMapper mapper = new ObjectMapper();
-            doc.setPresenti(mapper.writeValueAsString(presenti));
-            e.merge(doc);
-            e.merge(prg);
-            e.commit();
-            resp.addProperty("result", true);
-        } catch (Exception ex) {
-            e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA modifyRegistrioAula: " + ex.getMessage());
-            resp.addProperty("result", false);
-            resp.addProperty("message", "Errore: non &egrave; stato possibile modificare il registro.");
-        } finally {
-            e.close();
-        }
-
-        response.getWriter().write(resp.toString());
-        response.getWriter().flush();
-        response.getWriter().close();
-    }
-
+    
     protected void checkEmail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
@@ -2613,51 +1968,6 @@ public class OperazioniSA extends HttpServlet {
         e.close();
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(a));
-    }
-
-    protected void deleteRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/plain");
-        response.setCharacterEncoding("UTF-8");
-        JsonObject resp = new JsonObject();
-
-        Entity e = new Entity();
-
-        try {
-            e.begin();
-            ProgettiFormativi p;
-            DocumentiPrg registro = e.getEm().find(DocumentiPrg.class,
-                    Long.valueOf(request.getParameter("id")));
-            p = registro.getProgetto();
-
-            p.setOre(p.getOre() - registro.getOre());
-            registro.setDeleted(1);
-            registro.setOre(0);
-
-            registro.setOrarioend(registro.getOrariostart());
-            List<DocumentiPrg> registri_day = e.getRegisterProgetto_by_Day(registro.getGiorno(), registro.getProgetto());
-
-            registri_day.stream().filter(r -> !r.getId().equals(registro.getId())).forEach(d -> {
-                p.setOre(p.getOre() - d.getOre());
-                d.setDeleted(1);
-                d.setOre(0);
-                d.setOrarioend(d.getOrariostart());
-                e.persist(d);
-            });
-            e.persist(registro);
-            e.persist(p);
-            e.commit();
-            resp.addProperty("result", true);
-        } catch (Exception ex) {
-            e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA modifyRegistrioAula: " + ex.getMessage());
-            resp.addProperty("result", false);
-            resp.addProperty("message", "Errore: non &egrave; stato possibile modificare il registro.");
-        } finally {
-            e.close();
-        }
-
-        response.getWriter().write(resp.toString());
-        response.getWriter().flush();
-        response.getWriter().close();
     }
 
     protected void sendAsk(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -3793,10 +3103,6 @@ public class OperazioniSA extends HttpServlet {
         String idallievo = getRequestValue(request, "iduser");
         String orerendicontabili = Utility.roundFloatAndFormat(Long.parseLong(getRequestValue(request, "orerendicontabili")), true);
 
-        if (Utility.demoversion) {
-            orerendicontabili = "80";
-        }
-
         File downloadFile = null;
         try {
 
@@ -4167,392 +3473,6 @@ public class OperazioniSA extends HttpServlet {
         response.getWriter().write(resp.toString());
         response.getWriter().flush();
         response.getWriter().close();
-    }
-
-    protected void simulaconcludi(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        Entity e = new Entity();
-
-        String idpr = getRequestValue(request, "idpr");
-        String fase = getRequestValue(request, "fase");
-
-        try {
-            e.begin();
-            Long hh36 = Long.valueOf(129600000);
-//            Long hh64 = new Long(230400000);
-            ProgettiFormativi p = e.getEm().find(ProgettiFormativi.class,
-                    Long.valueOf(idpr));
-            List<Allievi> al = e.getAllieviProgettiFormativi(p);
-            List<MascheraM5> rendicontati = e.getM5Loaded_byPF(p);
-            Map<Long, Long> allievi_m5 = Utility.allieviM5_loaded(rendicontati);
-
-//            Map<Long, Long> oreRendicontabili = Action.OreRendicontabiliAlunni((int) (long) p.getId());
-            Map<Long, Long> oreRendicontabili_faseA = Action.OreRendicontabiliAlunni_faseA((int) (long) p.getId());
-
-            if (fase.equals("1")) {
-
-                for (Allievi a : al) {
-                    if (oreRendicontabili_faseA.get(a.getId()) == null || (oreRendicontabili_faseA.get(a.getId())
-                            != null && oreRendicontabili_faseA.get(a.getId()).compareTo(hh36) < 0)) {
-
-                    } else {
-                        if (allievi_m5.get(a.getId()) == null) {
-//                            System.out.println("INSERIRE () " + a.getCognome());
-
-                            MascheraM5 mask = new MascheraM5();
-                            mask.setAllievo(a);
-                            mask.setProgetto_formativo(a.getProgetto());
-                            mask.setForma_giuridica(e.getEm().find(Formagiuridica.class,
-                                    2));
-                            mask.setComune_localizzazione(e.getEm().find(Comuni.class,
-                                    5721L));
-                            mask.setSede(true);
-                            mask.setColloquio(true);
-                            mask.setFabbisogno_finanziario(1000.00);
-                            mask.setFinanziamento_richiesto_agevolazione(800.00);
-                            mask.setRagione_sociale("AZIENDA PERSONALE " + a.getCognome());
-                            mask.setIdea_impresa("esempio di descrizione idea d'impresa");
-                            mask.setMotivazione("motivazione di creazione nuova impresa");
-                            mask.setAteco(e.getEm().find(Ateco.class,
-                                    "62.02.00"));
-                            mask.setDomanda_ammissione_presente(true);
-                            mask.setDomanda_ammissione("/mnt/mcn/gestione_neet/pdf-test.pdf");
-                            mask.setNo_agevolazione(false);
-                            mask.setBando_se(true);
-                            mask.setBando_se_opzione("1");
-                            mask.setBando_sud(false);
-                            mask.setBando_reg(false);
-                            mask.setTabella_valutazionefinale_val("1=5=1.5;2=6=1.8;3=7=1.4;4=8=1.6;");
-                            mask.setTabella_valutazionefinale_punteggio(6.30);
-                            mask.setTabella_valutazionefinale_totale(9.00);
-                            mask.setTabella_premialita(true);
-                            mask.setTabella_premialita_val("1=7=2.1;2=7=2.1;3=7=1.4;4=7=1.4;");
-                            mask.setTabella_premialita_punteggio(7.00);
-                            mask.setTabella_premialita_totale(9.00);
-                            TipoDoc_Allievi tipodoc_m7 = e.getEm().find(TipoDoc_Allievi.class,
-                                    22L);
-                            Documenti_Allievi m7 = new Documenti_Allievi("/mnt/mcn/gestione_neet/pdf-test.pdf", tipodoc_m7, null, a);
-                            e.persist(m7);
-                            a.getDocumenti().add(m7);
-                            e.persist(mask);
-                            TipoDoc_Allievi tipodoc_m5 = e.getEm().find(TipoDoc_Allievi.class,
-                                    20L);
-                            Documenti_Allievi m5 = new Documenti_Allievi("/mnt/mcn/gestione_neet/pdf-test.pdf", tipodoc_m5, null, a);
-                            e.persist(m5);
-                            a.getDocumenti().add(m5);
-                            e.merge(a);
-
-                        }
-                    }
-                }
-
-            }
-            e.commit();
-        } catch (Exception ex) {
-            insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
-        } finally {
-            e.close();
-        }
-
-        redirect(request, response, request.getContextPath() + "/page/sa/concludiPrg.jsp?id=" + idpr);
-    }
-
-    protected void simulafaseb(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        JsonObject resp = new JsonObject();
-        Entity e = new Entity();
-
-        try {
-            e.begin();
-            String idpr = getRequestValue(request, "idpr");
-
-            ProgettiFormativi pr = e.getEm().find(ProgettiFormativi.class,
-                    Long.parseLong(idpr));
-
-            ModelliPrg m4 = Utility.filterModello4(pr.getModelli());
-
-            Database d1 = new Database(false);
-            d1.svuotaregistroB(idpr);
-            m4.getLezioni().forEach(lez -> {
-                d1.popolaregistro_B(pr, lez);
-            });
-            d1.closeDB();
-
-            pr.setStato(e.getEm().find(StatiPrg.class,
-                    "F"));
-            e.merge(pr);
-            e.commit();
-            resp.addProperty("result", true);
-        } catch (Exception ex) {
-            e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA abilitaModificaCalendarM3: " + ex.getMessage());
-            resp.addProperty("result", false);
-        } finally {
-            e.close();
-        }
-
-        response.getWriter().write(resp.toString());
-        response.getWriter().flush();
-        response.getWriter().close();
-
-    }
-
-    protected void simulafasea(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        JsonObject resp = new JsonObject();
-        Entity e = new Entity();
-
-        try {
-            e.begin();
-            String idpr = getRequestValue(request, "idpr");
-
-            ProgettiFormativi pr = e.getEm().find(ProgettiFormativi.class,
-                    Long.parseLong(idpr));
-
-            ModelliPrg m3 = Utility.filterModello3(pr.getModelli());
-
-            DateTime oggi = new DateTime();
-
-            Date startpr = oggi.minusDays(12).withMillisOfDay(0).toDate();
-            Date endpr = oggi.plusDays(30).withMillisOfDay(0).toDate();
-            pr.setStart(startpr);
-            pr.setEnd(endpr);
-            pr.setEnd_fa(oggi.minusDays(1).withMillisOfDay(0).toDate());
-            e.merge(pr);
-
-            Database d1 = new Database(false);
-
-            d1.svuotaregistro(idpr);
-
-            m3.getLezioni().forEach(l1 -> {
-
-                int subday = 13 - l1.getLezione_calendario().getLezione();
-                Date dest = oggi.minusDays(subday).withMillisOfDay(0).toDate();
-                l1.setGiorno(dest);
-                e.merge(l1);
-                d1.popolaregistro_A(pr, l1);
-
-            });
-
-            d1.closeDB();
-            e.commit();
-            resp.addProperty("result", true);
-
-        } catch (Exception ex) {
-            e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA abilitaModificaCalendarM3: " + ex.getMessage());
-            resp.addProperty("result", false);
-        } finally {
-            e.close();
-        }
-
-        response.getWriter().write(resp.toString());
-        response.getWriter().flush();
-        response.getWriter().close();
-
-    }
-
-    protected void simulacalendario(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        Entity e = new Entity();
-        String modello = getRequestValue(request, "modello");
-        String idpr = getRequestValue(request, "idpr");
-        try {
-            e.begin();
-
-            String idmodello = getRequestValue(request, "idmodello");
-
-            ModelliPrg m = e.getEm().find(ModelliPrg.class,
-                    Long.parseLong(idmodello));
-
-            List<LezioneCalendario> lezioniCalendario_m3 = e.getLezioniByModello(3);
-            List<LezioneCalendario> lezioniCalendario_m4 = e.getLezioniByModello(4);
-
-            List<LezioneCalendario> grouppedByLezione_m3 = Utility.grouppedByLezione(lezioniCalendario_m3);
-            List<LezioneCalendario> grouppedByLezione_m4 = Utility.grouppedByLezione(lezioniCalendario_m4);
-
-            if (modello.equals("3")) {
-                DateTime start = null;
-                for (LezioneCalendario lez : grouppedByLezione_m3) {
-
-                    Lezioni_Modelli temp = Utility.lezioneFiltered(m.getLezioni(), lez.getId());
-                    if (lez.isDoppia()) {
-                        if (temp == null) {
-                            if (start != null) {
-                                start = start.plusDays(1);
-
-                                double orastart1 = 9.0;
-
-                                double orastart2 = 16.0;
-
-                                Date giorno = start.toDate();
-                                Docenti d = m.getProgetto().getDocenti().get(0);
-
-                                double oraend1 = orastart1 + lez.getOre1();
-
-                                BigDecimal bigDecimal1 = new BigDecimal(String.valueOf(oraend1));
-
-                                int intValue1 = bigDecimal1.intValue();
-                                BigDecimal doublevalue = bigDecimal1.subtract(new BigDecimal(intValue1));
-                                String oraend1_v = String.valueOf(intValue1);
-                                if (intValue1 < 10) {
-                                    oraend1_v = "0" + oraend1_v;
-                                }
-                                if (doublevalue.doubleValue() > 0) {
-                                    oraend1_v += ":30";
-                                } else {
-                                    oraend1_v += ":00";
-                                }
-
-                                double oraend2 = orastart2 + lez.getOre2();
-                                BigDecimal bigDecimal2 = new BigDecimal(String.valueOf(oraend2));
-
-                                int intValue2 = bigDecimal2.intValue();
-                                BigDecimal doublevalue2 = bigDecimal2.subtract(new BigDecimal(intValue2));
-                                String oraend2_v = String.valueOf(intValue2);
-                                if (intValue2 < 10) {
-                                    oraend2_v = "0" + oraend2_v;
-                                }
-                                if (doublevalue2.doubleValue() > 0) {
-                                    oraend2_v += ":30";
-                                } else {
-                                    oraend2_v += ":00";
-                                }
-
-                                Date orariostart1 = new SimpleDateFormat("HH:mm").parse("09:00");
-                                Date orarioend1 = new SimpleDateFormat("HH:mm").parse(oraend1_v);
-                                Date orariostart2 = new SimpleDateFormat("HH:mm").parse("16:00");
-                                Date orarioend2 = new SimpleDateFormat("HH:mm").parse(oraend2_v);
-
-                                Lezioni_Modelli lm1 = new Lezioni_Modelli(giorno, orariostart1, orarioend1, new Date(), m, lez, d);
-                                Lezioni_Modelli lm2 = new Lezioni_Modelli(giorno, orariostart2, orarioend2, new Date(), m, lez, d);
-
-                                e.persist(lm1);
-                                e.persist(lm2);
-//                            System.out.println("LEZIONE " + lez.getLezione() + " DOPPIA DA INSERIRE " + lm1.getGiorno() + " " + lm1.getOrainizio() + " - " + lm1.getOrafine());
-//                            System.out.println("LEZIONE " + lez.getLezione() + " DOPPIA DA INSERIRE " + lm2.getGiorno() + " " + lm2.getOrainizio() + " - " + lm2.getOrafine());
-                            }
-                        } else {
-                            start = new DateTime(temp.getGiorno().getTime());
-                        }
-                    } else {
-                        if (temp == null) {
-                            if (start != null) {
-                                start = start.plusDays(1);
-                                Date giorno, orariostart, orarioend;
-                                Docenti d = m.getProgetto().getDocenti().get(0);
-                                giorno = start.toDate();
-                                orariostart = new SimpleDateFormat("HH:mm").parse("09:00");
-                                orarioend = new SimpleDateFormat("HH:mm").parse("14:00");
-                                Lezioni_Modelli lm1 = new Lezioni_Modelli(giorno, orariostart, orarioend, new Date(), m, lez, d);
-//                            System.out.println("LEZIONE " + lez.getLezione() + " DOPPIA DA INSERIRE " + lm1.getGiorno() + " " + lm1.getOrainizio() + " - " + lm1.getOrafine());
-                                e.persist(lm1);
-                            }
-                        } else {
-                            start = new DateTime(temp.getGiorno().getTime());
-                        }
-                    }
-                }
-
-                m.setStato("R");
-                e.merge(m);
-
-                e.commit();
-
-            } else {
-
-                int gruppi = Utility.numberGroupsModello4(m.getProgetto());
-
-                for (int i = 1; i <= gruppi; i++) {
-                    DateTime start = new DateTime();
-                    for (LezioneCalendario lez : grouppedByLezione_m4) {
-                        Lezioni_Modelli temp = Utility.lezioneFiltered(m.getLezioni(), lez.getId());
-                        if (temp == null) {
-                            if (lez.isDoppia()) {
-                                start = start.plusDays(1);
-
-                                double orastart1 = 9.0;
-
-                                double orastart2 = 16.0;
-
-                                Date giorno = start.toDate();
-                                Docenti d = m.getProgetto().getDocenti().get(0);
-
-                                double oraend1 = orastart1 + lez.getOre1();
-
-                                BigDecimal bigDecimal1 = new BigDecimal(String.valueOf(oraend1));
-
-                                int intValue1 = bigDecimal1.intValue();
-                                BigDecimal doublevalue = bigDecimal1.subtract(new BigDecimal(intValue1));
-                                String oraend1_v = String.valueOf(intValue1);
-                                if (intValue1 < 10) {
-                                    oraend1_v = "0" + oraend1_v;
-                                }
-                                if (doublevalue.doubleValue() > 0) {
-                                    oraend1_v += ":30";
-                                } else {
-                                    oraend1_v += ":00";
-                                }
-
-                                double oraend2 = orastart2 + lez.getOre2();
-                                BigDecimal bigDecimal2 = new BigDecimal(String.valueOf(oraend2));
-
-                                int intValue2 = bigDecimal2.intValue();
-                                BigDecimal doublevalue2 = bigDecimal2.subtract(new BigDecimal(intValue2));
-                                String oraend2_v = String.valueOf(intValue2);
-                                if (intValue2 < 10) {
-                                    oraend2_v = "0" + oraend2_v;
-                                }
-                                if (doublevalue2.doubleValue() > 0) {
-                                    oraend2_v += ":30";
-                                } else {
-                                    oraend2_v += ":00";
-                                }
-
-                                Date orariostart1 = new SimpleDateFormat("HH:mm").parse("09:00");
-                                Date orarioend1 = new SimpleDateFormat("HH:mm").parse(oraend1_v);
-                                Date orariostart2 = new SimpleDateFormat("HH:mm").parse("16:00");
-                                Date orarioend2 = new SimpleDateFormat("HH:mm").parse(oraend2_v);
-
-                                Lezioni_Modelli lm1 = new Lezioni_Modelli(giorno, orariostart1, orarioend1, new Date(), m, lez, d, i, temp.getTipolez());
-                                Lezioni_Modelli lm2 = new Lezioni_Modelli(giorno, orariostart2, orarioend2, new Date(), m, lez, d, i, temp.getTipolez());
-
-                                e.persist(lm1);
-                                e.persist(lm2);
-
-                            } else {
-                                start = start.plusDays(1);
-                                Date giorno, orariostart, orarioend;
-                                Docenti d = m.getProgetto().getDocenti().get(0);
-                                giorno = start.toDate();
-                                orariostart = new SimpleDateFormat("HH:mm").parse("09:00");
-                                orarioend = new SimpleDateFormat("HH:mm").parse("14:00");
-                                Lezioni_Modelli lm2 = new Lezioni_Modelli(giorno, orariostart, orarioend,
-                                        new Date(), m, lez, d, i, temp.getTipolez());
-                                e.persist(lm2);
-                            }
-                        } else {
-                            start = new DateTime(temp.getGiorno().getTime());
-                        }
-
-                    }
-
-                }
-                m.setStato("R");
-                e.merge(m);
-
-                e.commit();
-            }
-
-        } catch (Exception ex) {
-            insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
-        } finally {
-            e.close();
-        }
-
-        redirect(request, response, request.getContextPath() + "/page/sa/modello" + modello + ".jsp?id=" + idpr);
-
     }
 
     protected void addregistro(HttpServletRequest request, HttpServletResponse response)
@@ -5026,30 +3946,6 @@ public class OperazioniSA extends HttpServlet {
                 case "goNext":
                     goNext(request, response);
                     break;
-                case "setEsitoAllievo":
-                    setEsitoAllievo(request, response);
-                    break;
-                case "uploadRegistro":
-                    uploadRegistro(request, response);
-                    break;
-                case "modifyRegistro":
-                    modifyRegistro(request, response);
-                    break;
-                case "getTotalHoursRegistriByAllievo":
-                    getTotalHoursRegistriByAllievo(request, response);
-                    break;
-                case "uploadDocPrg_FaseB":
-                    uploadDocPrg_FaseB(request, response);
-                    break;
-                case "modifyDocPrg_FaseB":
-                    modifyDocPrg_FaseB(request, response);
-                    break;
-                case "uploadRegistrioAula":
-                    uploadRegistrioAula(request, response);
-                    break;
-                case "modifyRegistrioAula":
-                    modifyRegistrioAula(request, response);
-                    break;
                 case "checkEmail":
                     checkEmail(request, response);
                     break;
@@ -5058,9 +3954,6 @@ public class OperazioniSA extends HttpServlet {
                     break;
                 case "getCodiceCatastaleComune":
                     getCodiceCatastaleComune(request, response);
-                    break;
-                case "deleteRegister":
-                    deleteRegister(request, response);
                     break;
                 case "sendAsk":
                     sendAsk(request, response);
@@ -5143,18 +4036,6 @@ public class OperazioniSA extends HttpServlet {
                 case "uploadModello1":
                     uploadModello1(request, response);
                     break;
-                case "simulacalendario":
-                    simulacalendario(request, response);
-                    break;
-                case "simulafasea":
-                    simulafasea(request, response);
-                    break;
-                case "simulafaseb":
-                    simulafaseb(request, response);
-                    break;
-                case "simulaconcludi":
-                    simulaconcludi(request, response);
-                    break;
                 case "generaterandomAllievi":
                     generaterandomAllievi(request, response);
                     break;
@@ -5204,15 +4085,6 @@ public class OperazioniSA extends HttpServlet {
 
     private double getHour(Date in, Date out) {
         return ((double) (out.getTime() - in.getTime()) / 3600000);
-    }
-
-    private boolean checkFaseAllievi(List<Allievi> allievi) {
-        for (Allievi a : allievi) {
-            if (a.getEsito().equals("Fase B")) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private checkResult checkScadenze(ProgettiFormativi prg) {

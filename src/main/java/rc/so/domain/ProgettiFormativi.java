@@ -7,29 +7,29 @@ package rc.so.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import rc.so.util.Fadroom;
+import rc.so.entity.Fadroom;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
@@ -139,7 +139,7 @@ public class ProgettiFormativi implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "id_checklist_finale")
-    private checklist_finale checklist_finale;
+    private Checklist_finale checklist_finale;
 
     @Column(name = "pdfunico")
     private String pdfunico;
@@ -522,11 +522,11 @@ public class ProgettiFormativi implements Serializable {
         this.staff_modelli = staff_modelli;
     }
 
-    public checklist_finale getChecklist_finale() {
+    public Checklist_finale getChecklist_finale() {
         return checklist_finale;
     }
 
-    public void setChecklist_finale(checklist_finale checklist_finale) {
+    public void setChecklist_finale(Checklist_finale checklist_finale) {
         this.checklist_finale = checklist_finale;
     }
 

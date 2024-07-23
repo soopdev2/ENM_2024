@@ -10,16 +10,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import rc.so.db.Action;
-import static rc.so.db.Action.insertTR;
+import static rc.so.util.Action.insertTR;
 import rc.so.db.Database;
 import rc.so.db.Entity;
 import rc.so.domain.Allievi;
-import rc.so.domain.Attivita;
 import rc.so.domain.TipoFaq;
 import rc.so.domain.CPI;
 import rc.so.domain.Comuni;
-import rc.so.domain.CpiUser;
 import rc.so.domain.Docenti;
 import rc.so.domain.DocumentiPrg;
 import rc.so.domain.Documenti_Allievi;
@@ -40,7 +37,7 @@ import rc.so.domain.TipoDoc;
 import rc.so.domain.TipoDoc_Allievi;
 import rc.so.domain.UnitaDidattiche;
 import rc.so.domain.User;
-import rc.so.util.Fadroom;
+import rc.so.entity.Fadroom;
 import rc.so.util.Utility;
 import static rc.so.util.Utility.estraiEccezione;
 import static rc.so.util.Utility.writeJsonResponseR;
@@ -53,11 +50,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.StringUtils;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -123,9 +119,6 @@ public class QueryMicro extends HttpServlet {
         Entity e = new Entity();
         try {
             List<Allievi> list = e.getAllievidaAssegnare();
-            list.stream().forEach((l) -> {
-                Utility.setOreLezioni(l);
-            });
             writeJsonResponse(response, list);
         } catch (Exception ex) {
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
@@ -144,15 +137,7 @@ public class QueryMicro extends HttpServlet {
             String cognome = request.getParameter("cognome") == null ? "" : request.getParameter("cognome");
             String cf = request.getParameter("cf") == null ? "" : request.getParameter("cf");
             String flag_pregresso = request.getParameter("pregresso");
-            List<Allievi> list = new ArrayList();
-
-            if (flag_pregresso.equals("0") || flag_pregresso.equals("")) {
-                list = e.getAllievi(sa, c, nome, cognome, cf);
-                list.stream().forEach((l) -> {
-                    Utility.setOreLezioni(l);
-                });
-            }
-
+            List<Allievi> list = e.getAllievi(sa, c, nome, cognome, cf);
             writeJsonResponse(response, list);
 
         } catch (Exception ex) {
@@ -258,32 +243,6 @@ public class QueryMicro extends HttpServlet {
         try {
             ProgettiFormativi p = e.getEm().find(ProgettiFormativi.class, Long.valueOf(request.getParameter("idprogetto")));
             List<Allievi> list = e.getAllieviProgettiFormativiAll(p);
-            writeJsonResponse(response, list);
-
-        } catch (Exception ex) {
-            insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
-        } finally {
-            e.close();
-        }
-    }
-
-    protected void searchMappaAllievi(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Entity e = new Entity();
-        try {
-            ProgettiFormativi p = e.getEm().find(ProgettiFormativi.class, Long.parseLong(request.getParameter("idprogetto")));
-            List<Allievi> list = e.getAllieviProgettiFormativi(p);
-//            List<Allievi> list = e.getAllieviProgettiFormativiAll(p);
-//            Long hh36 = new Long(129600000);
-            Map<Long, Long> oreRendicontabili_faseA = Action.OreRendicontabiliAlunni_faseA((int) (long) p.getId());
-
-            list.forEach(al1 -> {
-                if (oreRendicontabili_faseA.get(al1.getId()) == null) {
-                    al1.setOrerendicontabili("0");
-                } else {
-                    al1.setOrerendicontabili(Utility.roundFloatAndFormat(oreRendicontabili_faseA.get(al1.getId()), true));
-                }
-            });
-
             writeJsonResponse(response, list);
 
         } catch (Exception ex) {
@@ -643,32 +602,6 @@ public class QueryMicro extends HttpServlet {
         }
     }
 
-    protected void searchActivity(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Entity e = new Entity();
-        try {
-            List<Comuni> comuni = new ArrayList<>();
-
-            if (!request.getParameter("regione").equals("-")) {
-                if (!request.getParameter("provincia").equals("-")) {
-                    if (!request.getParameter("comune").equals("-")) {//singolo comune
-                        comuni.add((Comuni) e.getEm().find(Comuni.class, Long.parseLong(request.getParameter("comune"))));
-                    } else {//lista comuni provincia
-                        comuni = e.listaComunibyProvincia(request.getParameter("provincia"));
-                    }
-                } else {// lista comuni regione
-                    comuni = e.listaComunibyRegione(request.getParameter("regione"));
-                }
-            }
-
-            List<Attivita> list = e.getAttivita(request.getParameter("nome"), comuni);
-            writeJsonResponse(response, list);
-        } catch (Exception ex) {
-            insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
-        } finally {
-            e.close();
-        }
-    }
-
     protected void getDocente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
         response.setHeader("Content-Type", "application/json");
@@ -703,18 +636,6 @@ public class QueryMicro extends HttpServlet {
         Entity e = new Entity();
         try (PrintWriter out = response.getWriter();) {
             out.print(e.getLAST_CIP());
-        }
-    }
-
-    protected void searchCpiUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Entity e = new Entity();
-        try {
-            List<CpiUser> list = e.findAll(CpiUser.class);
-            writeJsonResponse(response, list);
-        } catch (Exception ex) {
-            insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
-        } finally {
-            e.close();
         }
     }
 
@@ -906,9 +827,6 @@ public class QueryMicro extends HttpServlet {
                 case "searchAllieviProgetti":
                     searchAllieviProgetti(request, response);
                     break;
-                case "searchMappaAllievi":
-                    searchMappaAllievi(request, response);
-                    break;
                 case "searchSedi":
                     searchSedi(request, response);
                     break;
@@ -951,14 +869,8 @@ public class QueryMicro extends HttpServlet {
                 case "getFAD":
                     getFAD(request, response);
                     break;
-                case "searchActivity":
-                    searchActivity(request, response);
-                    break;
                 case "getDocente":
                     getDocente(request, response);
-                    break;
-                case "searchCpiUser":
-                    searchCpiUser(request, response);
                     break;
                 case "searchUnitaDidattiche":
                     searchUnitaDidattiche(request, response);

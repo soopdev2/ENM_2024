@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rc.so.db;
+package rc.so.entity;
 
 import rc.so.util.Utility;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -208,12 +208,7 @@ public class Registro_completo {
         this.orelogin = orelogin;
         this.orelogout = orelogout;
         this.totaleore = totaleore;
-        if (Utility.demoversion && totaleorerendicontabili > 18000000L) {
-            this.totaleorerendicontabili = 18000000L;
-        } else {
-            this.totaleorerendicontabili = totaleorerendicontabili;
-        }
-
+        this.totaleorerendicontabili = totaleorerendicontabili;
         this.idutente = idutente;
     }
 

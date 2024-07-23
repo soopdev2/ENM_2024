@@ -412,14 +412,6 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        <%if (Utility.demoversion) {%>
-                                        <div class="row flex col-lg-12"  style="margin-right: 0px; padding-right: 0px;">
-                                            <div class="col-xl-4 col-lg-12 col-md-6">
-                                                <a href="<%=request.getContextPath()%>/OperazioniSA?type=resetdatidemo" 
-                                                   class="btn btn-dark kt-font-bold"><i class="fa fa-times"></i> RESET DATI DEMO</a>
-                                            </div>
-                                        </div>
-                                        <%}%>
                                         <div class="row flex col-lg-12"  style="margin-right: 0px; padding-right: 0px;">
                                             <%if (today.after(us.getSoggettoAttuatore().getScadenza())) {%>
                                             <div class="col-xl-4 col-lg-12 col-md-6">

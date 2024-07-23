@@ -1,7 +1,7 @@
 <%-- 
     Document   : profile
     Created on : 18-set-2019, 12.31.26
-    Author     : agodino
+    Author     : smo
 --%>
 <%@page import="rc.so.domain.Allievi"%>
 <%@page import="rc.so.util.Utility"%>
@@ -339,16 +339,6 @@
                                                   action="<%=request.getContextPath()%>/OperazioniSA?type=newAllievo" 
                                                   style="padding-top: 0;"  method="post" enctype="multipart/form-data">
                                                 <input type="hidden" name="save" id="save" value="0" />
-                                                <%if (Utility.demoversion) {%>
-                                                <div class="kt-portlet__head">
-                                                    <div class="kt-portlet__head-label">
-                                                        <h3 class="kt-portlet__head-title">
-                                                            <a href="<%=request.getContextPath()%>/OperazioniSA?type=generaterandomAllievi" 
-                                                               class="btn btn-dark kt-font-bold"><i class="fa fa-user"></i> INSERISCI 5 ALLIEVI RANDOM</a>
-                                                        </h3>
-                                                    </div>
-                                                </div>
-                                                <%}%>
                                                 <div class="kt-portlet__body">
                                                     <div class="kt-section kt-section--space-md">
                                                         <div class="form-group form-group-sm row">

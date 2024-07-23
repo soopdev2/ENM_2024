@@ -7,17 +7,17 @@ package rc.so.domain;
 
 import static rc.so.util.Utility.cp_toUTF;
 import java.io.Serializable;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 /**
  *
@@ -44,8 +44,6 @@ public class Comuni implements Serializable {
     private Long id;
     @Column(name = "nome")
     private String nome;
-//    @Column(name = "cap")
-//    private int cap;
     @Column(name = "provincia")
     private String provincia;
     @Column(name = "nome_provincia")
@@ -64,10 +62,6 @@ public class Comuni implements Serializable {
     private int cittadinanza;
     @Column(name = "codicicatastali_altri")
     private String codicicatastali_altri;
-
-    @OneToOne(mappedBy = "id", cascade = CascadeType.MERGE,
-            fetch = FetchType.LAZY, optional = false)
-    private ComuniCoord coordinate;
 
     public Long getId() {
         return id;
@@ -155,14 +149,6 @@ public class Comuni implements Serializable {
 
     public void setCodicicatastali_altri(String codicicatastali_altri) {
         this.codicicatastali_altri = codicicatastali_altri;
-    }
-
-    public ComuniCoord getCoordinate() {
-        return coordinate;
-    }
-
-    public void setCoordinate(ComuniCoord coordinate) {
-        this.coordinate = coordinate;
     }
 
     @Override

@@ -7,7 +7,7 @@ package rc.so.entity;
 
 /**
  *
- * @author dolivo
+ * @author smo
  */
 public class Item {
 

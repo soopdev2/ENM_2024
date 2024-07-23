@@ -1,5 +1,5 @@
 
-import rc.so.db.Action;
+import rc.so.util.Action;
 import rc.so.db.Entity;
 import rc.so.domain.MascheraM5;
 import rc.so.domain.ProgettiFormativi;

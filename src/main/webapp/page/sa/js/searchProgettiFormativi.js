@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 var context = document.getElementById("searchProgettiFormativi").getAttribute("data-context");
-var demoversion = document.getElementById("searchProgettiFormativi").getAttribute("data-demoversion");
 $.getScript(context + '/page/partialView/partialView.js', function () {});
 var ore_max_daily = document.getElementById("ore_max").getAttribute("data-context");
 var mapM4_start = new Map();
@@ -106,11 +105,6 @@ var KTDatatablesDataSourceAjaxServer = function () {
                                 }
                             } else if (row.stato.id === "ATB") {
                                 option += '<a class="dropdown-item fancyBoxReload" href="modello4.jsp?id=' + row.id + '"><i class="fa fa-calendar-check"></i> Visualizza/Modifica Calendario Modello 4</a>';
-                                if (demoversion === 'true') {
-                                    option += '<a class="dropdown-item kt-font-dark" href="javascript:void(0);" onclick="simulafaseB(' + row.id +
-                                            ')"> SIMULA lezioni Fase B &nbsp;<i class="fa fa-angle-double-right kt-font-dark" style="margin-top:-2px"></i></a>';
-                                }
-                            
                             } else if (row.stato.id === "F") {
                                 option += '<a class="dropdown-item fancyBoxReload" href="modello4.jsp?id=' + row.id + '"><i class="fa fa-calendar-check"></i> Visualizza Calendario Modello 4</a>';
                                 option += '<a class="dropdown-item" href="concludiPrg.jsp?id=' + row.id + '"><i class="fa fa-angle-double-right"></i> Concludi Progetto</a>';

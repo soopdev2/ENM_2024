@@ -338,16 +338,6 @@
                                         <form id="kt_form" action="<%=request.getContextPath()%>/OperazioniSA?type=addDocente" 
                                               class="kt-form kt-form--label-right" method="post" enctype="multipart/form-data">
                                             <input type="hidden" name="save" id="save" value="0" />
-                                            <%if (Utility.demoversion) {%>
-                                            <div class="kt-portlet__head">
-                                                <div class="kt-portlet__head-label">
-                                                    <h3 class="kt-portlet__head-title">
-                                                        <a href="<%=request.getContextPath()%>/OperazioniSA?type=generaterandomDocenti" 
-                                                           class="btn btn-dark kt-font-bold"><i class="fa fa-user"></i> INSERISCI DOCENTE RANDOM</a>
-                                                    </h3>
-                                                </div>
-                                            </div>
-                                            <%}%>
                                             <div class="kt-portlet__body">
                                                 <h5>ANAGRAFICA</h5>
                                                 <p1>tutti i campi sono obbligatori* </p1>

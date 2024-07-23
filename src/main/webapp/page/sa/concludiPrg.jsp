@@ -248,12 +248,6 @@
                                                         <!--step: 1-->
                                                         <div class="kt-wizard-v1__content" id="step1" data-ktwizard-type="step-content" data-ktwizard-state="current">
                                                             <div class="kt-form__section kt-form__section--first">
-                                                                <%if (Utility.demoversion) {%>
-                                                                <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>   
-                                                                <a href="<%=request.getContextPath()%>/OperazioniSA?type=simulaconcludi&fase=1&idpr=<%=p.getId()%>" class="btn btn-dark kt-font-bold"><i class="fa fa-user"></i> SIMULA RENDICONTO ALLIEVI</a>
-                                                                <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                                                <%}%>
-
                                                                 <div class="kt-wizard-v1__form" style="color: #6c7293; min-height: 40vh">
                                                                     <%for (Allievi a : al) {
                                                                             if (oreRendicontabili_faseA.get(a.getId()) == null || (oreRendicontabili_faseA.get(a.getId())
