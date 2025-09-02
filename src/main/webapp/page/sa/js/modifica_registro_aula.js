@@ -5,10 +5,10 @@
  */
 var context = document.getElementById("restristro_aula").getAttribute("data-context");
 
-var offset = moment().utcOffset()*60*1000;
+var offset = moment().utcOffset() * 60 * 1000;
 
-if(new Date().getHours() - new Date().getUTCHours()==2){//tolgo 1 ora per compensare ora legale
-    offset=offset-(60*1000);
+if (new Date().getHours() - new Date().getUTCHours() == 2) {//tolgo 1 ora per compensare ora legale
+    offset = offset - (60 * 1000);
 }
 
 
@@ -35,8 +35,8 @@ if (millis_my_end == 0 && millis_my_start == 0) {
     my_start = start;
     my_end = end;
 } else {
-    my_start = new Date(millis_day + millis_my_start+offset);
-    my_end = new Date(millis_day + millis_my_end+offset);
+    my_start = new Date(millis_day + millis_my_start + offset);
+    my_end = new Date(millis_day + millis_my_end + offset);
 }
 
 var min_time = "", max_time = "";//sono l'ora inizio e fine della darate della lezione. serve per fare i controlli sul singolo ragazzo.
@@ -183,3 +183,35 @@ function setStartEnd(json) {
         $("#time_end_" + j.id).val(getTime(new Date(j.end)));
     });
 }
+
+function controlTotHour() {
+    if ((ore + calculateHour()) > ore_max) {
+        fastSwalShow("<h2>Superate le " + ore_max + " h giornaliere</h2>");
+        $('#range2').removeClass("is-valid").addClass("is-invalid");
+        $('input.time-a').removeClass("is-valid").addClass("is-invalid");
+        return true;
+    } else if ((ore_attuali + calculateHour()) > ore_max_tot) {
+        fastSwalShow("<h2>Superate le " + ore_max_tot + " h tot.<br> Max h disponibili " + (ore_max_tot - ore_attuali) + "</h2>");
+        $('#range2').removeClass("is-valid").addClass("is-invalid");
+        $('input.time-a').removeClass("is-valid").addClass("is-invalid");
+        return true;
+    }
+    return false;
+}
+
+function calculateHour() {
+    var range = $('#range2').val().split("-");
+    var h1 = range[1].trim().split(":");
+    var h2 = range[2].trim().split(":");
+    return (new Date("00", "00", "00", h2[0], h2[1]).getTime() - new Date("00", "00", "00", h1[0], h1[1]).getTime()) / 3600000;
+
+}
+
+jQuery(document).ready(function () {
+    var range2 = $('#range2').val().split("-");
+    min_time = range2[1].trim(), max_time = range2[2].trim();
+    ingressiAllevi();
+    $('#range2').trigger("change");
+    $(".time-a.in").trigger("change");
+    setStartEnd(l_presenti);
+});

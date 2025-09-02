@@ -108,7 +108,7 @@
             </div>
         </div>
 
-        <script src="assets/soop/js/jquery-3.6.1.js" type="text/javascript"></script>
+        <script src="assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
         <script src="assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
         <script src="assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>

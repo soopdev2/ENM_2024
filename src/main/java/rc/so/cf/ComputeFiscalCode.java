@@ -13,13 +13,7 @@ import static rc.so.cf.NameAndSurnameComputations.pickFirstTwoConsonantsAndFirst
 import static rc.so.db.Action.insertTR;
 import static rc.so.util.Utility.estraiEccezione;
 import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 
 

@@ -321,7 +321,7 @@
         <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
             <i class="fa fa-arrow-up"></i>
         </div>
-        <script src="<%=src%>/assets/soop/js/jquery-3.6.1.js" type="text/javascript"></script>
+        <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
@@ -337,6 +337,7 @@
         <script src="<%=src%>/assets/vendors/general/sweetalert2/dist/sweetalert2.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/utility.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/app/bundle/app.bundle.js" type="text/javascript"></script>
+        <script src="js/docaggiuntiva.js" type="text/javascript"></script>
         <!--this page-->
         <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/bootstrap-datepicker.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
@@ -358,44 +359,7 @@
                                                             }
                                                         }
                                                     };
-                                                    function changesino() {
-
-                                                        try {
-                                                            var sino = $('#tos_m0_volonta').val();
-                                                            if (sino === "1") {
-                                                                document.getElementById("div_volontasi").style.display = "";
-                                                                document.getElementById("div_volontano").style.display = "none";
-                                                            } else {
-                                                                document.getElementById("div_volontasi").style.display = "none";
-                                                                document.getElementById("div_volontano").style.display = "";
-
-                                                            }
-                                                        } catch (e) {
-                                                            console.error(e);
-                                                        }
-
-
-
-
-                                                    }
-                                                    function changealtro() {
-
-                                                        try {
-                                                            var noper = $('#tos_m0_noperche').val();
-                                                            if (noper === "7") {
-                                                                document.getElementById("div_altrospec").style.display = "";
-                                                            } else {
-                                                                document.getElementById("div_altrospec").style.display = "none";
-                                                            }
-                                                        } catch (e) {
-                                                            console.error(e);
-                                                        }
-                                                    }
-
-                                                    jQuery(document).ready(function () {
-                                                        changesino();
-                                                        changealtro();
-                                                    });
+                                                  
         </script>
     </body>
 </html>

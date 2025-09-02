@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
-import javax.persistence.TypedQuery;
+import jakarta.persistence.TypedQuery;
 import static org.apache.commons.io.FilenameUtils.separatorsToSystem;
 
 /**

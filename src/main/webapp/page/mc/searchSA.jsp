@@ -468,8 +468,12 @@
         <div id="kt_scrolltop"style="background-color: #0059b3" class="kt-scrolltop">
             <i class="fa fa-arrow-up"></i>
         </div>
+        
+        
+        <input type="hidden" id="context" value="<%=request.getContextPath()%>">
+        
         <script src="<%=src%>/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/soop/js/jquery-3.6.1.js" type="text/javascript"></script>
+        <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
@@ -486,6 +490,7 @@
         <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/bootstrap-datepicker.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
         <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
+        <script src="js/searchSA.js" type="text/javascript"></script>
 
         <script type="text/javascript">
                                                                         var KTAppOptions = {
@@ -619,13 +624,7 @@
                     const ps = new PerfectScrollbar($(this)[0], {suppressScrollY: true});
                 });
             });
-            function refresh() {
-                $("#toolbar").css("display", "none");
-                $('html, body').animate({scrollTop: $('#offsetresult').offset().top}, 500);
-                load_table($('#kt_table_1'), '<%=request.getContextPath()%>/QueryMicro?type=searchSA&ragionesociale=' + $('#ragionesociale').val()
-                        + '&protocollo=' + $('#protocollo').val() + '&piva=' + $('#piva').val() + '&cf=' + $('#cf').val() + '&protocollare='
-                        + $('input[name=protocollare]:checked').val() + '&nome=' + $('#nome').val() + '&cognome=' + $('#cognome').val());
-            }
+            
 
             function uploadPec(idsa, rs, piva, cf) {
 
@@ -713,26 +712,7 @@
                 );
             }
 
-            function upDoc(id, fdata) {
-                $.ajax({
-                    type: "POST",
-                    url: '<%=request.getContextPath()%>/OperazioniMicro?type=uploadPec&idsa=' + id,
-                    data: fdata,
-                    processData: false,
-                    contentType: false,
-                    success: function (data) {
-                        var json = JSON.parse(data);
-                        if (json.result) {
-                            swalSuccessReload("Documento Caricato", "Operazione effettuata con successo");
-                        } else {
-                            swalError("Errore", json.message);
-                        }
-                    },
-                    error: function () {
-                        swalError("Errore", "Non è stato possibile caricare il documento");
-                    }
-                });
-            }
+          
 
             $(document).on('change', '#piva_sa', function (e) {
                 $("#warning_iva").css("display", "none");
@@ -754,55 +734,8 @@
                 }
             });
 
-            function pivaPresent() {
-                var err;
-                if ($('#piva_sa').val() != $('#prevpiva').val()) {
-                    $.ajax({
-                        type: "GET",
-                        async: false,
-                        url: '<%=request.getContextPath()%>/OperazioniMicro?type=checkPiva&piva=' + $('#piva_sa').val(),
-                        success: function (data) {
-                            if (data != null && data != 'null') {
-                                $('#warning_iva').css("display", "");
-                                $('#piva_sa').attr("class", "form-control is-invalid");
-                                err = true;
-                            } else {
-                                $("#warning_iva").css("display", "none");
-                                $('#piva_sa').attr("class", "form-control is-valid");
-                                err = false;
-                            }
-                        }
-                    });
-                } else {
-                    err = false;
-                }
-                return err;
-            }
-
-            function CFPresent() {
-                var err;
-                if ($('#cf_sa').val() != $('#prevcf').val()) {
-                    $.ajax({
-                        type: "GET",
-                        async: false,
-                        url: '<%=request.getContextPath()%>/OperazioniMicro?type=checkCF&cf=' + $('#cf_sa').val(),
-                        success: function (data) {
-                            if (data != null && data != 'null') {
-                                $('#warning_cf').css("display", "");
-                                $('#cf_sa').attr("class", "form-control is-invalid");
-                                err = true;
-                            } else {
-                                $("#warning_cf").css("display", "none");
-                                $('#cf_sa').attr("class", "form-control is-valid");
-                                err = false;
-                            }
-                        }
-                    });
-                } else {
-                    err = false;
-                }
-                return err;
-            }
+            
+            
         </script>
     </body>
 </html>

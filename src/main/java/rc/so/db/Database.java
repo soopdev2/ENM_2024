@@ -76,15 +76,15 @@ public class Database {
         String host;
         if (bando) {
             if (test) {
-                host = conf.getString("db.host") + ":3306/toscana";
+                host = conf.getString("db.host") + ":3306/enm_gestione_toscana_prod";
             } else {
-                host = conf.getString("db.host") + ":3306/toscana";
+                host = conf.getString("db.host") + ":3306/enm_gestione_toscana_prod";
             }
         } else {
             if (test) {
-                host = conf.getString("db.host") + ":3306/toscana";
+                host = conf.getString("db.host") + ":3306/enm_gestione_toscana_prod";
             } else {
-                host = conf.getString("db.host") + ":3306/toscana";
+                host = conf.getString("db.host") + ":3306/enm_gestione_toscana_prod";
             }
         }
 

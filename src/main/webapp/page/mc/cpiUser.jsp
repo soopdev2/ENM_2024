@@ -28,12 +28,12 @@
         <script src="<%=src%>/resource/webfont.js"></script>
         <script>
             WebFont.load({
-                google: {
-                    "families": ["Poppins:300,400,500,600,700", "Roboto:300,400,500,600,700"]
-                },
-                active: function () {
+            google: {
+            "families": ["Poppins:300,400,500,600,700", "Roboto:300,400,500,600,700"]
+            },
+                    active: function () {
                     sessionStorage.fonts = true;
-                }
+                    }
             });
         </script>
 
@@ -127,8 +127,11 @@
         <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
             <i class="fa fa-arrow-up"></i>
         </div>
+
+        <input type="hidden" id="context" value="<%=request.getContextPath()%>">
+
         <!--begin:: Global Mandatory Vendors -->
-        <script src="<%=src%>/assets/soop/js/jquery-3.6.1.js" type="text/javascript"></script>
+        <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
@@ -144,94 +147,31 @@
         <!-- this page -->
         <script src="<%=src%>/assets/vendors/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/loadTable.js" type="text/javascript">
+            <script src="js/cpiUser.js" type="text/javascript">
         </script>
         <script type="text/javascript">
-            var KTAppOptions = {
-                "colors": {
-                    "state": {
-                        "brand": "#5d78ff",
-                        "dark": "#282a3c",
-                        "light": "#ffffff",
-                        "primary": "#5867dd",
-                        "success": "#34bfa3",
-                        "info": "#36a3f7",
-                        "warning": "#ffb822"
-                    },
-                    "base": {
-                        "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                        "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                    }
-                }
-            };
-        </script>
-        <script>
-            var context = '<%=request.getContextPath()%>';
-
-            var KTDatatablesDataSourceAjaxServer = function () {
-                var initTable1 = function () {
-                    var table = $('#kt_table_1');
-                    table.DataTable({
-                        dom: `<'row'<'col-sm-12'ftr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-                        lengthMenu: [5, 10, 25, 50],
-                        language: {
-                            'lengthMenu': 'Mostra _MENU_',
-                            "infoEmpty": "Mostrati 0 di 0 per 0",
-                            "loadingRecords": "Caricamento...",
-                            "search": "Cerca:",
-                            "zeroRecords": "Nessun risultato trovato",
-                            "info": "Mostrati _START_ di _TOTAL_ ",
-                            "emptyTable": "Nessun risultato",
-                            "sInfoFiltered": "(filtrato su _MAX_ risultati totali)"
-                        },
-//                        responsive: true,
-                        ScrollX: "100%",
-                        sScrollXInner: "110%",
-                        searchDelay: 500,
-                        processing: true,
-                        pageLength: 10,
-                        ajax: context + '/QueryMicro?type=searchCpiUser',
-                        order: [],
-                        columns: [
-//                            {defaultContent: ''},
-                            {data: 'nome', className: 'text-center'},
-                            {data: 'cognome', className: 'text-center'},
-                            {data: 'email', className: 'text-center'},
-                            {data: 'cpi.descrizione', className: 'text-center'},
-                        ],
-                        drawCallback: function () {
-                            $('[data-toggle="kt-tooltip"]').tooltip();
-                        },
-                        rowCallback: function (row, data) {
-                            $(row).attr("id", "row_" + data.id);
-                        },
-                        columnDefs: []
-                    }).columns.adjust();
+        
+                var KTAppOptions = {
+                            "colors": {
+                            "state": {
+                            "brand": "#5d78ff",
+                                    "dark": "#282a3c",
+                                    "light": "#ffffff",
+                                    "primary": "#5867dd",
+                                    "success": "#34bfa3",
+                                    "info": "#36a3f7",
+                                    "warning": "#ffb822"
+                            },
+                                    "base": {
+                                    "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                                            "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                                    }
+                            }
                 };
-                return {
-                    init: function () {
-                        initTable1();
-                    },
-                };
-            }();
+            </script>
 
-            jQuery(document).ready(function () {
-                KTDatatablesDataSourceAjaxServer.init();
-                $('.kt-scroll-x').each(function () {
-                    const ps = new PerfectScrollbar($(this)[0], {suppressScrollY: true});
-                });
-            });
-            function refresh() {
-                $('html, body').animate({scrollTop: $('#offsetresult').offset().top}, 500);
-                load_table($('#kt_table_1'), '<%=request.getContextPath()%>/QueryMicro?type=searchCpiUser');
-            }
-
-            function reload() {
-                $('html, body').animate({scrollTop: $('#offsetresult').offset().top}, 500);
-                reload_table($('#kt_table_1'));
-            }
-        </script>
-    </body>
-</html>
+        </body>
+    </html>
 <%
         }
     }

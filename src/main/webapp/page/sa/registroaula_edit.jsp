@@ -406,7 +406,7 @@
 <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
     <i class="fa fa-arrow-up"></i>
 </div>
-<script src="<%=src%>/assets/soop/js/jquery-3.6.1.js" type="text/javascript"></script>
+<script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
 <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
 <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
@@ -432,6 +432,7 @@
 <link href="<%=src%>/assets/soop/css/jquery.fancybox.min.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="<%=src%>/assets/soop/js/jquery.fancybox.min.js"></script>
 <script type="text/javascript" src="<%=src%>/assets/soop/js/fancy.js"></script>
+<script type="text/javascript" src="../sa/js/registroaula_edit.js"></script>
 <input type="hidden" id="systemtype" value="<%=Utility.iswindows()%>" />
 <script type="text/javascript" src="../../assets/DOMPurify/src/purify.js"></script>
 <script type="text/javascript">
@@ -452,46 +453,8 @@
                                                                     }
                                                                 }
                                                             };
-                                                            function getMaxhours(idselect, check) {
-                                                                var selected_2 = $('#' + idselect).val();
-                                                                $('#form_add select').each(
-                                                                        function (index) {
-                                                                            var input = $(this);
-                                                                            var ew = '_docereg';
-                                                                            if (check) {
-                                                                                ew = '_docereg_' + idselect.split("_")[2];
-                                                                            }
-                                                                            if (input.attr('id').endsWith(ew)) {
-                                                                                var selected = $('#' + input.attr('id')).val();
-                                                                                if (BigInt(selected_2) > BigInt(selected)) {
-                                                                                    $('#' + idselect).val(selected).trigger('change');
-                                                                                    $('#modaltexterror').html("Le ore dell'allievo non possono superare quelle del docente della lezione (<b>"
-                                                                                            + $("#" + input.attr('id') + " option:selected").text() + "</b>).");
-                                                                                    $('#modalerror').modal('toggle');
-                                                                                    return false;
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                );
-                                                            }
-                                                            function setMaxhours(idselect, check) {
-                                                                var selected = $('#' + idselect).val();
-                                                                $('#form_add select').each(
-                                                                        function (index) {
-                                                                            var input = $(this);
-                                                                            var ew = '_allreg';
-                                                                            if (check) {
-                                                                                ew = '_allreg_' + idselect.split("_")[2];
-                                                                            }
-                                                                            if (input.attr('id').endsWith(ew)) {
-                                                                                var selected_2 = $('#' + input.attr('id')).val();
-                                                                                if (BigInt(selected_2) > BigInt(selected)) {
-                                                                                    $('#' + input.attr('id')).val(selected).trigger('change');
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                );
-                                                            }
+                                                            
+                                                            
                                                             
 
 </script>

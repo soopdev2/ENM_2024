@@ -197,7 +197,7 @@
         <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
             <i class="fa fa-arrow-up"></i>
         </div>
-        <script src="<%=src%>/assets/soop/js/jquery-3.6.1.js" type="text/javascript"></script>
+        <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
@@ -259,28 +259,7 @@
                 controlTotHour();
             });
 
-            function controlTotHour() {
-                if ((ore + calculateHour()) > ore_max) {
-                    fastSwalShow("<h2>Superate le " + ore_max + " h giornaliere</h2>");
-                    $('#range2').removeClass("is-valid").addClass("is-invalid");
-                    $('input.time-a').removeClass("is-valid").addClass("is-invalid");
-                    return true;
-                } else if ((ore_attuali + calculateHour()) > ore_max_tot) {
-                    fastSwalShow("<h2>Superate le " + ore_max_tot + " h tot.<br> Max h disponibili " + (ore_max_tot - ore_attuali) + "</h2>");
-                    $('#range2').removeClass("is-valid").addClass("is-invalid");
-                    $('input.time-a').removeClass("is-valid").addClass("is-invalid");
-                    return true;
-                }
-                return false;
-            }
-
-            function calculateHour() {
-                var range = $('#range2').val().split("-");
-                var h1 = range[1].trim().split(":");
-                var h2 = range[2].trim().split(":");
-                return (new Date("00", "00", "00", h2[0], h2[1]).getTime() - new Date("00", "00", "00", h1[0], h1[1]).getTime()) / 3600000;
-
-            }
+            
 
             $('#submit').on('click', function () {
                 submitForm($('#kt_form'), "Registro modificato", "Registro modificato con successo", ctrlForm(), false);
@@ -288,14 +267,7 @@
 
             var l_presenti = JSON.parse('<%=d.getPresenti().replace("\n", "")%>');
 
-            jQuery(document).ready(function () {
-                var range2 = $('#range2').val().split("-");
-                min_time = range2[1].trim(), max_time = range2[2].trim();
-                ingressiAllevi();
-                $('#range2').trigger("change");
-                $(".time-a.in").trigger("change");
-                setStartEnd(l_presenti);
-            });
+            
 
         </script>
     </body>

@@ -224,7 +224,7 @@
         <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
             <i class="fa fa-arrow-up"></i>
         </div>
-        <script src="<%=src%>/assets/soop/js/jquery-3.6.1.js" type="text/javascript"></script>
+        <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
@@ -243,6 +243,7 @@
         <script src="<%=src%>/assets/vendors/general/select2/dist/js/select2.full.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/select2.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>
+        <script src="../sa/js/modifyProgetto.js" type="text/javascript"></script>
         <script id="docenti_allievi" src="<%=src%>/page/sa/js/docenti_allievi.js" data-context="<%=request.getContextPath()%>" type="text/javascript"></script>
         <script type="text/javascript">
                                                                        var KTAppOptions = {
@@ -298,45 +299,9 @@
                 }
             });
 
-            function download_m2() {
-                $('#tipo_op').val('download');
-                $('#kt_form2').submit();
-            }
+            
 
-            function checkPdf() {
-                let err = false;
-                $('#file_m2').each(function () {
-                    if ($(this).val() === '') {
-                        err = true;
-                        $(this).removeClass("is-valid").addClass("is-invalid");
-                    } else {
-                        $(this).removeClass("is-invalid").addClass("is-valid");
-                    }
-                });
-                return err;
-            }
-
-            $('#upfile').on("click", function () {
-                $('#tipo_op').val('');
-                if (!checkPdf()) {
-                    showLoad();
-                    $('#kt_form2').ajaxSubmit({
-                        error: function () {
-                            closeSwal();
-                            swalError('Errore', "Riprovare, se l'errore persiste richiedere assistenza");
-                        },
-                        success: function (resp) {
-                            var json = JSON.parse(resp);
-                            closeSwal();
-                            if (json.result) {
-                                swalSuccessCloseFancy("Caricamento modello 2", "Operazione effettuata con successo.");
-                            } else {
-                                swalError('Errore', "<h4>" + json.message + "</h4>");
-                            }
-                        }
-                    });
-                }
-            });
+            
 
             function checkStato() {
                 let val = '<%=ckstato%>';
@@ -351,15 +316,7 @@
             <%=p.getStato().getModifiche().getAllievi() == 1 ? "conoscenzeAllevi();" : ""%>
             });
 
-            function ctrlForm() {
-                var err = checkObblFields();
-                if ($('#allievi').val().length < min_allievi || $('#allievi').val().length > max_allievi) {//chek num max e min allievi
-                    err = true;
-                    $('#allievi_div').removeClass("is-valid-select").addClass("is-invalid-select");
-                    fastSwalShow("<h3>Numero minimo di allievi non raggiunto</h3>", "wobble");
-                }
-                return err;
-            }
+            
 
             $('#submit').on("click", function () {
                 if (!ctrlForm()) {

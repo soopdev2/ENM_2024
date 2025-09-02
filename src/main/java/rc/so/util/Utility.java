@@ -60,7 +60,6 @@ import static java.lang.Math.toRadians;
 import java.math.BigDecimal;
 import static java.math.BigDecimal.ROUND_HALF_DOWN;
 import java.math.RoundingMode;
-import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -70,20 +69,14 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.RequestContext;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -115,10 +108,15 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
+import java.util.Iterator;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.RequestContext;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
-import org.apache.commons.text.StringEscapeUtils;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.sax.ToTextContentHandler;
@@ -231,29 +229,30 @@ public class Utility {
                 System.out.println(paramName + " : " + new String(paramValue.getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
             }
         }
-        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-        if (isMultipart) {
-            try {
-                FileItemFactory factory = new DiskFileItemFactory();
-                ServletFileUpload upload = new ServletFileUpload(factory);
-                List items = upload.parseRequest((RequestContext) request);
-                Iterator iterator = items.iterator();
-                while (iterator.hasNext()) {
-                    FileItem item = (FileItem) iterator.next();
-                    if (item.isFormField()) {
-                        String fieldName = item.getFieldName();
-                        String value = new String(item.getString().getBytes(Charsets.ISO_8859_1), Charsets.UTF_8);
-                        System.out.println("MULTIPART FIELD - " + fieldName + " : " + value);
-                    } else {
-                        String fieldName = item.getFieldName();
-                        String fieldValue = item.getName();
-                        System.out.println("MULTIPART FILE - " + fieldName + " : " + fieldValue);
-                    }
-                }
-            } catch (Exception ex) {
-                insertTR("E", "SERVICE", estraiEccezione(ex));
-            }
-        }
+        
+//        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+//        if (isMultipart) {
+//            try {
+//                FileItemFactory factory = new DiskFileItemFactory();
+//                ServletFileUpload upload = new ServletFileUpload(factory);
+//                List items = upload.parseRequest((RequestContext) request);
+//                Iterator iterator = items.iterator();
+//                while (iterator.hasNext()) {
+//                    FileItem item = (FileItem) iterator.next();
+//                    if (item.isFormField()) {
+//                        String fieldName = item.getFieldName();
+//                        String value = new String(item.getString().getBytes(Charsets.ISO_8859_1), Charsets.UTF_8);
+//                        System.out.println("MULTIPART FIELD - " + fieldName + " : " + value);
+//                    } else {
+//                        String fieldName = item.getFieldName();
+//                        String fieldValue = item.getName();
+//                        System.out.println("MULTIPART FILE - " + fieldName + " : " + fieldValue);
+//                    }
+//                }
+//            } catch (Exception ex) {
+//                insertTR("E", "SERVICE", estraiEccezione(ex));
+//            }
+//        }
     }
 
     public static String formatStringtoStringDate(String dat, String pattern1, String pattern2) {

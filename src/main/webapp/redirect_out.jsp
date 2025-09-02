@@ -28,7 +28,7 @@
                 }%>
         </form>
     </body>
-    <script src="assets/soop/js/jquery-3.6.1.js" type="text/javascript"></script>
+    <script src="assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             document.getElementById("form").submit();

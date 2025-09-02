@@ -9,19 +9,19 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-        User us = (User) session.getAttribute("user");
-        if (us == null) {
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
+    User us = (User) session.getAttribute("user");
+    if (us == null) {
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
+    } else {
+        String uri_ = request.getRequestURI();
+        String pageName_ = uri_.substring(uri_.lastIndexOf("/") + 1);
+        if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
+            response.sendRedirect(request.getContextPath() + "/page_403.jsp");
         } else {
-            String uri_ = request.getRequestURI();
-            String pageName_ = uri_.substring(uri_.lastIndexOf("/") + 1);
-            if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
-                response.sendRedirect(request.getContextPath() + "/page_403.jsp");
-            } else {
-                Entity e = new Entity();
-                List<Item> regioni = e.listaRegioni();
-                e.close();
-                String src = Utility.checkAttribute(session, "src");
+            Entity e = new Entity();
+            List<Item> regioni = e.listaRegioni();
+            e.close();
+            String src = Utility.checkAttribute(session, "src");
 %>
 <html>
     <head>
@@ -231,8 +231,11 @@
         <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
             <i class="fa fa-arrow-up"></i>
         </div>
+
+        <input type="hidden" id="context" value="<%=request.getContextPath()%>">
+
         <!--begin:: Global Mandatory Vendors -->
-        <script src="<%=src%>/assets/soop/js/jquery-3.6.1.js" type="text/javascript"></script>
+        <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
@@ -254,6 +257,7 @@
         <script src="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/dropzone/dist/dropzone.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/dropzone/dist/min/dropzone.min.js" type="text/javascript"></script>
+        <script src="js/uploadAule.js" type="text/javascript"></script>
         <script type="text/javascript">
                                                                     var KTAppOptions = {
                                                                         "colors": {
@@ -273,109 +277,11 @@
                                                                         }
                                                                     };
         </script>
-        <script>
-            $('#regione').on('change', function (e) {
-                $("#provincia").empty();
-                $("#comune").empty();
-                $("#comune").append('<option value="-">. . .</option>');
-                if ($('#regione').val() != '-') {
-                    startBlockUILoad("#provincia_div");
-                    $("#provincia").append('<option value="-">Seleziona Provincia</option>');
-                    $.get('<%=request.getContextPath()%>/Login?type=getProvincia&regione=' + $('#regione').val(), function (resp) {
-                        var json = JSON.parse(resp);
-                        for (var i = 0; i < json.length; i++) {
-                            $("#provincia").append('<option value="' + json[i].value + '">' + json[i].desc + '</option>');
-                        }
-                        stopBlockUI("#provincia_div");
-                    });
-                } else {
-                    $("#provincia").append('<option value="-">. . .</option>');
-                }
-            });
-        </script>
-        <script>
-            $('#provincia').on('change', function (e) {
-                $("#comune").empty();
-                if ($('#provincia').val() != '-') {
-                    startBlockUILoad("#comune_div");
-                    $("#comune").append('<option value="-">Seleziona Comune</option>');
-                    $.get('<%=request.getContextPath()%>/Login?type=getComune&provincia=' + $('#provincia').val(), function (resp) {
-                        var json = JSON.parse(resp);
-                        for (var i = 0; i < json.length; i++) {
-                            $("#comune").append('<option value="' + json[i].value + '">' + json[i].desc + '</option>');
-                        }
-                        stopBlockUI("#comune_div");
-                    });
-                } else {
-                    $("#comune").append('<option value="-">. . .</option>');
-                }
-            });
-        </script>
-        <script>
-            function ctrlForm() {
-                var err = false;
-                err = checkObblFields() ? true : err;
-                if ($('#email').val() != '') {
-                    err = checkEmail($('#email')) ? true : err;
-                }
-                return err ? false : true;
-            }
-            $('#submit').on('click', function () {
-                if (ctrlForm()) {
-                    showLoad();
-                    $('#kt_form').ajaxSubmit({
-                        error: function () {
-                            closeSwal();
-                            swalError("Errore", "Riprovare, se l'errore persiste contattare l'assistenza");
-                        },
-                        success: function (resp) {
-                            var json = JSON.parse(resp);
-                            closeSwal();
-                            if (json.result) {
-                                resetInput();
-                                swalSuccess("Sede di formazione aggiunta!", "Operazione effettuata con successo.");
-                            } else {
-                                swalError("Errore!", json.message);
-                            }
-                        }
-                    });
-                }
-            });
 
 
-            function ctrlFile() {
-                var err = false;
-                err = !checkRequiredFile() ? true : err;
-                err = !checkFileExtAndDim(['xls', 'xlsx']) ? true : err;
-                return err ? false : true;
-            }
-
-            $('#submit_file').on('click', function () {
-                if (ctrlFile()) {
-                    showLoad();
-                    $('#kt_form_file').ajaxSubmit({
-                        error: function () {
-                            closeSwal();
-                            swalError("Errore", "Riprovare, se l'errore persiste contattare l'assistenza");
-                        },
-                        success: function (resp) {
-                            var json = JSON.parse(resp);
-                            closeSwal();
-                            if (json.result) {
-                                $('.custom-file-input').val('');
-                                $('.custom-file-input').removeClass('is-valid');
-                                swalSuccess("Aula aggiunta!", "Operazione effettuata con successo.");
-                            } else {
-                                swalError("Errore!", json.message);
-                            }
-                        }
-                    });
-                }
-            });
-        </script>
     </body>
 </html>
 <%
-            }
         }
+    }
 %>
