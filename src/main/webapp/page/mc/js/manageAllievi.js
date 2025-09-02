@@ -137,7 +137,7 @@
                         if (ext === null || ext === undefined || typeof ext === 'undefined' || ext === "p7m" || ext.includes("pdf")) {
                             ext = "pdf";
                         }
-                        $("#prg_docs").append(
+                        $("#prg_docs").text(
                                 doc_prg.replace("@href",
                                         context + "/OperazioniGeneral?type=showDoc&path=" + json[i].path)
                                 .replace("#ex", ext)
