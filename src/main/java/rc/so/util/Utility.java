@@ -109,12 +109,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import jakarta.servlet.http.HttpSession;
-import java.util.Iterator;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.RequestContext;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.mindrot.jbcrypt.BCrypt;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.tika.metadata.Metadata;
@@ -280,21 +275,30 @@ public class Utility {
         return datesInRange;
     }
 
-    public static String convMd5(String psw) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(psw.getBytes());
-            byte byteData[] = md.digest();
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < byteData.length; i++) {
-                sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-            }
-            return sb.toString().trim();
-        } catch (Exception ex) {
-            insertTR("E", "SERVICE", estraiEccezione(ex));
-            return "-";
-        }
-    }
+//    public static String convMd5(String psw) {
+//        try {
+//            MessageDigest md = MessageDigest.getInstance("MD5");
+//            md.update(psw.getBytes());
+//            byte byteData[] = md.digest();
+//            StringBuilder sb = new StringBuilder();
+//            for (int i = 0; i < byteData.length; i++) {
+//                sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+//            }
+//            return sb.toString().trim();
+//        } catch (Exception ex) {
+//            insertTR("E", "SERVICE", estraiEccezione(ex));
+//            return "-";
+//        }
+//    }
+    
+    public static String convBcrypt(String psw) {
+    try {
+        return BCrypt.hashpw(psw, BCrypt.gensalt(12));
+    } catch (Exception ex) {
+        insertTR("E", "SERVICE", estraiEccezione(ex));
+        return "-";
+    }}
+
 
     public static String getRandomString(int length) {
         boolean useLetters = true;

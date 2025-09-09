@@ -154,28 +154,7 @@
         <!-- begin:: Page -->
         <%@include file="../../Bootstrap2024/index/index_SoggettoAttuatore/Header_soggettoAttuatore.jsp" %>
         <div class="kt-grid kt-grid--hor kt-grid--root">
-            <nav class="navbar navbar-expand-lg has-megamenu" aria-label="Menu principale">
-                <button type="button" aria-label="Mostra o nascondi il menu" class="custom-navbar-toggler" aria-controls="menu" aria-expanded="false" data-bs-toggle="navbarcollapsible" data-bs-target="#navbar-E">
-                    <span>
-                        <svg role="img" class="icon"><use href="../../Bootstrap2024/assets/svg/sprites.svg#it-burger"></use></svg>
-                    </span>
-                </button>
-                <div class="navbar-collapsable" id="navbar-E">
-                    <div class="overlay fade"></div>
-                    <div class="close-div">
-                        <button type="button" aria-label="Chiudi il menu" class="btn close-menu">
-                            <span><svg role="img" class="icon"><use href="../../Bootstrap2024/assets/svg/sprites.svg#it-close-big"></use></svg></span>
-                        </button>
-                    </div>
-                    <div class="menu-wrapper justify-content-lg-between">
-                        <ul class="navbar-nav">
-                            <li class="nav-item active">
-                                <a class="nav-link active " href="indexSoggettoAttuatore.jsp"><span>Home</span></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+            <%@ include file="../../Bootstrap2024/index/menu/menuAtt.jsp"%>
 
             <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page" >
                 <!-- end:: Aside -->

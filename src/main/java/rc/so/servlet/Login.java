@@ -5,6 +5,7 @@
  */
 package rc.so.servlet;
 
+import org.mindrot.jbcrypt.BCrypt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 import static rc.so.db.Action.insertTR;
@@ -43,32 +44,47 @@ public class Login extends HttpServlet {
             request.getSession().setAttribute("src", e.getPath("dominio"));
         }
 
-        if (us != null) {
-            if (us.getStato() != 0) {
-                request.getSession().setAttribute("user", us);
-                e.insertTracking(us.getUsername(), "Log In");
-                switch (us.getTipo()) {
-                    case 1:
-                        request.getSession().setAttribute("t_user", "sa");
-                        request.getSession().setAttribute("guida", e.getPath("guida_SA"));
-                        redirect(request, response, "page/sa/indexSoggettoAttuatore.jsp");
-                        break;
-                    case 2:
-                        request.getSession().setAttribute("guida", e.getPath("guida_MC"));
-                        redirect(request, response, "page/mc/indexMicrocredito.jsp");
-                        break;
-                    case 5:
-                        redirect(request, response, "page/mc/searchPFMicro.jsp");
-                        break;
-                    default:
-                        redirect(request, response, "redirect.jsp?page=login.jsp&esito=KO");
-                        break;
+        try {
+
+            if (us != null) {
+
+                String psw = us.getPassword();
+                System.out.println(psw);
+                System.out.println(password);
+
+                if (BCrypt.checkpw(password, psw)) {
+
+                    if (us.getStato() != 0) {
+                      
+                        request.getSession().setAttribute("user", us);
+                        e.insertTracking(us.getUsername(), "Log In");
+                        switch (us.getTipo()) {
+                            case 1:
+                                request.getSession().setAttribute("t_user", "sa");
+                                request.getSession().setAttribute("guida", e.getPath("guida_SA"));
+                                redirect(request, response, "page/sa/indexSoggettoAttuatore.jsp");
+                                break;
+                            case 2:
+                                request.getSession().setAttribute("guida", e.getPath("guida_MC"));
+                                redirect(request, response, "page/mc/indexMicrocredito.jsp");
+                                break;
+                            case 5:
+                                redirect(request, response, "page/mc/searchPFMicro.jsp");
+                                break;
+                            default:
+                                redirect(request, response, "redirect.jsp?page=login.jsp&esito=KO");
+                                break;
+                        }
+                    }
+                } else {
+                    redirect(request, response, "redirect.jsp?page=login.jsp&esito=banned");
                 }
             } else {
-                redirect(request, response, "redirect.jsp?page=login.jsp&esito=banned");
+                redirect(request, response, "redirect.jsp?page=login.jsp&esito=KO");
             }
-        } else {
-            redirect(request, response, "redirect.jsp?page=login.jsp&esito=KO");
+        } catch (ServletException | IOException ex) {
+            ex.printStackTrace();
+            System.out.println(ex);
         }
         e.close();
     }
@@ -160,7 +176,7 @@ public class Login extends HttpServlet {
             if (us != null) {
                 String email = us.getEmail();
                 pwd = Utility.generatePassword(8);
-                us.setPassword(Utility.convMd5(pwd));
+                us.setPassword(Utility.convBcrypt(pwd));
                 us.setStato(2);
                 e.begin();
                 e.merge(us);
@@ -194,25 +210,30 @@ public class Login extends HttpServlet {
 
     }
 
-    protected void changePwd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/plain");
+    protected void changePwdNEW(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
         User us = (User) request.getSession().getAttribute("user");
 
-        String old_pwd = Utility.convMd5(request.getParameter("old_pwd"));
+        String old_pwd = request.getParameter("old_pwd");
         String new_pwd = request.getParameter("new_pwd");
         String new_pwd_2 = request.getParameter("new_pwd_2");
+
         JsonObject resp = new JsonObject();
         Entity e = new Entity();
         try {
-            // deepcode ignore ReturnsPassword: <please specify a reason of ignoring this>
-            if (us.getPassword().equals(old_pwd) && new_pwd.equals(new_pwd_2)) {
-                us.setPassword(Utility.convMd5(new_pwd));
+            // Verifica password con BCrypt
+            if (BCrypt.checkpw(old_pwd, us.getPassword()) && new_pwd.equals(new_pwd_2)) {
+                // Crea nuovo hash
+                String hashedNewPwd = BCrypt.hashpw(new_pwd, BCrypt.gensalt());
+                us.setPassword(hashedNewPwd);
+
                 if (us.getSoggettoAttuatore() != null) {
                     us.setTipo(us.getSoggettoAttuatore().getProtocollo() == null ? 3 : 1);
                 }
                 us.setStato(1);
+
                 e.begin();
                 e.merge(us);
                 e.commit();
@@ -222,8 +243,7 @@ public class Login extends HttpServlet {
                 resp.addProperty("result", true);
             } else {
                 resp.addProperty("result", false);
-                // deepcode ignore ReturnsPassword: <please specify a reason of ignoring this>
-                if (!us.getPassword().equals(old_pwd)) {
+                if (!BCrypt.checkpw(old_pwd, us.getPassword())) {
                     resp.addProperty("messagge", "Vecchia password errata.");
                 } else if (!new_pwd.equals(new_pwd_2)) {
                     resp.addProperty("messagge", "La password nuova non coincide.");
@@ -242,6 +262,53 @@ public class Login extends HttpServlet {
         response.getWriter().close();
     }
 
+//    protected void changePwdOLD(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        response.setContentType("text/plain");
+//        response.setCharacterEncoding("UTF-8");
+//
+//        User us = (User) request.getSession().getAttribute("user");
+//
+//        String old_pwd = Utility.convMd5(request.getParameter("old_pwd"));
+//        String new_pwd = request.getParameter("new_pwd");
+//        String new_pwd_2 = request.getParameter("new_pwd_2");
+//        JsonObject resp = new JsonObject();
+//        Entity e = new Entity();
+//        try {
+//            // deepcode ignore ReturnsPassword: <please specify a reason of ignoring this>
+//            if (us.getPassword().equals(old_pwd) && new_pwd.equals(new_pwd_2)) {
+//                us.setPassword(Utility.convMd5(new_pwd));
+//                if (us.getSoggettoAttuatore() != null) {
+//                    us.setTipo(us.getSoggettoAttuatore().getProtocollo() == null ? 3 : 1);
+//                }
+//                us.setStato(1);
+//                e.begin();
+//                e.merge(us);
+//                e.commit();
+//
+//                request.getSession().setAttribute("user", us);
+//                request.getSession().setAttribute("changePwd", "0");
+//                resp.addProperty("result", true);
+//            } else {
+//                resp.addProperty("result", false);
+//                // deepcode ignore ReturnsPassword: <please specify a reason of ignoring this>
+//                if (!us.getPassword().equals(old_pwd)) {
+//                    resp.addProperty("messagge", "Vecchia password errata.");
+//                } else if (!new_pwd.equals(new_pwd_2)) {
+//                    resp.addProperty("messagge", "La password nuova non coincide.");
+//                }
+//            }
+//        } catch (Exception ex) {
+//            e.insertTracking(null, "changePwd Errore: " + ex.getMessage());
+//            resp.addProperty("result", false);
+//            resp.addProperty("messagge", "Errore durante il cambio password. Se l'errore persiste contattare il servizio assistenza.");
+//        } finally {
+//            e.close();
+//        }
+//
+//        response.getWriter().write(resp.toString());
+//        response.getWriter().flush();
+//        response.getWriter().close();
+//    }
     protected void botAreU(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
@@ -279,7 +346,7 @@ public class Login extends HttpServlet {
                 forgotPwd(request, response);
                 break;
             case "changePwd":
-                changePwd(request, response);
+                changePwdNEW(request, response);
                 break;
             case "checkPiva":
                 checkPiva(request, response);

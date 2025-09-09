@@ -3,6 +3,7 @@
     Created on : 18-set-2019, 12.31.26
     Author     : agodino
 --%>
+<%@page import="rc.so.db.Action"%>
 <%@page import="rc.so.util.Utility"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.List"%>
@@ -15,11 +16,11 @@
     if (us == null) {
     } else {
         String uri_ = request.getRequestURI();
-        //String pageName_ = uri_.substring(uri_.lastIndexOf("/") + 1);
-        //String type_ = session.getAttribute("abbonamento").toString();
-        //if (!Action.isVisibile(type_, pageName_)) {
-        //    response.sendRedirect(request.getContextPath() + "/page_403.jsp");
-        //} else {
+        String pageName_ = uri_.substring(uri_.lastIndexOf("/") + 1);
+        String type_ = session.getAttribute("abbonamento").toString();
+        if (!Action.isVisibile(type_, pageName_)) {
+            response.sendRedirect(request.getContextPath() + "/page_403.jsp");
+        } else {
         String src = Utility.checkAttribute(session, "src");
         Entity e = new Entity();
         List<Item> regioni = e.listaRegioni();

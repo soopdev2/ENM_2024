@@ -16,7 +16,7 @@ public class test {
         
         String psw = "test";
         
-        System.out.println(Utility.convMd5(psw));
+        System.out.println(Utility.convBcrypt(psw));
         
         
         

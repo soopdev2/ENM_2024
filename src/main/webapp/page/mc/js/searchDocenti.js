@@ -7,6 +7,7 @@
 
             var context = document.getElementById("context");
             var tipouser = document.getElementById("tipoR");
+            
             var KTDatatablesDataSourceAjaxServer = function () {
                 var initTable1 = function () {
                     var table = $('#kt_table_1');

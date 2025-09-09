@@ -1643,7 +1643,7 @@ public class OperazioniMicro extends HttpServlet {
             String pwd = Utility.generatePassword(8);
             User u = new User();
             u.setUsername(Utility.UniqueUser(listusernames, em.substring(0, em.lastIndexOf("@"))));
-            u.setPassword(Utility.convMd5(pwd));
+            u.setPassword(Utility.convBcrypt(pwd));
             u.setTipo(4);
             u.setEmail(em);
             
@@ -1774,7 +1774,7 @@ public class OperazioniMicro extends HttpServlet {
                         String pwd = Utility.generatePassword(8);
                         User u = new User();
                         u.setUsername(Utility.UniqueUser(listusernames, sa.getEmail().substring(0, sa.getEmail().lastIndexOf("@"))));
-                        u.setPassword(Utility.convMd5(pwd));
+                        u.setPassword(Utility.convBcrypt(pwd));
                         u.setTipo(1);
                         u.setStato(1);
                         u.setSoggettoAttuatore(sa);

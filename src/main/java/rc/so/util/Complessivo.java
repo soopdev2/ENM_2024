@@ -55,8 +55,6 @@ import org.joda.time.DateTime;
  */
 public class Complessivo {
 
-    
-
     public String host;
 
     public Complessivo(String host) {
@@ -77,7 +75,7 @@ public class Complessivo {
             String now0 = adesso.toString(timestamp);
             String now1 = adesso.toString(patternid);
             String pathtemp = db1.getPathtemp("pathTemp");
-            //dati pdf
+            // dati pdf
             Color lightgrey = new DeviceRgb(242, 242, 242);
             PdfFont fontbold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
             Style bold = new Style();
@@ -86,7 +84,7 @@ public class Complessivo {
             Style normal = new Style();
             normal.setFont(fontnormal).setFontSize(10);
 
-//CREA PDF REPORT
+            // CREA PDF REPORT
             File out0 = new File(pathtemp + now0 + "reportcomplessivo_" + idpr + ".pdf");
             PdfWriter pw0 = new PdfWriter(out0);
             PdfDocument pdfDoc = new PdfDocument(pw0);
@@ -100,7 +98,8 @@ public class Complessivo {
                 Table table = new Table(UnitValue.createPercentArray(8)).useAllAvailableWidth();
                 try {
                     String day = cal.getGiorno();
-                    String sql = "SELECT * FROM registro_completo WHERE idprogetti_formativi = " + idpr + " AND data = '" + day
+                    String sql = "SELECT * FROM registro_completo WHERE idprogetti_formativi = " + idpr
+                            + " AND data = '" + day
                             + "' AND fase='A' ORDER BY ruolo DESC,cognome ASC,nome ASC";
                     try (Statement st = db1.getC().createStatement(); ResultSet rs = st.executeQuery(sql)) {
                         while (rs.next()) {
@@ -321,8 +320,10 @@ public class Complessivo {
                 Table table = new Table(UnitValue.createPercentArray(8)).useAllAvailableWidth();
                 try {
                     String day = cal.getGiorno();
-                    String sql = "SELECT * FROM registro_completo WHERE idprogetti_formativi = " + idpr + " AND data = '" + day
-                            + "' AND fase='B' AND gruppofaseb = '" + cal.getGruppo() + "' ORDER BY ruolo DESC,cognome ASC,nome ASC";
+                    String sql = "SELECT * FROM registro_completo WHERE idprogetti_formativi = " + idpr
+                            + " AND data = '" + day
+                            + "' AND fase='B' AND gruppofaseb = '" + cal.getGruppo()
+                            + "' ORDER BY ruolo DESC,cognome ASC,nome ASC";
                     try (Statement st = db1.getC().createStatement(); ResultSet rs = st.executeQuery(sql)) {
                         while (rs.next()) {
                             Registro_completo rc = new Registro_completo(
@@ -543,7 +544,8 @@ public class Complessivo {
                 File out1 = new File(StringUtils.replace(out0.getPath(), ".pdf", "_qr.pdf"));
                 try (PdfReader p2 = new PdfReader(out0); PdfWriter p2w = new PdfWriter(out1); PdfDocument pdfDoc1 = new PdfDocument(p2, p2w)) {
                     BarcodeQRCode barcode = new BarcodeQRCode(qrcontent);
-                    String add = "Questo registro è stato generato automaticamente dalla piattaforma raggiungibile al link: " + linkpiattaforma;
+                    String add = "Questo registro è stato generato automaticamente dalla piattaforma raggiungibile al link: "
+                            + linkpiattaforma;
                     printbarcode(barcode, pdfDoc1, true, add);
                 }
 
@@ -556,13 +558,15 @@ public class Complessivo {
                     out1.deleteOnExit();
                     if (save) {
                         Database db3 = new Database(false);
-                        String sql = "SELECT iddocumenti_progetti FROM documenti_progetti WHERE idprogetto = " + idpr + " AND tipo = 33";
+                        String sql = "SELECT iddocumenti_progetti FROM documenti_progetti WHERE idprogetto = " + idpr
+                                + " AND tipo = 33";
                         try (Statement st = db3.getC().createStatement(); ResultSet rs = st.executeQuery(sql)) {
                             if (rs.next()) {
-                                try (Statement st1 = db3.getC().createStatement()) {
-                                    String upd = "UPDATE documenti_progetti SET path = '" + pdf_final.getPath() + "' WHERE iddocumenti_progetti = " + rs.getInt(1);
-                                    // file deepcode ignore Sqli: <please specify a reason of ignoring this>
-                                    st1.executeUpdate(upd);
+                                String upd = "UPDATE documenti_progetti SET path = ? WHERE iddocumenti_progetti = ?";
+                                try (PreparedStatement ps = db3.getC().prepareStatement(upd)) {
+                                    ps.setString(1, pdf_final.getPath());
+                                    ps.setInt(2, rs.getInt(1));
+                                    ps.executeUpdate();
                                 }
                             } else {
                                 String ins = "INSERT INTO documenti_progetti (path,idprogetto,tipo) VALUES (?,?,?)";
@@ -572,8 +576,21 @@ public class Complessivo {
                                     ps1.setInt(3, 33);
                                     ps1.execute();
                                 }
-
                             }
+
+                            //OLD CODE
+                            //if (rs.next()) {
+                            //try (Statement st1 = db3.getC().createStatement()) {
+                            //String upd = "UPDATE documenti_progetti SET path = '" + pdf_final.getPath() + "' WHERE iddocumenti_progetti = "
+                            //+ rs.getInt(1);
+                            //}
+                            //}
+                            //}else { String ins = "INSERT INTO documenti_progetti (path,idprogetto,tipo) VALUES (?,?,?)"; 
+                            //try (PreparedStatement ps1 = db3.getC().prepareStatement(ins))
+                            //{ ps1.setString(1, pdf_final.getPath()); ps1.setInt(2, idpr); ps1.setInt(3, 33); ps1.execute();
+                            //} 
+                            //}
+                            //}
                         }
                         db3.closeDB();
                     }
@@ -594,18 +611,21 @@ public class Complessivo {
         List<File> temp = new ArrayList<>();
         Database db = new Database(false);
         try {
-            String sql = "SELECT * FROM documenti_progetti WHERE idprogetto = " + idpr + " AND tipo IN (29,32) AND deleted=0 ORDER BY tipo";
+            String sql = "SELECT * FROM documenti_progetti WHERE idprogetto = " + idpr
+                    + " AND tipo IN (29,32) AND deleted=0 ORDER BY tipo";
             try (Statement st = db.getC().createStatement(); ResultSet rs = st.executeQuery(sql)) {
                 while (rs.next()) {
                     String path = rs.getString("path");
-                    File t1 = new File(path);
+
+                    File t1 = new File(path.replace("..", "").replace("\\", "").replace("/", ""));
                     if (checkPDF(t1)) {
                         temp.add(t1);
                     }
                 }
             }
 
-            try (PdfDocument pdf = new PdfDocument(new PdfWriter("C:\\mnt\\mcn\\yisu_neet\\SoggettiAttuatori\\36\\Progetti\\82\\testing.pdf"))) {
+            try (PdfDocument pdf = new PdfDocument(
+                    new PdfWriter("C:\\mnt\\mcn\\yisu_neet\\SoggettiAttuatori\\36\\Progetti\\82\\testing.pdf"))) {
                 PdfMerger merger = new PdfMerger(pdf);
                 temp.forEach(f1 -> {
                     try {
@@ -615,7 +635,7 @@ public class Complessivo {
                     } catch (Exception ex) {
                         insertTR("E", "SERVICE", estraiEccezione(ex));
                     }
-                    
+
                 });
             }
 

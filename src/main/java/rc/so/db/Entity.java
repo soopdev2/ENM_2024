@@ -48,7 +48,6 @@ import rc.so.entity.Item;
 import rc.so.domain.Cloud;
 import rc.so.domain.checklist_finale;
 import rc.so.util.Utility;
-import static rc.so.util.Utility.convMd5;
 import static rc.so.util.Utility.dtz_italy;
 import static rc.so.util.Utility.maxQueryResult;
 import java.util.ArrayList;
@@ -66,8 +65,10 @@ import static org.apache.commons.io.FilenameUtils.separatorsToSystem;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.joda.time.DateTime;
+import org.mindrot.jbcrypt.BCrypt;
 import rc.so.domain.Presenze_Lezioni;
 import rc.so.domain.Presenze_Lezioni_Allievi;
+import static rc.so.util.Utility.convBcrypt;
 
 /**
  *
@@ -269,9 +270,9 @@ public class Entity {
     }
 
     public User getUser(String user, String pwd) {
-        TypedQuery q = em.createNamedQuery("user.UsernamePwd", User.class);
+        TypedQuery q = em.createNamedQuery("user.byUsername", User.class);
         q.setParameter("username", user);
-        q.setParameter("password", convMd5(pwd));
+        
 
         return q.getResultList().isEmpty() ? null : (User) q.getSingleResult();
     }
