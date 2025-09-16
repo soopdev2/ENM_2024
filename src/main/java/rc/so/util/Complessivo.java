@@ -549,7 +549,7 @@ public class Complessivo {
                     printbarcode(barcode, pdfDoc1, true, add);
                 }
 
-                // file deepcode ignore PT: <please specify a reason of ignoring this>
+                
                 out0.deleteOnExit();
 
                 File pdf_final = new File(path_destinazione + File.separator + "Registro Complessivo_" + now1 + ".pdf");

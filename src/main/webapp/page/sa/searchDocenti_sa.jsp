@@ -61,6 +61,7 @@
         <!--begin::Global Theme Styles(used by all pages) -->
         <link href="<%=src%>/assets/demo/default/base/style.bundle.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/resource/custom.css" rel="stylesheet" type="text/css" />
+        <script src="../../Bootstrap2024/assets/js/popper.js"></script>
 
         <!--end::Global Theme Styles -->
 
@@ -69,7 +70,7 @@
         <link href="<%=src%>/assets/demo/default/skins/header/menu/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/brand/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
-        <link href="../../Bootstrap2024/assets/css/bootstrap-italia.min.css" rel="stylesheet" type="text/css" />
+        <link href="../../Bootstrap2024/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="https://fonts.cdnfonts.com/css/titillium-web" rel="stylesheet">
 
         <!--end::Layout Skins -->
@@ -211,14 +212,13 @@
         </div>
         <!--begin:: Global Mandatory Vendors -->
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/sticky-js/dist/sticky.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/select2/dist/js/select2.full.js" type="text/javascript"></script>
+        <script src="<%=src%>/assets/vendors/general/select2/dist/select2.full.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/select2.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
         <!--DATATABLE -->
@@ -251,162 +251,13 @@
                                                                             }
                                                                         };
         </script>
+
         <script>
-            var KTDatatablesDataSourceAjaxServer = function () {
-                var initTable1 = function () {
-                    var table = $('#kt_table_1');
-                    table.DataTable({
-                        dom: `<'row'<'col-sm-12'ftr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-                        lengthMenu: [5, 10, 25, 50],
-                        language: {
-                            'lengthMenu': 'Mostra _MENU_',
-                            "infoEmpty": "Mostrati 0 di 0 per 0",
-                            "loadingRecords": "Caricamento...",
-                            "search": "Cerca:",
-                            "zeroRecords": "Nessun risultato trovato",
-                            "info": "Mostrati _START_ di _TOTAL_ ",
-                            "emptyTable": "Nessun risultato",
-                            "sInfoFiltered": "(filtrato su _MAX_ risultati totali)"
-                        },
-                        searchDelay: 500,
-                        processing: true,
-                        ScrollX: "100%",
-                        sScrollXInner: "100%",
-                        pageLength: 10,
-                        ajax: '<%=request.getContextPath()%>/QuerySA?type=searchDocenti&cf=' + $('#cf').val()
-                                + '&nome=' + $('#nome').val() + '&cognome=' + $('#cognome').val(),
-                        order: [],
-                        columns: [
-                            {defaultContent: ''},
-                            {data: 'nome', className: 'text-center text-uppercase '},
-                            {data: 'cognome', className: 'text-center text-uppercase '},
-                            {data: 'codicefiscale', className: 'text-center text-uppercase '},
-                            {data: 'datanascita', className: 'text-center text-uppercase '},
-                            {data: 'fascia.descrizione', className: 'text-center text-uppercase '},
-                            {data: 'descrizionestato', className: 'text-center text-uppercase '},
-                            {data: 'tipo_inserimento', className: 'text-center text-uppercase '},
-                            {data: 'datawebinair', className: 'text-center text-uppercase '}
-                        ],
-                        drawCallback: function () {
-                            $('[data-toggle="kt-tooltip"]').tooltip();
-                        },
-                        rowCallback: function (row, data) {
-                            $(row).attr("id", "row_" + data.id);
-                        },
-                        columnDefs: [
-                            {
-                                targets: 0,
-                                className: 'text-center',
-                                orderable: false,
-                                render: function (data, type, row, meta) {
-
-                                    var option = '<div class="dropdown dropdown-inline">'
-                                            + '<button type="button" class="btn btn-icon btn-sm btn-icon-md btn-circle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
-                                            + '   <i class="flaticon-more-1"></i>'
-                                            + '</button>'
-                                            + '<div class="dropdown-menu dropdown-menu-left">';
-                                    if (row.docId !== null) {
-                                        option += '<a class="fancyDocument dropdown-item" href="<%=request.getContextPath()%>/OperazioniGeneral?type=showDoc&path=' + row.docId + '"><i class="fa fa-address-card"></i>Visualizza Documento Identità</a>';
-                                    }
-                                    if (row.curriculum !== null) {
-                                        option += '<a class="fancyDocument dropdown-item" href="<%=request.getContextPath()%>/OperazioniGeneral?type=showDoc&path=' + row.curriculum + '"><i class="fa fa-file-invoice"></i>Visualizza Curriculum</a>';
-                                    }
-                                    if (row.richiesta_accr !== null && row.richiesta_accr !== "" && row.richiesta_accr !== "-") {
-                                        option += '<a class="fancyDocument dropdown-item" href="<%=request.getContextPath()%>/OperazioniGeneral?type=showDoc&path=' + row.richiesta_accr + '"><i class="fa fa-file-pdf"></i>Visualizza Richiesta Accreditamento</a>';
-                                    }
-
-                                    option += '<a class="dropdown-item" href="javascript:void(0);" onclick="swalTablePrg(' + row.id + ')"><i class="fa fa-list"></i>Progetti Formativi</a>';
-                                    option += '<a class="dropdown-item" href="javascript:void(0);" onclick="swaleditMail(' + row.id + ',\'' + row.email + '\')"><i class="fa fa-envelope"></i>Modifica EMAIL</a>';
-                                    option += '</div></div>';
-                                    return option;
-                                }
-                            }, {
-                                targets: 4,
-                                type: 'date-it',
-                                render: function (data, type, row, meta) {
-                                    return formattedDate(new Date(row.datanascita));
-                                }
-                            }, {
-                                targets: 6,
-                                className: 'text-center',
-                                render: function (data, type, row, meta) {
-                                    if (data === "RIGETTATO" && row.motivo !== null) {
-                                        data += "&nbsp;<i class='fa fa-info-circle kt-font-danger' data-container='body' data-html='true' data-toggle='kt-tooltip' data-placement='top' " +
-                                                "title=\"<h6><b>MOTIVO RIGETTO</b>:<br><h6 style='text-align:justify;'>" + row.motivo.replace(/"/g, '\'') + "</h6>\"></i>";
-                                    }
-                                    return data;
-                                }
-                            }, {
-                                targets: 7,
-                                className: 'text-center',
-                                render: function (data, type, row, meta) {
-                                    if (data === null || data === "null" || data === "") {
-                                        return "ACCREDITAMENTO";
-                                    }
-                                    return data;
-                                }
-                            }, {
-                                targets: 8,
-                                className: 'text-center',
-                                render: function (data, type, row, meta) {
-                                    if (data === null || data === "null" || row.datawebinair === null) {
-                                        return "";
-                                    }
-                                    return formattedDate(new Date(row.datawebinair));
-                                }
-                            }
-                        ]
-                    }).columns.adjust();
-                };
-                return {
-                    init: function () {
-                        initTable1();
-                    }
-                };
-            }();
-            jQuery(document).ready(function () {
-                KTDatatablesDataSourceAjaxServer.init();
-                $('.kt-scroll-x').each(function () {
-                    const ps = new PerfectScrollbar($(this)[0]);
-                });
-            });
-
-            function refresh() {
-                $("#toolbar").css("display", "none");
-                $('html, body').animate({scrollTop: $('#offsetresult').offset().top}, 500);
-                load_table($('#kt_table_1'), '<%=request.getContextPath()%>/QuerySA?type=searchDocenti&soggettoattuatore=' + $('#soggettoattuatore').val()
-                        + '&cf=' + $('#cf').val() + '&nome=' + $('#nome').val() + '&cognome=' + $('#cognome').val(), );
-            }
-
-            
-
-            function modifyMail(id, result) {
-                showLoad();
-                $.ajax({
-                    type: "POST",
-                    url: '<%=request.getContextPath()%>' + '/OperazioniSA?type=modifyEmail&id=' + id,
-                    data: result,
-                    success: function (data) {
-                        closeSwal();
-                        var json = JSON.parse(data);
-                        if (json.result) {
-                            reload();
-                            swalSuccess("Mail Docente", "Mail modificata con successo!");
-                        } else {
-                            swalError("Errore", json.message);
-                        }
-                    },
-                    error: function () {
-                        swalError("Errore", "Non &egrave; stato possibile modificare la mail.");
-                    }
-                });
-            }
-
-           
-
-
-          
+            // Esporto le variabili che mi servono dal server
+            const contextPath = '<%= request.getContextPath()%>';
         </script>
+
+        
     </body>
 </html>
 <%

@@ -47,7 +47,7 @@
                 }
             });
         </script>
-        <link rel="stylesheet" href="./Bootstrap2024/assets/css/bootstrap-italia.min.css"/>
+        <link rel="stylesheet" href="./Bootstrap2024/assets/css/bootstrap.min.css"/>
         <link href="assets/app/custom/login/login-v3.default.css" rel="stylesheet" type="text/css" />
         <link href="assets/vendors/general/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.css" rel="stylesheet" type="text/css" />
         <link href="assets/vendors/general/animate.css/animate.css" rel="stylesheet" type="text/css" />
@@ -64,7 +64,7 @@
         <link href="assets/demo/default/skins/brand/light.css" rel="stylesheet" type="text/css" />
         <link href="assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
         <link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
-        <script src="./Bootstrap2024/assets/js/bootstrap-italia.min.js"></script>
+        <script src="./Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js"></script>
 
 
     </head>
@@ -188,7 +188,6 @@
 
             <!-- end:: Page -->
 
-            <script type="text/javascript" src="assets/soop/js/jquery-3.6.1.min.js"></script>
             <!--begin:: Global Mandatory Vendors -->
             <script src="assets/soop/js/utility.js" type="text/javascript"></script>
             <script>
@@ -242,7 +241,6 @@
             <script type="text/javascript" src="assets/soop/js/jquery.fancybox.min.js"></script>
             <script type="text/javascript" src="assets/soop/js/fancy.js"></script>
             <script src="assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-            <script src="assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
             <script src="assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
             <script src="assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
             <script src="assets/soop/js/moment.min.js" type="text/javascript"></script>

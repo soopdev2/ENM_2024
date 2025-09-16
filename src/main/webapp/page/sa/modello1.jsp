@@ -80,7 +80,9 @@
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/base/style.bundle.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/resource/custom.css" rel="stylesheet" type="text/css" />
-        <link href="../../Bootstrap2024/assets/css/bootstrap-italia.min.css" rel="stylesheet" type="text/css" />
+        <link href="../../Bootstrap2024/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <script src="../../Bootstrap2024/assets/js/popper.js"></script>
+
 
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
         <style type="text/css">
@@ -250,7 +252,7 @@
                                                                                    class="custom-file-input" 
                                                                                    accept="<%=mod_1.getMimetype()%>" name="doc_<%=mod_1.getId()%>" 
                                                                                    onchange="return checkFileExtAndDim('<%=mod_1.getEstensione()%>');">
-                                                                            <label class="custom-file-label selected" name="label_<%=mod_1.getId()%>">Scegli File</label>
+                                                                            <label class="custom-file-label selected" name="label_<%=mod_1.getId()%>"></label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -266,7 +268,7 @@
                                                                                    class="custom-file-input" 
                                                                                    accept="<%=t.getMimetype()%>" name="doc_<%=t.getId()%>" id="doc_<%=t.getId()%>"
                                                                                    onchange="return checkFileExtAndDim('<%=t.getEstensione()%>');">
-                                                                            <label class="custom-file-label selected" name="label_<%=t.getId()%>">Scegli File</label>
+                                                                            <label class="custom-file-label selected" name="label_<%=t.getId()%>"></label>
                                                                         </div>
                                                                     </div>
                                                                     <%}%>
@@ -299,7 +301,6 @@
             <i class="fa fa-arrow-up"></i>
         </div>
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/sticky-js/dist/sticky.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
@@ -314,7 +315,7 @@
         <script src="<%=src%>/assets/app/bundle/app.bundle.js" type="text/javascript"></script>
         <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
         <!--this page -->
-        <script src="<%=src%>/assets/vendors/general/select2/dist/js/select2.full.js" type="text/javascript"></script>
+        <script src="<%=src%>/assets/vendors/general/select2/dist/select2.full.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/select2.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/bootstrap-select/dist/js/bootstrap-select.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/bootstrap-datepicker.js" type="text/javascript"></script>

@@ -109,6 +109,8 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import jakarta.servlet.http.HttpSession;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.mindrot.jbcrypt.BCrypt;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
@@ -174,8 +176,7 @@ public class Utility {
 
     public static final String APP = "ENM_TOSCANA";
     public static final Logger LOGAPP = Logger.getLogger(APP);
-    
-    
+
     public static String checkAttribute(HttpSession session, String attribute) {
         try {
             if (session.getAttribute(attribute) != null) {
@@ -185,21 +186,20 @@ public class Utility {
         }
         return "";
     }
-    
-    public static String sanitizeInput(String input) {
-    // Rimuovi i caratteri che non sono lettere, numeri o underscore
-    String sanitizedInput = input.replaceAll("[^a-zA-Z0-9_]", "");
-    
-    // Aggiungi un controllo per i caratteri HTML riservati
-    sanitizedInput = sanitizedInput.replaceAll("&", "&amp;")
-                                     .replaceAll("<", "&lt;")
-                                     .replaceAll(">", "&gt;")
-                                     .replaceAll("\"", "&quot;")
-                                     .replaceAll("'", "&#39;");
-    
-    return sanitizedInput;
-    }
 
+    public static String sanitizeInput(String input) {
+        // Rimuovi i caratteri che non sono lettere, numeri o underscore
+        String sanitizedInput = input.replaceAll("[^a-zA-Z0-9_]", "");
+
+        // Aggiungi un controllo per i caratteri HTML riservati
+        sanitizedInput = sanitizedInput.replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll("\"", "&quot;")
+                .replaceAll("'", "&#39;");
+
+        return sanitizedInput;
+    }
 
     private static String sanitizePath(String path) {
         return path.replaceAll("[^a-zA-Z0-9-_./]", "");
@@ -224,7 +224,7 @@ public class Utility {
                 System.out.println(paramName + " : " + new String(paramValue.getBytes(Charsets.ISO_8859_1), Charsets.UTF_8));
             }
         }
-        
+
 //        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 //        if (isMultipart) {
 //            try {
@@ -290,24 +290,23 @@ public class Utility {
 //            return "-";
 //        }
 //    }
-    
     public static String convBcrypt(String psw) {
-    try {
-        return BCrypt.hashpw(psw, BCrypt.gensalt(12));
-    } catch (Exception ex) {
-        insertTR("E", "SERVICE", estraiEccezione(ex));
-        return "-";
-    }}
-
+        try {
+            return BCrypt.hashpw(psw, BCrypt.gensalt(12));
+        } catch (Exception ex) {
+            insertTR("E", "SERVICE", estraiEccezione(ex));
+            return "-";
+        }
+    }
 
     public static String getRandomString(int length) {
         boolean useLetters = true;
         boolean useNumbers = false;
         return RandomStringUtils.random(length, useLetters, useNumbers);
     }
-    
+
     public static String generatePassword(int length) {
-        
+
         Random RANDOM = new SecureRandom();
         String POSSIBLE_CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_-+=!@#$%&*()[]{}<>:.,?";
 
@@ -317,7 +316,6 @@ public class Utility {
         }
         return password.toString();
     }
-
 
     public static String correctName(String ing) {
         ing = correggiusername(ing);
@@ -514,8 +512,6 @@ public class Utility {
         return "";
     }
 
-    
-
     public static String getRequestCheckbox(HttpServletRequest request, String fieldname) {
         String out = getRequestValue(request, fieldname);
         if (out.equals("")) {
@@ -540,6 +536,7 @@ public class Utility {
         }
         return false;
     }
+    
 
     public static FileDownload preparefilefordownload(String path) {
         List<String> spl = on("###").splitToList(path);
@@ -1448,4 +1445,6 @@ public class Utility {
             return 0L;
         }
     }
+
+   
 }
