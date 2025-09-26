@@ -42,7 +42,7 @@ function checkSecondMember(form, index) {
               lowerNtrimmed(membri[0].email) === lowerNtrimmed($('#email'+index).val()) &&
               lowerNtrimmed(membri[0].telefono) === lowerNtrimmed($('#telefono'+index).val()) ? true : false;
     }else if(membri.length === 2){
-        let actual = index == 1 ? 0 : 1;
+        let actual = index === 1 ? 0 : 1;
         err = lowerNtrimmed(membri[actual].nome) === lowerNtrimmed($('#nome'+index).val()) &&
               lowerNtrimmed(membri[actual].cognome) === lowerNtrimmed($('#cognome'+index).val()) &&
               lowerNtrimmed(membri[actual].email) === lowerNtrimmed($('#email'+index).val()) &&
@@ -108,7 +108,7 @@ function loadStaff() {
         async: false,
         url: context + "/QuerySA?type=getMembriStaff&idprogetto=" + pId,
         success: function (resp) {
-            if (resp != null)
+            if (resp !== null)
                 temp = JSON.parse(resp);
         }
     });
@@ -161,8 +161,8 @@ function deleteMembro(i) {
         cancelButtonClass: "btn btn-io-n",
         confirmButtonClass: "btn btn-io",
         customClass: {
-            popup: 'large-swal animated bounceInUp',
-        },
+            popup: 'large-swal animated bounceInUp'
+        }
     }).then((result) => {
         if (result.value) {
             executeDelete(id);

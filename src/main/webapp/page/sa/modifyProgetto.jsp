@@ -75,6 +75,7 @@
         <link href="<%=src%>/assets/demo/default/skins/brand/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/resource/animate.css" rel="stylesheet" type="text/css"/>
+        <link href="../../Bootstrap2024/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
         <style>
             a.disablelink {
@@ -84,149 +85,131 @@
             }
         </style>
     </head>
-    <body class="kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed">
-        <div class="kt-grid kt-grid--hor kt-grid--root">
-            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                        <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-                            <div class="kt-portlet kt-portlet--mobile">
-                                <div class="kt-portlet__head">
-                                    <div class="kt-portlet__head-label">
-                                        <h3 class="kt-portlet__head-title">
-                                            Modifica Progetto:
-                                        </h3>
-                                    </div>
-                                </div>
-                                <%
-                                    DocumentiPrg m2 = Utility.filterM2(p);
-                                    if (m2 != null && p.getModello2_check() == 1) {
-                                %>
-                                <div class="kt-portlet__body" style="padding-bottom: 0px!important">
-                                    <div class="alert alert-warning" role="alert">
-                                        <form id="kt_form2" name="kt_form2" action="<%=request.getContextPath()%>/OperazioniSA?type=manageM2" class="kt-form kt-form--label-right" method="post" enctype="multipart/form-data" style="width:100%;">
-                                            <input type="hidden" id="idfile" name="idfile" value="<%=m2.getId()%>">
-                                            <input type="hidden" id="id_prg" name="id_prg" value="<%=p.getId()%>">
-                                            <input type="hidden" id="modello" name="modello" value="<%=m2.getTipo().getId()%>"/>
-                                            <input type="hidden" id="tipo_op" name="tipo_op"/>
-                                            <div class="alert-text">
-                                                <h4 class="alert-heading">Modello 2</h4>
-                                                <p>Le modifiche effettuate al progetto hanno richiesto la generazione di un nuovo modello.<br>Affinchè sia validato il modello stesso deve essere scaricato, firmato digitalmente (.p7m CAdES, .pdf PAdES) e caricato nel campo sottostante.</p>
-                                                <hr>
-                                                <div class="row">
-                                                    <div class="col-sm-5 col-md-4 col-lg-4">
-                                                        <button class="btn btn-primary btn-md btn-wide kt-font-bold" type="button" target="_blank" onclick="return download_m2();">Scarica nuovo Modello 2</button>                                                                
-                                                    </div>
-                                                    <div class="col-sm-5 col-md-6 col-lg-6">
-                                                        <div class="custom-file" style="float: right;">
-                                                            <input type="file" 
-                                                                   class="custom-file-input" 
-                                                                   accept="<%=m2.getTipo().getMimetype()%>" name="file_m2"  id="file_m2"
-                                                                   onchange="return checkFileExtAndDim('<%=m2.getTipo().getEstensione()%>');">
-                                                            <label class="custom-file-label selected" 
-                                                                   style="color: #a7abc3; text-align: left;">Scegli File</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-2 col-md-2 col-lg-2">
-                                                        <button style="float: right; "class="btn btn-primary btn-md btn-wide kt-font-bold" type="button" id="upfile"><i class="fa fa-cloud-upload-alt"></i>Carica</button>                                                                
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <%}%>
-                                <div class="kt-portlet__body">
-                                    <form id="kt_form" action="<%=request.getContextPath()%>/OperazioniSA?type=modifyPrg" class="kt-form kt-form--label-right" accept-charset="ISO-8859-1" method="post">
-                                        <input type="hidden" id="id_progetto" name="id_progetto" value="<%=p.getId()%>">
-                                        <div class="form-group">
-                                            <div class="col-12">
-                                                <label>Nome</label><%=p.getStato().getModifiche().getNome() == 1 ? "<label class='kt-font-danger kt-font-boldest'>*</label>" : ""%>
-                                                <div class="dropdown bootstrap-select form-control kt- paddig_0" id="nome_pf_div">
-                                                    <select class="form-control kt-select2-general obbligatory" <%=p.getStato().getModifiche().getNome() == 1 ? "" : "disabled"%> id="nome_pf" name="nome_pf">
-                                                        <option value="-">Seleziona Nome</option>
-                                                        <%for (NomiProgetto s : nomi) {
-                                                                if (p.getNome().equals(s)) {%>
-                                                        <option selected value="<%=s.getId()%>"><%=s.getDescrizione()%></option>
-                                                        <%} else {%>
-                                                        <option value="<%=s.getId()%>"><%=s.getDescrizione()%></option>
-                                                        <%}
-                                                            }%>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-12">
-                                                <label>Descrizione</label>
-                                                <textarea class="form-control" <%=p.getStato().getModifiche().getDescrizione() == 1 ? "" : "disabled"%> id="descrizione_pf" name="descrizione_pf" rows="5"><%=p.getDescrizione()%></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-12">
-                                                <label>Date Inizio - Fine </label><%=p.getStato().getModifiche().getDate() == 1 ? "<label class='kt-font-danger kt-font-boldest'>*</label>" : ""%>
-                                                <input type="text" class="form-control obbligatory" <%=p.getStato().getModifiche().getDate() == 1 ? "id='kt_daterange' readonly" : "disabled"%>  name="date"  value="<%=sdf.format(p.getStart()) + " - " + sdf.format(p.getEnd())%>" autocomplete="off">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-12">
-                                                <label>Sede di Formazione</label><%=p.getStato().getModifiche().getSede() == 1 ? "<label class='kt-font-danger kt-font-boldest'>*</label>" : ""%>
-                                                <div class="dropdown bootstrap-select form-control kt-" id="sede_div" style="padding: 0;">
-                                                    <select class="form-control kt-select2-general obbligatory" id="sede" name="sede"  style="width: 100%" <%=p.getStato().getModifiche().getSede() == 1 ? "" : "disabled"%>>
-                                                        <option value="-">Seleziona Sede</option>
-                                                        <%for (SediFormazione s : sedi) {
-                                                                if (s.equals(p.getSede())) {%>
-                                                        <option selected value="<%=s.getId()%>"><%=s.getDenominazione()%></option>
-                                                        <%} else {%>
-                                                        <option value="<%=s.getId()%>"><%=s.getDenominazione()%></option>
-                                                        <%}
-                                                            }%>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row col">
-                                            <div class="col-12">
-                                                <label>Allievi</label><%=p.getStato().getModifiche().getAllievi() == 1 ? "<label class='kt-font-danger kt-font-boldest'>*</label>" : ""%>
-                                                <div class="select-div" id="allievi_div">
-                                                    <select class="form-control kt-select2 obbligatory" id="allievi" name="allievi[]" multiple="multiple" style="width: 100%" <%=p.getStato().getModifiche().getAllievi() == 1 ? "" : "disabled"%>>
-                                                        <%for (Allievi a : alunni_prg) {%>
-                                                        <option selected value="<%=a.getId()%>"><%=a.getCognome()%> <%=a.getNome()%></option>
-                                                        <%}%>
-                                                        <%if (p.getStato().getModifiche().getAllievi() == 1) {
-                                                                for (Allievi a : alunni) {%>
-                                                        <option value="<%=a.getId()%>"><%=a.getCognome()%> <%=a.getNome()%></option>
-                                                        <%}%>
-                                                        <%}%>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <!--                                            <div class="col-6">
-                                                                                            <label style="color:#fff;">-</label>
-                                                                                        </div>-->
-                                        </div>
-                                        <label class="kt-font-danger kt-font-bold"><font size="2">* Campi Obbligatori</font></label>
-                                        <div class="kt-portlet__foot">
-                                            <div class="kt-form__actions">
-                                                <div class="row" style="align-items: center;justify-content: center; display:flex;">
-                                                    <a id="submit" href="javascript:void(0);" class="btn btn-primary ">Salva modifiche</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form> 
-                                </div>
+    <body class="d-flex flex-column min-vh-100">
+        <div class="container-fluid">
+            <div id="kt_content">
+
+                <%
+                    DocumentiPrg m2 = Utility.filterM2(p);
+                    if (m2 != null && p.getModello2_check() == 1) {
+                %>
+                <div class="alert alert-warning mb-3 p-3">
+                    <form id="kt_form2" name="kt_form2" action="<%=request.getContextPath()%>/OperazioniSA?type=manageM2" method="post" enctype="multipart/form-data">
+                        <input type="hidden" id="idfile" name="idfile" value="<%=m2.getId()%>">
+                        <input type="hidden" id="id_prg" name="id_prg" value="<%=p.getId()%>">
+                        <input type="hidden" id="modello" name="modello" value="<%=m2.getTipo().getId()%>"/>
+                        <input type="hidden" id="tipo_op" name="tipo_op"/>
+                        <h4>Modello 2</h4>
+                        <p>Le modifiche effettuate al progetto hanno richiesto la generazione di un nuovo modello.<br>
+                            Affinchè sia validato il modello stesso deve essere scaricato, firmato digitalmente (.p7m CAdES, .pdf PAdES) e caricato nel campo sottostante.</p>
+                        <hr>
+                        <div class="row align-items-center">
+                            <div class="col-sm-5 col-md-4 col-lg-4 mb-2 mb-sm-0">
+                                <button class="btn btn-primary w-100" type="button" target="_blank" onclick="return download_m2();">Scarica nuovo Modello 2</button>
+                            </div>
+                            <div class="col-sm-5 col-md-6 col-lg-6 mb-2 mb-sm-0 text-end">
+                                <input type="file" class="form-control" accept="<%=m2.getTipo().getMimetype()%>" name="file_m2" id="file_m2" onchange="return checkFileExtAndDim('<%=m2.getTipo().getEstensione()%>');">
+                            </div>
+                            <div class="col-sm-2 col-md-2 col-lg-2 text-end">
+                                <button class="btn btn-primary w-100" type="button" id="upfile"><i class="fa fa-cloud-upload-alt"></i> Carica</button>
                             </div>
                         </div>
-                    </div>	
+                    </form>
                 </div>
+                <% }%>
+
+                <br>
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h3>Modifica Progetto:</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="kt_form" action="<%=request.getContextPath()%>/OperazioniSA?type=modifyPrg" method="post" accept-charset="ISO-8859-1">
+                            <input type="hidden" id="id_progetto" name="id_progetto" value="<%=p.getId()%>">
+
+                            <div class="mb-3">
+                                <label for="nome_pf" class="form-label">Nome
+                                    <%=p.getStato().getModifiche().getNome() == 1 ? "<span class='text-danger fw-bold'>*</span>" : ""%>
+                                </label>
+                                <select class="form-select obbligatory" id="nome_pf" name="nome_pf" <%=p.getStato().getModifiche().getNome() == 1 ? "" : "disabled"%>>
+                                    <option value="-">Seleziona Nome</option>
+                                    <% for (NomiProgetto s : nomi) {
+                                            if (p.getNome().equals(s)) {%>
+                                    <option selected value="<%=s.getId()%>"><%=s.getDescrizione()%></option>
+                                    <% } else {%>
+                                    <option value="<%=s.getId()%>"><%=s.getDescrizione()%></option>
+                                    <% }
+                                        }%>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="descrizione_pf" class="form-label">Descrizione</label>
+                                <textarea class="form-control" id="descrizione_pf" name="descrizione_pf" rows="5" <%=p.getStato().getModifiche().getDescrizione() == 1 ? "" : "disabled"%>><%=p.getDescrizione()%></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="kt_daterange" class="form-label">Date Inizio - Fine
+                                    <%=p.getStato().getModifiche().getDate() == 1 ? "<span class='text-danger fw-bold'>*</span>" : ""%>
+                                </label>
+                                <input type="text" class="form-control obbligatory" name="date" value="<%=sdf.format(p.getStart()) + " - " + sdf.format(p.getEnd())%>" <%=p.getStato().getModifiche().getDate() == 1 ? "id='kt_daterange' readonly" : "disabled"%> autocomplete="off">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="sede" class="form-label">Sede di Formazione
+                                    <%=p.getStato().getModifiche().getSede() == 1 ? "<span class='text-danger fw-bold'>*</span>" : ""%>
+                                </label>
+                                <select class="form-select obbligatory" id="sede" name="sede" style="width: 100%" <%=p.getStato().getModifiche().getSede() == 1 ? "" : "disabled"%>>
+                                    <option value="-">Seleziona Sede</option>
+                                    <% for (SediFormazione s : sedi) {
+                                            if (s.equals(p.getSede())) {%>
+                                    <option selected value="<%=s.getId()%>"><%=s.getDenominazione()%></option>
+                                    <% } else {%>
+                                    <option value="<%=s.getId()%>"><%=s.getDenominazione()%></option>
+                                    <% }
+                                        }%>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="allievi" class="form-label">Allievi
+                                    <%=p.getStato().getModifiche().getAllievi() == 1 ? "<span class='text-danger fw-bold'>*</span>" : ""%>
+                                </label>
+                                <select class="form-select obbligatory" id="allievi" name="allievi[]" multiple style="width: 100%" <%=p.getStato().getModifiche().getAllievi() == 1 ? "" : "disabled"%>>
+                                    <% for (Allievi a : alunni_prg) {%>
+                                    <option selected value="<%=a.getId()%>"><%=a.getCognome()%> <%=a.getNome()%></option>
+                                    <% } %>
+                                    <% if (p.getStato().getModifiche().getAllievi() == 1) {
+                                            for (Allievi a : alunni) {%>
+                                    <option value="<%=a.getId()%>"><%=a.getCognome()%> <%=a.getNome()%></option>
+                                    <% }
+                                        }%>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <small class="text-danger fw-bold">* Campi Obbligatori</small>
+                            </div>
+
+                            <div class="text-center">
+                                <a id="submit" href="javascript:void(0);" class="btn btn-primary">Salva modifiche</a>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
             </div>
         </div>
+
+
+
         <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
             <i class="fa fa-arrow-up"></i>
         </div>
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/popper.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
@@ -246,23 +229,23 @@
         <script src="../sa/js/modifyProgetto.js" type="text/javascript"></script>
         <script id="docenti_allievi" src="<%=src%>/page/sa/js/docenti_allievi.js" data-context="<%=request.getContextPath()%>" type="text/javascript"></script>
         <script type="text/javascript">
-                                                                       var KTAppOptions = {
-                                                                           "colors": {
-                                                                               "state": {
-                                                                                   "brand": "#5d78ff",
-                                                                                   "dark": "#282a3c",
-                                                                                   "light": "#ffffff",
-                                                                                   "primary": "#5867dd",
-                                                                                   "success": "#34bfa3",
-                                                                                   "info": "#36a3f7",
-                                                                                   "warning": "#ffb822"
-                                                                               },
-                                                                               "base": {
-                                                                                   "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                                                                                   "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                                                                               }
-                                                                           }
-                                                                       };
+                                    var KTAppOptions = {
+                                        "colors": {
+                                            "state": {
+                                                "brand": "#5d78ff",
+                                                "dark": "#282a3c",
+                                                "light": "#ffffff",
+                                                "primary": "#5867dd",
+                                                "success": "#34bfa3",
+                                                "info": "#36a3f7",
+                                                "warning": "#ffb822"
+                                            },
+                                            "base": {
+                                                "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                                                "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                                            }
+                                        }
+                                    };
         </script>
         <script>
             var min_allievi = <%=n_allievi%>;
@@ -299,9 +282,9 @@
                 }
             });
 
-            
 
-            
+
+
 
             function checkStato() {
                 let val = '<%=ckstato%>';
@@ -316,7 +299,7 @@
             <%=p.getStato().getModifiche().getAllievi() == 1 ? "conoscenzeAllevi();" : ""%>
             });
 
-            
+
 
             $('#submit').on("click", function () {
                 if (!ctrlForm()) {

@@ -49,7 +49,6 @@
         <meta name="description" content="Updates and statistics">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <script src="<%=src%>/resource/webfont.js"></script>
-        <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js"></script>
         <script>
             WebFont.load({
                 google: {
@@ -106,273 +105,278 @@
             }
         </script>
     </head>
-    <body>
+
+
+
+
+    <body class="d-flex flex-column min-vh-100">
         <!-- begin:: Page -->
         <%if (fancy) {%>
         <%@ include file="menu/head1.jsp"%>
         <%@ include file="../../Bootstrap2024/index/index_SoggettoAttuatore/Header_soggettoAttuatore.jsp"%>
-        <div class="kt-grid kt-grid--hor kt-grid--root">
-            <%@ include file="../../Bootstrap2024/index/menu/menuAtt.jsp" %>
+        <%@ include file="../../Bootstrap2024/index/menu/menuAtt.jsp" %>
+        <%@ include file="menu/head.jsp"%>
 
-            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-                <!-- end:: Aside -->
-                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
-                    <%@ include file="menu/head.jsp"%>
-                    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                        <div class="kt-subheader   kt-grid__item" id="kt_subheader">
-                            <div class="kt-subheader   kt-grid__item" id="kt_subheader">
-                                <div class="kt-subheader__main">
-                                    <h3 class="kt-subheader__title">Allievi</h3>
-                                    <span class="kt-subheader__separator kt-subheader__separator--v"></span>
-                                    <a class="kt-subheader__breadcrumbs-link">Aggiungi</a>
+
+        <main class="container-fluid my-4">
+
+
+            <!-- Subheader -->
+            <div class="my-3">
+                <h1 class="h3">Allievi</h1>
+                <span class="text-muted">Aggiungi</span>
+            </div>
+
+            <% } else { %>
+            <div class="container-fluid d-flex flex-column min-vh-100">
+                <div class="flex-grow-1 d-flex flex-column">
+                    <% }%>
+
+                    <!-- Content -->
+                    <div class="container flex-grow-1" id="kt_content">
+
+                        <!-- Alert Info -->
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <div class="alert alert-info">
+                                    MODELLO 1 - La scheda d'iscrizione deve essere compilata in ogni sua parte, i campi contrassegnati con l'asterisco sono obbligatori. 
+                                    La scheda generata dal sistema informativo dovrà essere firmata (con firma elettronica pdf) dall'allievo e caricata in piattaforma. 
                                 </div>
                             </div>
                         </div>
-                        <%} else {%>
-                        <div class="kt-grid kt-grid--hor kt-grid--root">
-                            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-                                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                                    <%}%>
-                                    <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="alert alert-info">
-                                                    MODELLO 1 - La scheda d'iscrizione deve essere compilata in ogni sua parte, i campi contrassegnati con l'asterisco sono obbligatori. 
-                                                    La scheda generata dal sistema informativo dovr&#224; essere firmata (con firma elettronica pdf) dall'allievo e caricata in piattaforma. 
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="alert alert-warning">
-                                                    MODELLO 1 - Il S.I. controlla il QRCODE presente sulla domanda, si consiglia pertanto di verificare che la scansione non abbia reso illeggibile il QRCODE 
-                                                    (in tal caso verr&#224; visualizzato un Messaggio di errore ed è necessario caricare un documento correttamente scansionato). 
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                        <div class="kt-portlet kt-portlet--mobile">
-                                            <form class="kt-form" id="kt_form" 
-                                                  action="<%=request.getContextPath()%>/OperazioniSA?type=newAllievo" 
-                                                  style="padding-top: 0;"  method="post" enctype="multipart/form-data">
-                                                <input type="hidden" name="save" id="save" value="0" />
-                                                <%if (Utility.demoversion) {%>
-                                                <div class="kt-portlet__head">
-                                                    <div class="kt-portlet__head-label">
-                                                        <h3 class="kt-portlet__head-title">
-                                                            <a href="<%=request.getContextPath()%>/OperazioniSA?type=generaterandomAllievi" 
-                                                               class="btn btn-dark kt-font-bold"><i class="fa fa-user"></i> INSERISCI 5 ALLIEVI RANDOM</a>
-                                                        </h3>
-                                                    </div>
-                                                </div>
-                                                <%}%>
-                                                <div class="kt-portlet__body">
-                                                    <div class="kt-section kt-section--space-md">
-                                                        <div class="form-group form-group-sm row">
-                                                            <div class="col-12">
-                                                                <h5>ALLIEVO/A</h5>
-                                                                <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                                                <div class="form-row">
-                                                                    <div class="form-group col-lg-6">
-                                                                        <div class="dropdown bootstrap-select form-control kt-" id="allievo_div" style="padding: 0;">
-                                                                            <select class="form-control kt-select2-general obbligatory" id="allievo" name="allievo"  style="width: 100%">
-                                                                                <option value="-">Seleziona</option>
-                                                                                <%for (Allievi al1 : list_allievi) {%>
-                                                                                <option value="<%=al1.getId()%>"><%=al1.getCognome()%> <%=al1.getNome()%> - <%=al1.getCodicefiscale()%></option>
-                                                                                <%}%>
-                                                                                <!--                                                                                <option value="100">ITALIA</option>
-                                                                                <option value="200">STATO UE</option>
-                                                                                <option value="300">STATO EXTRA UE</option>-->
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
+                        <!-- Alert Warning -->
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <div class="alert alert-warning">
+                                    MODELLO 1 - Il S.I. controlla il QRCODE presente sulla domanda, si consiglia pertanto di verificare che la scansione non abbia reso illeggibile il QRCODE 
+                                    (in tal caso verrà visualizzato un Messaggio di errore ed è necessario caricare un documento correttamente scansionato). 
+                                </div>
+                            </div>
+                        </div>
 
-                                                                </div>
+                        <!-- Form -->
+                        <div class="card shadow-sm">
+                            <form class="needs-validation" id="kt_form" 
+                                  action="<%=request.getContextPath()%>/OperazioniSA?type=newAllievo" 
+                                  method="post" enctype="multipart/form-data" novalidate>
+                                <input type="hidden" name="save" id="save" value="0" />
 
-                                                                <h5>AUTORIZZAZIONI PRIVACY</h5>
-                                                                <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                                                <br>
+                                <% if (Utility.demoversion) {%>
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">
+                                        <a href="<%=request.getContextPath()%>/OperazioniSA?type=generaterandomAllievi" 
+                                           class="btn btn-dark fw-bold">
+                                            <i class="fa fa-user"></i> INSERISCI 5 ALLIEVI RANDOM
+                                        </a>
+                                    </h5>
+                                </div>
+                                <% } %>
 
-                                                                <div class="form-row">   
-                                                                    <div class="form-group col-xl-4 col-lg-6">
-                                                                        <label class="active">Autorizzazione Privacy 1 </label><label class="kt-font-danger kt-font-boldest">*</label>
+                                <div class="card-body">
+                                    <!-- Allievo -->
+                                    <h5>ALLIEVO/A</h5>
+                                    <hr class="my-2">
 
-                                                                        <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--primary">
-                                                                            <label>
-                                                                                <input type="checkbox" class="form-control" name="prv1" id="prv1" checked disabled/>
-                                                                                <span></span>
-                                                                                <%=prv1%>
-                                                                            </label>
-                                                                        </span>
-
-                                                                    </div>
-                                                                    <div class="form-group col-xl-4 col-lg-6">
-                                                                        <label class="active">Autorizzazione Privacy 2 </label>
-                                                                        <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--primary">
-                                                                            <label>
-                                                                                <input type="checkbox" class="form-control" name="prv2" id="prv2"/>
-                                                                                <span></span>
-                                                                                <%=prv2%>
-                                                                            </label>
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="form-group col-xl-4 col-lg-6">
-                                                                        <label class="active">Autorizzazione Privacy 3</label>
-                                                                        <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--primary">
-                                                                            <label>
-                                                                                <input type="checkbox" class="form-control" name="prv3" id="prv3"/>
-                                                                                <span></span>
-                                                                                <%=prv3%>
-                                                                            </label>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                                <br>
-                                                                <br>
-
-                                                                <%if (mod_1.getModello() != null) {%>
-                                                                <h5>MODELLO 1</h5>
-                                                                <br>
-                                                                <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                                                <div class="form-group row">
-                                                                    <div class="form-group col-xl-6 col-lg-6">
-                                                                        <label>Scaricare il modello per l'allievo selezionato per poi caricarlo firmato dall'allievo nel campo seguente.</label>
-                                                                        <br>
-                                                                        <br>
-                                                                        <button class="btn btn-primary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" 
-                                                                                type="button" 
-                                                                                onclick="return model_funct('<%=mod_1.getId()%>');"
-                                                                                >
-                                                                            Scarica
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="form-group col-xl-4 col-lg-6">
-                                                                        <div class="custom-file">
-                                                                            <input type="file" <%=mod_1.getObbligatorio() == 1 ? "tipo='obbligatory'" : ""%> 
-                                                                                   class="custom-file-input" 
-                                                                                   accept="<%=mod_1.getMimetype()%>" name="doc_<%=mod_1.getId()%>" 
-                                                                                   onchange="return checkFileExtAndDim('<%=mod_1.getEstensione()%>');">
-                                                                            <label class="custom-file-label selected" name="label_<%=mod_1.getId()%>"></label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <%}%>
-                                                                <h5>Altra Documentazione</h5>
-                                                                <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                                                <div class="form-group row">
-                                                                    <%for (TipoDoc_Allievi t : tipo_doc) {%>
-                                                                    <div class="form-group col-xl-4 col-lg-6">
-                                                                        <label><%=t.getDescrizione()%></label><%=t.getObbligatorio() == 1 ? "<label id='label_doc_" + t.getId() + "' class='kt-font-danger kt-font-boldest'>*</label>" : "<label id='label_doc_" + t.getId() + "' class='kt-font-danger kt-font-boldest'></label>"%>
-                                                                        <div class="custom-file">
-                                                                            <input type="file" <%=t.getObbligatorio() == 1 ? "tipo='obbligatory'" : ""%> 
-                                                                                   class="custom-file-input" 
-                                                                                   accept="<%=t.getMimetype()%>" name="doc_<%=t.getId()%>" id="doc_<%=t.getId()%>"
-                                                                                   onchange="return checkFileExtAndDim('<%=t.getEstensione()%>');">
-                                                                            <label class="custom-file-label selected" name="label_<%=t.getId()%>"></label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <%}%>
-                                                                </div>
-                                                                <div class="kt-portlet__foot" style="padding-left: 10px;">
-                                                                    <div class="kt-form__actions">
-                                                                        <div class="row">
-                                                                            <a id="submit_change" href="javascript:void(0);" class="btn btn-primary" style="font-family: Poppins"><i class="flaticon2-plus-1"></i> Aggiungi</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>    
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>     
+                                    <div class="row mb-3">
+                                        <div class="col-lg-6">
+                                            <label for="allievo" class="form-label">Seleziona</label>
+                                            <select class="form-select obbligatory" id="allievo" name="allievo">
+                                                <option value="-">Seleziona</option>
+                                                <% for (Allievi al1 : list_allievi) {%>
+                                                <option value="<%=al1.getId()%>">
+                                                    <%=al1.getCognome()%> <%=al1.getNome()%> - <%=al1.getCodicefiscale()%>
+                                                </option>
+                                                <% }%>
+                                            </select>
                                         </div>
                                     </div>
-                                    <%if (fancy) {%>
+
+                                    <!-- Privacy -->
+                                    <h5>AUTORIZZAZIONI PRIVACY</h5>
+                                    <hr class="my-2">
+
+                                    <div class="row">
+                                        <div class="col-xl-4 col-lg-6 mb-3">
+                                            <div class="form-check form-switch">
+                                                <input type="checkbox" class="form-check-input" name="prv1" id="prv1" checked disabled />
+                                                <label class="form-check-label" for="prv1">
+                                                    Autorizzazione Privacy 1 <span class="text-danger fw-bold">*</span> - <%=prv1%>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-6 mb-3">
+                                            <div class="form-check form-switch">
+                                                <input type="checkbox" class="form-check-input" name="prv2" id="prv2" />
+                                                <label class="form-check-label" for="prv2">
+                                                    Autorizzazione Privacy 2 - <%=prv2%>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-6 mb-3">
+                                            <div class="form-check form-switch">
+                                                <input type="checkbox" class="form-check-input" name="prv3" id="prv3" />
+                                                <label class="form-check-label" for="prv3">
+                                                    Autorizzazione Privacy 3 - <%=prv3%>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <% if (mod_1.getModello() != null) {%>
+                                    <!-- Modello 1 -->
+                                    <h5 class="mt-4">MODELLO 1</h5>
+                                    <hr class="my-2">
+
+                                    <div class="row mb-3">
+                                        <div class="col-lg-6">
+                                            <p>Scaricare il modello per l'allievo selezionato per poi caricarlo firmato dall'allievo nel campo seguente.</p>
+                                            <button type="button" class="btn btn-primary fw-bold text-uppercase" 
+                                                    onclick="return model_funct('<%=mod_1.getId()%>');">
+                                                Scarica
+                                            </button>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="doc_<%=mod_1.getId()%>" class="form-label">Carica documento</label>
+                                                <input type="file" 
+                                                       <%=mod_1.getObbligatorio() == 1 ? "tipo='obbligatory'" : ""%>
+                                                       class="form-control" 
+                                                       accept="<%=mod_1.getMimetype()%>" 
+                                                       name="doc_<%=mod_1.getId()%>" 
+                                                       onchange="return checkFileExtAndDim('<%=mod_1.getEstensione()%>');">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+
+                                    <!-- Altra Documentazione -->
+                                    <h5 class="mt-4">Altra Documentazione</h5>
+                                    <hr class="my-2">
+
+                                    <div class="row">
+                                        <% for (TipoDoc_Allievi t : tipo_doc) {%>
+                                        <div class="col-xl-4 col-lg-6 mb-3">
+                                            <label class="form-label"><%=t.getDescrizione()%>
+                                                <%=t.getObbligatorio() == 1 ? "<span id='label_doc_" + t.getId() + "' class='text-danger fw-bold'>*</span>" : ""%>
+                                            </label>
+                                            <input type="file" 
+                                                   <%=t.getObbligatorio() == 1 ? "tipo='obbligatory'" : ""%>
+                                                   class="form-control"
+                                                   accept="<%=t.getMimetype()%>" 
+                                                   name="doc_<%=t.getId()%>" id="doc_<%=t.getId()%>"
+                                                   onchange="return checkFileExtAndDim('<%=t.getEstensione()%>');">
+                                        </div>
+                                        <% } %>
+                                    </div>
                                 </div>
-                                <%@ include file="../../Bootstrap2024/index/login/Footer_login.jsp"%>
-                                <%}%>
-                            </div>
+
+                                <!-- Footer -->
+                                <div class="card-footer text-start">
+                                    <a id="submit_change" href="javascript:void(0);" class="btn btn-primary">
+                                        <i class="flaticon2-plus-1"></i> Aggiungi
+                                    </a>
+                                </div>
+
+                            </form>
                         </div>
                     </div>
+
+                    <% if (fancy) { %>
                 </div>
+                <% }%>
+
             </div>
         </div>
-        <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
-            <i class="fa fa-arrow-up"></i>
-        </div>
-        <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/sticky-js/dist/sticky.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/jquery-form/dist/jquery.form.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/app/custom/general/components/extended/blockui1.33.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/sweetalert2/dist/sweetalert2.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/soop/js/utility.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/app/bundle/app.bundle.js" type="text/javascript"></script>
-        <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
-        <!--this page -->
-        <script src="<%=src%>/assets/vendors/general/select2/dist/select2.full.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/select2.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap-select/dist/js/bootstrap-select.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/bootstrap-datepicker.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
-        <script id="newAllievo" src="<%=src%>/page/sa/js/modello1.js" data-context="<%=request.getContextPath()%>" type="text/javascript"></script>
-        <script type="text/javascript">
-                                                                                       var KTAppOptions = {
-                                                                                           "colors": {
-                                                                                               "state": {
-                                                                                                   "brand": "#5d78ff",
-                                                                                                   "dark": "#282a3c",
-                                                                                                   "light": "#ffffff",
-                                                                                                   "primary": "#5867dd",
-                                                                                                   "success": "#34bfa3",
-                                                                                                   "info": "#36a3f7",
-                                                                                                   "warning": "#ffb822"
-                                                                                               },
-                                                                                               "base": {
-                                                                                                   "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                                                                                                   "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                                                                                               }
-                                                                                           }
-                                                                                       };
-        </script>
-        <script>
-            var datep = function () {
-                var arrows = {
-                    leftArrow: '<i class="la la-angle-left"></i>',
-                    rightArrow: '<i class="la la-angle-right"></i>'
+    </main>
+    <%@ include file="../../Bootstrap2024/index/login/Footer_login.jsp"%>
+
+
+
+
+    <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
+        <i class="fa fa-arrow-up"></i>
+    </div>
+    <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
+    <script src="../../assets/soop/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/vendors/general/sticky-js/dist/sticky.min.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/vendors/general/jquery-form/dist/jquery.form.min.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/app/custom/general/components/extended/blockui1.33.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/vendors/general/sweetalert2/dist/sweetalert2.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/soop/js/utility.js" type="text/javascript"></script>
+    <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
+
+    <script src="<%=src%>/assets/app/bundle/app.bundle.js" type="text/javascript"></script>
+    <!--this page -->
+    <script src="<%=src%>/assets/vendors/general/select2/dist/select2.full.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/select2.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/vendors/general/bootstrap-select/dist/js/bootstrap-select.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/bootstrap-datepicker.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
+    
+    <script id="newAllievo" src="<%=src%>/page/sa/js/modello1.js" data-context="<%=request.getContextPath()%>" type="text/javascript"></script>
+    <script type="text/javascript">
+                                                       var KTAppOptions = {
+                                                           "colors": {
+                                                               "state": {
+                                                                   "brand": "#5d78ff",
+                                                                   "dark": "#282a3c",
+                                                                   "light": "#ffffff",
+                                                                   "primary": "#5867dd",
+                                                                   "success": "#34bfa3",
+                                                                   "info": "#36a3f7",
+                                                                   "warning": "#ffb822"
+                                                               },
+                                                               "base": {
+                                                                   "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                                                                   "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                                                               }
+                                                           }
+                                                       };
+    </script>
+    <script>
+        var datep = function () {
+            var arrows = {
+                leftArrow: '<i class="la la-angle-left"></i>',
+                rightArrow: '<i class="la la-angle-right"></i>'
+            }
+
+            var demos = function () {
+                $('input.dateBorth').datepicker({
+                    orientation: "bottom left",
+                    todayHighlight: true,
+                    templates: arrows,
+                    autoclose: true,
+                    format: 'dd/mm/yyyy',
+                    startView: 'decade',
+                    endDate: new Date()
+                });
+
+            }
+
+            return {
+                // public functions
+                init: function () {
+                    demos();
                 }
+            };
+        }();
 
-                var demos = function () {
-                    $('input.dateBorth').datepicker({
-                        orientation: "bottom left",
-                        todayHighlight: true,
-                        templates: arrows,
-                        autoclose: true,
-                        format: 'dd/mm/yyyy',
-                        startView: 'decade',
-                        endDate: new Date()
-                    });
+        jQuery(document).ready(function () {
+            datep.init();
+        });
+    </script>
+</body>
 
-                }
 
-                return {
-                    // public functions
-                    init: function () {
-                        demos();
-                    }
-                };
-            }();
 
-            jQuery(document).ready(function () {
-                datep.init();
-            });
-        </script>
-    </body>
+
+
 </html>
 <%}
     }%>

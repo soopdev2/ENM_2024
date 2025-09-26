@@ -11,23 +11,23 @@
 <%@page import="rc.so.domain.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-        User us = (User) session.getAttribute("user");
-        if (us == null) {
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
+    User us = (User) session.getAttribute("user");
+    if (us == null) {
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
+    } else {
+        String uri_ = request.getRequestURI();
+        String pageName_ = uri_.substring(uri_.lastIndexOf("/") + 1);
+        if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
+            response.sendRedirect(request.getContextPath() + "/page_403.jsp");
         } else {
-            String uri_ = request.getRequestURI();
-            String pageName_ = uri_.substring(uri_.lastIndexOf("/") + 1);
-            if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
-                response.sendRedirect(request.getContextPath() + "/page_403.jsp");
-            } else {
-                String src = Utility.checkAttribute(session, "src");
-                Entity e = new Entity();
-                UnitaDidattiche u = e.getEm().find(UnitaDidattiche.class, StringEscapeUtils.escapeHtml4(request.getParameter("codice")));
-                int files = Integer.parseInt(e.getPath("UD_max_files"));
-                int links = Integer.parseInt(e.getPath("UD_max_links"));
-                boolean checkUpload[] = Utility.LinksDocs_UD(u.getDocumenti_ud(), Integer.parseInt(e.getPath("UD_max_files")), Integer.parseInt(e.getPath("UD_max_links")));
-                e.close();
-                int maxfiles = links + files;
+            String src = Utility.checkAttribute(session, "src");
+            Entity e = new Entity();
+            UnitaDidattiche u = e.getEm().find(UnitaDidattiche.class, StringEscapeUtils.escapeHtml4(request.getParameter("codice")));
+            int files = Integer.parseInt(e.getPath("UD_max_files"));
+            int links = Integer.parseInt(e.getPath("UD_max_links"));
+            boolean checkUpload[] = Utility.LinksDocs_UD(u.getDocumenti_ud(), Integer.parseInt(e.getPath("UD_max_files")), Integer.parseInt(e.getPath("UD_max_links")));
+            e.close();
+            int maxfiles = links + files;
 %>
 <html>
     <head>
@@ -293,6 +293,6 @@
     </body>
 </html>
 <%}
-        }
     }
+
 %>

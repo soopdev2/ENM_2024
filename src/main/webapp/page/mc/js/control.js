@@ -14,7 +14,7 @@ function controlHourRegister() {
 }
 
 function checkHour(make, recognized) {
-    if (make.val() < recognized.val() || recognized.val() == "") {
+    if (make.val() < recognized.val() || recognized.val() === "") {
         recognized.removeClass("is-valid");
         recognized.addClass("is-invalid");
         return false;

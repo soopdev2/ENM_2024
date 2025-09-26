@@ -82,303 +82,176 @@
         <link href="<%=src%>/assets/demo/default/base/style.bundle.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/resource/custom.css" rel="stylesheet" type="text/css" />
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
-        <style type="text/css">
-            .form-group {
-                margin-bottom: 1rem;
-            }
+        <link href="../../Bootstrap2024/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
-            .custom-file-label::after {
-                color:#fff;
-                background-color: #eaa21c;
-            }
-
-            .kt-radio > span::after {
-                border: solid #363a90;
-                background: #363a90;
-            }
-
-            .kt-radio > input:checked ~ span {
-                border: 1px solid #363a90;
-            }
-
-            a.disablelink > i {
-                color: #7c7fb7!important;
-            }
-
-            .datepicker table tr td.highlighted.disabled, .datepicker table tr td.highlighted.disabled:active {
-                background: #d9edf7;
-                color: #d08902 !important;
-            }
-
-            .datepicker tbody tr > td.day {
-                background: #ebedf2;
-                color: #1d32a6 !important;
-            }
-
-            .datepicker tbody tr > td.day.active, .datepicker tbody tr > td.day.active {
-                background: #363a90;
-                color: #ffffff !important;
-            }
-
-            .datepicker table tr td.disabled, .datepicker table tr td.disabled {
-                background: none;
-                color: #777;
-                cursor: default;
-                color: #756c6e !important;
-            }
-            .select2-results__option[aria-selected=true] {
-                display: none;
-            }
-            .select2-selection__clear{
-                display: none;
-            }
-        </style>
     </head>
-    <body class="kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed">
-        <!-- begin:: Page -->
-        <div class="kt-grid kt-grid--hor kt-grid--root">
-            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                    <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-                        <div class="kt-portlet kt-portlet--mobile">
-                            <div class="kt-portlet__body">
-                                <input type="hidden" id="pId" name="pId" value="<%=p.getId()%>">
-                                <input type="hidden" id="m4Stato" name="m4Stato" value="<%=m4.getStato()%>">
-                                <input type="hidden" id="m4Id" name="m4Id" value="<%=m4.getId()%>">
-                                <input type="hidden" id="startPrg" name="startPrg" value="<%=p.getStart().getTime()%>">
-                                <input type="hidden" id="endPrg" name="endPrg" value="<%=p.getEnd().getTime()%>">
-                                <div class="kt-section kt-section--space-md">
-                                    <div class="form-group form-group-sm row">
-                                        <div class="col-12">
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <h5>Modello 4 - Gruppi</h5>                                                
-                                                </div>                                               
-                                                <div class="col-8">
-                                                    <%if (!m4.getStato().equalsIgnoreCase("OK")) {%>
-                                                    <div class="btn-group btn-group" role="group" style="float:right">
-                                                        <button id="deleteAll" disabled="disabled" class="btn btn-danger kt-font-bold" >Elimina tutte le lezioni</button>
-                                                    </div>
-                                                    <%}%>
-                                                </div>
+    <!-- begin:: Page -->
+    <body class="d-flex flex-column min-vh-100">
 
-                                            </div>
-                                            <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                            <div class="form-inline">
-                                                <%for (int i = 1; i <= gruppi; i++) {%>
-                                                <div class="col-md-6 col-lg-6">
-                                                    <div class="form-group">
-                                                        <label class="col-form-label">Gruppo <%=i%></label>
-                                                        <select class="form-control kt-select2 obbligatory" <%=disG%> id="param_<%=i%>" name="param_<%=i%>" multiple="multiple">
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <%}%>
-                                            </div>
-                                            <br>
-                                            <div class="kt-form__actions">
-                                                <div class="row" style="  align-items: center; justify-content: center;">
-                                                    <button id="createGroups" disabled style="display: none" class="btn btn-primary" style="font-family: Poppins;"><i class="fa fa-users"></i> Crea gruppi</button>
-                                                </div>
-                                            </div>
-                                        </div> 
-                                        <%
-                                            String esito = (String) session.getAttribute("esito4");
-                                            if (esito != null && !esito.trim().equals("") && !esito.trim().equals("OK")) {%>
-                                        <div class="form-row">
-                                            <div class="col-12">
-                                                <div class="alert alert-danger">
-                                                    <%=esito%>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <%}
-                                        %>
-                                        <div class="col-12" id="lezioni_m4" style="display:none;">
-                                            <h5>Modello 4 - Calendario <i class="fa fa-info-circle kt-font-io" 
-                                                                          data-container="body" 
-                                                                          data-toggle="kt-popover" 
-                                                                          data-html="true"
-                                                                          data-placement="bottom"
-                                                                          data-original-title="Calendario"
-                                                                          data-content="Eventuali variazioni, di date e docenti, dovranno essere <u>preventivamente e 
-                                                                          tempestivamente</u> comunicate all'ENM tramite apposita funzionalit&#224; della piattaforma.
-                                                                          <b>Le modifiche saranno autorizzate mediante aggiornamento del calendario corso validato presente in piattaforma.</b>"></i></h5>
-                                            <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                            <div class="alert alert-info" role="alert">
-                                                <div class="alert-text">
-                                                    <i class="fa fa-info-circle"></i> N.B. Prima di caricare il modello è necessario controllare attentamente che le informazioni riportate nel modello siano le medesime dei calendari (data, ora, docenti).
-                                                </div>
-                                            </div>
-                                            <%if (!m4.getStato().equalsIgnoreCase("OK")) {%>
-                                            <div class="alert alert-warning" role="alert">
-                                                <div class="alert-text">
-                                                    <h5 class="alert-heading">Caricamento Calendario modello 4</h5>
-                                                    <p>N.B. se il caricamento del calendario avviene dopo le ore 12:00 nell'ultima giornata di Fase A NON sarà possibile far partire la fase B il giorno successivo, ma bisognerà attendere un ulteriore giorno.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <%}%>
-                                            <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                            <%for (int i = 1; i <= gruppi; i++) {%>
+        <div class="container-fluid">
+            <div id="kt_content">
+                <!-- Modello 4 - Gruppi -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <input type="hidden" id="pId" name="pId" value="<%=p.getId()%>">
+                        <input type="hidden" id="m4Stato" name="m4Stato" value="<%=m4.getStato()%>">
+                        <input type="hidden" id="m4Id" name="m4Id" value="<%=m4.getId()%>">
+                        <input type="hidden" id="startPrg" name="startPrg" value="<%=p.getStart().getTime()%>">
+                        <input type="hidden" id="endPrg" name="endPrg" value="<%=p.getEnd().getTime()%>">
 
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <h5 class="kt-font-io"><i class="fa fa-users kt-font-io"></i> Gruppo <%=i%></h5>
-                                                </div>                                               
-                                                <div class="col-8">
-                                                    <%if (!m4.getStato().equalsIgnoreCase("OK")) {%>
-                                                    <div class="btn-group btn-group" role="group" style="float:right">
-                                                        <button id="deleteByGroup_<%=i%>" disabled="disabled" class="btn btn-danger kt-font-bold" >Elimina da una data lezione</button>
-                                                        <button id="deleteAllGroup_<%=i%>" disabled="disabled" class="btn btn-danger kt-font-bold" >Elimina tutte le lezioni</button>
-                                                    </div>
-                                                    <%}%>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-row">
-                                                <%for (LezioneCalendario lez : grouppedByLezione) {
-                                                        temp = Utility.lezioneFilteredByGroup(lezioni, lez.getId(), i);%>
-                                                
-                                                        <div class='col-lg-2 col-md-4 col-sm-6'>
-                                                    <div class='row'>
-                                                        <%if (lez.isDoppia()) {%>
-                                                        <div class="col-6 paddig_0_r" id="msgItem_<%=lez.getLezione()%>_<%=i%>" data-container="body" data-html="true" data-toggle="kt-tooltip" title="" style="text-align: center;">
-                                                            <%if (temp == null) {%>
-                                                            <a href="javascript:void(0)" id="a_lez<%=lez.getLezione()%>_<%=i%>" 
-                                                               onclick="uploadLezioneDouble(<%=p.getId()%>,<%=m4.getId()%>,<%=lez.getLezione()%>, <%=i%>)" class='btn-icon kt-font-io document disablelink' >
-                                                                <i id="mainIcon_<%=lez.getLezione()%>_<%=i%>" class='fa fa-file-invoice kt-font-io' style='font-size: 100px;'></i>
-                                                            </a>
-                                                            <%} else {%>
-                                                            <a href="javascript:void(0)" id="a_lez<%=lez.getLezione()%>_<%=i%>" 
-                                                               onclick="lezioniDouble(<%=lez.getId_cal1()%>,<%=lez.getId_cal2()%>, <%=lez.getLezione()%>, <%=i%>)" class='btn-icon kt-font-io document disablelink'>
-                                                                <i class='fa fa-file-invoice' style='font-size: 100px;'></i>
-                                                            </a>
-                                                            <%}%>
-                                                        </div>
-
-                                                        <%} else {%>
-                                                        <div class='col-6 paddig_0_r' id="msgItem_<%=lez.getLezione()%>_<%=i%>" data-container="body" data-html="true" 
-                                                             data-toggle="kt-tooltip" title="" style="text-align: center;">
-                                                            <%if (temp == null) {%>
-                                                            <a href="javascript:void(0)" id="a_lez<%=lez.getLezione()%>_<%=i%>" 
-                                                               onclick="uploadLezione(<%=p.getId()%>, <%=m4.getId()%>, <%=lez.getLezione()%>, <%=i%>, '<%=lez.getUd1()%>', '<%=idsedefisica%>')"
-                                                               class='btn-icon kt-font-io document disablelink' >
-                                                                <i id="mainIcon_<%=lez.getLezione()%>_<%=i%>" class='fa fa-file-invoice kt-font-io' style='font-size: 100px;'></i>
-                                                            </a>
-                                                            <%} else {%>
-                                                            <a href="javascript:void(0)" id="a_lez<%=lez.getLezione()%>_<%=i%>" 
-                                                               onclick="lezioniSingle(<%=lez.getId()%>, <%=lez.getLezione()%>, <%=i%>, '<%=lez.getUd1()%>', '<%=idsedefisica%>')" 
-                                                               class='btn-icon kt-font-io document disablelink'>
-                                                                <i class='fa fa-file-invoice kt-font-io' style='font-size: 100px;'></i>
-                                                            </a>
-                                                            <%}%>
-                                                        </div>
-
-                                                        <%}%> 
-                                                        <div class='col-6 paddig_0_l' style='text-align: left;'>
-                                                            <a class="btn btn-icon btn-sm" id="icon_<%=lez.getLezione()%>_<%=i%>" 
-                                                               data-container="body" data-html="true" data-toggle="kt-tooltip" title="">
-                                                                <i id="c_icon<%=lez.getLezione()%>_<%=i%>" class="fa fa-check" style="display:none;"></i>
-                                                                <i id="q_icon<%=lez.getLezione()%>_<%=i%>" class="fa fa-question" style="display:none;"></i>
-                                                            </a>
-                                                        </div>
-                                                        <div class='offset-1 row'>
-                                                            <h5 class='kt-font-io-n'>Modulo <%=lez.getUd1()%></h5>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <%}%>
-                                            </div>
-                                            <%if (i != gruppi) {%><div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                            <%}
-                                                }%>
-                                            <%if (m4.getStato().equals("R")) {%>
-                                            <div class="kt-portlet__foot" style="padding-left: 10px;">
-                                                <div class="kt-form__actions">
-                                                    <form action="<%=request.getContextPath()%>/OperazioniSA" 
-                                                          method="POST" target="_blank">
-                                                        <input type="hidden" name="type" value="scaricamodello4" />
-                                                        <input type="hidden" name="idpr" value="<%=StringEscapeUtils.escapeHtml4(request.getParameter("id"))%>" />
-                                                        <div class="row">
-                                                            <label>Scaricare il modello con il calendario inserito per poi caricarlo
-                                                                firmato digitalmente (.p7m CAdES, .pdf PAdES) nel campo sottostante.</label>
-                                                            <div class='col-lg-2 col-md-4 col-sm-6'>
-                                                                <button class="btn btn-primary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" 
-                                                                        type="submit" 
-                                                                        >
-                                                                    Scarica
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                    <div class="row">
-                                                        <hr>
-                                                    </div>
-                                                    <form action="<%=request.getContextPath()%>/OperazioniSA" method="POST" 
-                                                          enctype="multipart/form-data">
-                                                        <input type="hidden" name="type" value="salvamodello4" />
-                                                        <input type="hidden" name="idpr" value="<%=StringEscapeUtils.escapeHtml4(request.getParameter("id"))%>" />
-                                                        <input type="hidden" name="idmodello" value="<%=m4.getId()%>" />
-                                                        <div class="row">
-                                                            <div class='col-lg-4 col-md-4 col-sm-6'>
-                                                                <div class="custom-file">
-                                                                    <input type="file" required tipo='obbligatory' <%=modello.getObbligatorio() == 1 ? "tipo='obbligatory'" : ""%> 
-                                                                           class="custom-file-input" 
-                                                                           accept="<%=modello.getMimetype()%>" 
-                                                                           name="doc_<%=modello.getId()%>" 
-                                                                           onchange="return checkFileExtAndDim('<%=modello.getEstensione()%>');">
-                                                                    <label class="custom-file-label selected" 
-                                                                           style="color: #a7abc3; text-align: left;">Scegli File</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <hr>
-                                                        </div>           
-                                                        <div class="row">
-                                                            <div class='col-lg-2 col-md-4 col-sm-6'>
-                                                                <button type="submit"  class="btn btn-primary" style="font-family: Poppins"><i class="flaticon2-plus-1"></i> Carica Modello 4</button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <%}%>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="row mb-3">
+                            <div class="col-4">
+                                <h5>Modello 4 - Gruppi</h5>
                             </div>
-                            <!--</form>-->     
-                        </div>
-                        <%if (p.getStato().getId().equalsIgnoreCase("ATB") && isEditable) {%>
-                        <div class="kt-portlet kt-portlet--mobile">
-                            <div class="kt-portlet__body">
-                                <div class="kt-section kt-section--space-md" style="margin-bottom: 0rem;">
-                                    <div class="form-group form-group-sm row">
-                                        <div class="col-12 text-center">
-                                            <p>Un'eventuale modifica del calendario comporterebbe il passaggio del progetto nello step precedente, <br>
-                                                con conseguente generazione di un nuovo Modello 4 da firmare digitalmente e caricare sulla piattaforma.</p>
-                                            <button id="revert" disabled="disabled" class="btn btn-danger kt-font-bold">Modifica calendario</button>
-                                        </div>
-                                    </div>
+                            <div class="col-8 text-end">
+                                <% if (!m4.getStato().equalsIgnoreCase("OK")) { %>
+                                <div class="btn-group" role="group">
+                                    <button id="deleteAll" disabled class="btn btn-danger">Elimina tutte le lezioni</button>
                                 </div>
+                                <% } %>
                             </div>
                         </div>
-                        <%}%>
+
+                        <div class="row g-3 mb-3">
+                            <% for (int i = 1; i <= gruppi; i++) {%>
+                            <div class="col-md-6 col-lg-6">
+                                <label for="param_<%=i%>">Gruppo <%=i%></label>
+                                <select class="form-control obbligatory" <%=disG%> id="param_<%=i%>" name="param_<%=i%>" multiple="multiple"></select>
+                            </div>
+                            <% } %>
+                        </div>
+
+                        <div class="text-center mb-3">
+                            <button id="createGroups" disabled style="display:none" class="btn btn-primary">
+                                <i class="fa fa-users"></i> Crea gruppi
+                            </button>
+                        </div>
+
+                        <% String esito = (String) session.getAttribute("esito4");
+                    if (esito != null && !esito.trim().equals("") && !esito.trim().equals("OK")) {%>
+                        <div class="alert alert-danger"><%=esito%></div>
+                        <% } %>
+
+                        <div id="lezioni_m4" style="display:none;">
+                            <h5>
+                                Modello 4 - Calendario 
+                                <i class="fa fa-info-circle" 
+                                   data-container="body" 
+                                   data-toggle="popover" 
+                                   data-html="true"
+                                   data-placement="bottom"
+                                   data-original-title="Calendario"
+                                   data-content="Eventuali variazioni, di date e docenti, dovranno essere <u>preventivamente e tempestivamente</u> comunicate all'ENM tramite apposita funzionalità della piattaforma.
+                                   <b>Le modifiche saranno autorizzate mediante aggiornamento del calendario corso validato presente in piattaforma.</b>">
+                                </i>
+                            </h5>
+
+                            <div class="alert alert-info">
+                                <i class="fa fa-info-circle"></i> N.B. Prima di caricare il modello è necessario controllare attentamente che le informazioni riportate nel modello siano le medesime dei calendari (data, ora, docenti).
+                            </div>
+
+                            <% if (!m4.getStato().equalsIgnoreCase("OK")) { %>
+                            <div class="alert alert-warning">
+                                <h5>Caricamento Calendario modello 4</h5>
+                                <p>N.B. se il caricamento del calendario avviene dopo le ore 12:00 nell'ultima giornata di Fase A NON sarà possibile far partire la fase B il giorno successivo, ma bisognerà attendere un ulteriore giorno.</p>
+                            </div>
+                            <% } %>
+
+                            <% for (int i = 1; i <= gruppi; i++) {%>
+                            <div class="row mb-2">
+                                <div class="col-4">
+                                    <h5><i class="fa fa-users"></i> Gruppo <%=i%></h5>
+                                </div>
+                                <div class="col-8 text-end">
+                                    <% if (!m4.getStato().equalsIgnoreCase("OK")) {%>
+                                    <div class="btn-group" role="group">
+                                        <button id="deleteByGroup_<%=i%>" disabled class="btn btn-danger">Elimina da una data lezione</button>
+                                        <button id="deleteAllGroup_<%=i%>" disabled class="btn btn-danger">Elimina tutte le lezioni</button>
+                                    </div>
+                                    <% } %>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mb-3">
+                                <% for (LezioneCalendario lez : grouppedByLezione) {
+                                    temp = Utility.lezioneFilteredByGroup(lezioni, lez.getId(), i); %>
+                                <div class="col-lg-2 col-md-4 col-sm-6 text-center">
+                                    <% if (lez.isDoppia()) {%>
+                                    <a href="javascript:void(0)" id="a_lez<%=lez.getLezione()%>_<%=i%>" onclick="uploadLezioneDouble(<%=p.getId()%>,<%=m4.getId()%>,<%=lez.getLezione()%>, <%=i%>)">
+                                        <i id="mainIcon_<%=lez.getLezione()%>_<%=i%>" class="fa fa-file-invoice" style="font-size:100px;"></i>
+                                    </a>
+                                    <% } else { %>
+                                    <% if (temp == null) {%>
+                                    <a href="javascript:void(0)" id="a_lez<%=lez.getLezione()%>_<%=i%>" onclick="uploadLezione(<%=p.getId()%>, <%=m4.getId()%>, <%=lez.getLezione()%>, <%=i%>, '<%=lez.getUd1()%>', '<%=idsedefisica%>')">
+                                        <i id="mainIcon_<%=lez.getLezione()%>_<%=i%>" class="fa fa-file-invoice" style="font-size:100px;"></i>
+                                    </a>
+                                    <% } else {%>
+                                    <a href="javascript:void(0)" id="a_lez<%=lez.getLezione()%>_<%=i%>" onclick="lezioniSingle(<%=lez.getId()%>, <%=lez.getLezione()%>, <%=i%>, '<%=lez.getUd1()%>', '<%=idsedefisica%>')">
+                                        <i class="fa fa-file-invoice" style="font-size:100px;"></i>
+                                    </a>
+                                    <% } %>
+                                    <% }%>
+
+                                    <div class="mt-2">
+                                        <h6>Modulo <%=lez.getUd1()%></h6>
+                                    </div>
+                                </div>
+                                <% } %>
+                            </div>
+
+                            <% if (i != gruppi) { %>
+                            <hr>
+                            <% } %>
+                            <% } %>
+
+                            <% if (m4.getStato().equals("R")) {%>
+                            <div class="mt-3">
+                                <form action="<%=request.getContextPath()%>/OperazioniSA" method="POST" target="_blank" class="mb-2">
+                                    <input type="hidden" name="type" value="scaricamodello4" />
+                                    <input type="hidden" name="idpr" value="<%=StringEscapeUtils.escapeHtml4(request.getParameter("id"))%>" />
+                                    <button type="submit" class="btn btn-primary">Scarica</button>
+                                </form>
+
+                                <form action="<%=request.getContextPath()%>/OperazioniSA" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="type" value="salvamodello4" />
+                                    <input type="hidden" name="idpr" value="<%=StringEscapeUtils.escapeHtml4(request.getParameter("id"))%>" />
+                                    <input type="hidden" name="idmodello" value="<%=m4.getId()%>" />
+                                    <div class="mb-3">
+                                        <input type="file" required class="form-control" name="doc_<%=modello.getId()%>" accept="<%=modello.getMimetype()%>" onchange="return checkFileExtAndDim('<%=modello.getEstensione()%>');">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary"><i class="flaticon2-plus-1"></i> Carica Modello 4</button>
+                                </form>
+                            </div>
+                            <% } %>
+                        </div>
                     </div>
                 </div>
+
+                <% if (p.getStato().getId().equalsIgnoreCase("ATB") && isEditable) { %>
+                <div class="card mb-3">
+                    <div class="card-body text-center">
+                        <p>Un'eventuale modifica del calendario comporterebbe il passaggio del progetto nello step precedente, <br>
+                            con conseguente generazione di un nuovo Modello 4 da firmare digitalmente e caricare sulla piattaforma.</p>
+                        <button id="revert" disabled class="btn btn-danger">Modifica calendario</button>
+                    </div>
+                </div>
+                <% }%>
             </div>
         </div>
+
+
+
+
+
         <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
             <i class="fa fa-arrow-up"></i>
         </div>
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
+
         <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/sticky-js/dist/sticky.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
@@ -400,23 +273,23 @@
         data-context="<%=request.getContextPath()%>" type="text/javascript"></script>
         <input type="hidden" id="systemtype" value="<%=Utility.iswindows()%>" />
         <script type="text/javascript">
-                                                                               var KTAppOptions = {
-                                                                                   "colors": {
-                                                                                       "state": {
-                                                                                           "brand": "#5d78ff",
-                                                                                           "dark": "#282a3c",
-                                                                                           "light": "#ffffff",
-                                                                                           "primary": "#5867dd",
-                                                                                           "success": "#34bfa3",
-                                                                                           "info": "#36a3f7",
-                                                                                           "warning": "#ffb822"
-                                                                                       },
-                                                                                       "base": {
-                                                                                           "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                                                                                           "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                                                                                       }
-                                                                                   }
-                                                                               };
+                                        var KTAppOptions = {
+                                            "colors": {
+                                                "state": {
+                                                    "brand": "#5d78ff",
+                                                    "dark": "#282a3c",
+                                                    "light": "#ffffff",
+                                                    "primary": "#5867dd",
+                                                    "success": "#34bfa3",
+                                                    "info": "#36a3f7",
+                                                    "warning": "#ffb822"
+                                                },
+                                                "base": {
+                                                    "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                                                    "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                                                }
+                                            }
+                                        };
 
         </script>
     </body>

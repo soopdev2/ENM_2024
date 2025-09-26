@@ -61,7 +61,7 @@
         <link href="<%=src%>/assets/demo/default/skins/header/menu/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/brand/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="Bootstrap2024/assets/css/global.css"/>
+        <link rel="stylesheet" href="../../Bootstrap2024/assets/css/bootstrap.min.css"/>
         <link href="https://fonts.cdnfonts.com/css/titillium-web" rel="stylesheet">
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
         <!--end::countDown -->
@@ -71,132 +71,129 @@
             }
         </style>
     </head>
-    <body class="kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed">
+    <body class="d-flex flex-column min-vh-100">
         <!-- begin:: Page -->
+
+        <%@ include file="../../Bootstrap2024/index/index_SoggettoAttuatore/Header_soggettoAttuatore.jsp"%>
+        <%@ include file="../../Bootstrap2024/index/menu/menuMc.jsp"%>
+        <%@ include file="menu/head.jsp"%>
+
         <%@ include file="menu/head1.jsp"%>
-        <div class="kt-grid kt-grid--hor kt-grid--root">
-            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-                <%@ include file="menu/menu.jsp"%>
-                <!-- end:: Aside -->
-                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
-                    <%@ include file="menu/head.jsp"%>
-                    <!-- begin:: Footer -->
-                    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                        <!-- begin:: Content Head -->
-                        <div class="kt-subheader   kt-grid__item" id="kt_subheader">
-                            <div class="kt-subheader   kt-grid__item" id="kt_subheader">
-                                <div class="kt-subheader__main">
-                                    <h3 class="kt-subheader__title">Conferenze</h3>
-                                    <span class="kt-subheader__separator kt-subheader__separator--v"></span>
-                                    <a class="kt-subheader__breadcrumbs-link">Le Tue Conferenze</a>
-                                </div>
-                            </div>
+
+
+        <main class="container-fluid my-4">
+
+
+            <div class="container-fluid" id="kt_wrapper">
+
+                <!-- Subheader -->
+                <div class="row mb-3" id="kt_subheader">
+                    <div class="col">
+                        <div class="d-flex align-items-center">
+                            <h3 class="mb-0">Conferenze</h3>
+                            <span class="mx-2">|</span>
+                            <a class="text-muted">Le Tue Conferenze</a>
                         </div>
-                        <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="kt-portlet" id="kt_portlet" data-ktportlet="true">
-                                        <div class="kt-portlet__head">
-                                            <div class="kt-portlet__head-label">
-                                                <h3 class="kt-portlet__head-title" >
-                                                    Cerca :
-                                                </h3>
-                                            </div>
-                                            <div class="kt-portlet__head-toolbar">
-                                                <div class="kt-portlet__head-group">
-                                                    <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down" id="toggle_search"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <form action="" class="kt-form kt-form--label-right" onsubmit="refresh();return false;" accept-charset="ISO-8859-1" method="post">
-                                            <div class="kt-portlet__body paddig_0_t paddig_0_b">
-                                                <div class="kt-section kt-section--first">
-                                                    <div class="kt-section__body"><br>
-                                                        <div class="form-group row">
-                                                            <div class="col-lg-4 col-md-6">
-                                                                <label>Nome</label>
-                                                                <input class="form-control" id="nome">
-                                                            </div>
-                                                            <div class="col-lg-4 col-md-6">
-                                                                <label>Stato:</label><br>
-                                                                <div class="kt-radio-inline">
-                                                                    <label class="kt-radio">
-                                                                        <input type="radio" value="" checked name="stato">. .
-                                                                        <span></span>
-                                                                    </label>
-                                                                    <label class="kt-radio kt-radio--io">
-                                                                        <input type="radio" value="0" name="stato">Aperta
-                                                                        <span></span>
-                                                                    </label>
-                                                                    <label class="kt-radio kt-radio--io-n">
-                                                                        <input type="radio" value="1" name="stato">Chiusa
-                                                                        <span></span>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="kt-portlet__foot">
-                                                        <div class="kt-form__actions">
-                                                            <div class="row">
-                                                                <div class="offset-lg-6 col-lg-6 kt-align-right">
-                                                                    <a onclick="refresh();" href="javascript:void(0);" class="btn btn-primary"><font color='white'>Cerca</font></a>
-                                                                    <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-warning"><font color='white'>Reset</font></a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" id="offsetresult">
-                                <div class="col-lg-12">
-                                    <div class="kt-portlet" id="kt_portlet" data-ktportlet="true">
-                                        <div class="kt-portlet__head">
-                                            <div class="kt-portlet__head-label col-lg-8">
-                                                <div class="col-lg-4">
-                                                    <h3 class="kt-portlet__head-title text" >
-                                                        Risultati :
-                                                    </h3>
-                                                </div>
-                                            </div>
-                                            <div class="kt-portlet__head-toolbar">
-                                                <div class="kt-portlet__head-group">
-                                                    <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down" id="toggle_search"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="kt-portlet__body kt-scroll-x">
-                                            <table class="table table-striped table-bordered " cellspacing="0" id="kt_table_1" style="border-collapse: collapse;"> 
-                                                <thead>
-                                                    <tr>
-                                                        <th class="text-uppercase text-center">Azioni</th>
-                                                        <th class="text-uppercase text-center">Nome</th>
-                                                        <th class="text-uppercase text-center">Partecipanti</th>
-                                                        <th class="text-uppercase text-center">Creata</th>
-                                                        <th class="text-uppercase text-center">Stato</th>
-                                                        <th class="text-uppercase text-center">inizio</th>
-                                                        <th class="text-uppercase text-center">Fine</th>
-                                                    </tr>
-                                                </thead>
-                                            </table>  
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end:: Content Head -->
                     </div>
-                    <%@ include file="menu/footer.jsp"%>
-                    <!-- end:: Footer -->
-                    <!-- end:: Content -->
+                </div>
+
+                <!-- Content -->
+                <div class="container-fluid" id="kt_content">
+
+                    <!-- Card Ricerca -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card" id="kt_portlet">
+
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h3 class="card-title mb-0">Cerca :</h3>
+                                    <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-light">
+                                        <i class="la la-angle-down" id="toggle_search"></i>
+                                    </a>
+                                </div>
+
+                                <form action="" class="p-3" onsubmit="refresh();return false;" accept-charset="ISO-8859-1" method="post">
+                                    <div class="row g-3">
+                                        <!-- Nome -->
+                                        <div class="col-lg-4 col-md-6">
+                                            <label for="nome" class="form-label">Nome</label>
+                                            <input class="form-control" id="nome" name="nome">
+                                        </div>
+
+                                        <!-- Stato -->
+                                        <div class="col-lg-4 col-md-6">
+                                            <label class="form-label d-block">Stato:</label>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" value="" checked name="stato" id="stato_all">
+                                                <label class="form-check-label" for="stato_all">. .</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" value="0" name="stato" id="stato_aperta">
+                                                <label class="form-check-label" for="stato_aperta">Aperta</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" value="1" name="stato" id="stato_chiusa">
+                                                <label class="form-check-label" for="stato_chiusa">Chiusa</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Azioni -->
+                                    <div class="row mt-4">
+                                        <div class="col-lg-12 text-end">
+                                            <a onclick="refresh();" href="javascript:void(0);" class="btn btn-primary">Cerca</a>
+                                            <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-warning">Reset</a>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Risultati -->
+                    <div class="row mt-4" id="offsetresult">
+                        <div class="col-lg-12">
+                            <div class="card" id="kt_portlet">
+
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h3 class="card-title mb-0">Risultati :</h3>
+                                    <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-light">
+                                        <i class="la la-angle-down" id="toggle_search"></i>
+                                    </a>
+                                </div>
+
+                                <div class="card-body table-responsive">
+                                    <table class="table table-striped table-bordered align-middle" id="kt_table_1">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th class="text-uppercase text-center">Azioni</th>
+                                                <th class="text-uppercase text-center">Nome</th>
+                                                <th class="text-uppercase text-center">Partecipanti</th>
+                                                <th class="text-uppercase text-center">Creata</th>
+                                                <th class="text-uppercase text-center">Stato</th>
+                                                <th class="text-uppercase text-center">Inizio</th>
+                                                <th class="text-uppercase text-center">Fine</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- dati caricati via JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-        </div>
+
+
+        </main>
         <!-- begin::Scrolltop -->
+
+
         <div id="kt_scrolltop"style="background-color: #0059b3" class="kt-scrolltop">
             <i class="fa fa-arrow-up"></i>
         </div>
@@ -209,8 +206,7 @@
         </form>
         <!--end::Modal-->
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
@@ -225,23 +221,23 @@
         <script src="<%=src%>/resource/PerfectScroolbar/perfect-scrollbar.js" type="text/javascript"></script>
         <script id="mangeFAQ" src="<%=src%>/page/mc/js/mangeFAD_Converence.js<%=no_cache%>" data-context="<%=request.getContextPath()%>" type="text/javascript"></script>
         <script type="text/javascript">
-                                                                        var KTAppOptions = {
-                                                                            "colors": {
-                                                                                "state": {
-                                                                                    "brand": "#5d78ff",
-                                                                                    "dark": "#282a3c",
-                                                                                    "light": "#ffffff",
-                                                                                    "primary": "#5867dd",
-                                                                                    "success": "#34bfa3",
-                                                                                    "info": "#36a3f7",
-                                                                                    "warning": "#ffb822"
-                                                                                },
-                                                                                "base": {
-                                                                                    "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                                                                                    "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                                                                                }
-                                                                            }
-                                                                        };
+                                    var KTAppOptions = {
+                                        "colors": {
+                                            "state": {
+                                                "brand": "#5d78ff",
+                                                "dark": "#282a3c",
+                                                "light": "#ffffff",
+                                                "primary": "#5867dd",
+                                                "success": "#34bfa3",
+                                                "info": "#36a3f7",
+                                                "warning": "#ffb822"
+                                            },
+                                            "base": {
+                                                "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                                                "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                                            }
+                                        }
+                                    };
         </script>
     </body>
 </html>

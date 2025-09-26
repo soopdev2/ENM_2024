@@ -38,7 +38,7 @@ var KTDatatablesDataSourceAjaxServer = function () {
                 {data: 'datacreazione'},
                 {data: 'stato'},
                 {data: 'inizio'},
-                {data: 'fine'},
+                {data: 'fine'}
             ],
             drawCallback: function () {
                 $('[data-toggle="kt-tooltip"]').tooltip();
@@ -58,13 +58,13 @@ var KTDatatablesDataSourceAjaxServer = function () {
                                 + '   <i class="flaticon-more-1"></i>'
                                 + '</button>'
                                 + '<div class="dropdown-menu dropdown-menu-left">';
-                        if (row.stato == 1) {
+                        if (row.stato === 1) {
                             option += '<a class="dropdown-item" href="javascript:void(0);" onclick="closeFAD(' + row.id + ', 0, \'aprire\', \'aperta\')"><i class="fa fa-door-open"></i> Apri Stanza</a>';
                         } else {
                             option += '<a class="dropdown-item" href="javascript:void(0);" onclick="closeFAD(' + row.id + ', 1, \'chiudere\', \'chiusa\')"><i class="fa fa-power-off"></i> Chiudi Stanza</a>';
                         }
                         option += '<a class="dropdown-item" href="javascript:void(0);" onclick="closeFAD(' + row.id + ', 2, \'eliminare\', \'eliminata\')"><i class="fa fa-trash-alt"></i> Elimina Stanza</a>';
-                        if (row.stato == 0) {
+                        if (row.stato === 0) {
                             option += '<a class="dropdown-item" href="javascript:void(0);" onclick="logFAD(' + row.id + ')"><i class="fa fa-sign-in-alt"></i> Accedi</a>';
                         }
                         option += '<a class="dropdown-item fancyBoxAntoRef" href="modifyFadConference.jsp?idFad=' + row.id + '"><i class="fa fa-edit"></i> Modifica</a>';
@@ -78,38 +78,38 @@ var KTDatatablesDataSourceAjaxServer = function () {
                     orderable: false,
                     render: function (data, type, row, meta) {
                         return showList(data, 0);
-                    },
+                    }
                 }, {
                     targets: 3,
                     type: 'date-it',
                     render: function (data, type, row, meta) {
                         return formattedDate(new Date(data));
-                    },
+                    }
                 }, {
                     targets: 4,
                     className: 'text-center',
                     render: function (data, type, row, meta) {
-                        return data == 0 ? "Aperta" : "Chiusa";
+                        return data === 0 ? "Aperta" : "Chiusa";
                     }
                 },{
                     targets: 5,
                     type: 'date-it',
                     render: function (data, type, row, meta) {
                         return formattedDateTime(new Date(data));
-                    },
+                    }
                 },{
                     targets: 6,
                     type: 'date-it',
                     render: function (data, type, row, meta) {
                         return formattedDateTime(new Date(data));
-                    },
+                    }
                 }]
         }).columns.adjust();
     };
     return {
         init: function () {
             initTable1();
-        },
+        }
     };
 }();
 
@@ -143,7 +143,7 @@ function closeFAD(idFad, stato, swal, confirm) {
                 closeSwal();
                 var json = JSON.parse(data);
                 if (json.result) {
-                    swalSuccess('Successo', 'Stanza ' + confirm + ' con successo')
+                    swalSuccess('Successo', 'Stanza ' + confirm + ' con successo');
                     reload();
                 } else {
                     swalError('Errore', json.message);
@@ -189,7 +189,7 @@ function connectFAD(json) {
 
 function showList(json, index) {
     if (json.length > index) {
-        return (index == 0 ? "" : "<b class='kt-font-io-n'> | </b>") + (index % 3 == 0 ? "<br>" : "") + json[index] + showList(json, index + 1);
+        return (index === 0 ? "" : "<b class='kt-font-io-n'> | </b>") + (index % 3 === 0 ? "<br>" : "") + json[index] + showList(json, index + 1);
     } else {
         return "";
     }

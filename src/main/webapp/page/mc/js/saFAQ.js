@@ -37,7 +37,7 @@ function setConversation(json) {
         $("#answers").append(destinatario
                 .replace("@testo", j.domanda)
                 .replace("@data", formattedDate(new Date(j.date_ask))));
-        if (j.risposta != null) {
+        if (j.risposta !== null) {
             $("#answers").append(mittente
                     .replace("@testo", j.risposta)
                     .replace("@data", formattedDate(new Date(j.date_answer))));
@@ -123,7 +123,7 @@ $("#search").on("input", function () {
 function search(search) {
     var contatti = $(".contatto");
     search = search.toUpperCase();
-    if (search != null && search !== "") {
+    if (search !== null && search !== "") {
         contatti.each(function () {
             if (!$(this).find("input").val().toUpperCase().includes(search)) {
                 $(this).css("display", "none");

@@ -64,119 +64,133 @@
         <link href="<%=src%>/assets/demo/default/skins/header/menu/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/brand/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="Bootstrap2024/assets/css/global.css"/>
+        <link rel="stylesheet" href="../../Bootstrap2024/assets/css/bootstrap.min.css"/>
         <link href="https://fonts.cdnfonts.com/css/titillium-web" rel="stylesheet">
         <link href="<%=src%>/resource/animate.css" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
 
     </head>
-    <body class="kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed">
-        <div class="kt-grid kt-grid--hor kt-grid--root">
-            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                        <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-                            <div class="kt-portlet kt-portlet--mobile">
-                                <div class="kt-portlet__head">
-                                    <div class="kt-portlet__head-label">
-                                        <h3 class="kt-portlet__head-title">
-                                            Modifica Docente:
-                                        </h3>
+
+    <body class="d-flex flex-column min-vh-100">
+
+        <main class="container-fluid my-4">
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+
+                        <!-- begin:: Content -->
+                        <div class="row" id="kt_content">
+                            <div class="col-12">
+                                <div class="card">
+
+                                    <!-- Header -->
+                                    <div class="card-header">
+                                        <h3 class="card-title">Modifica Docente:</h3>
                                     </div>
-                                </div>
-                                <div class="kt-portlet__body">
-                                    <form id="kt_form" action="<%=request.getContextPath()%>/OperazioniMicro?type=modifyDocente" class="kt-form kt-form--label-right" accept-charset="ISO-8859-1" method="post">
-                                        <input  name="id" type="hidden" value="<%=d.getId()%>">
-                                        <div class="kt-portlet__body paddig_0_t paddig_0_b">
-                                            <div class="kt-section kt-section--first">
-                                                <div class="kt-section__body"><br>
-                                                    <div class="form-group row">
-                                                        <div class="col-lg-3">
-                                                            <label>Nome</label>
-                                                            <input class="form-control obbligatory" name="nome" id="nome" value="<%=d.getNome()%>">
-                                                        </div>
-                                                        <div class="col-lg-3">
-                                                            <label>Cognome</label>
-                                                            <input class="form-control obbligatory" name="cognome" id="cognome" value="<%=d.getCognome()%>">
-                                                        </div>
+
+                                    <!-- Body -->
+                                    <div class="card-body">
+                                        <form id="kt_form" action="<%=request.getContextPath()%>/OperazioniMicro?type=modifyDocente"
+                                              method="post" accept-charset="ISO-8859-1" class="needs-validation" novalidate>
+
+                                            <input type="hidden" name="id" value="<%=d.getId()%>">
+
+                                            <div class="mb-4">
+                                                <div class="row g-3">
+                                                    <div class="col-lg-3">
+                                                        <label for="nome" class="form-label">Nome</label>
+                                                        <input type="text" class="form-control obbligatory" name="nome" id="nome" value="<%=d.getNome()%>">
                                                     </div>
-                                                    <div class="form-group row">
-                                                        <div class="col-lg-3">
-                                                            <label>Codice Fiscale</label>
-                                                            <input class="form-control obbligatory" name="cf" id="cf" value="<%=d.getCodicefiscale()%>">
-                                                        </div>
-                                                        <div class="col-lg-3">
-                                                            <label>Data Nascita</label>
-                                                            <input class="form-control dp obbligatory" name="data" id="data" autocomplete="off" value="<%=new SimpleDateFormat("dd/MM/yyyy").format(d.getDatanascita())%>" readonly>
-                                                        </div>
-                                                        <div class="col-lg-3">
-                                                            <label>Fascia</label>
-                                                            <div class="dropdown bootstrap-select form-control kt- paddig_0" id="fascia_div">
-                                                                <select class="form-control kt-select2-general obbligatory" id="fascia" name="fascia">
-                                                                    <option value="-">Seleziona Fascia</option>
-                                                                    <%for (FasceDocenti f : fasce) {
-                                                                            if (f.equals(d.getFascia())) {%>
-                                                                    <option selected value="<%=f.getId()%>"><%=f.getDescrizione()%></option>
-                                                                    <%} else {%>
-                                                                    <option value="<%=f.getId()%>"><%=f.getDescrizione()%></option>
-                                                                    <%}
-                                                                        }%>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <div class="col-lg-3">
-                                                            <label>Email</label>
-                                                            <input class="form-control obbligatory" name="email" id="email" value="<%=d.getEmail() == null ? "" : d.getEmail()%>">
-                                                        </div>
-                                                        <%
-                                                            String dweb = "";
-                                                            if (d.getDatawebinair() != null) {
-                                                                dweb = new SimpleDateFormat("dd/MM/yyyy").format(d.getDatawebinair());
-                                                            }
-                                                        %>
-                                                        <div class="col-lg-3">
-                                                            <label>Data Webinair</label>
-                                                            <input class="form-control dp" 
-                                                                   name="dataweb" id="dataweb" 
-                                                                   autocomplete="off" 
-                                                                   value="<%=dweb%>"
-                                                                   readonly/>
-                                                        </div>
+                                                    <div class="col-lg-3">
+                                                        <label for="cognome" class="form-label">Cognome</label>
+                                                        <input type="text" class="form-control obbligatory" name="cognome" id="cognome" value="<%=d.getCognome()%>">
                                                     </div>
                                                 </div>
-                                                <div class="kt-portlet__foot">
-                                                    <div class="kt-form__actions">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <%if (d.getStato().equals("DV")) {%>
-                                                                <a id="submit" href="javascript:void(0);" 
-                                                                   class="btn btn-success pull-right"><font color='white'>Accredita e Salva dati</font></a>
-                                                                    <%} else {%>
-                                                                <a id="submit" href="javascript:void(0);" 
-                                                                   class="btn btn-io pull-right"><font color='white'>Salva</font></a>
-                                                                    <%}%>
-                                                            </div>
-                                                        </div>
+
+                                                <div class="row g-3 mt-2">
+                                                    <div class="col-lg-3">
+                                                        <label for="cf" class="form-label">Codice Fiscale</label>
+                                                        <input type="text" class="form-control obbligatory" name="cf" id="cf" value="<%=d.getCodicefiscale()%>">
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <label for="data" class="form-label">Data Nascita</label>
+                                                        <input type="text" class="form-control dp obbligatory"
+                                                               name="data" id="data"
+                                                               autocomplete="off"
+                                                               value="<%=new SimpleDateFormat("dd/MM/yyyy").format(d.getDatanascita())%>"
+                                                               readonly>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <label for="fascia" class="form-label">Fascia</label>
+                                                        <select class="form-select obbligatory kt-select2-general" id="fascia" name="fascia">
+                                                            <option value="-">Seleziona Fascia</option>
+                                                            <% for (FasceDocenti f : fasce) { %>
+                                                            <% if (f.equals(d.getFascia())) {%>
+                                                            <option selected value="<%=f.getId()%>"><%=f.getDescrizione()%></option>
+                                                            <% } else {%>
+                                                            <option value="<%=f.getId()%>"><%=f.getDescrizione()%></option>
+                                                            <% } %>
+                                                            <% }%>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row g-3 mt-2">
+                                                    <div class="col-lg-3">
+                                                        <label for="email" class="form-label">Email</label>
+                                                        <input type="email" class="form-control obbligatory" name="email" id="email"
+                                                               value="<%=d.getEmail() == null ? "" : d.getEmail()%>">
+                                                    </div>
+                                                    <%
+                                                        String dweb = "";
+                                                        if (d.getDatawebinair() != null) {
+                                                            dweb = new SimpleDateFormat("dd/MM/yyyy").format(d.getDatawebinair());
+                                                        }
+                                                    %>
+                                                    <div class="col-lg-3">
+                                                        <label for="dataweb" class="form-label">Data Webinar</label>
+                                                        <input type="text" class="form-control dp"
+                                                               name="dataweb" id="dataweb"
+                                                               autocomplete="off"
+                                                               value="<%=dweb%>"
+                                                               readonly>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </form>
+
+                                            <!-- Footer con pulsanti -->
+                                            <div class="card-footer text-end">
+                                                <% if (d.getStato().equals("DV")) { %>
+                                                <a id="submit" href="javascript:void(0);" class="btn btn-success">
+                                                    Accredita e Salva dati
+                                                </a>
+                                                <% } else { %>
+                                                <a id="submit" href="javascript:void(0);" class="btn btn-primary">
+                                                    Salva
+                                                </a>
+                                                <% }%>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>	
+                        <!-- end:: Content -->
+
+                    </div>
                 </div>
             </div>
-        </div>
+
+
+
+        </main>                                                
         <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
             <i class="fa fa-arrow-up"></i>
         </div>
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/popper.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>

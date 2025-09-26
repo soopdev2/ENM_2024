@@ -63,7 +63,7 @@
         <link href="<%=src%>/assets/demo/default/skins/header/menu/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/brand/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="Bootstrap2024/assets/css/global.css"/>
+        <link rel="stylesheet" href="../../Bootstrap2024/assets/css/bootstrap.min.css"/>
         <link href="https://fonts.cdnfonts.com/css/titillium-web" rel="stylesheet">
         <!-- this page -->
 
@@ -77,81 +77,109 @@
             }
         </style>
     </head>
-    <body class="kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed">
-        <div class="kt-grid kt-grid--hor kt-grid--root">
-            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                        <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-                            <div class="kt-portlet kt-portlet--mobile">
-                                <div class="kt-portlet__head">
-                                    <div class="kt-portlet__head-label">
-                                        <h3 class="kt-portlet__head-title">
-                                            Modifica Conferenza:
-                                        </h3>
+
+    <body class="d-flex flex-column min-vh-100">
+
+
+        <main class="container-fluid my-4">
+
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+
+                        <!-- begin:: Content -->
+                        <div class="row" id="kt_content">
+                            <div class="col-12">
+                                <div class="card">
+
+                                    <!-- Header -->
+                                    <div class="card-header">
+                                        <h3 class="card-title">Modifica Conferenza:</h3>
                                     </div>
-                                </div>
-                                <div class="kt-portlet__body">
-                                    <form id="kt_form" action="<%=request.getContextPath()%>/OperazioniMicro?type=modifyFAD" class="kt-form kt-form--label-right" accept-charset="ISO-8859-1" method="post">
-                                        <input type="hidden" name="idFad" value="<%=fad.getId()%>">
-                                        <div class="kt-portlet__body paddig_0_t paddig_0_b">
-                                            <div class="kt-section kt-section--first">
-                                                <div class="kt-section__body"><br>
-                                                    <div class="row form-group">
-                                                        <div class="col-lg-6 col-md-12">
-                                                            <label>Nome</label><label class="kt-font-danger">*</label>
-                                                            <input class="form-control obbligatory" name="name_fad" onkeydown="return blockspecialcharacter();" value="<%=fad.getNomestanza()%>">
-                                                        </div>
-                                                        <div class="col-lg-6 col-md-12">
-                                                            <label>Data e ora di inizio e fine</label><label class="kt-font-danger">*</label>
-                                                            <input type="text" class="form-control obbligatory" name="range" id="range"  autocomplete="off" readonly placeholder="Selezionare data e ora inizio fine" value ="<%=fad.getInizio() != null ? sdf.format(fad.getInizio()) + " - " + sdf.format(fad.getFine()) : ""%>">
-                                                        </div>
+
+                                    <!-- Body -->
+                                    <div class="card-body">
+                                        <form id="kt_form"
+                                              action="<%=request.getContextPath()%>/OperazioniMicro?type=modifyFAD"
+                                              method="post" accept-charset="ISO-8859-1">
+
+                                            <input type="hidden" name="idFad" value="<%=fad.getId()%>">
+
+                                            <div class="mb-4">
+                                                <div class="row g-3">
+                                                    <div class="col-lg-6 col-md-12">
+                                                        <label for="name_fad" class="form-label">Nome <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control obbligatory"
+                                                               name="name_fad" id="name_fad"
+                                                               onkeydown="return blockspecialcharacter();"
+                                                               value="<%=fad.getNomestanza()%>">
                                                     </div>
-                                                    <div class="row form-group-marginless">
-                                                        <div class="col-lg-6 col-md-12" id="paretcipant">
-                                                            <label>Patecipanti</label><label class="kt-font-danger">*</label>
-                                                            <%for (String s : fad.getList_partecipanti()) {%>
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <a class="btn btn-primary btn-icon"><i class="fa fa-at"></i></a>
-                                                                </div>
-                                                                <input type="text" name="email[]" class="form-control obbligatory" placeholder="Email" value="<%=s%>">
-                                                                <div class="input-group-append">
-                                                                    <a href="javascript:void(0);" title="Elimina" data-container="body" data-html="true" data-toggle="kt-tooltip" class="btn btn-danger btn-icon delete"><i class="fa fa-times"></i></a>
-                                                                </div>
-                                                            </div>
-                                                            <%}%>
-                                                        </div>
+                                                    <div class="col-lg-6 col-md-12">
+                                                        <label for="range" class="form-label">Data e ora di inizio e fine <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control obbligatory"
+                                                               name="range" id="range"
+                                                               autocomplete="off" readonly
+                                                               placeholder="Selezionare data e ora inizio fine"
+                                                               value ="<%=fad.getInizio() != null ? sdf.format(fad.getInizio()) + " - " + sdf.format(fad.getFine()) : ""%>">
                                                     </div>
-                                                    <div class="row col"><div class="text-right col-lg-6 col-md-12 paddig_0_r"><a id="add" href="javascript:void(0);"><i class="fa fa-plus"></i> aggiungi</a></div></div>
                                                 </div>
-                                                <label class="kt-font-danger kt-font-bold"><font size="2" >* Campi Obbligatori</font></label>
-                                                <div class="kt-portlet__foot">
-                                                    <div class="kt-form__actions">
-                                                        <div class="row">
-                                                            <div class="col-lg-6 kt-align-right">
-                                                                <a id="submit" href="javascript:void(0);" class="btn btn-primary btn-lg"><font color='white'>Salva</font></a>
-                                                            </div>
+
+                                                <div class="row g-3 mt-3">
+                                                    <div class="col-lg-6 col-md-12" id="paretcipant">
+                                                        <label class="form-label">Partecipanti <span class="text-danger">*</span></label>
+                                                        <% for (String s : fad.getList_partecipanti()) {%>
+                                                        <div class="input-group mb-2">
+                                                            <span class="input-group-text bg-primary text-white"><i class="fa fa-at"></i></span>
+                                                            <input type="text" name="email[]" class="form-control obbligatory"
+                                                                   placeholder="Email" value="<%=s%>">
+                                                            <button type="button" class="btn btn-danger delete">
+                                                                <i class="fa fa-times"></i>
+                                                            </button>
                                                         </div>
+                                                        <% }%>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-2">
+                                                    <div class="col text-end">
+                                                        <a id="add" href="javascript:void(0);" class="btn btn-link">
+                                                            <i class="fa fa-plus"></i> aggiungi
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </form>
+
+                                            <p class="text-danger fw-bold" style="font-size: 0.9rem;">* Campi Obbligatori</p>
+
+                                            <!-- Footer con pulsante -->
+                                            <div class="card-footer text-end">
+                                                <a id="submit" href="javascript:void(0);" class="btn btn-primary btn-lg">Salva</a>
+                                            </div>
+                                        </form>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                    </div>	
+                        <!-- end:: Content -->
+
+                    </div>
                 </div>
             </div>
-        </div>
+
+
+
+        </main>
+
+
         <div id="kt_scrolltop"style="background-color: #0059b3" class="kt-scrolltop">
             <i class="fa fa-arrow-up"></i>
         </div>       
         <!--begin:: Global Mandatory Vendors -->
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/popper.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
@@ -174,25 +202,25 @@
         <script src="<%=src%>/assets/vendors/general/dropzone/dist/min/dropzone.min.js" type="text/javascript"></script>
         <script src="js/modifyFacConference.js" type="text/javascript"></script>
         <script type="text/javascript">
-                                                                var KTAppOptions = {
-                                                                    "colors": {
-                                                                        "state": {
-                                                                            "brand": "#5d78ff",
-                                                                            "dark": "#282a3c",
-                                                                            "light": "#ffffff",
-                                                                            "primary": "#5867dd",
-                                                                            "success": "#34bfa3",
-                                                                            "info": "#36a3f7",
-                                                                            "warning": "#ffb822"
-                                                                        },
-                                                                        "base": {
-                                                                            "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                                                                            "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                                                                        }
-                                                                    }
-                                                                };
+                                                       var KTAppOptions = {
+                                                           "colors": {
+                                                               "state": {
+                                                                   "brand": "#5d78ff",
+                                                                   "dark": "#282a3c",
+                                                                   "light": "#ffffff",
+                                                                   "primary": "#5867dd",
+                                                                   "success": "#34bfa3",
+                                                                   "info": "#36a3f7",
+                                                                   "warning": "#ffb822"
+                                                               },
+                                                               "base": {
+                                                                   "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                                                                   "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                                                               }
+                                                           }
+                                                       };
         </script>
-       
+
     </body>
 </html>
 <%

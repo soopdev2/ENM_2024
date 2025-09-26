@@ -36,6 +36,7 @@ import static rc.so.util.Utility.formatStringtoStringDateSQL;
 import static rc.so.util.Utility.patternITA;
 import static rc.so.util.Utility.patternid;
 import static rc.so.util.Utility.printbarcode;
+import static rc.so.util.Utility.sanitizeFile;
 import static rc.so.util.Utility.timestamp;
 import static rc.so.util.Utility.timestampITAcomplete;
 import java.io.File;
@@ -85,7 +86,8 @@ public class Complessivo {
             normal.setFont(fontnormal).setFontSize(10);
 
             // CREA PDF REPORT
-            File out0 = new File(pathtemp + now0 + "reportcomplessivo_" + idpr + ".pdf");
+            File out00 = new File(pathtemp + now0 + "reportcomplessivo_" + idpr + ".pdf");
+            File out0 = sanitizeFile(out00);
             PdfWriter pw0 = new PdfWriter(out0);
             PdfDocument pdfDoc = new PdfDocument(pw0);
             pdfDoc.setDefaultPageSize(PageSize.A4.rotate());
@@ -553,9 +555,11 @@ public class Complessivo {
                 out0.deleteOnExit();
 
                 File pdf_final = new File(path_destinazione + File.separator + "Registro Complessivo_" + now1 + ".pdf");
-                FileUtils.copyFile(out1, pdf_final);
-                if (checkPDF(pdf_final)) {
-                    out1.deleteOnExit();
+                File sanitizeFile = sanitizeFile(pdf_final);
+                File out1S = sanitizeFile(out1);
+                FileUtils.copyFile(out1S, sanitizeFile);
+                if (checkPDF(sanitizeFile)) {
+                    out1S.deleteOnExit();
                     if (save) {
                         Database db3 = new Database(false);
                         String sql = "SELECT iddocumenti_progetti FROM documenti_progetti WHERE idprogetto = " + idpr
@@ -618,7 +622,8 @@ public class Complessivo {
                     String path = rs.getString("path");
 
                     File t1 = new File(path.replace("..", "").replace("\\", "").replace("/", ""));
-                    if (checkPDF(t1)) {
+                    File sanitizeFile = sanitizeFile(t1);
+                    if (checkPDF(sanitizeFile)) {
                         temp.add(t1);
                     }
                 }

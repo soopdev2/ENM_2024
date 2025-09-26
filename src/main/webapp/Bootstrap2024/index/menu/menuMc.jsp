@@ -39,7 +39,7 @@
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<nav class="navbar navbar-expand-lg has-megamenu" aria-label="Menu principale">
+<nav class="navbar navbar-expand-lg has-megamenu " aria-label="Menu principale">
     <button type="button" aria-label="Mostra o nascondi il menu" class="custom-navbar-toggler" aria-controls="menu" aria-expanded="false" data-bs-toggle="navbarcollapsible" data-bs-target="#navbar-E">
         <span>
             <svg role="img" class="icon"><use href=""></use></svg>

@@ -67,125 +67,95 @@
         <script src="../../Bootstrap2024/assets/js/popper.js"></script>
 
     </head>
-    <body>
+    <body class="d-flex flex-column min-vh-100">
         <!-- begin:: Page -->
         <%@ include file="menu/head1.jsp"%>
         <%@ include file="../../Bootstrap2024/index/index_SoggettoAttuatore/Header_soggettoAttuatore.jsp"%>
-        <div class="kt-grid kt-grid--hor kt-grid--root">
-            
-            <%@ include file="../../Bootstrap2024/index/menu/menuAtt.jsp"%>
-            
-            
-            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-                <!-- end:: Aside -->
-                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
-                    <%@ include file="menu/head.jsp"%>
-                    <!-- begin:: Footer -->
-                    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                        <!-- begin:: Content Head -->
-                        <div class="kt-subheader   kt-grid__item" id="kt_subheader">
-                            <div class="kt-subheader   kt-grid__item" id="kt_subheader">
-                                <div class="kt-subheader__main">
-                                    <h3 class="kt-subheader__title">Allievi</h3>
-                                    <span class="kt-subheader__separator kt-subheader__separator--v"></span>
-                                    <a class="kt-subheader__breadcrumbs-link">Cerca</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="kt-portlet" id="kt_portlet" data-ktportlet="true"><!--io-background-->
-                                        <div class="kt-portlet__head">
-                                            <div class="kt-portlet__head-label">
-                                                <h3 class="kt-portlet__head-title" >
-                                                    Cerca :
-                                                </h3>
-                                            </div>
-                                            <div class="kt-portlet__head-toolbar">
-                                                <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down" id="toggle_search"></i></a>
-                                            </div>
-                                        </div>
-                                        <form action="" class="kt-form kt-form--label-right" onsubmit="return ctrlForm();" accept-charset="ISO-8859-1" method="post" enctype="multipart/form-data">
-                                            <div class="kt-portlet__body paddig_0_t paddig_0_b">
-                                                <div class="kt-section kt-section--first">
-                                                    <div class="kt-section__body"><br>
-                                                        <div class="form-group row">
-                                                            <div class="col-xl-3 col-lg-6">
-                                                                <label>Nome</label>
-                                                                <input class="form-control" name="nome" id="nome" autocomplete="off">
-                                                            </div>
-                                                            <div class="col-xl-3 col-lg-6">
-                                                                <label>Cognome</label>
-                                                                <input class="form-control" name="cognome" id="cognome" autocomplete="off">
-                                                            </div>
-                                                            <div class="col-xl-3 col-lg-6">
-                                                                <label>Codice Fiscale</label>
-                                                                <input class="form-control" name="cf" id="cf" autocomplete="off">
-                                                            </div>
-                                                        </div>
-                                                        <input type="hidden" name="cpi" value="-" />
-                                                        <input type="hidden" name="stato" value="" />
-                                                    </div>
-                                                    <div class="kt-portlet__foot">
-                                                        <div class="kt-form__actions">
-                                                            <div class="row">
-                                                                <div class="offset-lg-6 col-lg-6 kt-align-right">
-                                                                    <a onclick="refresh();" href="javascript:void(0);" class="btn btn-primary"><font color='white'>Cerca</font></a>
-                                                                    <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-warning"><font color='white'>Reset</font></a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+        <%@ include file="../../Bootstrap2024/index/menu/menuAtt.jsp"%>
+        <%@ include file="menu/head.jsp"%>
 
-                            <div class="row" id="offsetresult">
-                                <div class="col-lg-12">
-                                    <div class="kt-portlet" id="kt_portlet" data-ktportlet="true">
-                                        <div class="kt-portlet__head">
-                                            <div class="kt-portlet__head-label col-lg-8">
-                                                <div class="col-lg-4">
-                                                    <h3 class="kt-portlet__head-title text" >
-                                                        Risultati :
-                                                    </h3>
-                                                </div>
-                                            </div>
-                                            <div class="kt-portlet__head-toolbar">
-                                                <div class="kt-portlet__head-group">
-                                                    <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down" id="toggle_search"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="kt-portlet__body kt-scroll-x">
-                                            <table class="table table-striped table-bordered" cellspacing="0" id="kt_table_1" style="width:100%;border-collapse: collapse;"> 
-                                                <thead>
-                                                    <tr>
-                                                        <th class="text-uppercase text-center">Azioni</th>
-                                                        <th class="text-uppercase text-center">Allievo</th>
-                                                        <th class="text-uppercase text-center">Codice Fiscale</th>
-                                                        <th class="text-uppercase text-center">Data Nascita</th>
-                                                        <th class="text-uppercase text-center">Residenza</th>
-                                                        <th class="text-uppercase text-center">CPI</th>
-                                                        <th class="text-uppercase text-center">Stato di partecipazione</th>
-                                                    </tr>
-                                                </thead>
-                                            </table>  
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end:: Content Head -->
-                    </div>
-                    <%@ include file="../../Bootstrap2024/index/login/Footer_login.jsp"%>
+
+
+        <main class="container-fluid my-4">
+
+            <!-- Intestazione sezione -->
+            <div class="my-3" id="kt_subheader">
+                <div class="d-flex align-items-center">
+                    <h1 class="h3 mb-0">Allievi</h1>
+                    <span class="mx-2">|</span>
+                    <span class="text-muted">Cerca</span>
                 </div>
             </div>
-        </div>
+
+            <!-- BOX RICERCA -->
+            <div class="card shadow-sm mb-4" id="kt_portlet" data-ktportlet="true">
+                <div class="card-header d-flex justify-content-between align-items-center" id="kt_content">
+                    <h3 class="card-title m-0">Cerca :</h3>
+                    <a href="#" data-bs-toggle="collapse" data-bs-target="#searchForm" class="btn btn-sm btn-outline-secondary">
+                        <i class="bi bi-chevron-down" id="toggle_search"></i>
+                    </a>
+                </div>
+                <div class="collapse show" id="searchForm">
+                    <form action="" class="p-3" onsubmit="return ctrlForm();" accept-charset="ISO-8859-1" method="post" enctype="multipart/form-data">
+                        <div class="row g-3">
+                            <div class="col-xl-3 col-lg-6">
+                                <label for="nome" class="form-label">Nome</label>
+                                <input type="text" class="form-control" name="nome" id="nome" autocomplete="off">
+                            </div>
+                            <div class="col-xl-3 col-lg-6">
+                                <label for="cognome" class="form-label">Cognome</label>
+                                <input type="text" class="form-control" name="cognome" id="cognome" autocomplete="off">
+                            </div>
+                            <div class="col-xl-3 col-lg-6">
+                                <label for="cf" class="form-label">Codice Fiscale</label>
+                                <input type="text" class="form-control" name="cf" id="cf" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="cpi" value="-" />
+                        <input type="hidden" name="stato" value="" />
+
+                        <div class="d-flex justify-content-end mt-4">
+                            <a onclick="refresh();" href="javascript:void(0);" class="btn btn-primary me-2">
+                                <i class="bi bi-search"></i> Cerca
+                            </a>
+                            <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-warning">
+                                <i class="bi bi-arrow-counterclockwise"></i> Reset
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- RISULTATI -->
+            <div class="card shadow-sm" id="offsetresult">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="card-title m-0">Risultati :</h3>
+                    <a href="#" data-bs-toggle="collapse" data-bs-target="#resultTable" class="btn btn-sm btn-outline-secondary">
+                        <i class="bi bi-chevron-down"></i>
+                    </a>
+                </div>
+                <div class="collapse show" id="resultTable">
+                    <div class="card-body table-responsive">
+                        <table class="table table-striped table-bordered align-middle text-center" id="kt_table_1" style="width:100%;">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="text-uppercase">Azioni</th>
+                                    <th class="text-uppercase">Allievo</th>
+                                    <th class="text-uppercase">Codice Fiscale</th>
+                                    <th class="text-uppercase">Data Nascita</th>
+                                    <th class="text-uppercase">Residenza</th>
+                                    <th class="text-uppercase">CPI</th>
+                                    <th class="text-uppercase">Stato di partecipazione</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
 
         <!-- begin::Scrolltop -->
         <div id="kt_scrolltop"style="background-color: #0059b3" class="kt-scrolltop">
@@ -210,8 +180,6 @@
         </div>
         <!--end:Modal-->
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
-        <!--<script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>-->
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
@@ -235,23 +203,23 @@
         <script src="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
         <script id="searchAllievi" src="<%=src%>/page/sa/js/searchAllievi.js<%=no_cache%>" data-context="<%=request.getContextPath()%>" type="text/javascript"></script>
         <script type="text/javascript">
-                                                                        var KTAppOptions = {
-                                                                            "colors": {
-                                                                                "state": {
-                                                                                    "brand": "#5d78ff",
-                                                                                    "dark": "#282a3c",
-                                                                                    "light": "#ffffff",
-                                                                                    "primary": "#5867dd",
-                                                                                    "success": "#34bfa3",
-                                                                                    "info": "#36a3f7",
-                                                                                    "warning": "#ffb822"
-                                                                                },
-                                                                                "base": {
-                                                                                    "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                                                                                    "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                                                                                }
-                                                                            }
-                                                                        };
+                        var KTAppOptions = {
+                            "colors": {
+                                "state": {
+                                    "brand": "#5d78ff",
+                                    "dark": "#282a3c",
+                                    "light": "#ffffff",
+                                    "primary": "#5867dd",
+                                    "success": "#34bfa3",
+                                    "info": "#36a3f7",
+                                    "warning": "#ffb822"
+                                },
+                                "base": {
+                                    "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                                    "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                                }
+                            }
+                        };
         </script>
     </body>
 </html>

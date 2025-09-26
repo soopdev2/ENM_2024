@@ -1477,7 +1477,7 @@ function modifyDate(id, start, end, fb) {
         preConfirm: function () {
             var err = false;
             err = checkObblFieldsContent($('#mod_date')) ? true : err;
-            if (fb != null) {
+            if (fb !== null) {
                 var split = $("#kt_daterange").val().split("-");
                 var start = getDate(split[0].trim());
                 var end = getDate(split[1].trim());
@@ -1485,8 +1485,8 @@ function modifyDate(id, start, end, fb) {
                 if (start > data_fb || data_fb > end) {
                     err = true;
                     $("#data_err").empty();
-                    $("#kt_daterange").removeClass("is-valid").addClass("is-invalid")
-                    $("#data_s_fb").removeClass("is-valid").addClass("is-invalid")
+                    $("#kt_daterange").removeClass("is-valid").addClass("is-invalid");
+                    $("#data_s_fb").removeClass("is-valid").addClass("is-invalid");
                     $("#data_err").append('<label class="kt-font-danger">Data inizio Fase B errata, fuori range.</label>');
                 }
             }
@@ -1495,13 +1495,13 @@ function modifyDate(id, start, end, fb) {
                     resolve({
                         "id": id,
                         "date": $("#kt_daterange").val(),
-                        "fb": ($("#data_s_fb").val() !== undefined ? $("#data_s_fb").val() : null),
+                        "fb": ($("#data_s_fb").val() !== undefined ? $("#data_s_fb").val() : null)
                     });
                 });
             } else {
                 return false;
             }
-        },
+        }
     }).then((result) => {
         showLoad();
         if (result.value) {
@@ -1531,7 +1531,7 @@ function rendiconta(idPrg) {
             success: function (data) {
                 closeSwal();
                 if (data.result) {
-                    swalSuccess('Successo', 'Progetto rendicontato con successo')
+                    swalSuccess('Successo', 'Progetto rendicontato con successo');
                     reload();
                 } else {
                     swalError('Errore', data.message);
@@ -1568,13 +1568,13 @@ function liquida(id) {
             if (!err) {
                 return new Promise(function (resolve) {
                     resolve({
-                        "importo": $('#importo').val(),
+                        "importo": $('#importo').val()
                     });
                 });
             } else {
                 return false;
             }
-        },
+        }
     }).then((result) => {
         if (result.value) {
             liquidaPrg(id, result.value);
@@ -1626,7 +1626,7 @@ function reEvaluateOptions() {
     $('select[id*="neet_"]').each(function () {
         var $this = $(this);
         $('select[id*="neet_"]').not($this).find('option').each(function () {
-            if ($(this).attr('value') == $this.val()) {
+            if ($(this).attr('value') === $this.val()) {
                 $(this).prop('disabled', true);
             }
         });
@@ -1634,7 +1634,7 @@ function reEvaluateOptions() {
     setTimeout(function () {
         $('select[id*="neet_"]').select2("destroy").select2({
             dropdownCssClass: "select2-on-top",
-            minimumResultsForSearch: -1,
+            minimumResultsForSearch: -1
         });
     }, 0);
 }

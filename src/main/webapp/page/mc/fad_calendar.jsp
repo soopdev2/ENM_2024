@@ -28,7 +28,7 @@
         String src = Utility.checkAttribute(session, "src");
         Entity e = new Entity();
         ProgettiFormativi p = e.getEm().find(ProgettiFormativi.class, Long.parseLong(request.getParameter("id")));
-        
+
 
 %>
 <html>
@@ -63,7 +63,7 @@
         <link href="<%=src%>/assets/demo/default/skins/header/menu/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/brand/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="Bootstrap2024/assets/css/global.css"/>
+        <link rel="stylesheet" href="../../Bootstrap2024/assets/css/bootstrap.min.css"/>
         <link href="https://fonts.cdnfonts.com/css/titillium-web" rel="stylesheet">
         <link href="<%=src%>/resource/animate.css" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
@@ -76,7 +76,7 @@
         <script type="text/javascript" src="<%=src%>/assets/soop/js/jquery.fancybox.min.js"></script>
         <script type="text/javascript" src="<%=src%>/assets/soop/js/fancy.js"></script>
     </head>
-    <body class="kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed">
+    <body class="d-flex flex-column min-vh-100">
 
         <%if (p != null) {
 
@@ -84,216 +84,216 @@
         %>
 
 
-        <div class="kt-grid kt-grid--hor kt-grid--root">
-            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                        <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-                            <div class="kt-portlet kt-portlet--mobile">
-                                <div class="kt-portlet__head">
-                                    <div class="kt-portlet__head-label">
-                                        <h3 class="kt-portlet__head-title">
-                                            Progetto Formativo: <%=p.getDescrizione()%> -  <%=p.getSoggetto().getRagionesociale()%> - Calendario FAD
+        <main class="container-fluid my-4">
+            <div class="container-fluid kt-grid kt-grid--hor kt-grid--root">
+                <div class="row kt-grid__item kt-grid__item--fluid">
+                    <div class="col-12 kt-grid__item kt-grid--hor">
+
+                        <!-- begin:: Content -->
+                        <div class="row kt-grid__item kt-grid__item--fluid" id="kt_content">
+                            <div class="col-12">
+                                <div class="card kt-portlet kt-portlet--mobile">
+
+                                    <!-- Header -->
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                            Progetto Formativo: <%=p.getDescrizione()%> - <%=p.getSoggetto().getRagionesociale()%> - Calendario FAD
                                         </h3>
                                     </div>
-                                </div>
-                                <div class="kt-portlet__body">
-                                    <%if (!calendarioFAD.isEmpty()) {%>
-                                    <div class="kt-portlet__body paddig_0_t paddig_0_b">
-                                        <div class="kt-section kt-section--first">
-                                            <h4 class="kt-portlet__head-title">
-                                                LEZIONI CONFERMATE
-                                            </h4>
-                                            <div class="kt-section__body">
-                                                <div class="table-responsive">
-                                                    <table class="table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th scope="col">Data</th>
-                                                                <th scope="col">Numero Corso</th>
-                                                                <th scope="col">Ora Inizio</th>
-                                                                <th scope="col">Ora Fine</th>
-                                                                <th scope="col"></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <%
-                                                                for (int i = 0; i < calendarioFAD.size(); i++) {
-                                                                    FadCalendar lez = calendarioFAD.get(i);%>
-                                                        <form action="../../OperazioniMicro?type=removelez" method="post">
-                                                            <input type="hidden" name="idpr1" value="<%=p.getId()%>" />
-                                                            <input type="hidden" name="data1" value="<%=StringEscapeUtils.escapeHtml4(lez.getData())%>" />
-                                                            <input type="hidden" name="corso1" value="<%=StringEscapeUtils.escapeHtml4(lez.getNumerocorso())%>" />
-                                                            <input type="hidden" name="inizio1" value="<%=StringEscapeUtils.escapeHtml4(lez.getOrainizio())%>" />
-                                                            <tr>
-                                                                <th scope="row">
-                                                                    <%=StringEscapeUtils.escapeHtml4(lez.getData())%></th>
-                                                                <td><%=StringEscapeUtils.escapeHtml4(lez.getNumerocorso())%></td>
-                                                                <td><%=StringEscapeUtils.escapeHtml4(lez.getOrainizio())%></td>
-                                                                <td><%=StringEscapeUtils.escapeHtml4(lez.getOrafine())%></td>
-                                                                <td><button type="submit" class="btn btn-sm btn-outline-danger">
-                                                                        <i class="fa fa-trash"></i> Elimina</button>
-                                                                </td>
-                                                            </tr>
-                                                        </form>
-                                                        <%}%>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+
+                                    <!-- Body -->
+                                    <div class="card-body">
+
+                                        <% if (!calendarioFAD.isEmpty()) { %>
+                                        <div class="mb-4">
+                                            <h4 class="mb-3">LEZIONI CONFERMATE</h4>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Data</th>
+                                                            <th scope="col">Numero Corso</th>
+                                                            <th scope="col">Ora Inizio</th>
+                                                            <th scope="col">Ora Fine</th>
+                                                            <th scope="col"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <%
+                                                            for (int i = 0; i < calendarioFAD.size(); i++) {
+                                                                FadCalendar lez = calendarioFAD.get(i);
+                                                        %>
+                                                    <form action="../../OperazioniMicro?type=removelez" method="post">
+                                                        <input type="hidden" name="idpr1" value="<%=p.getId()%>" />
+                                                        <input type="hidden" name="data1" value="<%=StringEscapeUtils.escapeHtml4(lez.getData())%>" />
+                                                        <input type="hidden" name="corso1" value="<%=StringEscapeUtils.escapeHtml4(lez.getNumerocorso())%>" />
+                                                        <input type="hidden" name="inizio1" value="<%=StringEscapeUtils.escapeHtml4(lez.getOrainizio())%>" />
+                                                        <tr>
+                                                            <th scope="row"><%=StringEscapeUtils.escapeHtml4(lez.getData())%></th>
+                                                            <td><%=StringEscapeUtils.escapeHtml4(lez.getNumerocorso())%></td>
+                                                            <td><%=StringEscapeUtils.escapeHtml4(lez.getOrainizio())%></td>
+                                                            <td><%=StringEscapeUtils.escapeHtml4(lez.getOrafine())%></td>
+                                                            <td>
+                                                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                                    <i class="fa fa-trash"></i> Elimina
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </form>
+                                                    <% } %>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col"><hr></div>
-                                        <%}%>
-                                    <form action="../../OperazioniMicro?type=addlez" method="post" onsubmit="return checkform()">
-                                        <input type="hidden" name="idpr1" value="<%=p.getId()%>" />
-                                        <div class="kt-portlet__body paddig_0_t paddig_0_b">
-                                            <div class="kt-section kt-section--first">
-                                                <h4 class="kt-portlet__head-title">
-                                                    AGGIUNGI NUOVA LEZIONE
-                                                </h4>
-                                                <div class="kt-section__body"><br>
-                                                    <div class="form-group row">
-                                                        <div class="col-lg-3">
-                                                            <label>Data</label>
-                                                            <input type="text" class="form-control kt_datepicker_r"
-                                                                   name="datalezione" required
-                                                                   id="datalezione" 
-                                                                   autocomplete="off"/>
-                                                        </div>
-                                                        <div class="col-lg-3">
-                                                            <label>Numero Corso</label>
-                                                            <div class="dropdown bootstrap-select form-control kt-"style="padding: 0;height: 35px;">
-                                                                <select class="form-control kt-select2-general" id="corso" name="corso" style="width: 100%" required>
-                                                                    <option value="">Seleziona Corso</option>
-                                                                    <option value="1">Corso 1</option>
-                                                                    <option value="2">Corso 2</option>
-                                                                    <option value="3">Corso 3</option>
-                                                                    <option value="4">Corso 4</option>
-                                                                    <option value="5">Corso 5</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-3">
-                                                            <label>Ora Inizio</label>
-                                                            <input class="form-control kt_timepicker_r" required id="orainizio" name="orainizio" placeholder="Ora Inizio" type="text" />
-                                                        </div>
+                                        <hr>
+                                        <% }%>
 
-                                                        <div class="col-lg-3">
-                                                            <label>Ora Fine</label>
-                                                            <input class="form-control kt_timepicker_r" required id="orafine" name="orafine" placeholder="Ora Fine" type="text" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <div class="offset-lg-6 col-lg-6 kt-align-right">
-                                                            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>
-                                                                Salva</button>
-                                                        </div>
-                                                    </div>
+                                        <!-- Form aggiungi nuova lezione -->
+                                        <form action="../../OperazioniMicro?type=addlez" method="post" onsubmit="return checkform()">
+                                            <input type="hidden" name="idpr1" value="<%=p.getId()%>" />
+                                            <h4 class="mb-3">AGGIUNGI NUOVA LEZIONE</h4>
+                                            <div class="row g-3 mb-3">
+                                                <div class="col-lg-3">
+                                                    <label for="datalezione" class="form-label">Data</label>
+                                                    <input type="text" class="form-control kt_datepicker_r"
+                                                           name="datalezione" id="datalezione"
+                                                           autocomplete="off" required />
                                                 </div>
-
+                                                <div class="col-lg-3">
+                                                    <label for="corso" class="form-label">Numero Corso</label>
+                                                    <select class="form-control kt-select2-general" id="corso" name="corso" required>
+                                                        <option value="">Seleziona Corso</option>
+                                                        <option value="1">Corso 1</option>
+                                                        <option value="2">Corso 2</option>
+                                                        <option value="3">Corso 3</option>
+                                                        <option value="4">Corso 4</option>
+                                                        <option value="5">Corso 5</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <label for="orainizio" class="form-label">Ora Inizio</label>
+                                                    <input type="text" class="form-control kt_timepicker_r"
+                                                           id="orainizio" name="orainizio"
+                                                           placeholder="Ora Inizio" required />
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <label for="orafine" class="form-label">Ora Fine</label>
+                                                    <input type="text" class="form-control kt_timepicker_r"
+                                                           id="orafine" name="orafine"
+                                                           placeholder="Ora Fine" required />
+                                                </div>
                                             </div>
-                                        </div>
-                                    </form>
-                                    <script type="text/javascript">
-                                        function checkform() {
-                                            var orainizio = document.getElementById('orainizio').value.trim();
-                                            if (orainizio.length === 4) {
-                                                orainizio = "0" + orainizio;
-                                            }
-                                            var orafine = document.getElementById('orafine').value.trim();
-                                            if (orafine.length === 4) {
-                                                orafine = "0" + orafine;
-                                            }
-                                            var dateToCompare1 = moment("2013-02-08 " + orainizio + ":00");
-                                            var dateToCompare2 = moment("2013-02-08 " + orafine + ":00");
-                                            var out = dateToCompare1.isBefore(dateToCompare2);
-
-                                            if (!out) {
-                                                document.getElementById('modalerrortxt').innerHTML = "L'ORA DI INIZIO DEVE ESSERE ANTECEDENTE A QUELLA DI FINE.";
-                                                document.getElementById('openmodalerror').click();
-                                                return false;
-                                            }
-
-
-                                        }
-                                    </script>
-                                    <!-- Button trigger modal -->
-                                    <div class="modal fade"  tabindex="-1" role="dialog" aria-hidden="true">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="openmodalerror">
-                                            Launch demo modal
-                                        </button>
-                                    </div>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title text-danger" id="exampleModalLabel"><i class="fa fa-exclamation-triangle"></i> ERRORE!</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
+                                            <div class="row">
+                                                <div class="offset-lg-6 col-lg-6 text-end">
+                                                    <button type="submit" class="btn btn-primary">
+                                                        <i class="fa fa-save"></i> Salva
                                                     </button>
                                                 </div>
-                                                <div class="modal-body" id="modalerrortxt">
-                                                    
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </form>
+
+                                        <!-- Script di validazione -->
+                                        <script type="text/javascript">
+                                            function checkform() {
+                                                var orainizio = document.getElementById('orainizio').value.trim();
+                                                if (orainizio.length === 4) {
+                                                    orainizio = "0" + orainizio;
+                                                }
+                                                var orafine = document.getElementById('orafine').value.trim();
+                                                if (orafine.length === 4) {
+                                                    orafine = "0" + orafine;
+                                                }
+                                                var dateToCompare1 = moment("2013-02-08 " + orainizio + ":00");
+                                                var dateToCompare2 = moment("2013-02-08 " + orafine + ":00");
+                                                var out = dateToCompare1.isBefore(dateToCompare2);
+
+                                                if (!out) {
+                                                    document.getElementById('modalerrortxt').innerHTML =
+                                                            "L'ORA DI INIZIO DEVE ESSERE ANTECEDENTE A QUELLA DI FINE.";
+                                                    document.getElementById('openmodalerror').click();
+                                                    return false;
+                                                }
+                                            }
+                                        </script>
+
+                                        <!-- Button trigger modal (nascosto) -->
+                                        <button type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal" id="openmodalerror"></button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title text-danger" id="exampleModalLabel">
+                                                            <i class="fa fa-exclamation-triangle"></i> ERRORE!
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body" id="modalerrortxt"></div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+
+                                    </div> <!-- card-body -->
                                 </div>
                             </div>
                         </div>
-                    </div>	
+                        <!-- end:: Content -->
+
+                    </div>
                 </div>
             </div>
-        </div>
-        <%}%>
-        <div id="kt_scrolltop"style="background-color: #0059b3" class="kt-scrolltop">
-            <i class="fa fa-arrow-up"></i>
-        </div>
-        <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/sticky-js/dist/sticky.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/jquery-form/dist/jquery.form.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/jquery-validation/dist/jquery.validate.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/jquery-validation/dist/additional-methods.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/app/custom/general/components/extended/blockui1.33.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/sweetalert2/dist/sweetalert2.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/soop/js/utility.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/app/bundle/app.bundle.js" type="text/javascript"></script>
-        <!--this page-->
-        <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/bootstrap-datepicker.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/bootstrap-timepicker.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap-timepicker/js/bootstrap-timepicker.js" type="text/javascript"></script>
-        <script type="text/javascript">
-                                    var KTAppOptions = {
-                                        "colors": {
-                                            "state": {
-                                                "brand": "#5d78ff",
-                                                "dark": "#282a3c",
-                                                "light": "#ffffff",
-                                                "primary": "#5867dd",
-                                                "success": "#34bfa3",
-                                                "info": "#36a3f7",
-                                                "warning": "#ffb822"
-                                            },
-                                            "base": {
-                                                "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                                                "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                                            }
-                                        }
-                                    };
-        </script>
+
+
+
+
+            <%}%>
+            <div id="kt_scrolltop"style="background-color: #0059b3" class="kt-scrolltop">
+                <i class="fa fa-arrow-up"></i>
+            </div>
+            <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
+            <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js"></script>
+            <script src="../../Bootstrap2024/assets/js/popper.js"></script>
+            <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
+            <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
+            <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
+            <script src="<%=src%>/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
+            <script src="<%=src%>/assets/vendors/general/sticky-js/dist/sticky.min.js" type="text/javascript"></script>
+            <script src="<%=src%>/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
+            <script src="<%=src%>/assets/vendors/general/jquery-form/dist/jquery.form.min.js" type="text/javascript"></script>
+            <script src="<%=src%>/assets/vendors/general/jquery-validation/dist/jquery.validate.js" type="text/javascript"></script>
+            <script src="<%=src%>/assets/vendors/general/jquery-validation/dist/additional-methods.js" type="text/javascript"></script>
+            <script src="<%=src%>/assets/app/custom/general/components/extended/blockui1.33.js" type="text/javascript"></script>
+            <script src="<%=src%>/assets/vendors/general/sweetalert2/dist/sweetalert2.js" type="text/javascript"></script>
+            <script src="<%=src%>/assets/soop/js/utility.js" type="text/javascript"></script>
+            <script src="<%=src%>/assets/app/bundle/app.bundle.js" type="text/javascript"></script>
+            <!--this page-->
+            <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/bootstrap-datepicker.js" type="text/javascript"></script>
+            <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/bootstrap-timepicker.js" type="text/javascript"></script>
+            <script src="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
+            <script src="<%=src%>/assets/vendors/general/bootstrap-timepicker/js/bootstrap-timepicker.js" type="text/javascript"></script>
+            <script type="text/javascript">
+                                            var KTAppOptions = {
+                                                "colors": {
+                                                    "state": {
+                                                        "brand": "#5d78ff",
+                                                        "dark": "#282a3c",
+                                                        "light": "#ffffff",
+                                                        "primary": "#5867dd",
+                                                        "success": "#34bfa3",
+                                                        "info": "#36a3f7",
+                                                        "warning": "#ffb822"
+                                                    },
+                                                    "base": {
+                                                        "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                                                        "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                                                    }
+                                                }
+                                            };
+            </script>
     </body>
 </html>
 <%

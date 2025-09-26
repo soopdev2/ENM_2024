@@ -7,13 +7,13 @@ var context = document.getElementById("context");
 
 function CFPresent() {
     var err;
-    if ($('#cf_sa').val() != $('#prevcf').val()) {
+    if ($('#cf_sa').val() !== $('#prevcf').val()) {
         $.ajax({
             type: "GET",
             async: false,
             url: context + '/OperazioniMicro?type=checkCF&cf=' + $('#cf_sa').val(),
             success: function (data) {
-                if (data != null && data != 'null') {
+                if (data !== null && data !== 'null') {
                     $('#warning_cf').css("display", "");
                     $('#cf_sa').attr("class", "form-control is-invalid");
                     err = true;
@@ -32,13 +32,13 @@ function CFPresent() {
 
 function pivaPresent() {
     var err;
-    if ($('#piva_sa').val() != $('#prevpiva').val()) {
+    if ($('#piva_sa').val() !== $('#prevpiva').val()) {
         $.ajax({
             type: "GET",
             async: false,
             url: context + '/OperazioniMicro?type=checkPiva&piva=' + $('#piva_sa').val(),
             success: function (data) {
-                if (data != null && data != 'null') {
+                if (data !== null && data !== 'null') {
                     $('#warning_iva').css("display", "");
                     $('#piva_sa').attr("class", "form-control is-invalid");
                     err = true;
@@ -265,7 +265,7 @@ function uploadPec(idsa, rs, piva, cf) {
             } else {
                 return false;
             }
-        },
+        }
     }).then((result) => {
         if (result.value) {
             showLoad();
@@ -286,7 +286,7 @@ $(document).on('change', '#piva_sa', function (e) {
     if (!checkPIva($('#piva_sa'))) {
         pivaPresent();
     }
-    if ($('#piva_sa').val() == "") {
+    if ($('#piva_sa').val() === "") {
         $('#piva_sa').attr("class", "form-control");
     }
 });
@@ -296,7 +296,7 @@ $(document).on('change', '#cf_sa', function (e) {
     if (!check_PIVA_CF($('#cf_sa'))) {
         CFPresent();
     }
-    if ($('#cf_sa').val() == "") {
+    if ($('#cf_sa').val() === "") {
         $('#cf_sa').attr("class", "form-control");
     }
 });

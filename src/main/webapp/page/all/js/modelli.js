@@ -25,8 +25,8 @@
         cancelButtonClass: "btn btn-io-n",
         confirmButtonClass: "btn btn-io",
         customClass: {
-            popup: 'large-swal animated bounceInUp',
-        },
+            popup: 'large-swal animated bounceInUp'
+        }
     }).then((result) => {
         if (result.value) {
             $.ajax({

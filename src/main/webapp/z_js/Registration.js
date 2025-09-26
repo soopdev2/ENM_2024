@@ -34,7 +34,7 @@ $('#regione').on('change', function (e) {
     $("#provincia").empty();
     $("#comune").empty();
     $("#comune").append('<option value="-">. . .</option>');
-    if ($('#regione').val() != '-') {
+    if ($('#regione').val() !== '-') {
         startBlockUILoad("#provincia_div");
         $("#provincia").append('<option value="-">Seleziona Provincia</option>');
         $.get(context + '/Login?type=getProvincia&regione=' + $('#regione').val(), function (resp) {
@@ -50,7 +50,7 @@ $('#regione').on('change', function (e) {
 });
 $('#provincia').on('change', function (e) {
     $("#comune").empty();
-    if ($('#provincia').val() != '-') {
+    if ($('#provincia').val() !== '-') {
         startBlockUILoad("#comune_div");
         $("#comune").append('<option value="-">Seleziona Comune</option>');
         $.get(context + '/Login?type=getComune&provincia=' + $('#provincia').val(), function (resp) {
@@ -145,10 +145,10 @@ function ctrlForm() {
 
     if (req_piva && req_cf) {
         err = true;
-        if (req_piva && piva.val() == "") {
+        if (req_piva && piva.val() === "") {
             piva.attr("class", "form-control");
         }
-        if (req_cf && cf.val() == "") {
+        if (req_cf && cf.val() === "") {
             cf.attr("class", "form-control");
         }
     }
@@ -177,7 +177,7 @@ $("#submit_change").on('click', function () {
                         "title": 'Errore',
                         "text": "Riprovare, se l'errore persiste contattare il servizio clienti",
                         "type": "error",
-                        cancelButtonClass: "btn btn-io-n",
+                        cancelButtonClass: "btn btn-io-n"
                     });
                 },
                 success: function (resp) {
@@ -210,7 +210,7 @@ $("#submit_change").on('click', function () {
 
 $('#piva').keydown(function (e) {
     if (this.value.length > 10)
-        if (!(e.which == '46' || e.which == '8' || e.which == '13')) // backspace/enter/del
+        if (!(e.which === '46' || e.which === '8' || e.which === '13')) // backspace/enter/del
             e.preventDefault();
 });
 
@@ -218,7 +218,7 @@ $('#piva').on("change", function () {
     if (!checkPIva($('#piva'))) {
         pivaPresent();
     }
-    if ($('#piva').val() == "") {
+    if ($('#piva').val() === "") {
         $('#piva').attr("class", "form-control");
     }
 });
@@ -227,7 +227,7 @@ $('#cf').on("change", function () {
     if (!check_PIVA_CF($('#cf'))) {
         CFPresent();
     }
-    if ($('#cf').val() == "") {
+    if ($('#cf').val() === "") {
         $('#cf').attr("class", "form-control");
     }
 });
@@ -239,12 +239,12 @@ function CFPresent() {
         async: false,
         url: context + '/Login?type=checkCF&cf=' + $('#cf').val(),
         success: function (data) {
-            if (data != null && data != 'null') {
+            if (data !== null && data !== 'null') {
                 swal.fire({
                     "title": 'Errore',
                     "html": "<h3>Codice Fiscale già presente</h3>",
                     "type": "error",
-                    cancelButtonClass: "btn btn-io-n",
+                    cancelButtonClass: "btn btn-io-n"
                 });
                 $('#cf').attr("class", "form-control is-invalid");
                 err = true;
@@ -264,12 +264,12 @@ function pivaPresent() {
         async: false,
         url: context + '/Login?type=checkPiva&piva=' + $('#piva').val(),
         success: function (data) {
-            if (data != null && data != 'null') {
+            if (data !== null && data !== 'null') {
                 swal.fire({
                     "title": 'Errore',
                     "html": "<h3>Partita iva già presente</h3>",
                     "type": "error",
-                    cancelButtonClass: "btn btn-io-n",
+                    cancelButtonClass: "btn btn-io-n"
                 });
                 $('#piva').attr("class", "form-control is-invalid");
                 err = true;
@@ -295,12 +295,12 @@ function Emailpresente() {
         async: false,
         url: context + '/Login?type=checkEmail&email=' + $('#email').val(),
         success: function (data) {
-            if (data != null && data != 'null') {
+            if (data !== null && data !== 'null') {
                 swal.fire({
                     "title": 'Errore',
                     "html": "<h3>Email già presente</h3>",
                     "type": "error",
-                    cancelButtonClass: "btn btn-io-n",
+                    cancelButtonClass: "btn btn-io-n"
                 });
                 $('#email').attr("class", "form-control is-invalid");
                 err = true;
@@ -314,6 +314,6 @@ function Emailpresente() {
 }
 $('#cap').keydown(function (e) {
     if (this.value.length > 4)
-        if (!(e.which == '46' || e.which == '8' || e.which == '13')) // backspace/enter/del
+        if (!(e.which === '46' || e.which === '8' || e.which === '13')) // backspace/enter/del
             e.preventDefault();
 });

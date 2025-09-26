@@ -17,35 +17,35 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-    try{
-    User us = (User) session.getAttribute("user");
-    if (us == null) {
-        response.sendRedirect(request.getContextPath() + "/login.jsp");
-    } else {
-        String uri_ = request.getRequestURI();
-        String pageName_ = uri_.substring(uri_.lastIndexOf("/") + 1);
-        if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
-            response.sendRedirect(request.getContextPath() + "/page_403.jsp");
+    try {
+        User us = (User) session.getAttribute("user");
+        if (us == null) {
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
         } else {
-            String src = Utility.checkAttribute(session, "src");
-            Entity e = new Entity();
-            List<Estrazioni> est = e.getEstazioniDesc();
-            List<SoggettiAttuatori> lsa = new ArrayList<>();
-            for (SoggettiAttuatori sa : e.getSoggettiAttuatori()) {
-                if (sa.getProtocollo() != null) {
-                    lsa.add(sa);
+            String uri_ = request.getRequestURI();
+            String pageName_ = uri_.substring(uri_.lastIndexOf("/") + 1);
+            if (!Action.isVisibile(String.valueOf(us.getTipo()), pageName_)) {
+                response.sendRedirect(request.getContextPath() + "/page_403.jsp");
+            } else {
+                String src = Utility.checkAttribute(session, "src");
+                Entity e = new Entity();
+                List<Estrazioni> est = e.getEstazioniDesc();
+                List<SoggettiAttuatori> lsa = new ArrayList<>();
+                for (SoggettiAttuatori sa : e.getSoggettiAttuatori()) {
+                    if (sa.getProtocollo() != null) {
+                        lsa.add(sa);
+                    }
                 }
-            }
 
-            Long messaggi = e.countFAQ();
-            e.close();
+                Long messaggi = e.countFAQ();
+                e.close();
 
-            //PREGRESSO RAF
-            //END PREGRESSO RAF
-            int i = 0;
-            String[] styles;
-            String bgc;
-            Map<StatiPrg, Long> requirementCountMap = new HashMap();
+                //PREGRESSO RAF
+                //END PREGRESSO RAF
+                int i = 0;
+                String[] styles;
+                String bgc;
+                Map<StatiPrg, Long> requirementCountMap = new HashMap();
 
 %>
 <html>
@@ -93,7 +93,7 @@
         <link href="../../Bootstrap2024/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="https://fonts.cdnfonts.com/css/titillium-web" rel="stylesheet">
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
-           <script src="../../Bootstrap2024/assets/js/popper.js"></script>
+        <script src="../../Bootstrap2024/assets/js/popper.js"></script>
         <style>
             #containerCanvas {
                 position: inherit;
@@ -159,14 +159,16 @@
     <body>
         <!-- begin:: Page -->                   
         <%@ include file="../../Bootstrap2024/index/index_SoggettoAttuatore/Header_soggettoAttuatore.jsp"%>
+        <%@ include file="../../Bootstrap2024/index/menu/menuMc.jsp"%>
+
+        <%@ include file="menu/head.jsp"%>
+
         <div class="kt-grid kt-grid--hor kt-grid--root">
             <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
                 <!-- end:: Aside -->
                 <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
-                    <%@ include file="menu/head.jsp"%>
-                    <%@ include file="../../Bootstrap2024/index/menu/menuMc.jsp"%>
-                   
-                    
+
+
                     <br>
                     <!-- begin:: Footer -->
                     <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" style="background-image: url(<%=src%>/resource/bg.png); background-size: cover;background-position: center; background-color: #fff;">
@@ -190,11 +192,11 @@
 
                                         </div>
                                         <script>
-                                            const button1 = document.getElementById('button1');
-                                            button1.addEventListener('click', function () {
-                                                window.location.href = "searchAllieviMicro.jsp"
-                                            }
-                                            )
+            const button1 = document.getElementById('button1');
+            button1.addEventListener('click', function () {
+                window.location.href = "searchAllieviMicro.jsp"
+            }
+            )
                                         </script>
 
                                         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12" style="padding-bottom: 1.5rem;">
@@ -570,7 +572,7 @@
                                                         </a>
                                                     </div>
                                                     <%}
-                                                    }%>
+                                                        }%>
                                                 </div>
                                             </div>
                                         </div>
@@ -611,7 +613,6 @@
         </div>
 
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
@@ -623,26 +624,26 @@
         <script src="<%=src%>/assets/soop/js/utility.js" type="text/javascript"></script>
         <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
         <script type="text/javascript">
-                                        var KTAppOptions = {
-                                            "colors": {
-                                                "state": {
-                                                    "brand": "#5d78ff",
-                                                    "dark": "#282a3c",
-                                                    "light": "#ffffff",
-                                                    "primary": "#5867dd",
-                                                    "success": "#34bfa3",
-                                                    "info": "#36a3f7",
-                                                    "warning": "#ffb822"
-                                                },
-                                                "base": {
-                                                    "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                                                    "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                                            var KTAppOptions = {
+                                                "colors": {
+                                                    "state": {
+                                                        "brand": "#5d78ff",
+                                                        "dark": "#282a3c",
+                                                        "light": "#ffffff",
+                                                        "primary": "#5867dd",
+                                                        "success": "#34bfa3",
+                                                        "info": "#36a3f7",
+                                                        "warning": "#ffb822"
+                                                    },
+                                                    "base": {
+                                                        "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                                                        "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                                                    }
                                                 }
-                                            }
-                                        };
-                                        $('.kt-scroll').each(function () {
-                                            const ps = new PerfectScrollbar($(this)[0]);
-                                        });
+                                            };
+                                            $('.kt-scroll').each(function () {
+                                                const ps = new PerfectScrollbar($(this)[0]);
+                                            });
         </script>
 
         <script>
@@ -661,10 +662,10 @@
     </body>
 </html>
 <%
+            }
         }
-    }
-}catch(OutOfMemoryError e){
-e.printStackTrace();
+    } catch (OutOfMemoryError e) {
+        e.printStackTrace();
 
-}
+    }
 %>

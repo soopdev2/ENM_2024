@@ -1,103 +1,68 @@
 <%@page import="rc.so.util.Utility"%>
 <%@page import="java.util.Date"%>
-<!-- begin:: Header -->
-<%String no_cache = "?dummy=" + String.valueOf(new Date().getTime());
-
+<%
+    String no_cache = "?dummy=" + String.valueOf(new Date().getTime());
     String guida = Utility.checkAttribute(session, "guida");
 %>
-<div id="kt_header" class="kt-header kt-grid__item  kt-header--fixed" style="background-color: #0059b3!important; border: none">
-    <!-- begin:: Header Menu -->
-    <button class="kt-header-menu-wrapper-close" id="kt_header_menu_mobile_close_btn"><i class="la la-close"></i></button>
-    <div class="kt-header-menu-wrapper " id="kt_header_menu_wrapper">
-        <div style="display: inline-block;  vertical-align: middle;  line-height: normal;"> 
 
-        </div>
-    </div>
-    <!-- end:: Header Menu -->
-    <!-- begin:: Header Topbar -->
-    <div class="kt-header__topbar">
-        <!--begin: User Bar -->
-        <div class="kt-header__topbar-item kt-header__topbar-item--user">
-            <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="0px,0px">
-                <div class="kt-header__topbar-user">
-                    <span class="kt-header__topbar-welcome kt-hidden-mobile" style="color: white">Ciao,</span>
-                    <span class="kt-header__topbar-username kt-hidden-mobile" style="color: white"><%=us.getSoggettoAttuatore().getRagionesociale()%></span>
-                    <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
-                    <span class="kt-badge kt-badge--username kt-badge--unified-io kt-badge--lg kt-badge--rounded kt-badge--bold" style="color: white" >
-                        <%=us.getSoggettoAttuatore().getRagionesociale().substring(0, 1).toUpperCase()%>
-                    </span>
-                </div>
-            </div>
-            <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">
-                <!--begin: Head -->
-                <div class="kt-user-card kt-user-card--skin-dark kt-notification-item-padding-x"
-                     style="background-image: url(<%=src%>/assets/media/bg/bg-3.jpg);background-position: left bottom ;background-repeat: repeat-x;">
-                    <div class="kt-user-card__avatar">
-                        <span class="kt-badge kt-badge--lg kt-badge--rounded kt-badge--bold kt-font-io"> <i class="flaticon-presentation-1"></i></span>
-                    </div>
-                    <div class="kt-user-card__name kt-font-io">
+<!-- Header -->
+<nav id="kt_header" class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color:#0059b3!important; border:none; position: relative; top: -200px;">
+    <div class="container-fluid">
+
+        <!-- Branding / titolo (se serve) -->
+        <a class="navbar-brand d-none d-lg-inline-block" href="#">
+            <i class="bi bi-mortarboard"></i>
+        </a>
+
+        <!-- Right user dropdown -->
+        <div class="dropdown ms-auto">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" 
+               id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="me-2">Ciao,</span>
+                <span class="fw-bold me-2"><%=us.getSoggettoAttuatore().getRagionesociale()%></span>
+                <span class="badge bg-light text-dark rounded-circle p-2">
+                    <%=us.getSoggettoAttuatore().getRagionesociale().substring(0, 1).toUpperCase()%>
+                </span>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
+                <li>
+                    <h6 class="dropdown-header">
+                        <i class="bi bi-person-circle me-2"></i>
                         <%=us.getSoggettoAttuatore().getRagionesociale()%>
-                    </div>
-                    <div class="kt-user-card__badge">
-                        <a href="<%=request.getContextPath()%>/Login?type=logout" id="a_logout" class="btn btn-io btn-bold" data-container="body" data-toggle="kt-popover" data-placement="bottom" data-content="Esci">
-                            <i class="flaticon-logout" style="padding: 0;"></i>
-                        </a>
-                        <!--                        <a href="../profile.jsp" class="btn btn-io btn-bold fancyBoxRaf" data-container="body" data-toggle="kt-popover" data-placement="bottom" data-content="Modifica Profilo">
-                                                    <i class="flaticon2-user" style="padding: 0;"></i>
-                                                </a>-->
-                    </div>
+                    </h6>
+                </li>
+                <li><hr class="dropdown-divider"></li>
 
-                </div>
-                <div class="kt-notification">
-                    <a href="<%=src%>/page/personal/profile.jsp" class="kt-notification__item fancyProfile" style="margin-bottom: 0px;">
-                        <div class="kt-notification__item-icon">
-                            <i class="flaticon2-calendar-3 kt-font-io-n"></i>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title kt-font-bold">
-                                Profilo Personale
-                            </div>
-                            <div class="kt-notification__item-time">
-                                Informazioni e altro
-                            </div>
-                        </div>
-                    </a>     
-                    <a href="<%=src%>/page/personal/chgPwd.jsp?active=yes" class="kt-notification__item fancyProfile" style="margin-bottom: 0px;">
-                        <div class="kt-notification__item-icon">
-                            <i class="flaticon2-gear kt-font-io-n"></i>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title kt-font-bold">
-                                Password
-                            </div>
-                            <div class="kt-notification__item-time">
-                                Cambia
-                            </div>
-                        </div>
+                <li>
+                    <a class="dropdown-item fancyProfile" href="<%=src%>/page/personal/profile.jsp">
+                        <i class="bi bi-card-text me-2"></i> Profilo Personale
                     </a>
-                    <a href="<%=src%>/OperazioniGeneral?type=downloadDoc&path=<%=guida%>" class="kt-notification__item" style="margin-bottom: 0px;">
-                        <div class="kt-notification__item-icon">
-                            <i class="flaticon-book kt-font-io-n"></i>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title kt-font-bold">
-                                Manuale Operativo
-                            </div>
-                            <div class="kt-notification__item-time">
-                                Guida all'utilizzo della piattaforma
-                            </div>
-                        </div>
-                    </a>    
-                </div>
-                <!--end: Head -->
-            </div>
+                </li>
+                <li>
+                    <a class="dropdown-item fancyProfile" href="<%=src%>/page/personal/chgPwd.jsp?active=yes">
+                        <i class="bi bi-key me-2"></i> Password
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="<%=src%>/OperazioniGeneral?type=downloadDoc&path=<%=guida%>">
+                        <i class="bi bi-journal-text me-2"></i> Manuale Operativo
+                    </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <a class="dropdown-item text-danger" href="<%=request.getContextPath()%>/Login?type=logout" id="a_logout">
+                        <i class="bi bi-box-arrow-right me-2"></i> Esci
+                    </a>
+                </li>
+            </ul>
         </div>
-        <!--end: User Bar -->
     </div>
-    <!-- end:: Header Topbar -->
-</div>
+</nav>
 
+<!-- Fancybox CSS/JS -->
 <link href="<%=src%>/assets/soop/css/jquery.fancybox.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="<%=src%>/assets/soop/js/jquery-1.12.1.min.js"></script>
-<script type="text/javascript" src="<%=src%>/assets/soop/js/jquery.fancybox.js?v=2.1.5"></script>
-<script type="text/javascript" src="<%=src%>/assets/soop/js/fancy.js"></script>
+<script src="<%=src%>/assets/soop/js/jquery-1.12.1.min.js"></script>
+<script src="<%=src%>/assets/soop/js/jquery.fancybox.js?v=2.1.5"></script>
+<script src="<%=src%>/assets/soop/js/fancy.js"></script>
+

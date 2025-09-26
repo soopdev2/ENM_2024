@@ -68,6 +68,8 @@ import static rc.so.util.Utility.getStartPath;
 import static rc.so.util.Utility.parseDouble;
 import static rc.so.util.Utility.patternComplete;
 import static rc.so.util.Utility.redirect;
+import static rc.so.util.Utility.sanitizeFile;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -1150,7 +1152,7 @@ public class OperazioniSA extends HttpServlet {
 
         if (downloadFile != null && downloadFile.exists()) {
             OutputStream outStream;
-            try (FileInputStream inStream = new FileInputStream(downloadFile)) {
+            try (FileInputStream inStream = new FileInputStream(sanitizeFile(downloadFile))) {
                 String mimeType = probeContentType(downloadFile.toPath());
                 if (mimeType == null) {
                     mimeType = "application/octet-stream";

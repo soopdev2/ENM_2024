@@ -67,7 +67,7 @@
         <link href="<%=src%>/assets/demo/default/skins/header/menu/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/brand/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="Bootstrap2024/assets/css/global.css"/>
+        <link rel="stylesheet" href="../../Bootstrap2024/assets/css/bootstrap.min.css"/>
         <link href="https://fonts.cdnfonts.com/css/titillium-web" rel="stylesheet">
         <link href="<%=src%>/resource/animate.css" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
@@ -79,53 +79,70 @@
         <script type="text/javascript" src="<%=src%>/assets/soop/js/jquery.fancybox.min.js"></script>
         <script type="text/javascript" src="<%=src%>/assets/soop/js/fancy.js"></script>
     </head>
-    <body class="kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed">
-        <div class="kt-grid kt-grid--hor kt-grid--root">
-            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                        <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-                            <div class="kt-portlet kt-portlet--mobile">
-                                <form method="POST" action="<%=request.getContextPath()%>/OperazioniMicro">
-                                    <input type="hidden" name="type" value="saveanpal" />
-                                    <input type="hidden" name="idallievo" value="<%=a.getId()%>" />
 
-                                    <div class="kt-portlet__head">
-                                        <div class="kt-portlet__head-label">
-                                            <h3 class="kt-portlet__head-title">
-                                                Data Inserimento ANPAL:
-                                            </h3>
+
+    <body class="d-flex flex-column min-vh-100">
+
+        <main class="container-fluid my-4">
+
+            <div class="container-fluid kt-grid kt-grid--hor kt-grid--root">
+                <div class="row kt-grid__item kt-grid__item--fluid">
+                    <div class="col-12 kt-grid__item kt-grid kt-grid--hor">
+
+                        <!-- begin:: Content -->
+                        <div class="row kt-grid__item kt-grid__item--fluid" id="kt_content">
+                            <div class="col-12">
+                                <div class="card kt-portlet kt-portlet--mobile">
+
+                                    <form method="POST" action="<%=request.getContextPath()%>/OperazioniMicro">
+                                        <input type="hidden" name="type" value="saveanpal" />
+                                        <input type="hidden" name="idallievo" value="<%=a.getId()%>" />
+
+                                        <!-- Header -->
+                                        <div class="card-header">
+                                            <h3 class="card-title">Data Inserimento ANPAL:</h3>
                                         </div>
-                                    </div>
-                                    <div class="kt-portlet__body">
-                                        <div class="form-group col-xl-3 col-lg-6">
-                                            <label>Data ANPAL </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                            <input type="text" class="form-control obbligatory date-picker_r" 
-                                                   name="datanpal" value="<%=a.getData_anpal()%>" 
-                                                   id="datanpal"/>
-                                        </div>
-                                    </div>
-                                    <div class="kt-portlet__foot" style="padding-left: 10px;">
-                                        <div class="kt-form__actions">
-                                            <div class="form-group col-xl-3 col-lg-6">
-                                                <button type="submit" class="btn btn-primary" 
-                                                        style="font-family: Poppins"><i class="flaticon2-splus-1"></i> SALVA </button>
+
+                                        <!-- Body -->
+                                        <div class="card-body">
+                                            <div class="mb-3 col-xl-3 col-lg-6">
+                                                <label for="datanpal" class="form-label">Data ANPAL 
+                                                    <span class="text-danger fw-bold">*</span>
+                                                </label>
+                                                <input type="text" class="form-control obbligatory date-picker_r"
+                                                       name="datanpal" value="<%=a.getData_anpal()%>"
+                                                       id="datanpal"/>
                                             </div>
                                         </div>
-                                    </div>
-                                </form>
+
+                                        <!-- Footer -->
+                                        <div class="card-footer">
+                                            <div class="col-xl-3 col-lg-6">
+                                                <button type="submit" class="btn btn-primary" style="font-family: Poppins">
+                                                    <i class="flaticon2-splus-1"></i> SALVA
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>	
+                        <!-- end:: Content -->
+
+                    </div>
                 </div>
             </div>
-        </div>
+
+
+        </main>
+
         <div id="kt_scrolltop"style="background-color: #0059b3" class="kt-scrolltop">
             <i class="fa fa-arrow-up"></i>
         </div>
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/popper.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>

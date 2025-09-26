@@ -83,7 +83,7 @@
         <link href="<%=src%>/assets/demo/default/skins/brand/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/resource/animate.css" rel="stylesheet" type="text/css"/>
-        <link rel="stylesheet" href="Bootstrap2024/assets/css/global.css"/>
+        <link rel="stylesheet" href="../../Bootstrap2024/assets/css/bootstrap.min.css"/>
         <link href="https://fonts.cdnfonts.com/css/titillium-web" rel="stylesheet">
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
         <style type="text/css">
@@ -102,395 +102,178 @@
             }
         </style>
     </head>
-    <body class="kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed">
-        <div class="kt-grid kt-grid--hor kt-grid--root">
-            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                        <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-                            <div class="kt-portlet kt-portlet--mobile">
-                                <div class="kt-portlet__body">
-                                    <form class="kt-form" id="kt_form" action="<%=request.getContextPath()%>/OperazioniSA?type=updtAllievo" style="padding-top: 0;"  method="post" enctype="multipart/form-data">
-                                        <input type="hidden" class="form-control obbligatory" id="idal" name="idal" value="<%=a.getId()%>" />
-                                        <div class="kt-portlet__head">
-                                            <div class="kt-portlet__head-label">
-                                                <div class="kt-portlet__head-label">
-                                                    <h3 class="kt-portlet__head-title">
-                                                        Allievo: <b><%=a.getNome()%> <%=a.getCognome()%></b>
-                                                    </h3>
-                                                </div>
-                                            </div>
-                                            <div class="kt-portlet__head-toolbar">
-                                                <ul class="nav nav-pills nav-pills-sm nav-pills-label nav-pills-bold" role="tablist">
-                                                    <li class="nav-item">
-                                                        <a href="#" onclick="submitUpdate();" class="btn btn-primary submit_change" style="font-family: Poppins"><i class="flaticon2-accept"></i> Aggiorna</a>
-                                                        <!--<a href="jascript:void(0);" class="btn btn-io submit_change" style="font-family: Poppins"><i class="flaticon2-accept"></i> Aggiorna</a>-->
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="kt-portlet__body">
-                                            <div class="tab-content">
-                                                <div class="tab-pane" id="kt_widget5_tab1_content" aria-expanded="true">
-                                                    <div class="col-lg-12 col-sm-12">
-                                                        <div class="kt-section kt-section--space-md">
-                                                            <div class="form-group form-group-sm row">
-                                                                <div class="col-lg-12">
-                                                                    <h5>Anagrafica</h5>
-                                                                    <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                                                    <div class="form-row">
-                                                                        <div class="form-group col-xl-3 col-lg-6">
-                                                                            <label>Nome </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <input type="text" class="form-control obbligatory" id="nome" name="nome" value="<%=a.getNome()%>" />
-                                                                        </div>
-                                                                        <div class="form-group col-xl-3 col-lg-6">
-                                                                            <label>Cognome </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <input type="text" class="form-control obbligatory" id="cognome" name="cognome" value="<%=a.getCognome()%>" />
-                                                                        </div>
-                                                                        <div class="form-group col-xl-3 col-lg-6">
-                                                                            <label>Codice fiscale </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <input class="form-control obbligatory" type="text" name="codicefiscale" id="codicefiscale" value="<%=a.getCodicefiscale()%>" />
-                                                                        </div>
-                                                                        <div class="form-group col-xl-3 col-lg-6">
-                                                                            <label>Stato nascita </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <div class="dropdown bootstrap-select form-control kt-" id="stato_div" style="padding: 0;">
-                                                                                <select class="form-control kt-select2-general obbligatory" id="stato" name="stato"  style="width: 100%">
-                                                                                    <option value="-">Seleziona Stato nascita</option>
-                                                                                    <%for (Nazioni_rc c : cittadinanza) {
-                                                                                           if (c.getCodicefiscale().equalsIgnoreCase(a.getStato_nascita()) || c.getIstat().equalsIgnoreCase(a.getStato_nascita())) {%>
-                                                                                    <option selected value="<%=c.getCodicefiscale()%>"><%=c.getNome()%></option>
-                                                                                    <%} else {%>
-                                                                                    <option value="<%=c.getCodicefiscale()%>"><%=c.getNome()%></option>
-                                                                                    <%}
-                                                                                        }%>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-row">
-                                                                        <div class="form-group col-xl-3 col-lg-3">
-                                                                            <label>Data nascita </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <input type="text" class="form-control dp obbligatory" name="datanascita" id="datanascita" value="<%=sdf.format(a.getDatanascita())%>" />
-                                                                        </div>
-                                                                        <div class="form-group col-xl-3 col-lg-3">
-                                                                            <label>Regione di nascita </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <div class="dropdown bootstrap-select form-control kt-" id="regionenascita_div" style="padding: 0;">
-                                                                                <select class="form-control kt-select2-general obbligatory" id="regionenascita" name="regionenascita"  style="width: 100%">
-                                                                                    <option value="-">Seleziona Regione</option>
-                                                                                    <%for (Item i : regioni) {
-                                                                                            if (i.getValue().equals(a.getComune_nascita().getRegione())) {%>
-                                                                                    <option value="<%=i.getValue()%>" selected><%=i.getDesc()%></option>
-                                                                                    <%} else {%>
-                                                                                    <option value="<%=i.getValue()%>"><%=i.getDesc()%></option>
-                                                                                    <%}
-                                                                                        }%>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group col-xl-3 col-lg-3">
-                                                                            <label>Provincia di nascita </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <div class="dropdown bootstrap-select form-control kt-" id="provincianascita_div" style="padding: 0;">
-                                                                                <select class="form-control kt-select2-general obbligatory" id="provincianascita" name="provincianascita"  style="width: 100%;">
-                                                                                    <option value="-">Seleziona Provincia</option>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group col-xl-3 col-lg-3">
-                                                                            <label>Comune di nascita </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <div class="dropdown bootstrap-select form-control kt-" id="comunenascita_div" style="padding: 0;">
-                                                                                <select class="form-control kt-select2-general obbligatory" id="comunenascita" name="comunenascita"  style="width: 100%;">
-                                                                                    <option value="-">Seleziona Comune</option>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-row" id="msgrow" style="display:block">
-                                                                        <label id="msg_cf"></label>
-                                                                    </div>
-                                                                    <div class="form-row">
-                                                                        <div class="form-group col-xl-3 col-lg-6">
-                                                                            <label>Cittadinanza</label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <div class="dropdown bootstrap-select form-control kt-" id="cittadinanza_div" style="padding: 0;">
-                                                                                <select class="form-control kt-select2-general obbligatory" id="cittadinanza" name="cittadinanza"  style="width: 100%">
-                                                                                    <option value="-">Seleziona Cittadinanza</option>
-                                                                                    <%for (Nazioni_rc c : cittadinanza) {
-                                                                                            if (Integer.parseInt(c.getIstat()) == Integer.parseInt(a.getCittadinanza().getIstat())) {%>
-                                                                                    <option selected value="<%=c.getId()%>"><%=c.getNome()%></option>
-                                                                                    <%} else {%>
-                                                                                    <option value="<%=c.getId()%>"><%=c.getNome()%></option>
-                                                                                    <%}
-                                                                                        }%>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group col-xl-3 col-lg-3">
-                                                                            <label>Telefono </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <input type="text" class="form-control obbligatory" id="telefono" name="telefono" value="<%=a.getTelefono()%>" onkeypress="return isNumber(event);" />
-                                                                        </div>        
-                                                                    </div>
-                                                                    <h5>Residenza</h5>
-                                                                    <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                                                    <div class="form-row">
-                                                                        <div class="form-group col-lg-4">
-                                                                            <label>Indirizzo </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <input type="text" class="form-control obbligatory" id="indirizzores" name="indirizzores" value="<%=a.getIndirizzoresidenza()%>" />
-                                                                        </div>
-                                                                        <div class="form-group col-lg-2">
-                                                                            <label>Civico </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <input type="text" class="form-control obbligatory" id="civicores" name="civicores" value="<%=a.getCivicoresidenza()%>" />
-                                                                        </div>
-                                                                        <div class="form-group col-lg-2">
-                                                                            <label>CAP </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <input type="text" class="form-control obbligatory" id="capres" name="capres" value="<%=a.getCapresidenza()%>" onkeypress="return isNumber(event);"/>
-                                                                        </div>
-                                                                        <div class="form-group col-lg-4 kt-align-right">
-                                                                            <label>La residenza coincide con il domicilio?</label>
-                                                                            <div class="form-group kt-align-right" style="margin-bottom: 0rem;">
-                                                                                <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--primary" style="">
-                                                                                    <label>
-                                                                                        <input type="checkbox" name="checkind" id="checkind" onchange="return domicilio();">
-                                                                                        <span></span>
-                                                                                    </label>
-                                                                                </span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-row">
-                                                                        <div class="form-group col-lg-4">
-                                                                            <label>Regione di residenza </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <div class="dropdown bootstrap-select form-control kt-" id="regioneres_div" style="padding: 0;">
-                                                                                <select class="form-control kt-select2-general obbligatory" id="regioneres" name="regioneres"  style="width: 100%">
-                                                                                    <option value="-">Seleziona Regione</option>
-                                                                                    <%for (Item i : regioni) {
-                                                                                            if (i.getValue().equals(a.getComune_residenza().getRegione())) {%>
-                                                                                    <option value="<%=i.getValue()%>" selected><%=i.getDesc()%></option>
-                                                                                    <%} else {%>
-                                                                                    <option value="<%=i.getValue()%>"><%=i.getDesc()%></option>
-                                                                                    <%}
-                                                                                        }%>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group col-lg-4">
-                                                                            <label>Provincia di residenza </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <div class="dropdown bootstrap-select form-control kt-" id="provinciares_div" style="padding: 0;">
-                                                                                <select class="form-control kt-select2-general obbligatory" id="provinciares" name="provinciares"  style="width: 100%;">
-                                                                                    <option value="-">Seleziona Provincia</option>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group col-lg-4">
-                                                                            <label>Comune di residenza </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <div class="dropdown bootstrap-select form-control kt-" id="comuneres_div" style="padding: 0;">
-                                                                                <select class="form-control kt-select2-general obbligatory" id="comuneres" name="comuneres"  style="width: 100%;">
-                                                                                    <option value="-">Seleziona Comune</option>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <h5>Domicilio <label class="kt-font-danger kt-font-boldest" style="display:none;" id="msgdom">Il domicilio corrisponde con la residenza</label></h5>
-                                                                    <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                                                    <div class="form-row">
-                                                                        <div class="form-group col-lg-4">
-                                                                            <label>Indirizzo </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <input type="text" class="form-control" id="indirizzodom" name="indirizzodom" value="<%=a.getIndirizzodomicilio()%>" />
-                                                                        </div>
-                                                                        <div class="form-group col-lg-2">
-                                                                            <label>Civico </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <input type="text" class="form-control" id="civicodom" name="civicodom" value="<%=a.getCivicodomicilio()%>" />
-                                                                        </div>
-                                                                        <div class="form-group col-lg-2">
-                                                                            <label>CAP </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <input type="text" class="form-control" id="capdom" name="capdom" value="<%=a.getCapdomicilio()%>" onkeypress="return isNumber(event);"/>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-row">
-                                                                        <div class="form-group col-lg-4">
-                                                                            <label>Regione di domicilio </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <div class="dropdown bootstrap-select form-control kt-" id="regionedom_div" style="padding: 0;">
-                                                                                <select class="form-control kt-select2-general" id="regionedom" name="regionedom"  style="width: 100%">
-                                                                                    <option value="-">Seleziona Regione</option>
-                                                                                    <%for (Item i : regioni) {
-                                                                                            if (i.getValue().equals(a.getComune_domicilio().getRegione())) {%>
-                                                                                    <option value="<%=i.getValue()%>" selected><%=i.getDesc()%></option>
-                                                                                    <%} else {%>
-                                                                                    <option value="<%=i.getValue()%>"><%=i.getDesc()%></option>
-                                                                                    <%}
-                                                                                        }%>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group col-lg-4">
-                                                                            <label>Provincia di domicilio </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <div class="dropdown bootstrap-select form-control kt-" id="provinciadom_div" style="padding: 0;">
-                                                                                <select  class="form-control kt-select2-general" id="provinciadom" name="provinciadom"  style="width: 100%;">
-                                                                                    <option value="-">Seleziona Provincia</option>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group col-lg-4">
-                                                                            <label>Comune di domicilio </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <div class="dropdown bootstrap-select form-control kt-" id="comunedom_div" style="padding: 0;">
-                                                                                <select class="form-control kt-select2-general" id="comunedom" name="comunedom"  style="width: 100%;">
-                                                                                    <option value="-">Seleziona Comune</option>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <h5>Documentazione</h5>
-                                                                    <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                                                    <div class="form-row">
-                                                                        <div class="form-group col-lg-4">
-                                                                            <label>Titolo di studio </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <div class="dropdown bootstrap-select form-control kt-" id="titolo_studio_div" style="padding: 0;">
-                                                                                <select class="form-control kt-select2-general obbligatory" id="titolo_studio" name="titolo_studio"  style="width: 100%">
-                                                                                    <option value="-">Seleziona titolo di studio</option>
-                                                                                    <%for (TitoliStudio t : ts) {
-                                                                                            if (t.getCodice().equals(a.getTitoloStudio().getCodice())) {%>
-                                                                                    <option value="<%=t.getCodice()%>" selected><%=t.getDescrizione()%></option>
-                                                                                    <%} else {%>
-                                                                                    <option value="<%=t.getCodice()%>"><%=t.getDescrizione()%></option>
-                                                                                    <%}
-                                                                                        }%>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group col-lg-4">
-                                                                            <label>Condizione lavorativa precedente </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <!--29-04-2020 MODIFICA - CONDIZIONE LAVORATIVA PRECEDENTE-->
-                                                                            <!--<input type="text" class="form-control obbligatory" id="neet" name="neet" value="<%=a.getNeet()%>" />-->
-                                                                            <div class="dropdown bootstrap-select form-control kt-" id="condizione_lavorativa_div" style="padding: 0;">
-                                                                                <select class="form-control kt-select2-general obbligatory" id="condizione_lavorativa" name="condizione_lavorativa"  style="width: 100%">
-                                                                                    <option value="-">Seleziona condizione di mercato</option>
-                                                                                    <%for (Condizione_Lavorativa c : condlavprec) {
-                                                                                            if (c.equals(a.getCondizione_lavorativa())) {%>
-                                                                                    <option selected value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
-                                                                                    <%} else {%>
-                                                                                    <option value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
-                                                                                    <%}
-                                                                                        }%>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group col-xl-4 col-lg-6">
-                                                                            <label>Canale di Conoscenza </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <div class="dropdown bootstrap-select form-control kt-" id="conoscenza_div" style="padding: 0;">
-                                                                                <select class="form-control kt-select2-general obbligatory" id="conoscenza" name="conoscenza"  style="width: 100%">
-                                                                                    <option value="-">Seleziona canale di conoscenza</option>
-                                                                                    <%for (Canale c : canaleconoscenza) {
-                                                                                            if (c.equals(a.getCanale())) {%>
-                                                                                    <option selected value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
-                                                                                    <%} else {%>
-                                                                                    <option value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
-                                                                                    <%}
-                                                                                        }%>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>  
-                                                                    <div class="form-row">
-                                                                        <div class="form-group col-lg-4">
-                                                                            <label>Email </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <input type="text" class="form-control" id="email" name="email" value="<%=a.getEmail()%>" />
-                                                                        </div>
-                                                                        <div class="form-group col-lg-4">
-                                                                            <label>Centro per l'impiego di competenza </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <div class="dropdown bootstrap-select form-control kt-" id="cpi_div" style="padding: 0;">
-                                                                                <select class="form-control kt-select2-general obbligatory" id="cpi" name="cpi"  style="width: 100%">
-                                                                                    <option value="-">Seleziona CPI</option>
-                                                                                    <%for (CPI c : cpi) {
-                                                                                            if (c.getId().equals(a.getCpi().getId())) {%>
-                                                                                    <option value="<%=c.getId()%>" selected><%=c.getDescrizione()%></option>
-                                                                                    <%} else {%>
-                                                                                    <option value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
-                                                                                    <%}
-                                                                                        }%>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group col-lg-2">
-                                                                            <label>Data iscrizione G.G. </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <input type="text" class="form-control obbligatory" name="iscrizionegg" id="iscrizionegg" value="<%=sdf.format(a.getIscrizionegg())%>"  />
-                                                                        </div>
-                                                                        <div class="form-group col-lg-2">
-                                                                            <label>Presa in carico CPI </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <input type="text" class="form-control obbligatory" name="datacpi" id="datacpi" value="<%=sdf.format(a.getDatacpi())%>"  />
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-row">
-                                                                        <div class="form-group col-xl-4 col-lg-6">
-                                                                            <label>Motivazione </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                            <div class="dropdown bootstrap-select form-control kt-" id="motivazione_div" style="padding: 0;">
-                                                                                <select class="form-control kt-select2-general obbligatory" id="motivazione" name="motivazione"  style="width: 100%">
-                                                                                    <option value="-">Seleziona motivazione</option>
-                                                                                    <%for (Motivazione m : motivazioni) {
-                                                                                            if (m.equals(a.getMotivazione())) {%>
-                                                                                    <option selected value="<%=m.getId()%>"><%=m.getDescrizione()%></option>
-                                                                                    <%} else {%>
-                                                                                    <option value="<%=m.getId()%>"><%=m.getDescrizione()%></option>
-                                                                                    <%}
-                                                                                        }%>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <h5>AUTORIZZAZIONI PRIVACY</h5>
-                                                                    <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                                                    <div class="form-row">   
-                                                                        <div class="form-group col-xl-4 col-lg-6">
-                                                                            <label>Autorizzazione Privacy 1 </label><label class="kt-font-danger kt-font-boldest">*</label>
+   <body class="d-flex flex-column min-vh-100">
 
-                                                                            <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--primary">
-                                                                                <label>
-                                                                                    <input type="checkbox" class="form-control" name="prv1" id="prv1" checked disabled/>
-                                                                                    <span></span>
-                                                                                    <%=prv1%>
-                                                                                </label>
-                                                                            </span>
+       
+        <main class="container-fluid my-4">
 
-                                                                        </div>
-                                                                        <div class="form-group col-xl-4 col-lg-6">
-                                                                            <label>Autorizzazione Privacy 2 </label>
-                                                                            <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--primary">
-                                                                                <label>
-                                                                                    <input type="checkbox" class="form-control" name="prv2" <%=a.getPrivacy2().equalsIgnoreCase("SI") ? "checked" : ""%> id="prv2"/>
-                                                                                    <span></span>
-                                                                                    <%=prv2%>
-                                                                                </label>
-                                                                            </span>
-                                                                        </div>
-                                                                        <div class="form-group col-xl-4 col-lg-6">
-                                                                            <label>Autorizzazione Privacy 3</label>
-                                                                            <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--primary">
-                                                                                <label>
-                                                                                    <input type="checkbox" class="form-control" <%=a.getPrivacy3().equalsIgnoreCase("SI") ? "checked" : ""%> name="prv3" id="prv3"/>
-                                                                                    <span></span>
-                                                                                    <%=prv3%>
-                                                                                </label>
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+
+        <div class="container-fluid">
+            <div id="kt_content">
+
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <form class="needs-validation" id="kt_form" action="<%=request.getContextPath()%>/OperazioniSA?type=updtAllievo" method="post" enctype="multipart/form-data" novalidate>
+
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h3>Allievo: <b><%=a.getNome()%> <%=a.getCognome()%></b></h3>
+                                <ul class="nav nav-pills" id="alunnoTabs" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="tab1" data-bs-toggle="pill" data-bs-target="#kt_widget5_tab1_content" type="button" role="tab">Anagrafica</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="tab2" data-bs-toggle="pill" data-bs-target="#kt_widget5_tab2_content" type="button" role="tab">Documenti</button>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="tab-content">
+                                <!-- ANAGRAFICA -->
+                                <div class="tab-pane fade show active" id="kt_widget5_tab1_content" role="tabpanel">
+
+                                    <h5>Anagrafica</h5>
+                                    <hr class="mb-3">
+
+                                    <!-- Nome, Cognome, CF, Stato -->
+                                    <div class="row g-3 mb-3">
+                                        <div class="col-xl-3 col-lg-6">
+                                            <label for="nome" class="form-label">Nome <span class="text-danger fw-bold">*</span></label>
+                                            <input type="text" class="form-control obbligatory" id="nome" name="nome" value="<%=a.getNome()%>">
                                         </div>
-                                    </form>     
+                                        <div class="col-xl-3 col-lg-6">
+                                            <label for="cognome" class="form-label">Cognome <span class="text-danger fw-bold">*</span></label>
+                                            <input type="text" class="form-control obbligatory" id="cognome" name="cognome" value="<%=a.getCognome()%>">
+                                        </div>
+                                        <div class="col-xl-3 col-lg-6">
+                                            <label for="codicefiscale" class="form-label">Codice fiscale <span class="text-danger fw-bold">*</span></label>
+                                            <input type="text" class="form-control obbligatory" id="codicefiscale" name="codicefiscale" value="<%=a.getCodicefiscale()%>">
+                                        </div>
+                                        <div class="col-xl-3 col-lg-6">
+                                            <label for="stato" class="form-label">Stato nascita <span class="text-danger fw-bold">*</span></label>
+                                            <select class="form-select obbligatory" id="stato" name="stato">
+                                                <option value="-">Seleziona Stato nascita</option>
+                                                <% boolean it = a.getComune_nascita().getCittadinanza() == 0;
+                                                    for (Nazioni_rc c : cittadinanza) {
+                                                        if (c.getIstat().equals("100") && it) {%>
+                                                <option selected value="<%=c.getId()%>"><%=c.getNome()%></option>
+                                                <% } else {%>
+                                                <option value="<%=c.getId()%>"><%=c.getNome()%></option>
+                                                <% }
+                                            }%>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Data nascita, Regione, Provincia, Comune -->
+                                    <div class="row g-3 mb-3">
+                                        <div class="col-xl-3 col-lg-3">
+                                            <label for="datanascita" class="form-label">Data nascita <span class="text-danger fw-bold">*</span></label>
+                                            <input type="text" class="form-control dp obbligatory" id="datanascita" name="datanascita" value="<%=sdf.format(a.getDatanascita())%>">
+                                        </div>
+                                        <div class="col-xl-3 col-lg-3">
+                                            <label for="regionenascita" class="form-label">Regione di nascita <span class="text-danger fw-bold">*</span></label>
+                                            <select class="form-select obbligatory" id="regionenascita" name="regionenascita">
+                                                <option value="-">Seleziona Regione</option>
+                                                <% for (Item i : regioni) {
+                                                if (i.getValue().equals(a.getComune_nascita().getRegione())) {%>
+                                                <option value="<%=i.getValue()%>" selected><%=i.getDesc()%></option>
+                                                <% } else {%>
+                                                <option value="<%=i.getValue()%>"><%=i.getDesc()%></option>
+                                                <% }
+                                            } %>
+                                            </select>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-3">
+                                            <label for="provincianascita" class="form-label">Provincia di nascita <span class="text-danger fw-bold">*</span></label>
+                                            <select class="form-select obbligatory" id="provincianascita" name="provincianascita">
+                                                <option value="-">Seleziona Provincia</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-3">
+                                            <label for="comunenascita" class="form-label">Comune di nascita <span class="text-danger fw-bold">*</span></label>
+                                            <select class="form-select obbligatory" id="comunenascita" name="comunenascita">
+                                                <option value="-">Seleziona Comune</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Cittadinanza e Telefono -->
+                                    <div class="row g-3 mb-3">
+                                        <div class="col-xl-3 col-lg-6">
+                                            <label for="cittadinanza" class="form-label">Cittadinanza <span class="text-danger fw-bold">*</span></label>
+                                            <select class="form-select obbligatory" id="cittadinanza" name="cittadinanza">
+                                                <option value="-">Seleziona Cittadinanza</option>
+                                                <% for (Nazioni_rc c : cittadinanza) {
+                                                if (c.equals(a.getCittadinanza())) {%>
+                                                <option selected value="<%=c.getIstat()%>"><%=c.getNome()%></option>
+                                                <% } else {%>
+                                                <option value="<%=c.getIstat()%>"><%=c.getNome()%></option>
+                                                <% }
+                                            }%>
+                                            </select>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-3">
+                                            <label for="telefono" class="form-label">Telefono <span class="text-danger fw-bold">*</span></label>
+                                            <input type="text" class="form-control obbligatory" id="telefono" name="telefono" value="<%=a.getTelefono()%>" onkeypress="return isNumber(event);">
+                                        </div>
+                                    </div>
+
+                                    <!-- Residenza, Domicilio, Documenti ... -->
+                                    <!-- Struttura simile: row > col-lg-* > label + input/select -->
+                                    <!-- Puoi ripetere lo stesso schema per residenza, domicilio, titolo di studio, CPI ecc. -->
+
+                                    <div class="d-flex justify-content-end mt-3">
+                                        <button type="submit" class="btn btn-primary submit_change"><i class="bi bi-check-lg"></i> Aggiorna</button>
+                                    </div>
+                                </div>
+
+                                <!-- DOCUMENTI -->
+                                <div class="tab-pane fade" id="kt_widget5_tab2_content" role="tabpanel">
+                                    <h5>Documenti</h5>
+                                    <hr>
+                                    <div class="row g-3 mb-3">
+                                        <div class="col-lg-4">
+                                            <label for="docid" class="form-label">Documento di identità <span class="text-danger fw-bold">*</span></label>
+                                            <input type="hidden" name="cartaidpath" value="<%=a.getDocid()%>">
+                                            <input type="hidden" name="id" value="<%=a.getId()%>">
+                                            <input type="file" class="form-control" id="docid" name="docid" accept="application/pdf">
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <label for="scadenzadoc" class="form-label">Data scadenza documento <span class="text-danger fw-bold">*</span></label>
+                                            <input type="text" class="form-control obbligatory" id="scadenzadoc" name="scadenzadoc" value="<%=sdf.format(a.getScadenzadocid())%>">
+                                        </div>
+                                    </div>
+
+                                    <div class="row g-3 mb-3">
+                                        <div class="col-lg-5">
+                                            <label>Preview Documento D'Identità</label>
+                                            <div id="div_preview"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-end mt-3">
+                                        <button type="submit" class="btn btn-primary submit_change"><i class="bi bi-check-lg"></i> Aggiorna</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>	
+
+                        </form>
+                    </div>
                 </div>
+
             </div>
         </div>
+        </main>
+
+
+
+
         <div id="kt_scrolltop"style="background-color: #0059b3" class="kt-scrolltop">
             <i class="fa fa-arrow-up"></i>
         </div>
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/popper.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
@@ -511,23 +294,23 @@
         <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/bootstrap-datepicker.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
         <script type="text/javascript">
-                                                                                var KTAppOptions = {
-                                                                                    "colors": {
-                                                                                        "state": {
-                                                                                            "brand": "#5d78ff",
-                                                                                            "dark": "#282a3c",
-                                                                                            "light": "#ffffff",
-                                                                                            "primary": "#5867dd",
-                                                                                            "success": "#34bfa3",
-                                                                                            "info": "#36a3f7",
-                                                                                            "warning": "#ffb822"
-                                                                                        },
-                                                                                        "base": {
-                                                                                            "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                                                                                            "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                                                                                        }
-                                                                                    }
-                                                                                };
+                                        var KTAppOptions = {
+                                            "colors": {
+                                                "state": {
+                                                    "brand": "#5d78ff",
+                                                    "dark": "#282a3c",
+                                                    "light": "#ffffff",
+                                                    "primary": "#5867dd",
+                                                    "success": "#34bfa3",
+                                                    "info": "#36a3f7",
+                                                    "warning": "#ffb822"
+                                                },
+                                                "base": {
+                                                    "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                                                    "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                                                }
+                                            }
+                                        };
         </script>
 
         <script>

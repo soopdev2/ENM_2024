@@ -35,7 +35,7 @@ var KTDatatablesDataSourceAjaxServer = function () {
                 {data: 'nome', className: 'text-center'},
                 {data: 'cognome', className: 'text-center'},
                 {data: 'email', className: 'text-center'},
-                {data: 'cpi.descrizione', className: 'text-center'},
+                {data: 'cpi.descrizione', className: 'text-center'}
             ],
             drawCallback: function () {
                 $('[data-toggle="kt-tooltip"]').tooltip();
@@ -49,7 +49,7 @@ var KTDatatablesDataSourceAjaxServer = function () {
     return {
         init: function () {
             initTable1();
-        },
+        }
     };
 }();
 

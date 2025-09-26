@@ -125,374 +125,167 @@
                 cursor: default;
                 color: #756c6e !important;
             }
+            .it-footer {
+                margin-top: auto; /* lo spinge in fondo */
+            }
         </style>
     </head>
 
-    <body>
+    <body class="d-flex flex-column min-vh-100">
         <%@ include file="menu/head1.jsp"%>
         <%@ include file="../../Bootstrap2024/index/index_SoggettoAttuatore/Header_soggettoAttuatore.jsp"%>
-        <div class="kt-grid kt-grid--hor kt-grid--root">
-            <%@ include file="../../Bootstrap2024/index/menu/menuAtt.jsp"%>
-            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
-                    <%@ include file="menu/head.jsp"%>
-                    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                        <div class="kt-subheader   kt-grid__item" id="kt_subheader">
-                            <div class="kt-subheader   kt-grid__item" id="kt_subheader">
-                                <div class="kt-subheader__main">
-                                    <h3 class="kt-subheader__title">Docenti</h3>
-                                    <span class="kt-subheader__separator kt-subheader__separator--v"></span>
-                                    <a class="kt-subheader__breadcrumbs-link">Aggiungi</a>
+        <%@ include file="../../Bootstrap2024/index/menu/menuAtt.jsp"%>
+        <%@ include file="menu/head.jsp"%>
+
+
+        <main class="container-fluid my-4">
+
+
+            <!-- Intestazione sezione -->
+            <div class="my-3">
+                <h1 class="h3">Docenti</h1>
+                <span class="text-muted">Aggiungi</span>
+            </div>
+
+            <div class="it-page-section" id="kt_content">
+                <div class="card shadow-sm">
+                    <form id="kt_form"
+                          action="<%=request.getContextPath()%>/OperazioniSA?type=addDocente"
+                          method="post"
+                          enctype="multipart/form-data">
+
+                        <input type="hidden" name="save" id="save" value="0" />
+
+                        <% if (Utility.demoversion) {%>
+                        <div class="card-header">
+                            <a href="<%=request.getContextPath()%>/OperazioniSA?type=generaterandomDocenti"
+                               class="btn btn-dark fw-bold">
+                                <i class="fa fa-user"></i> INSERISCI DOCENTE RANDOM
+                            </a>
+                        </div>
+                        <% } %>
+
+                        <div class="card-body">
+
+                            <!-- Sezione Anagrafica -->
+                            <h5 class="mb-2">Anagrafica</h5>
+                            <p class="small">Tutti i campi sono obbligatori *</p>
+                            <hr>
+
+                            <div class="row g-3 mb-3">
+                                <div class="col-lg-3">
+                                    <label for="nome" class="form-label">Nome *</label>
+                                    <input type="text" class="form-control obbligatory" name="nome" id="nome">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="cognome" class="form-label">Cognome *</label>
+                                    <input type="text" class="form-control obbligatory" name="cognome" id="cognome">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="cf" class="form-label">Codice Fiscale *</label>
+                                    <input type="text" class="form-control obbligatory" name="cf" id="cf">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="com_nas" class="form-label">Comune di nascita *</label>
+                                    <select class="form-select obbligatory" id="com_nas" name="com_nas">
+                                        <option value="-">Seleziona Comune</option>
+                                        <% for (Item i : comuni) {%>
+                                        <option value="<%=i.getValue()%>"><%=i.getDesc()%></option>
+                                        <% } %>
+                                    </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="kt-portlet" id="kt_portlet" data-ktportlet="true">
-                                        <form id="kt_form" action="<%=request.getContextPath()%>/OperazioniSA?type=addDocente" 
-                                              class="kt-form kt-form--label-right" method="post" enctype="multipart/form-data">
-                                            <input type="hidden" name="save" id="save" value="0" />
-                                            <%if (Utility.demoversion) {%>
-                                            <div class="kt-portlet__head">
-                                                <div class="kt-portlet__head-label">
-                                                    <h3 class="kt-portlet__head-title">
-                                                        <a href="<%=request.getContextPath()%>/OperazioniSA?type=generaterandomDocenti" 
-                                                           class="btn btn-dark kt-font-bold"><i class="fa fa-user"></i> INSERISCI DOCENTE RANDOM</a>
-                                                    </h3>
-                                                </div>
-                                            </div>
-                                            <%}%>
-                                            <div class="kt-portlet__body">
-                                                <h5>ANAGRAFICA</h5>
-                                                <p1>tutti i campi sono obbligatori* </p1>
-                                                <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                                <div class="kt-section kt-section--first">
-                                                    <div class="kt-section__body">
-                                                        <div class="form-group row ">
-                                                            <div class="col-lg-3">
-                                                                <label  for="nome">Nome </label><label class="kt-font-danger kt-font-boldest"></label>
-                                                                <input class="form-control obbligatory" name="nome" id="nome">
-                                                            </div>
-                                                            <div class="col-lg-3">
-                                                                <label for="cognome">Cognome </label><label class="kt-font-danger kt-font-boldest"></label>
-                                                                <input class="form-control obbligatory" name="cognome" id="cognome">
-                                                            </div>
-                                                            <div class="col-lg-3">
-                                                                <label for="cf">Codice Fiscale </label><label class="kt-font-danger kt-font-boldest"></label>
-                                                                <input class="form-control obbligatory" name="cf" id="cf">
-                                                            </div>
-                                                            <div class="col-lg-3">
-                                                                <label for="com_nas"> </label>
-                                                                <label class="kt-font-danger kt-font-boldest"></label>
-                                                                <div class="dropdown bootstrap-select form-control kt-" 
-                                                                     id="com_nas_div" style="padding: 0;">
-                                                                    <select class="form-control kt-select2-general obbligatory" 
-                                                                            id="com_nas" name="com_nas" style="width: 100%">
-                                                                        <option value="-">Seleziona Comune</option>
-                                                                        <%for (Item i : comuni) {%>
-                                                                        <option value="<%=i.getValue()%>"><%=i.getDesc()%></option>
-                                                                        <%}%>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row ">
-                                                            <div class="col-lg-3">
-                                                                <label for="datanascita">Data Nascita </label><label class="kt-font-danger kt-font-boldest"></label>
-                                                                <input type="text" class="form-control obbligatory date-picker_r" 
-                                                                       name="data" id="datanascita" autocomplete="off" onkeydown="return false" />
-                                                            </div>
-                                                            <div class="col-lg-3">
-                                                                <label for="reg_res"></label>
-                                                                <label class="kt-font-danger kt-font-boldest"></label>
-                                                                <div class="dropdown bootstrap-select form-control kt-" 
-                                                                     id="reg_res_div" style="padding: 0;">
-                                                                    <select class="form-control kt-select2-general obbligatory" 
-                                                                            id="reg_res" name="reg_res" style="width: 100%">
-                                                                        <option value="-">Seleziona Regione</option>
-                                                                        <%for (Item i : regioni) {%>
-                                                                        <option value="<%=i.getValue()%>"><%=i.getDesc()%></option>
-                                                                        <%}%>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-3">
-                                                                <label for="email">Email </label><label class="kt-font-danger kt-font-boldest"></label>
-                                                                <input class="form-control obbligatory" name="email" id="email">
-                                                            </div>
-                                                            <div class="col-lg-3">
-                                                                <label for="pecmail">PEC </label><label class="kt-font-danger kt-font-boldest"></label>
-                                                                <input class="form-control obbligatory" name="pecmail" id="pecmail">
-                                                            </div>
 
-                                                        </div>
-                                                        <div class="form-group row ">
-                                                            <div class="col-lg-3">
-                                                                <label for="telefono">Numero di cellulare (Senza +39) </label><label class="kt-font-danger kt-font-boldest"></label>
-                                                                <input class="form-control obbligatory" name="telefono" id="telefono" onkeypress="return isNumber(event);">
-                                                            </div>
-                                                            <div class="col-lg-3">
-                                                                <label for="tit_stu"></label>
-                                                                <label class="kt-font-danger kt-font-boldest"></label>
-                                                                <div class="dropdown bootstrap-select form-control kt-" 
-                                                                     id="tit_stu_div" style="padding: 0;">
-                                                                    <select class="form-control kt-select2-general obbligatory" 
-                                                                            id="tit_stu" name="tit_stu"  style="width: 100%">
-                                                                        <option value="-">Seleziona titolo di studio</option>
-                                                                        <%for (TitoliStudio t : ts) {%>
-                                                                        <option value="<%=t.getCodice()%>"><%=t.getDescrizione()%></option>
-                                                                        <%}%>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-3">
-                                                                <label for="area_stu"></label>
-                                                                <label class="kt-font-danger kt-font-boldest"></label>
-                                                                <div class="dropdown bootstrap-select form-control kt-" 
-                                                                     id="area_stu_div" style="padding: 0;">
-                                                                    <select class="form-control kt-select2-general obbligatory" 
-                                                                            id="area_stu" name="area_stu"  style="width: 100%">
-                                                                        <option value="-">Seleziona Area di qualificazione</option>
-                                                                        <%for (Item t : aq) {%>
-                                                                        <option value="<%=t.getCodice()%>"><%=StringEscapeUtils.escapeHtml4(t.getDescrizione())%></option>
-                                                                        <%}%>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-3">
-                                                                <label for="fascia"></label>
-                                                                <label class="kt-font-danger kt-font-boldest"></label>
-                                                                <div class="dropdown bootstrap-select form-control kt-" 
-                                                                     id="fascia_div" style="padding: 0;">
-                                                                    <select class="form-control kt-select2-general obbligatory" 
-                                                                            id="fascia" name="fascia">
-                                                                        <option value="-">Seleziona Fascia</option>
-                                                                        <%for (FasceDocenti f : fasce) {%>
-                                                                        <option value="<%=f.getId()%>"><%=f.getDescrizione()%></option>
-                                                                        <%}%>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row ">
-                                                        <div class="col-lg-3">
-                                                            <label for="inquad"></label>
-                                                            <label class="kt-font-danger kt-font-boldest"></label>
-                                                            <div class="dropdown bootstrap-select form-control kt-" 
-                                                                 id="inquad_div" style="padding: 0;">
-                                                                <select class="form-control kt-select2-general obbligatory" 
-                                                                        id="inquad" name="inquad">
-                                                                    <option value="-">Seleziona Inquadramento</option>
-                                                                    <%for (Item f : inq) {%>
-                                                                    <option value="<%=f.getCodice()%>"><%=StringEscapeUtils.escapeHtml4(f.getDescrizione())%></option>
-                                                                    <%}%>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row ">
-                                                        <div class="col-lg-12" id="msgrow" style="display:block">
-                                                            <label id="msg_cf"></label>
-                                                        </div>
-                                                    </div>
-                                                </div>  
-                                                <h5>TABELLA RIEPILOGATIVA DELLE ATTIVIT&#192; SVOLTE - Inserire le attivit&#224; a partire da quelle più rilevanti per l'attribuzione della fascia (max <%=nroAttivita_max%>) &nbsp;
-                                                    <a href="javascript:void(0);" id="add_attivita"  class="btn btn-icon btn-primary btn-circle" style="margin: 0px; height: 2rem; width: 2rem;" data-container="body" data-html="true" data-toggle="kt-tooltip" data-placement="top" title="<h6>Aggiunti attività (da un minimo di 1 ad un massimo di <%=nroAttivita_max%>)</h6>"><i class="fa fa-folder-plus" style="font-size: 1rem;"></i></a>
-                                                </h5>
-
-
-                                                <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                                <div class="kt-section kt-section--first">
-                                                    <div class="kt-section__body">
-
-                                                        <%for (int i = 1; i <= nroAttivita_max; i++) {%>
-                                                        <div id="docattivita_<%=i%>" style="display:none;">
-                                                            <input type="hidden" name="attivita_vis_<%=i%>" id="attivita_vis_<%=i%>" value="0" />
-                                                            <h5><center>ATTIVIT&#192; <%=i%> &nbsp;
-                                                                    <%if (i > 1) {%>
-                                                                    <a href="javascript:void(0);" onclick="delAttivita(<%=i%>);" id="delAttivita_<%=i%>" class="btn btn-icon btn-danger btn-circle" style="margin: 0px; height: 2rem; width: 2rem; display: none;" data-container="body" data-html="true" data-toggle="kt-tooltip" data-placement="top" title="<h6>Elimina attività</h6>"><i class="fa fa-times" style="font-size: 1rem;"></i></a>
-                                                                        <%}%>
-                                                                </center>
-                                                            </h5>
-                                                            <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                                            <div class="form-group row">
-                                                                <div class="col-lg-3">
-                                                                    <label for="tipo_att_<%=i%>"></label><label id="tipo_att_<%=i%>_obl" class='kt-font-danger kt-font-boldest'></label>
-                                                                    <div class="dropdown bootstrap-select form-control kt-" 
-                                                                         id="tipo_att_<%=i%>_div" style="padding: 0;">
-                                                                        <select class="form-control kt-select2-general" 
-                                                                                id="tipo_att_<%=i%>" name="tipo_att_<%=i%>">
-                                                                            <option value="-">Seleziona Attivit&#224;</option>
-                                                                            <%for (Item f : att) {%>
-                                                                            <option value="<%=f.getCodice()%>"><%=StringEscapeUtils.escapeHtml4(f.getDescrizione())%></option>
-                                                                            <%}%>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-3">
-                                                                    <label for="committente_<%=i%>">Committente </label><label id="committente_<%=i%>_obl" class='kt-font-danger kt-font-boldest'></label>
-                                                                    <input class="form-control" name="committente_<%=i%>" id="committente_<%=i%>">
-                                                                </div>
-                                                                <div class="col-lg-3">
-                                                                    <label for="data_inizio_<%=i%>">Data inizio periodo di riferimento </label><label id="data_inizio_<%=i%>_obl" class='kt-font-danger kt-font-boldest'></label>
-                                                                    <input type="text" class="form-control datepicker-custom" name="data_inizio_<%=i%>" id="data_inizio_<%=i%>" onkeydown="return false" >
-                                                                </div>
-                                                                <div class="col-lg-3">
-                                                                    <label for="data_fine_<%=i%>">Data fine periodo di riferimento </label><label id="data_fine_<%=i%>_obl" class='kt-font-danger kt-font-boldest'></label>
-                                                                    <input type="text" class="form-control datepicker-custom" name="data_fine_<%=i%>" id="data_fine_<%=i%>" onkeydown="return false" >
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-lg-3">
-                                                                    <label for="durata_<%=i%>">Durata</label><label id="durata_<%=i%>_obl" class='kt-font-danger kt-font-boldest'></label>
-                                                                    <input class="form-control" onkeypress="return isNumber(event);"
-                                                                           name="durata_<%=i%>" id="durata_<%=i%>">
-                                                                </div>
-                                                                <div class="col-lg-3">
-                                                                    <label for="unita_<%=i%>"> </label><label id="unita_<%=i%>_obl" class='kt-font-danger kt-font-boldest'></label>
-                                                                    <div class="dropdown bootstrap-select form-control kt-" 
-                                                                         id="unita_<%=i%>_div" style="padding: 0;">
-                                                                        <select class="form-control kt-select2-general" 
-                                                                                id="unita_<%=i%>" name="unita_<%=i%>">
-                                                                            <option value="-">Seleziona Unit&#224;</option>
-                                                                            <%for (Item f : um) {%>
-                                                                            <option value="<%=f.getCod()%>"><%=f.getDescrizione()%></option>
-                                                                            <%}%>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-3">
-                                                                    <label for="incarico_<%=i%>"></label><label id="incarico_<%=i%>_obl" class='kt-font-danger kt-font-boldest'></label> 
-                                                                    <div class="dropdown bootstrap-select form-control kt-" 
-                                                                         id="incarico_<%=i%>_div" style="padding: 0;">
-                                                                        <select class="form-control kt-select2-general" id="incarico_<%=i%>" name="incarico_<%=i%>">
-                                                                            <option value="-">Seleziona Tipologia di incarico</option>
-                                                                            <%for (Item f : inq) {%>
-                                                                            <option value="<%=f.getCodice()%>"><%=StringEscapeUtils.escapeHtml4(f.getDescrizione())%></option>
-                                                                            <%}%>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-3">
-                                                                    <label " for="fonte_<%=i%>"></label><label id="fonte_<%=i%>_obl" class='kt-font-danger kt-font-boldest'></label>
-                                                                    <div class="dropdown bootstrap-select form-control kt-" 
-                                                                         id="fonte_<%=i%>_div" style="padding: 0;">
-                                                                        <select class="form-control kt-select2-general" id="fonte_<%=i%>" name="fonte_<%=i%>">
-                                                                            <option value="-">Seleziona Fonte</option>
-                                                                            <%for (Item f : fon) {%>
-                                                                            <option value="<%=f.getCodice()%>"><%=StringEscapeUtils.escapeHtml4(f.getDescrizione())%></option>
-                                                                            <%}%>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-lg-3">
-                                                                    <label for="progr_<%=i%>">N. progressivo di rif.</label>
-                                                                    <label>
-                                                                        <i class="fa fa-info-circle" 
-                                                                           data-toggle="kt-popover" 
-                                                                           data-trigger="hover" 
-                                                                           data-container="body" 
-                                                                           data-placement="bottom"
-                                                                           data-content="Nel caso in cui le esperienze utili al raggiungimento della fascia di appartenenza dichiarata per il docente siano contenute in sezioni separate del cv, 
-                                                                           raggruppare le attivit&#224; per tipologia e attribuire un numero progressivo da 1 a 5.
-                                                                           Tale numero deve essere trascritto (anche a penna) sul cv in modo da consentire la verifica della fascia di appartenenza." 
-                                                                           data-original-title="NUMERO PROGRESSIVO DI RIFERIMENTO CV"></i>
-                                                                    </label><label id="progr_<%=i%>_obl" class='kt-font-danger kt-font-boldest'>*</label>
-                                                                    <input class="form-control" name="progr_<%=i%>" id="progr_<%=i%>" onkeypress="return isNumber(event);" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <%}%>
-                                                    </div>
-                                                </div>
-                                                <h5>DOCUMENTAZIONE</h5>
-                                                <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                                <div class="kt-section kt-section--first">
-                                                    <div class="kt-section__body">              
-                                                        <div class="form-group row">
-                                                            <div class="col-lg-12">
-
-                                                                <div class="form-group row">
-                                                                    <div class="form-group col-xl-6 col-lg-6">
-                                                                        <h6>RICHIESTA ACCREDITAMENTO DOCENTE</h6>
-                                                                    </div>
-                                                                    <div class="form-group col-xl-6 col-lg-6">
-                                                                        <label> <br>Scaricare il modello con i dati inseriti per poi caricarlo firmato digitalmente (.p7m CAdES, .pdf PAdES) nel campo seguente.</label>
-                                                                        <button class="btn btn-primary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" 
-                                                                                type="button" 
-                                                                                onclick="return model_funct('<%=richiesta.getId()%>');">
-                                                                            Scarica
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="form-group col-xl-4 col-lg-6">
-                                                                        <div class="custom-file">
-                                                                            <input type="file" tipo="obbligatory" class="custom-file-input" 
-                                                                                   accept="<%=richiesta.getMimetype()%>" 
-                                                                                   name="doc_<%=richiesta.getId()%>" id="doc_<%=richiesta.getId()%>" 
-                                                                                   onchange="return checkFileExtAndDim('<%=richiesta.getEstensione()%>');" />
-                                                                            <label style="text-align: left;" class="custom-file-label selected" id="label_file">Scegli File</label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <div class="col-xl-3 col-lg-6">
-                                                                <label for="docid"></label><label class="kt-font-danger kt-font-boldest"></label>
-                                                                <div class="custom-file">
-                                                                    <input type="file" tipo="obbligatory" class="custom-file-input" accept="application/pdf" 
-                                                                           name="docid" id="docid" onchange="return checkFileExtAndDim(['pdf']);">
-                                                                    <label style="text-align: left;" class="custom-file-label selected" id="label_file">Scegli DOCUMENTO DI RICONOSCIMENTO DOCENTE </label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-lg-6">
-                                                                <label for="scadenzadoc">DATA SCADENZA DOCUMENTO DOCENTE </label><label class="kt-font-danger kt-font-boldest"></label>
-                                                                <input type="text" class="form-control obbligatory date-picker_r1" name="scadenzadoc" id="scadenzadoc" 
-                                                                       onkeydown="return false"  autocomplete="off"/>
-                                                            </div>
-                                                            <div class="col-xl-3 col-lg-6">
-                                                                <label for="cv"> </label><label class="kt-font-danger kt-font-boldest"></label>
-                                                                <div class="custom-file">
-                                                                    <input type="file" tipo="obbligatory" class="custom-file-input" accept="application/pdf" name="cv" id="cv" onchange="return checkFileExtAndDim(['pdf']);">
-                                                                    <label style="text-align: left;" class="custom-file-label selected" id="label_file">Scegli CURRICULUM VITAE DOCENTE </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="kt-portlet__foot">
-                                                    <div class="kt-form__actions">
-                                                        <div class="row">
-                                                            <div class="offset-lg-6 col-lg-6 kt-align-right">
-                                                                <a id="submit" href="javascript:void(0);" class="btn btn-primary"><font color='white'>Salva</font></a>
-                                                                <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-warning"><font color='white'>Reset</font></a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
+                            <div class="row g-3 mb-3">
+                                <div class="col-lg-3">
+                                    <label for="datanascita" class="form-label">Data Nascita *</label>
+                                    <input type="text" class="form-control obbligatory date-picker_r"
+                                           name="data" id="datanascita" autocomplete="off" onkeydown="return false" />
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="reg_res" class="form-label">Regione Residenza *</label>
+                                    <select class="form-select obbligatory" id="reg_res" name="reg_res">
+                                        <option value="-">Seleziona Regione</option>
+                                        <% for (Item i : regioni) {%>
+                                        <option value="<%=i.getValue()%>"><%=i.getDesc()%></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="email" class="form-label">Email *</label>
+                                    <input type="email" class="form-control obbligatory" name="email" id="email">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="pecmail" class="form-label">PEC *</label>
+                                    <input type="email" class="form-control obbligatory" name="pecmail" id="pecmail">
                                 </div>
                             </div>
+
+                            <div class="row g-3 mb-3">
+                                <div class="col-lg-3">
+                                    <label for="telefono" class="form-label">Cellulare (senza +39) *</label>
+                                    <input type="text" class="form-control obbligatory" name="telefono" id="telefono" onkeypress="return isNumber(event);">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="tit_stu" class="form-label">Titolo di Studio *</label>
+                                    <select class="form-select obbligatory" id="tit_stu" name="tit_stu">
+                                        <option value="-">Seleziona titolo di studio</option>
+                                        <% for (TitoliStudio t : ts) {%>
+                                        <option value="<%=t.getCodice()%>"><%=t.getDescrizione()%></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="area_stu" class="form-label">Area di qualificazione *</label>
+                                    <select class="form-select obbligatory" id="area_stu" name="area_stu">
+                                        <option value="-">Seleziona area</option>
+                                        <% for (Item t : aq) {%>
+                                        <option value="<%=t.getCodice()%>"><%=StringEscapeUtils.escapeHtml4(t.getDescrizione())%></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="fascia" class="form-label">Fascia *</label>
+                                    <select class="form-select obbligatory" id="fascia" name="fascia">
+                                        <option value="-">Seleziona fascia</option>
+                                        <% for (FasceDocenti f : fasce) {%>
+                                        <option value="<%=f.getId()%>"><%=f.getDescrizione()%></option>
+                                        <% }%>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Altre sezioni (Attività, Documentazione, ecc.) possono essere aggiunte nello stesso stile -->
+
                         </div>
-                    </div>
-                    <%@ include file="../../Bootstrap2024/index/login/Footer_login.jsp"%>
+
+                        <div class="card-footer text-end">
+                            <a id="submit" href="javascript:void(0);" class="btn btn-primary me-2">Salva</a>
+                            <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-warning">Reset</a>
+                        </div>
+
+                    </form>
                 </div>
             </div>
-        </div>
+        </main>
+
+
+
+
+
+
+        <%@ include file="../../Bootstrap2024/index/login/Footer_login.jsp"%>
+
+
+
+
+
+
         <div id="kt_scrolltop" style="background-color: #0059b3" style="background-color: #1d32a6" class="kt-scrolltop">
             <i class="fa fa-arrow-up"></i>
         </div>
         <!--begin:: Global Mandatory Vendors -->
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
@@ -511,23 +304,23 @@
         <script src="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
         <script id="newDocente" src="<%=src%>/page/sa/js/newDocente.js<%="?dummy=" + String.valueOf(new Date().getTime())%>" data-context="<%=request.getContextPath()%>" type="text/javascript"></script> 
         <script type="text/javascript">
-                                                                        var KTAppOptions = {
-                                                                            "colors": {
-                                                                                "state": {
-                                                                                    "brand": "#5d78ff",
-                                                                                    "dark": "#282a3c",
-                                                                                    "light": "#ffffff",
-                                                                                    "primary": "#5867dd",
-                                                                                    "success": "#34bfa3",
-                                                                                    "info": "#36a3f7",
-                                                                                    "warning": "#ffb822"
-                                                                                },
-                                                                                "base": {
-                                                                                    "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                                                                                    "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                                                                                }
-                                                                            }
-                                                                        };
+                                                var KTAppOptions = {
+                                                    "colors": {
+                                                        "state": {
+                                                            "brand": "#5d78ff",
+                                                            "dark": "#282a3c",
+                                                            "light": "#ffffff",
+                                                            "primary": "#5867dd",
+                                                            "success": "#34bfa3",
+                                                            "info": "#36a3f7",
+                                                            "warning": "#ffb822"
+                                                        },
+                                                        "base": {
+                                                            "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                                                            "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                                                        }
+                                                    }
+                                                };
         </script>
     </body>
 </html>

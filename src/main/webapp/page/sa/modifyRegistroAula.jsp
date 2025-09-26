@@ -92,114 +92,117 @@
         <link href="<%=src%>/assets/demo/default/skins/brand/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/resource/animate.css" rel="stylesheet" type="text/css"/>
+        <link href="../../Bootstrap2024/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
     </head>
-    <body class="kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed">
-        <div class="kt-grid kt-grid--hor kt-grid--root">
-            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                        <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-                            <div class="kt-portlet kt-portlet--mobile">
-                                <div class="kt-portlet__head">
-                                    <div class="kt-portlet__head-label">
-                                        <p>
-                                            <label class="kt-portlet__head-title" style="padding-top: 10px;">
-                                                Registro Aula:
-                                            </label><br>
-                                            <!--è possibile caricare solo due registi per giorno (mattina, pomeriggio)-->
-                                        </p>
+
+
+
+
+    <body class="d-flex flex-column min-vh-100">
+
+
+
+        <main class="container-fluid my-4">
+            <div id="kt_content">
+
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <p class="mb-0">
+                            <strong>Registro Aula:</strong><br>
+                            <!-- È possibile caricare solo due registri per giorno (mattina, pomeriggio) -->
+                        </p>
+                    </div>
+                    <div class="card-body">
+                        <form class="needs-validation" id="kt_form" action="<%=request.getContextPath()%>/OperazioniSA?type=modifyRegistrioAula" method="post" enctype="multipart/form-data" novalidate>
+                            <input type="hidden" name="iddoc" value="<%=d.getId()%>">
+
+                            <div class="mb-3" style="color: #464457;">
+                                <h5>Modifica registro del <%=new SimpleDateFormat("dd/MM/yyyy").format(d.getGiorno())%>.</h5>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-lg-5">
+                                    <div class="mb-3">
+                                        <label for="docente" class="form-label">Docente <span class="text-danger fw-bold">*</span></label>
+                                        <select class="form-select obbligatory" id="docente" name="docente">
+                                            <option value="-">Seleziona Docente</option>
+                                            <% for (Docenti s : docenti) {%>
+                                            <option value="<%=s.getId()%>" <%= s.equals(d.getDocente()) ? "selected" : ""%>><%=s.getCognome()%> <%=s.getNome()%></option>
+                                            <% }%>
+                                        </select>
                                     </div>
+
+                                    <div class="mb-3">
+                                        <label for="range2" class="form-label">Ora di Inizio e Fine Lezione <span class="text-danger fw-bold">*</span></label>
+                                        <input type="hidden" id="range">
+                                        <input type="text" class="form-control obbligatory" name="range" id="range2" readonly autocomplete="off" placeholder="Selezionare ora di inizio e fine" value="<%=sdf_date.format(d.getGiorno())%> - <%=sdf_time.format(d.getOrariostart())%> - <%=sdf_time.format(d.getOrarioend())%>">
+                                    </div>
+
+                                    <!-- Per futuro upload del registro, commentato come nel codice originale -->
+                                    <!--
+                                    <div class="mb-3">
+                                        <label for="registro" class="form-label">Registro</label>
+                                        <input type="file" class="form-control" accept="application/pdf" name="registro" id="registro" onchange="return checkFileExtAndDim(['pdf']);">
+                                        <small class="form-text text-muted">Il nuovo file sostituirà il precedente</small>
+                                    </div>
+                                    -->
                                 </div>
-                                <div class="kt-portlet__body">
-                                    <form class="kt-form" id="kt_form" action="<%=request.getContextPath()%>/OperazioniSA?type=modifyRegistrioAula" style="padding-top: 0;"  method="post" enctype="multipart/form-data">
-                                        <input type="hidden" name="iddoc" value="<%=d.getId()%>">
-                                        <div class="row col" style="color: #464457;">
-                                            <h5>Modifica registro del <%=new SimpleDateFormat("dd/MM/yyyy").format(d.getGiorno())%>.</h5>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-5">
-                                                <div class="form-group">
-                                                    <label>Docente</label><label class='kt-font-danger kt-font-boldest'>*</label>
-                                                    <div class="select-div" id="docente_div">
-                                                        <select class="form-control kt-select2-general obbligatory" id="docente" name="docente">
-                                                            <option value="-">Seleziona Docente</option>
-                                                            <%for (Docenti s : docenti) {%>
-                                                            <%if (s.equals(d.getDocente())) {%>
-                                                            <option selected value="<%=s.getId()%>"><%=s.getCognome()%> <%=s.getNome()%></option>
-                                                            <%} else {%>
-                                                            <option value="<%=s.getId()%>"><%=s.getCognome()%> <%=s.getNome()%></option>
-                                                            <%}
-                                                                }%>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Ora di Inizio e Fine Lezione</label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                    <input type="hidden" class="form-control" id="range">
-                                                    <input type="text" class="form-control obbligatory" name="range" id="range2" readonly autocomplete="off" placeholder="Selezionare ora di inzio e fine" value="<%=sdf_date.format(d.getGiorno())%> - <%=sdf_time.format(d.getOrariostart())%> - <%=sdf_time.format(d.getOrarioend())%>">
-                                                </div>
-                                                <!--                                                <div class="form-group">
-                                                                                                    <label>Registro</label>**
-                                                                                                    <div class="custom-file">
-                                                                                                        <input type="file" class="custom-file-input" accept="application/pdf" name="registro" id="registro" onchange="return checkFileExtAndDim(['pdf']);">
-                                                                                                        <label class="custom-file-label selected" id='label_file'></label>
-                                                                                                    </div>
-                                                                                                    <label>** il nuovo file sostituirà il precedente</label>
-                                                                                                </div>-->
-                                            </div>
-                                            <div class="col-lg-1">
-                                                <div class="center separator"> </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label>Presenti</label><label class='kt-font-danger kt-font-boldest'>*</label>
-                                                    <div class="select-div" id="allievi_div">
-                                                        <select class="form-control kt-select2 obbligatory" id="allievi" name="allievi[]" multiple="multiple">
-                                                            <%  boolean find;
-                                                                for (Allievi a : allievi) {
-                                                                    find = false;
-                                                            %>
-                                                            <%for (Presenti p : d.getPresenti_list()) {%>
-                                                            <%if (p.getId() == a.getId()) {
-                                                                    find = true;%>
-                                                            <option selected value="<%=a.getId()%>"><%=a.getCognome()%> <%=a.getNome()%></option>
-                                                            <%}
-                                                                }
-                                                                if (!find) {%>
-                                                            <option value="<%=a.getId()%>"><%=a.getCognome()%> <%=a.getNome()%></option>
-                                                            <%}
-                                                                }%>
-                                                        </select>
-                                                    </div>
-                                                    <label class='kt-font-danger'>per inserire ingresso e uscita per gli alunni settare prima ora inizio e fine lezione</label>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="row" id="ingressi_allievi">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <div class="form-group">
-                                        <div class="kt-form__actions">
-                                            <a href="javascript:void(0);" class="btn btn-primary" id="submit"><font color='white'>Salva</font></a>
-                                            <button onclick="location.reload();" class="btn btn-warning"><font color='white'>Reset</font></button>
+
+                                <div class="col-lg-1 d-flex align-items-center justify-content-center">
+                                    <div class="vr h-100"></div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="allievi" class="form-label">Presenti <span class="text-danger fw-bold">*</span></label>
+                                        <select class="form-select obbligatory" id="allievi" name="allievi[]" multiple>
+                                            <%
+                                                boolean find;
+                                                for (Allievi a : allievi) {
+                                                    find = false;
+                                                    for (Presenti p : d.getPresenti_list()) {
+                                                        if (p.getId() == a.getId()) {
+                                                            find = true;
+                                                            break;
+                                                        }
+                                                    }
+                                            %>
+                                            <option value="<%=a.getId()%>" <%= find ? "selected" : ""%>><%=a.getCognome()%> <%=a.getNome()%></option>
+                                            <% }%>
+                                        </select>
+                                        <small class="text-danger d-block mt-1">Per inserire ingresso e uscita per gli alunni settare prima ora inizio e fine lezione</small>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <div class="row" id="ingressi_allievi">
+                                            <!-- Eventuali campi dinamici inseriti tramite JS -->
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+                        </form>
+
+                        <div class="d-flex gap-2 mt-3">
+                            <a href="javascript:void(0);" class="btn btn-primary" id="submit">Salva</a>
+                            <button type="button" onclick="location.reload();" class="btn btn-warning">Reset</button>
                         </div>
-                    </div>	
+
+                    </div>
                 </div>
+
             </div>
-        </div>
+        </main>
+
+
+
         <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
             <i class="fa fa-arrow-up"></i>
         </div>
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
@@ -224,23 +227,23 @@
                 data-my_end="<%=d.getOrarioend().getTime()%>" data-my_start="<%=d.getOrariostart().getTime()%>" 
         data-day="<%=d.getGiorno().getTime()%>" type="text/javascript"></script>
         <script type="text/javascript">
-                                                var KTAppOptions = {
-                                                    "colors": {
-                                                        "state": {
-                                                            "brand": "#5d78ff",
-                                                            "dark": "#282a3c",
-                                                            "light": "#ffffff",
-                                                            "primary": "#5867dd",
-                                                            "success": "#34bfa3",
-                                                            "info": "#36a3f7",
-                                                            "warning": "#ffb822"
-                                                        },
-                                                        "base": {
-                                                            "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                                                            "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                                                        }
-                                                    }
-                                                };
+                        var KTAppOptions = {
+                            "colors": {
+                                "state": {
+                                    "brand": "#5d78ff",
+                                    "dark": "#282a3c",
+                                    "light": "#ffffff",
+                                    "primary": "#5867dd",
+                                    "success": "#34bfa3",
+                                    "info": "#36a3f7",
+                                    "warning": "#ffb822"
+                                },
+                                "base": {
+                                    "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                                    "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                                }
+                            }
+                        };
         </script>
         <script>
             var ore = <%=ore%>;
@@ -259,7 +262,7 @@
                 controlTotHour();
             });
 
-            
+
 
             $('#submit').on('click', function () {
                 submitForm($('#kt_form'), "Registro modificato", "Registro modificato con successo", ctrlForm(), false);
@@ -267,7 +270,7 @@
 
             var l_presenti = JSON.parse('<%=d.getPresenti().replace("\n", "")%>');
 
-            
+
 
         </script>
     </body>

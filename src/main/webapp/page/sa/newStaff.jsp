@@ -59,153 +59,107 @@
         <link href="<%=src%>/assets/demo/default/skins/header/menu/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/brand/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="Bootstrap2024/assets/css/global.css"/>
         <link href="https://fonts.cdnfonts.com/css/titillium-web" rel="stylesheet">
+        <link href="../../Bootstrap2024/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+
 
 
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
-        <style type="text/css">
-            .kt-section__title {
-                font-size: 1.2rem!important;
-            }
-
-            .form-group {
-                margin-bottom: 1rem;
-            }
-
-            .custom-file-label::after {
-                color:#fff;
-                background-color: #eaa21c;
-            }
-
-            a.disablelink {
-                color: #aaa!important;
-                cursor: default;
-                pointer-events: none;
-                background-color: #686dd5!important;
-                border-color: #686dd5!important;
-            }
-        </style>
+       
     </head>
-    <body class="kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed">
-        <div class="kt-grid kt-grid--hor kt-grid--root">
-            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                    <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="kt-portlet" id="kt_portlet" data-ktportlet="true">
-                                    <div class="kt-portlet__body">
-                                        <h5>Inserimento membri dello Staff Soggetto Esecutore per accesso alla FAD (Fase A - Fase B)</h5>
-                                    </div>
-                                    <div class="kt-portlet__foot">
-                                        <div class="kt-form__actions">
-                                            <div class="row">
-                                                    L'inserimento di membri dello staff non è un requisito obbligatorio per la prosecuzione del Progetto Formativo.<br>
-                                                    Tuttavia, si ricorda che un eventuale caricamento degli stessi (massimo 2) è possibile solamente prima del caricamento del modello 3. 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <%for (int i = 0; i < nro_staff; i++) {
-                                int cnt = i + 1;%>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="kt-portlet" id="kt_portlet" data-ktportlet="true">
-                                    <form id="kt_form_<%=i%>" action="<%=request.getContextPath()%>/OperazioniSA?type=manageMembriStaff&row=<%=i%>" class="kt-form kt-form--label-right" method="post" >
-                                        <div class="kt-portlet__body" style="padding: 25px 25px 5px 25px;">
-                                            <input type="hidden" name="mid_<%=i%>" id="mid_<%=i%>" />
-                                            <input type="hidden" name="pf<%=i%>" value="<%=StringEscapeUtils.escapeHtml4(request.getParameter("id"))%>" />
-                                            <h5>Membro #<%=cnt%></h5> 
-                                            <div class="kt-separator kt-separator--border kt-separator--space-xs"></div>
-                                            <div class="kt-section kt-section--first">
-                                                <div class="kt-section__body">
-                                                    <div class="form-group row">
-                                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6">
-                                                            <label for="nome<%=i%>">Nome </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                            <input class="form-control obbligatory" name="nome<%=i%>" id="nome<%=i%>">
-                                                        </div>
-                                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6">
-                                                            <label for="cognome<%=i%>">Cognome </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                            <input class="form-control obbligatory" name="cognome<%=i%>" id="cognome<%=i%>">
-                                                        </div>
-                                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6">
-                                                            <label for="email<%=i%>">Email </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                            <input class="form-control obbligatory" name="email<%=i%>" id="email<%=i%>">
-                                                        </div>
-                                                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6">
-                                                            <label for="telefono<%=i%>">Telefono </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                            <input type="text" class="form-control obbligatory" id="telefono<%=i%>" name="telefono<%=i%>" onkeypress="return isNumber(event);" />
-                                                        </div>
-                                                    </div>
-                                                        <div class="row kt-font-danger" id="sameMember<%=i%>" style="margin-left: 0px; display: none;">
-                                                            <b>Il membro che si sta tentando di inserire/modificare è identico a quello già caricato.</b>
-                                                        </div>
-                                                </div>        
-                                            </div>  
-                                            <div class="kt-portlet__foot" style="padding: 10px;">
-                                                <div class="kt-form__actions">
-                                                    <div class="row">
-                                                        <div class="col-12 kt-align-center">
-                                                            <a id="submit_<%=i%>" href="javascript:void(0);" class="btn btn-primary" style="width:12%;"><font color='white'>Salva</font></a>
-                                                            <a id="delete_<%=i%>" onclick="deleteMembro(<%=i%>)" href="javascript:void(0);" class="btn btn-danger" style="width:12%;display: none;"><font color='white'>Elimina</font></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <%}%>
-                    </div>
+
+
+   <body>
+    <div class="container-fluid">
+        <!-- Titolo e descrizione generale -->
+        <div class="row mb-3">
+            <div class="col-12">
+                <div id="card_body">
+                    <h5>Inserimento membri dello Staff Soggetto Esecutore per accesso alla FAD (Fase A - Fase B)</h5>
+                </div>
+                <div id="card_footer" class="mb-3">
+                    L'inserimento di membri dello staff non è obbligatorio per la prosecuzione del Progetto Formativo.<br>
+                    Caricamento massimo 2 membri, possibile solo prima del modello 3.
                 </div>
             </div>
         </div>
-        <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
-            <i class="fa fa-arrow-up"></i>
-        </div>
-        <!--begin:: Global Mandatory Vendors -->
-        <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/sticky-js/dist/sticky.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/jquery-form/dist/jquery.form.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/app/bundle/app.bundle.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/sweetalert2/dist/sweetalert2.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/soop/js/utility.js" type="text/javascript"></script>
-        <!-- this page -->
-        <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/bootstrap-datepicker.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
-        <script id="newStaff" src="<%=src%>/page/sa/js/newStaff.js?<%="?dummy=" + String.valueOf(new Date().getTime())%>" data-context="<%=request.getContextPath()%>" defer pId="<%=StringEscapeUtils.escapeHtml4(request.getParameter("id"))%>" nro="2" type="text/javascript"></script> 
-        <script type="text/javascript">
-                                                                var KTAppOptions = {
-                                                                    "colors": {
-                                                                        "state": {
-                                                                            "brand": "#5d78ff",
-                                                                            "dark": "#282a3c",
-                                                                            "light": "#ffffff",
-                                                                            "primary": "#5867dd",
-                                                                            "success": "#34bfa3",
-                                                                            "info": "#36a3f7",
-                                                                            "warning": "#ffb822"
-                                                                        },
-                                                                        "base": {
-                                                                            "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                                                                            "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                                                                        }
-                                                                    }
-                                                                };
-        </script>
-    </body>
+
+        <!-- Loop membri staff -->
+        <%for (int i = 0; i < nro_staff; i++) {
+            int cnt = i + 1;%>
+            <div class="row mb-3">
+                <div class="col-12">
+                    <form id="kt_form_<%=i%>" action="<%=request.getContextPath()%>/OperazioniSA?type=manageMembriStaff&row=<%=i%>" method="post">
+                        <input type="hidden" name="mid_<%=i%>" id="mid_<%=i%>" />
+                        <input type="hidden" name="pf<%=i%>" value="<%=StringEscapeUtils.escapeHtml4(request.getParameter("id"))%>" />
+                        
+                        <h5>Membro #<%=cnt%></h5>
+                        <hr>
+                        
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <label for="nome<%=i%>" class="form-label">Nome *</label>
+                                <input type="text" class="form-control" name="nome<%=i%>" id="nome<%=i%>">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="cognome<%=i%>" class="form-label">Cognome *</label>
+                                <input type="text" class="form-control" name="cognome<%=i%>" id="cognome<%=i%>">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="email<%=i%>" class="form-label">Email *</label>
+                                <input type="email" class="form-control" name="email<%=i%>" id="email<%=i%>">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="telefono<%=i%>" class="form-label">Telefono *</label>
+                                <input type="text" class="form-control" id="telefono<%=i%>" name="telefono<%=i%>" onkeypress="return isNumber(event);">
+                            </div>
+                        </div>
+
+                        <div id="sameMember<%=i%>" class="text-danger mt-2" style="display: none;">
+                            <b>Il membro inserito/modificato è già presente.</b>
+                        </div>
+
+                        <div class="mt-3 d-flex gap-2">
+                            <a id="submit_<%=i%>" href="javascript:void(0);" class="btn btn-primary">Salva</a>
+                            <a id="delete_<%=i%>" onclick="deleteMembro(<%=i%>)" href="javascript:void(0);" class="btn btn-danger" style="display: none;">Elimina</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        <%}%>
+    </div>
+
+    <!-- Scroll Top -->
+    <div id="kt_scrolltop" class="position-fixed bottom-0 end-0 m-3">
+        <i class="fa fa-arrow-up"></i>
+    </div>
+
+    <!-- Scripts JS esterni -->
+    <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js"></script>
+    <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js"></script>
+    <script src="<%=src%>/assets/soop/js/moment.min.js"></script>
+    <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js"></script>
+    <script src="<%=src%>/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js"></script>
+    <script src="<%=src%>/assets/vendors/general/sticky-js/dist/sticky.min.js"></script>
+    <script src="<%=src%>/assets/vendors/general/jquery-form/dist/jquery.form.min.js"></script>
+    <script src="<%=src%>/assets/demo/default/base/scripts.bundle.js"></script>
+    <script src="<%=src%>/assets/app/bundle/app.bundle.js"></script>
+    <script src="<%=src%>/assets/vendors/general/sweetalert2/dist/sweetalert2.js"></script>
+    <script src="<%=src%>/assets/soop/js/utility.js"></script>
+    <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/bootstrap-datepicker.js"></script>
+    <script src="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+    <script id="newStaff" src="<%=src%>/page/sa/js/newStaff.js?<%="?dummy=" + String.valueOf(new Date().getTime())%>" data-context="<%=request.getContextPath()%>" defer pId="<%=StringEscapeUtils.escapeHtml4(request.getParameter("id"))%>" nro="2"></script>
+</body>
+
+
+
+
+
+
+
+
 </html>
 <%
         }

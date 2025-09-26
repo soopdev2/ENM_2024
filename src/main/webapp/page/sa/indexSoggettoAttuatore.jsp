@@ -100,7 +100,7 @@
         <!-- Popper.js (necessario per dropdown, tooltip, popover) -->
         <script src="../../Bootstrap2024/assets/js/popper.js"></script>
 
-       
+
 
 
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
@@ -159,201 +159,180 @@
         </style>
     </head>
     <body>
-        <!-- begin:: Page -->
         <%@include file="../../Bootstrap2024/index/index_SoggettoAttuatore/Header_soggettoAttuatore.jsp" %>
-        <div class="kt-grid kt-grid--hor kt-grid--root">
-            <%@ include file="../../Bootstrap2024/index/menu/menuAtt.jsp"%>
+        <%@ include file="../../Bootstrap2024/index/menu/menuAtt.jsp"%>
+        <%@ include file="menu/head.jsp"%>
 
-            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page" >
-                <!-- end:: Aside -->
-                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
-                    <%@ include file="menu/head.jsp"%>
-                    <!-- begin:: Footer -->
-                    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" style="background-image: url(<%=src%>/resource/bg.png); background-size: cover;background-position: center; background-color: #fff;">
-                        <!-- begin:: Content Head -->
-                        <div class="kt-subheader   kt-grid__item" id="kt_subheader">
-                            <div class="kt-subheader   kt-grid__item" id="kt_subheader">
+        <div class="it-grid">
 
+            <main class="it-main">
 
-                                <div class="kt-portlet__head-toolbar kt-align-right">
-                                    <ul class="nav nav-pills nav-pills-lg nav-pills-label nav-pills-bold" style="padding-top: 0.5rem;" role="tablist">
-                                        <li class="nav-item">
-                                            <a style="color: #0d6efd; background-color: white; " class="nav-link " data-toggle="tab" id="tab2" href="#kt_widget5_tab2_content"  role="tab">
-                                                Riepilogo
-                                            </a>
-                                        </li>
-                                        <%if (us.getTipo() == 1) {%>
-                                        <li class="nav-item">
-                                            <a style="color: #0d6efd; background-color: white; " class="nav-link"  data-toggle="tab" id="tab1" href="#kt_widget5_tab1_content" role="tab">
-                                                Dashboard 
-                                            </a>
-                                        </li>
-                                        <%}%>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="tab-content" style="margin-right: 10px;">
-                            <div class="tab-pane" id="kt_widget5_tab1_content" aria-expanded="true">
-                                <div class="row">
-                                    <div class="col-md-12" style="padding-right: 0px;">
-                                        <%if (!messaggio.equals("")) {%>
-                                        <div class="row col">
-                                            <div class="col-12 paddig_0_r" style="padding-bottom: 1.5rem;">
-                                                <div class="custom-redbox message paddig_0_t"><br><label style="font-size: 1.5rem; font-weight: 200;"><%=messaggio%></label></div>
-                                            </div>
-                                        </div>
-                                        <%}%>
-                                        <div class="row flex col-lg-12"  style="margin-right: 0px; padding-right: 0px;">
+                <div class="it-content-wrapper bg-white" 
+                     style="background-image: url(<%=src%>/resource/bg.png); background-size: cover; background-position: center;">
 
-                                            <%
-                                                String[] contatori = Action.contatoriHomeSA(us);
-                                            %>
-
-                                            <div class="col-xl-3 col-lg-12 col-md-6" style="padding-bottom: 1.5rem;">
-                                                <button type="button" class="btn btn-primary btn-lg btn-me">
-                                                    Allievi totali 
-                                                    <span class="badge bg-white text-primary"><%=contatori[0]%></span>
-                                                </button>
-                                            </div>
-
-                                            <div class="col-xl-3 col-lg-12 col-md-6" style="padding-bottom: 1.5rem;">
-                                                <button type="button" class="btn btn-primary btn-lg btn-me">
-                                                    Allievi formati <span class="badge bg-white text-primary"><%=contatori[1]%></span>
-                                                </button>
-                                            </div>
-                                            <div class="col-xl-3 col-lg-12 col-md-6" style="padding-bottom: 1.5rem;">
-                                                <button type="button" class="btn btn-primary btn-lg btn-me">
-                                                    Progetti totali <span class="badge bg-white text-primary"><%=contatori[2]%></span>
-                                                </button>
-                                            </div>
-                                            <div class="col-xl-3 col-lg-12 col-md-6" style="padding-bottom: 1.5rem;">
-                                                <button type="button" class="btn btn-primary btn-lg btn-me">
-                                                    Progetti conclusi <span class="badge bg-white text-primary"><%=contatori[3]%></span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <%if (Utility.demoversion) {%>
-                                        <div class="row flex col-lg-12"  style="margin-right: 0px; padding-right: 0px;">
-                                            <div class="col-xl-4 col-lg-12 col-md-6">
-                                                <a href="<%=request.getContextPath()%>/OperazioniSA?type=resetdatidemo" 
-                                                   class="btn btn-dark kt-font-bold"><i class="fa fa-times"></i> RESET DATI DEMO</a>
-                                            </div>
-                                        </div>
-                                        <%}%>
-                                        <div class="row flex col-lg-12"  style="margin-right: 0px; padding-right: 0px;">
-                                            <%if (today.after(us.getSoggettoAttuatore().getScadenza())) {%>
-                                            <div class="col-xl-4 col-lg-12 col-md-6">
-                                                <div class="kt-portlet kt-iconbox kt-iconbox--warning kt-iconbox--animate-slow">
-                                                    <div class="kt-portlet__body">
-                                                        <div class="row">
-                                                            <div class="col-lg-3">
-                                                                <h4 class="kt-widget27__title kt-font-io-n" style="font-size: 5vh!important;">
-                                                                    <i class="fa fa-exclamation-triangle"></i>
-                                                                </h4>
-                                                            </div>
-                                                            <div class="col-lg-9">
-                                                                <div class="kt-iconbox__desc">
-                                                                    <h3 class="kt-iconbox__title">
-                                                                        <a href="javascript:void(0);" onclick="rinnovoCartaID();" class="kt-link kt-notification__item">Documento Scaduto</a>
-                                                                    </h3>
-                                                                    <div class="kt-iconbox__content">
-                                                                        Carica nuovo documento AD/AU 
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <%}%>
-
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <br>
-                            <div class="tab-pane" id="kt_widget5_tab2_content" aria-expanded="true">
-                                <div class="row col-lg-12">
-                                    <div class="col-lg-8">
-                                        <div class="row">
-                                            <div class="col-xl-6 col-lg-12"><br><br>
-                                                <h5 style="color: #fd7e14" ><b>Soggetto Attuatore</b></h5><br>
-                                                <h6 class="text-primary"><b>Ragione Sociale:</b> <%=us.getSoggettoAttuatore().getRagionesociale()%></h6><br>
-                                                <%if (us.getSoggettoAttuatore().getPiva() != null && !us.getSoggettoAttuatore().getPiva().equalsIgnoreCase("")) {%>
-                                                <h6 class="text-primary"><b>Partita IVA:</b> <%=us.getSoggettoAttuatore().getPiva()%></h6><br>
-                                                <%}
-                                                    if (us.getSoggettoAttuatore().getCodicefiscale() != null && !us.getSoggettoAttuatore().getCodicefiscale().equalsIgnoreCase("")) {%>
-                                                <h6 class="text-primary"><b>Codice Fiscale:</b> <%=us.getSoggettoAttuatore().getCodicefiscale()%></h6><br>
-                                                <%}%>
-                                                <h6 class="text-primary"><b>Email:</b> <%=us.getSoggettoAttuatore().getEmail()%></h6><br>
-                                                <h6 class="text-primary"><b>PEC:</b> <%=us.getSoggettoAttuatore().getPec()%></h6><br>
-                                                <h6 class="text-primary"><b>Telefono:</b> <%=us.getSoggettoAttuatore().getTelefono_sa()%></h6><br>
-                                                <h6 class="text-primary"><b>Cellulare:</b> <%=us.getSoggettoAttuatore().getCell_sa()%></h6><br>
-                                                <h6 class="text-primary"><b>Indirizzo:</b> <%=us.getSoggettoAttuatore().getIndirizzo()%></h6><br>
-                                                <h6 class="text-primary"><b>Comune:</b> <%=us.getSoggettoAttuatore().getComune().getNome()%> (<%=us.getSoggettoAttuatore().getCap()%>, <%=us.getSoggettoAttuatore().getComune().getNome_provincia()%>)</h6><br><br><br>
-                                            </div>
-                                            <div class="col-xl-6 col-lg-12"><br><br>
-                                                <h5 style="color: #fd7e14"><b>Amministratore Delegato / Unico</b></h5><br>
-                                                <h6 class="text-primary"><b>Nome:</b> <%=us.getSoggettoAttuatore().getNome()%></h6><br>
-                                                <h6 class="text-primary"><b>Cognome:</b> <%=us.getSoggettoAttuatore().getCognome()%></h6><br>
-                                                <h6 class="text-primary"><b>Data Nascita:</b> <%=sdf.format(us.getSoggettoAttuatore().getDatanascita())%></h6><br>
-                                                <h6 class="text-primary"><b>Numero Documento:</b> <%=us.getSoggettoAttuatore().getNro_documento()%></h6><br>
-                                                <h6 class="text-primary"><b>Scadenza Documento:</b> <%=sdf.format(us.getSoggettoAttuatore().getScadenza())%></h6><br><br><br>
-                                                <h5 style="color: #fd7e14"><b>Referente</b></h5><br>
-                                                <h6 class="text-primary"><b>Nome:</b> <%=us.getSoggettoAttuatore().getNome_refente()%></h6><br>
-                                                <h6 class="text-primary"><b>Cognome:</b> <%=us.getSoggettoAttuatore().getCognome_referente()%></h6><br>
-                                                <h6 class="text-primary"><b>Telefono:</b> <%=us.getSoggettoAttuatore().getTelefono_referente()%></h6><br>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group form-group-sm row" id="div_preview"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>      
-                        <!-- end:: Content Head -->
-                        <a id="chgPwd" href="<%=src%>/page/personal/chgPwd.jsp" class="btn btn-outline-brand btn-sm fancyProfileNoClose" style="display:none;"></a>
+                    <!-- NAV PILLS -->
+                    <div class="it-header-navbar-wrapper bg-light">
+                        <ul class="nav nav-pills nav-fill" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active text-primary bg-white" id="tab2" data-bs-toggle="pill" href="#kt_widget5_tab2_content" role="tab">
+                                    Riepilogo
+                                </a>
+                            </li>
+                            <% if (us.getTipo() == 1) { %>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary bg-white" id="tab1" data-bs-toggle="pill" href="#kt_widget5_tab1_content" role="tab">
+                                    Dashboard
+                                </a>
+                            </li>
+                            <% } %>
+                        </ul>
                     </div>
 
-                    <!-- end:: Footer -->
-                    <!-- end:: Content -->
-                </div>
-                <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                    <button id="showmod1" type="button" class="btn btn-outline-brand btn-sm" data-toggle="modal" data-target="#kt_modal_6">Launch Modal</button>
-                </div>
-                <div class="modal fade" id="kt_modal_6" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="text_modal_title"></h5>
-                                <button type="button" id='close_kt_modal_6' class="close" data-target="#kt_modal_6" data-dismiss="modal" aria-label="Close"></button>
+                    <div class="tab-content p-3" style="min-height: 100vh">
+
+                        <!-- DASHBOARD -->
+                        <div class="tab-pane fade" id="kt_widget5_tab1_content" role="tabpanel">
+                            <div class="container-fluid">
+
+                                <% if (!messaggio.equals("")) {%>
+                                <div class="alert alert-danger" role="alert">
+                                    <%=messaggio%>
+                                </div>
+                                <% } %>
+
+                                <%
+                                    String[] contatori = Action.contatoriHomeSA(us);
+                                %>
+
+                                <div class="row g-3">
+                                    <div class="col-xl-3 col-lg-6 col-md-6">
+                                        <button type="button" class="btn btn-primary btn-lg w-100">
+                                            Allievi totali 
+                                            <span class="badge bg-light text-primary"><%=contatori[0]%></span>
+                                        </button>
+                                    </div>
+
+                                    <div class="col-xl-3 col-lg-6 col-md-6">
+                                        <button type="button" class="btn btn-primary btn-lg w-100">
+                                            Allievi formati 
+                                            <span class="badge bg-light text-primary"><%=contatori[1]%></span>
+                                        </button>
+                                    </div>
+
+                                    <div class="col-xl-3 col-lg-6 col-md-6">
+                                        <button type="button" class="btn btn-primary btn-lg w-100">
+                                            Progetti totali 
+                                            <span class="badge bg-light text-primary"><%=contatori[2]%></span>
+                                        </button>
+                                    </div>
+
+                                    <div class="col-xl-3 col-lg-6 col-md-6">
+                                        <button type="button" class="btn btn-primary btn-lg w-100">
+                                            Progetti conclusi 
+                                            <span class="badge bg-light text-primary"><%=contatori[3]%></span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <% if (Utility.demoversion) {%>
+                                <div class="row mt-4">
+                                    <div class="col-xl-4 col-lg-6 col-md-6">
+                                        <a href="<%=request.getContextPath()%>/OperazioniSA?type=resetdatidemo"
+                                           class="btn btn-outline-danger w-100">
+                                            <i class="fa fa-times"></i> RESET DATI DEMO
+                                        </a>
+                                    </div>
+                                </div>
+                                <% } %>
+
+                                <% if (today.after(us.getSoggettoAttuatore().getScadenza())) { %>
+                                <div class="row mt-4">
+                                    <div class="col-xl-4 col-lg-6 col-md-6">
+                                        <div class="alert alert-warning d-flex align-items-center">
+                                            <i class="fa fa-exclamation-triangle me-2 fs-3"></i>
+                                            <div>
+                                                <h5 class="alert-heading">Documento Scaduto</h5>
+                                                <p class="mb-0">
+                                                    <a href="javascript:void(0);" onclick="rinnovoCartaID();" class="link-primary">Carica nuovo documento AD/AU</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% }%>
                             </div>
-                            <div class="modal-body" id="text_modal_html"></div>
                         </div>
+
+                        <!-- RIEPILOGO -->
+                        <div class="tab-pane fade show active" id="kt_widget5_tab2_content" role="tabpanel">
+                            <div class="row g-4">
+                                <div class="col-lg-8">
+                                    <div class="row g-4">
+                                        <div class="col-xl-6">
+                                            <h5 class="text-warning fw-bold">Soggetto Attuatore</h5>
+                                            <p class="text-primary mb-1"><b>Ragione Sociale:</b> <%=us.getSoggettoAttuatore().getRagionesociale()%></p>
+                                            <% if (us.getSoggettoAttuatore().getPiva() != null && !us.getSoggettoAttuatore().getPiva().equalsIgnoreCase("")) {%>
+                                            <p class="text-primary mb-1"><b>Partita IVA:</b> <%=us.getSoggettoAttuatore().getPiva()%></p>
+                                            <% } %>
+                                            <% if (us.getSoggettoAttuatore().getCodicefiscale() != null && !us.getSoggettoAttuatore().getCodicefiscale().equalsIgnoreCase("")) {%>
+                                            <p class="text-primary mb-1"><b>Codice Fiscale:</b> <%=us.getSoggettoAttuatore().getCodicefiscale()%></p>
+                                            <% }%>
+                                            <p class="text-primary mb-1"><b>Email:</b> <%=us.getSoggettoAttuatore().getEmail()%></p>
+                                            <p class="text-primary mb-1"><b>PEC:</b> <%=us.getSoggettoAttuatore().getPec()%></p>
+                                            <p class="text-primary mb-1"><b>Telefono:</b> <%=us.getSoggettoAttuatore().getTelefono_sa()%></p>
+                                            <p class="text-primary mb-1"><b>Cellulare:</b> <%=us.getSoggettoAttuatore().getCell_sa()%></p>
+                                            <p class="text-primary mb-1"><b>Indirizzo:</b> <%=us.getSoggettoAttuatore().getIndirizzo()%></p>
+                                            <p class="text-primary mb-1"><b>Comune:</b> <%=us.getSoggettoAttuatore().getComune().getNome()%> 
+                                                (<%=us.getSoggettoAttuatore().getCap()%>, <%=us.getSoggettoAttuatore().getComune().getNome_provincia()%>)</p>
+                                        </div>
+                                        <div class="col-xl-6">
+                                            <h5 class="text-warning fw-bold">Amministratore Delegato / Unico</h5>
+                                            <p class="text-primary mb-1"><b>Nome:</b> <%=us.getSoggettoAttuatore().getNome()%></p>
+                                            <p class="text-primary mb-1"><b>Cognome:</b> <%=us.getSoggettoAttuatore().getCognome()%></p>
+                                            <p class="text-primary mb-1"><b>Data Nascita:</b> <%=sdf.format(us.getSoggettoAttuatore().getDatanascita())%></p>
+                                            <p class="text-primary mb-1"><b>Numero Documento:</b> <%=us.getSoggettoAttuatore().getNro_documento()%></p>
+                                            <p class="text-primary mb-1"><b>Scadenza Documento:</b> <%=sdf.format(us.getSoggettoAttuatore().getScadenza())%></p>
+
+                                            <h5 class="text-warning fw-bold mt-3">Referente</h5>
+                                            <p class="text-primary mb-1"><b>Nome:</b> <%=us.getSoggettoAttuatore().getNome_refente()%></p>
+                                            <p class="text-primary mb-1"><b>Cognome:</b> <%=us.getSoggettoAttuatore().getCognome_referente()%></p>
+                                            <p class="text-primary mb-1"><b>Telefono:</b> <%=us.getSoggettoAttuatore().getTelefono_referente()%></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div id="div_preview"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a id="chgPwd" href="<%=src%>/page/personal/chgPwd.jsp" 
+                       class="btn btn-outline-primary d-none">Cambio Password</a>
+                </div>
+            </main>
+
+            <!-- MODAL -->
+            <div class="modal fade" id="kt_modal_6" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="text_modal_title"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+                        </div>
+                        <div class="modal-body" id="text_modal_html"></div>
                     </div>
                 </div>
             </div>
         </div>
+
+
         <%@include file="../../Bootstrap2024/index/login/Footer_login.jsp" %>
-        <!-- end:: Page -->
-
-        <!-- begin::Quick Panel -->
 
 
-        <!-- end::Quick Panel -->
-
-        <!-- begin::Scrolltop -->
-        <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
-            <i class="fa fa-arrow-up"></i>
-        </div>
         <!--begin:: Global Mandatory Vendors -->
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>

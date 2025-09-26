@@ -14,7 +14,7 @@ function ctrlForm() {
     return !err;
 }
 $('#submit').on('click', function () {
-    submitForm($("#kt_form"), "Cad Salvato!", "Operazione effettuata con successo.", ctrlForm(), id == null);
+    submitForm($("#kt_form"), "Cad Salvato!", "Operazione effettuata con successo.", ctrlForm(), id === null);
 });
 
 var days = ["Do", "Lu", "Ma", "Me", "Gi", "Ve", "Sa"];
@@ -33,7 +33,7 @@ $('#giorno').datepicker({
     templates: {
         leftArrow: '<i class="la la-angle-left"></i>',
         rightArrow: '<i class="la la-angle-right"></i>'
-    },
+    }
 });
 
 $('input.time').timepicker({
@@ -54,10 +54,10 @@ $("#giorno").change(function () {
 
 function getImpegni() {
     $('input.time').attr("disabled", "true");
-    if (id == null) {
+    if (id === null) {
         $('input.time').val("");
     }
-    if ($("#giorno").val() != "") {
+    if ($("#giorno").val() !== "") {
         $.ajax({
             type: "POST",
             async: false,
@@ -70,7 +70,7 @@ function getImpegni() {
         });
 
         $('input.time').removeAttr("disabled");
-        if (id == null) {
+        if (id === null) {
             if (cad_json.length > 0) {
                 $('input.time').val(formattedTime(cad_json[cad_json.length - 1].orarioend));
             } else {
@@ -84,10 +84,10 @@ function getImpegni() {
 
 function writeImpegni() {
     $("#impegni").empty();
-    if (cad_json.length == 0) {
+    if (cad_json.length === 0) {
         $("#impegni").append("<label>Nessun altro impegno per questo giorno:</label>");
     } else {
-        $("#impegni").append("<label class='text-center'>Colloqui del <b>" + $("#giorno").val() + "</b>:</label><br>")
+        $("#impegni").append("<label class='text-center'>Colloqui del <b>" + $("#giorno").val() + "</b>:</label><br>");
     }
     $.each(cad_json, function (index, c) {
         $("#impegni").append("<label><b><font class='kt-font-danger'>&diams;</font> " + c.cognome + " " + c.nome + "</b> dalle " + formattedTime(c.orariostart) + " alle " + formattedTime(c.orarioend) + "</label><br>");
@@ -95,11 +95,11 @@ function writeImpegni() {
 }
 
 function cotrolTime() {
-    if ($('#start').val() == $('#end').val()) {
+    if ($('#start').val() === $('#end').val()) {
         swalError("Attenzione!", "I due orari sono gli stessi");
         $("input.time").removeClass("is-valid").addClass("is-invalid");
-        return false
-    } else if ($('#start').val() != "" && $('#end').val() != "") {
+        return false;
+    } else if ($('#start').val() !== "" && $('#end').val() !== "") {
         return cehckImpegni();
     }
 }
@@ -134,7 +134,7 @@ $('#end').change(function (e) {
 var id = null;
 
 jQuery(document).ready(function () {
-    if (id != null) {
+    if (id !== null) {
         getImpegni();
     } else {
         $('input.time').val("");

@@ -59,90 +59,103 @@
     <!-- end::Head -->
 
     <!-- begin::Body -->
-    <body class="kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading">
+
+    <body class="d-flex flex-column min-vh-100">
 
         <!-- begin:: Page -->
-        <div class="kt-grid kt-grid--ver kt-grid--root">
-            <div class="kt-grid kt-grid--hor kt-grid--root  kt-login kt-login--v3 kt-login--signin" id="kt_login">
-                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" style="background-image: url(assets/media/bg/bg-3.jpg);">
-                    <div class="kt-grid__item kt-grid__item--fluid kt-login__wrapper paddig_0_t" style="width: 100%">
-                        <div class="kt-login__container" style="width: 100%">
-                            <div class="kt-login__logo" style="margin-bottom: 10px;">
-                                <a href="login.jsp">
-                                    <img src="assets/media/logos/logo.png" width="320">
-                                </a>
-                            </div>
-                            <div class="kt-login__signin">
-                                <div class="kt-login__head">
-                                    <h3 class="kt-login__title kt-font-io" style="font-size:2.2rem"><b>FAQs</b></h3>
-                                </div>
-                                <div class="center col-lg-8 col-md-10 col-sm-12">
-                                    <div class="row kt-login__extra">
-                                        <div class="col-6 kt-align-left">
-                                            <div class="col">
-                                                <a href="login.jsp" class="kt-login__link">torna indietro</a>
-                                            </div>
-                                        </div>
-                                    </div><br>
-                                    <div class="accordion accordion-solid accordion-toggle-plus" id="accordionExample1">
-                                        <%for (Faq f : faqs) {%>
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <div class="card-title collapsed kt-font-io-n" data-toggle="collapse" data-target="#collapse_<%=f.getId()%>" aria-expanded="false" aria-controls="collapse_<%=f.getId()%>" style="text-align: left;">
-                                                    <%=f.getDomanda_mod()%>
-                                                </div>
-                                            </div>
-                                            <div id="collapse_<%=f.getId()%>" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample1">
-                                                <div class="card-body" style="text-align: left;">
-                                                    <%=f.getRisposta()%>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <%}%>
-                                    </div>
-                                </div>
-                            </div>   
-                        </div>
+        <div class="container-fluid d-flex flex-column justify-content-center align-items-center bg-light min-vh-100" id="kt_login">
+
+            <!-- Wrapper -->
+            <div class="w-100 d-flex flex-column align-items-center py-5" style="background-image: url(assets/media/bg/bg-3.jpg); background-size: cover;">
+
+                <!-- Logo -->
+                <div class="mb-3">
+                    <a href="login.jsp">
+                        <img src="assets/media/logos/logo.png" width="320" alt="Logo">
+                    </a>
+                </div>
+
+                <!-- Titolo -->
+                <div class="text-center mb-4">
+                    <h3 class="fw-bold" style="font-size:2.2rem"><b>FAQs</b></h3>
+                </div>
+
+                <!-- Torna indietro -->
+                <div class="row justify-content-start w-100 mb-3 px-3">
+                    <div class="col-auto">
+                        <a href="login.jsp" class="text-decoration-none">&larr; torna indietro</a>
                     </div>
                 </div>
+
+                <!-- Accordion FAQ -->
+                <div class="col-lg-8 col-md-10 col-sm-12">
+                    <div class="accordion" id="accordionExample1">
+                        <% for (Faq f : faqs) {%>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading_<%=f.getId()%>">
+                                <button class="accordion-button collapsed text-start" type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapse_<%=f.getId()%>"
+                                        aria-expanded="false"
+                                        aria-controls="collapse_<%=f.getId()%>">
+                                    <%=f.getDomanda_mod()%>
+                                </button>
+                            </h2>
+                            <div id="collapse_<%=f.getId()%>" class="accordion-collapse collapse"
+                                 aria-labelledby="heading_<%=f.getId()%>" data-bs-parent="#accordionExample1">
+                                <div class="accordion-body text-start">
+                                    <%=f.getRisposta()%>
+                                </div>
+                            </div>
+                        </div>
+                        <% }%>
+                    </div>
+                </div>
+
             </div>
         </div>
+        <!-- end:: Page -->
 
-        <script src="assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
-        <script src="assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
-        <script src="assets/soop/js/moment.min.js" type="text/javascript"></script>
-        <script src="assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
-        <script src="assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
-        <script src="assets/vendors/general/sticky-js/dist/sticky.min.js" type="text/javascript"></script>
-        <script src="assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
-        <script src="assets/vendors/general/jquery-form/dist/jquery.form.min.js" type="text/javascript"></script>
-        <script src="assets/vendors/general/jquery-validation/dist/jquery.validate.js" type="text/javascript"></script>
-        <script src="assets/vendors/general/jquery-validation/dist/additional-methods.js" type="text/javascript"></script>
-        <script src="assets/vendors/custom/components/vendors/jquery-validation/init.js" type="text/javascript"></script>
-        <script src="assets/vendors/general/sweetalert2/dist/sweetalert2.js" type="text/javascript"></script>
-        <script src="assets/soop/js/utility.js" type="text/javascript"></script>
-        <script src="assets/app/bundle/app.bundle.js" type="text/javascript"></script>
+        <!-- Scripts -->
+        <script src="assets/soop/js/jquery-3.7.1.js"></script>
+        <script src="assets/vendors/general/popper.js/dist/umd/popper.js"></script>
+        <script src="assets/vendors/general/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="assets/vendors/general/js-cookie/src/js.cookie.js"></script>
+        <script src="assets/soop/js/moment.min.js"></script>
+        <script src="assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js"></script>
+        <script src="assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js"></script>
+        <script src="assets/vendors/general/sticky-js/dist/sticky.min.js"></script>
+        <script src="assets/demo/default/base/scripts.bundle.js"></script>
+        <script src="assets/vendors/general/jquery-form/dist/jquery.form.min.js"></script>
+        <script src="assets/vendors/general/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="assets/vendors/general/jquery-validation/dist/additional-methods.js"></script>
+        <script src="assets/vendors/custom/components/vendors/jquery-validation/init.js"></script>
+        <script src="assets/vendors/general/sweetalert2/dist/sweetalert2.js"></script>
+        <script src="assets/soop/js/utility.js"></script>
+        <script src="assets/app/bundle/app.bundle.js"></script>
         <script type="text/javascript">
-            var KTAppOptions = {
-                "colors": {
-                    "state": {
-                        "brand": "#5d78ff",
-                        "dark": "#282a3c",
-                        "light": "#ffffff",
-                        "primary": "#5867dd",
-                        "success": "#34bfa3",
-                        "info": "#36a3f7",
-                        "warning": "#ffb822",
-                        "danger": "#fd3995"
-                    },
-                    "base": {
-                        "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                        "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                var KTAppOptions = {
+                    "colors": {
+                        "state": {
+                            "brand": "#5d78ff",
+                            "dark": "#282a3c",
+                            "light": "#ffffff",
+                            "primary": "#5867dd",
+                            "success": "#34bfa3",
+                            "info": "#36a3f7",
+                            "warning": "#ffb822",
+                            "danger": "#fd3995"
+                        },
+                        "base": {
+                            "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                            "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                        }
                     }
-                }
-            };
+                };
         </script>
     </body>
+
+
+
+
 </html>

@@ -66,63 +66,59 @@
         <link href="<%=src%>/assets/demo/default/skins/brand/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/resource/animate.css" rel="stylesheet" type="text/css"/>
+        <link href="../../Bootstrap2024/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
 
     </head>
-    <body class="kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed">
-        <div class="kt-grid kt-grid--hor kt-grid--root">
-            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                        <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-                            <div class="kt-portlet kt-portlet--mobile">
-                                <div class="kt-portlet__head">
-                                    <div class="kt-portlet__head-label">
-                                        <h3 class="kt-portlet__head-title">
-                                            Modifica Docenti:
-                                        </h3>
-                                    </div>
-                                </div>
-                                <div class="kt-portlet__body">
-                                    <form id="kt_form" action="<%=request.getContextPath()%>/OperazioniSA?type=modifyDocenti" class="kt-form kt-form--label-right" accept-charset="ISO-8859-1" method="post">
-                                        <input type="hidden" id="id_progetto" name="id_progetto" value="<%=p.getId()%>">
-                                        <div class="form-group">
-                                            <label>Docente</label>
-                                            <div class="dropdown bootstrap-select form-control kt-" id="docenti_div" style="padding: 0;">
-                                                <select class="form-control kt-select2 obbligatory" id="docenti" name="docenti[]" multiple="multiple" style="width: 100%">
-                                                    <%for (Docenti d : docenti_prg) {%>
-                                                    <option selected value="<%=d.getId()%>"><%=d.getCognome()%> <%=d.getNome()%></option>
-                                                    <%}%>
-                                                    <%for (Docenti d : docenti) {%>
-                                                    <option value="<%=d.getId()%>"><%=d.getCognome()%> <%=d.getNome()%></option>
-                                                    <%}%>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row" id="teacher_doc">
-                                        </div>
-                                        <label class="kt-font-danger kt-font-bold"><font size="2">Se il docente è già selezionato non verrano sostituiti i relativi documenti nel progetto.</font></label>
-                                        <div class="kt-portlet__foot">
-                                            <div class="kt-form__actions">
-                                                <div class="row">
-                                                    <a id="submit" href="javascript:void(0);" class="btn btn-primary">Salva</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
+
+
+    <body class="d-flex flex-column min-vh-100">
+        <div class="container-fluid">
+            <div id="kt_content">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h3>Modifica Docenti:</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="kt_form" action="<%=request.getContextPath()%>/OperazioniSA?type=modifyDocenti" method="post" accept-charset="ISO-8859-1">
+                            <input type="hidden" id="id_progetto" name="id_progetto" value="<%=p.getId()%>">
+
+                            <div class="mb-3">
+                                <label for="docenti" class="form-label">Docente</label>
+                                <select class="form-control obbligatory" id="docenti" name="docenti[]" multiple style="width: 100%;">
+                                    <% for (Docenti d : docenti_prg) {%>
+                                    <option selected value="<%=d.getId()%>"><%=d.getCognome()%> <%=d.getNome()%></option>
+                                    <% } %>
+                                    <% for (Docenti d : docenti) {%>
+                                    <option value="<%=d.getId()%>"><%=d.getCognome()%> <%=d.getNome()%></option>
+                                    <% }%>
+                                </select>
                             </div>
-                        </div>
-                    </div>	
+
+                            <div class="mb-3" id="teacher_doc"></div>
+
+                            <div class="mb-3">
+                                <small class="text-danger">Se il docente è già selezionato non verranno sostituiti i relativi documenti nel progetto.</small>
+                            </div>
+
+                            <div class="text-start">
+                                <a id="submit" href="javascript:void(0);" class="btn btn-primary">Salva</a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
+
+
+
+
         <div id="kt_scrolltop"style="background-color: #0059b3" class="kt-scrolltop">
             <i class="fa fa-arrow-up"></i>
         </div>
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/popper.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
@@ -138,7 +134,7 @@
         <!--this page-->
         <script src="<%=src%>/assets/vendors/general/select2/dist/js/select2.full.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/select2.js" type="text/javascript"></script>
-       <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/bootstrap-datepicker.js" type="text/javascript"></script>
+        <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/bootstrap-datepicker.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
         <script id="docenti_allievi" src="<%=src%>/page/sa/js/docenti_allievi.js" data-context="<%=request.getContextPath()%>" type="text/javascript"></script>
 

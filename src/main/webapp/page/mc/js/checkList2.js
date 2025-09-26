@@ -29,7 +29,7 @@ $('#submit').on('click', function () {
                 var json = JSON.parse(resp);
                 closeSwal();
                 if (json.result) {
-                    var message = json.message != null ? "<h4>" + json.message + "</h4>" : "";
+                    var message = json.message !== null ? "<h4>" + json.message + "</h4>" : "";
                     console.log(json);
 //                                if (true) {
                     message += "<a href='" + context + "/OperazioniGeneral?type=downloadDoc&path=" + json.filedl + "' ><u><b>Clicca qui se il download non è iniziato.</b></u></a> ";//<i class='fa fa-cloud-download-alt'></i>
@@ -56,7 +56,7 @@ $('#allievi').on("change", function () {
     docsAllievi();
 });
 $('#allievi').select2({//setta placeholder nella multiselect
-    placeholder: "Seleziona Allievi",
+    placeholder: "Seleziona Allievi"
 });
 jQuery(document).ready(function () {
     docsAllievi();

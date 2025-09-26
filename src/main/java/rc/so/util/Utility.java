@@ -536,7 +536,6 @@ public class Utility {
         }
         return false;
     }
-    
 
     public static FileDownload preparefilefordownload(String path) {
         List<String> spl = on("###").splitToList(path);
@@ -1446,5 +1445,24 @@ public class Utility {
         }
     }
 
-   
+    public static File sanitizeFile(File file) {
+
+        try {
+            if (file == null) {
+                return null;
+            } else {
+
+                String sanitizePath = file.getPath().replace("..", " ")
+                        .replace("\\", "/")
+                        .replaceAll("^a-zA-Z0-9_./-", " ");
+                return new File(sanitizePath);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
+        return null;
+    }
+
 }

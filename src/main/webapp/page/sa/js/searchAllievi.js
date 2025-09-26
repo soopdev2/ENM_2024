@@ -180,7 +180,7 @@ function EmailPresente() {
                     "title": 'Errore',
                     "html": "<h3>Email già presente</h3>",
                     "type": "error",
-                    cancelButtonClass: "btn btn-io-n",
+                    cancelButtonClass: "btn btn-io-n"
                 });
                 fastSwal("Attenzione!", "Email già presente", "wobble");
                 $('#new_mail').attr("class", "form-control is-invalid");
@@ -242,7 +242,7 @@ function rinnovoCartaID(id) {
 
             $('#cartaid').on('change', function () {
                 ctrlPdf($('#cartaid'));
-            })
+            });
             $('input.dp').datepicker({
                 rtl: KTUtil.isRTL(),
                 orientation: "bottom left",
@@ -253,7 +253,7 @@ function rinnovoCartaID(id) {
                 todayHighlight: true,
                 autoclose: true,
                 format: 'dd/mm/yyyy',
-                startDate: new Date(),
+                startDate: new Date()
             });
         },
         preConfirm: function () {
@@ -267,13 +267,13 @@ function rinnovoCartaID(id) {
                     formCartaId = $('#formCartaId');
                     resolve([
                         docid.val(),
-                        data.val(),
+                        data.val()
                     ]);
                 });
             } else {
                 return false;
             }
-        },
+        }
     }).then((result) => {
         if (result.value) {
             showLoad();
@@ -287,14 +287,14 @@ function rinnovoCartaID(id) {
                             "title": 'Successo',
                             "text": "Documento d'identità aggiornata con successo",
                             "type": "success",
-                            confirmButtonClass: "btn btn-io",
+                            confirmButtonClass: "btn btn-io"
                         });
                     } else {
                         swal.fire({
                             "title": 'Errore',
                             "text": json.message,
                             "type": "error",
-                            cancelButtonClass: "btn btn-io-n",
+                            cancelButtonClass: "btn btn-io-n"
                         });
                     }
                 }
@@ -375,7 +375,7 @@ function swalDocumentAllievo(idallievo) {
 function showRegistro(idregistro) {
     var registro = registri.get(idregistro);
     var doc_registro;
-    if (registro.orariostart_pom != null) {
+    if (registro.orariostart_pom !== null) {
         doc_registro = getHtml("doc_registro_individiale_pomeriggio", context);
         doc_registro = doc_registro.replace("@start_pome", formattedTime(registro.orariostart_pom).replace(":0", ":00"))
                 .replace("@end_pome", formattedTime(registro.orarioend_pom).replace(":0", ":00"));
@@ -442,7 +442,7 @@ function uploadM1(id, estensione, mime_type) {
             } else {
                 return false;
             }
-        },
+        }
     }).then((result) => {
         if (result.value) {
             showLoad();

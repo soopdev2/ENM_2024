@@ -39,7 +39,7 @@ function delete_event() {
         $('[data-toggle="kt-tooltip"]').tooltip('dispose');
         $($(this).parent()).parent().remove();
         $('[data-toggle="kt-tooltip"]').tooltip();
-        if ($("input[name='email[]']").length == 0) {
+        if ($("input[name='email[]']").length === 0) {
             $("#add").trigger("click");
         }
     });
@@ -63,7 +63,7 @@ $("#add").click(function () {
 function blockspecialcharacter(e) {
     e = (e) ? e : window.event;
     var key = document.all ? key = e.keyCode : key = e.which;
-    return ((key > 64 && key < 91) || (key > 96 && key < 123) || key == 8 || key == 32 || "0123456789".includes(e.key) || "èéòàù".includes(e.key));
+    return ((key > 64 && key < 91) || (key > 96 && key < 123) || key === 8 || key === 32 || "0123456789".includes(e.key) || "èéòàù".includes(e.key));
 }
 
 var days = ["Do", "Lu", "Ma", "Me", "Gi", "Ve", "Sa"];
@@ -78,7 +78,7 @@ jQuery(document).ready(function () {
             firstDay: 1,
             format: 'DD/MM/YYYY HH:mm',
             daysOfWeek: days,
-            monthNames: months,
+            monthNames: months
         }
     });
     delete_event();

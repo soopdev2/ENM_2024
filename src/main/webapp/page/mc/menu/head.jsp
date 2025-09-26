@@ -1,78 +1,59 @@
-<%@page import="java.util.Date"%>
-<!-- begin:: Header -->
-<%String no_cache = "?dummy=" + String.valueOf(new Date().getTime());%>
-<div id="kt_header" class="kt-header kt-grid__item  kt-header--fixed " style="border: solid 1px #0059b3; background-color: #0059b3 ">
+<%@ page import="java.util.Date" %>
+<% String no_cache = "?dummy=" + new Date().getTime(); %>
 
-    <!-- begin:: Header Menu -->
-    <button class="kt-header-menu-wrapper-close" id="kt_header_menu_mobile_close_btn"><i class="la la-close"></i></button>
-    <div class="kt-header-menu-wrapper " id="kt_header_menu_wrapper">
-        <div style="display: inline-block;  vertical-align: middle;  line-height: normal;"> 
-           </div>
-    </div>
-    <!-- end:: Header Menu -->
-    <!-- begin:: Header Topbar -->
-    <div class="kt-header__topbar">  
-        <!--begin: User Bar -->
-        <div class="kt-header__topbar-item kt-header__topbar-item--user">
-            <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="0px,0px">
-                <div class="kt-header__topbar-user">
-                    <span class="kt-header__topbar-welcome kt-hidden-mobile">Ciao,</span>
-                    <span class="kt-header__topbar-username kt-hidden-mobile"><%=us.getUsername()%></span>
-                    <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
-                    <span class="kt-badge kt-badge--username kt-badge--unified-io kt-badge--lg kt-badge--rounded kt-badge--bold">
-                        <%=us.getUsername().substring(0, 1).toUpperCase()%>
-                    </span>
-                </div>
-            </div>
-            <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">
-                <!--begin: Head -->
-                <div class="kt-user-card kt-user-card--skin-dark kt-notification-item-padding-x"
-                     style="background-image: url(<%=src%>/assets/media/bg/bg-3.jpg);background-position: left bottom ;background-repeat: repeat-x;">
-                    <div class="kt-user-card__avatar">
-                        <span class="kt-badge kt-badge--lg kt-badge--rounded kt-badge--bold kt-font-io"> <%=us.getUsername().substring(0, 1).toUpperCase()%></span>
-                    </div>
-                    <div class="kt-user-card__name kt-font-io">
-                        <%=us.getUsername()%>
-                    </div>
-                    <div class="kt-user-card__badge">
-                        <a href="<%=request.getContextPath()%>/Login?type=logout" id="a_logout" class="btn btn-io btn-bold" data-container="body" data-toggle="kt-popover" data-placement="bottom" data-content="Esci">
-                            <i class="flaticon-logout" style="padding: 0;"></i>
-                        </a>
-                        <!--                        <a href="../profile.jsp" class="btn btn-io btn-bold fancyBoxRaf" data-container="body" data-toggle="kt-popover" data-placement="bottom" data-content="Modifica Profilo">
-                                                    <i class="flaticon2-user" style="padding: 0;"></i>
-                                                </a>-->
-                    </div>
+<!-- Bootstrap 5 Header -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #0059b3; border: 1px solid #0059b3; position: relative; top: -210px " >
+    <div class="container-fluid">
 
-                </div>
-                <div class="kt-notification">
-                    <a href="<%=src%>/page/personal/chgPwd.jsp?active=yes" class="kt-notification__item fancyProfile">
-                        <div class="kt-notification__item-icon">
-                            <i class="flaticon2-gear kt-font-io-n"></i>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title kt-font-bold">
-                                Password
-                            </div>
-                            <div class="kt-notification__item-time">
-                                Cambia
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <!--end: Head -->
+        <!-- Menu Mobile Close Button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTop" aria-controls="navbarTop" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Menu Wrapper -->
+        <div class="collapse navbar-collapse" id="navbarTop">
+            <div class="d-inline-block align-middle">
+                <!-- qui puoi inserire eventuali menu -->
             </div>
         </div>
-        <!--end: User Bar -->
-    </div>
-    <!-- end:: Header Topbar -->
-</div>
-<!-- end:: Header
-<link href="<%=src%>/assets/soop/css/jquery.fancybox.min.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="<%=src%>/assets/soop/js/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="<%=src%>/assets/soop/js/jquery.fancybox.min.js"></script>
-<script type="text/javascript" src="<%=src%>/assets/soop/js/fancy.js"></script>
--->
 
+        <!-- User Bar -->
+        <div class="dropdown ms-auto">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="me-2 d-none d-lg-inline">Ciao, <%=us.getUsername()%></span>
+                <span class="badge bg-primary rounded-circle fw-bold" style="width: 35px; height: 35px; display: flex; align-items: center; justify-content: center;">
+                    <%=us.getUsername().substring(0, 1).toUpperCase()%>
+                </span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="userDropdown">
+                <li>
+                    <div class="p-3 text-center bg-dark text-white" style="background-image: url(<%=src%>/assets/media/bg/bg-3.jpg); background-position: left bottom; background-repeat: repeat-x;">
+                        <span class="badge bg-primary rounded-circle fw-bold" style="width: 50px; height: 50px; display: inline-flex; align-items: center; justify-content: center;">
+                            <%=us.getUsername().substring(0, 1).toUpperCase()%>
+                        </span>
+                        <div class="mt-2 fw-bold"><%=us.getUsername()%></div>
+                        <div class="mt-2">
+                            <a href="<%=request.getContextPath()%>/Login?type=logout" class="btn btn-sm btn-light" title="Esci">
+                                <i class="flaticon-logout"></i>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a class="dropdown-item d-flex align-items-center" href="<%=src%>/page/personal/chgPwd.jsp?active=yes">
+                        <i class="flaticon2-gear me-2"></i>
+                        <div>
+                            <div class="fw-bold">Password</div>
+                            <div class="small">Cambia</div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Fancybox CSS/JS -->
 <link href="<%=src%>/assets/soop/css/jquery.fancybox.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="<%=src%>/assets/soop/js/jquery-1.10.1.min.js"></script>
 <script type="text/javascript" src="<%=src%>/assets/soop/js/jquery.fancybox.js?v=2.1.5"></script>

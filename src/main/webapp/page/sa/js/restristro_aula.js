@@ -16,10 +16,10 @@ var my_start, my_end;
 function setDay() {
     old_start = new Date(millis_start);
     old_end = new Date(millis_end);
-    if (millis_start == 0) {
+    if (millis_start === 0) {
         old_start.setHours(0, 0, 0);
     }
-    if (millis_end == 0) {
+    if (millis_end === 0) {
         old_end.setHours(20, 0, 0);
     }
     start = new Date(millis_day), end = new Date(millis_day);
@@ -27,7 +27,7 @@ function setDay() {
     start.setHours(old_start.getHours(), old_start.getMinutes());//setto ora minima inizio a fine lezione precedente
     end.setHours(old_end.getHours(), old_end.getMinutes());
 
-    if (millis_my_end == 0 && millis_my_start == 0) {
+    if (millis_my_end === 0 && millis_my_start === 0) {
         my_start = start;
         my_end = end;
     } else {
@@ -57,7 +57,7 @@ function genetateTime() {
             firstDay: 1,
             format: 'HH:mm',
             daysOfWeek: days,
-            monthNames: months,
+            monthNames: months
         }
     }, function (start, end, label) {
         min_time = start.format('HH:mm');
@@ -89,7 +89,7 @@ function cssDatePicker() {
 
 $('#range2').change(function (e) {
     var date = $(e.target).val();
-    if (date != "") {
+    if (date !== "") {
         $('input.time-a.in').val(min_time);
         $('input.time-a.out').val(max_time);
         initTimeAllievi();
@@ -108,7 +108,7 @@ $('#allievi').on("change", function () {
 });
 
 $('#allievi').select2({//setta placeholder nella multiselect
-    placeholder: "Seleziona Allievi",
+    placeholder: "Seleziona Allievi"
 });
 
 function ingressiAllevi() {
@@ -141,7 +141,7 @@ function ingressiAllevi() {
                         .replace("@nome", $("#allievi option[value='" + a + "']").text()));
             }
         });
-        if (min_time != "" && max_time != "") {
+        if (min_time !== "" && max_time !== "") {
             initTimeAllievi();
             $('input.time-a').removeAttr("disabled");
             $('input.time-a').removeClass("disable-input");
@@ -222,7 +222,7 @@ function controlTotHour() {
 }
 
 function calculateHour() {
-    if ($('#range2').val() != '') {
+    if ($('#range2').val() !== '') {
         var range = $('#range2').val().split("-");
         var h1 = range[0].trim().split(":");
         var h2 = range[1].trim().split(":");
@@ -248,7 +248,7 @@ function getRegisters(giorno) {
         },
         error: {
             //gestisci errore
-        },
+        }
     });
     return registri;
 }

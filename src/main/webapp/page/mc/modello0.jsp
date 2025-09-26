@@ -81,7 +81,7 @@
         <link href="<%=src%>/assets/demo/default/skins/header/menu/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/brand/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="Bootstrap2024/assets/css/global.css"/>
+        <link rel="stylesheet" href="../../Bootstrap2024/assets/css/bootstrap.min.css"/>
         <link href="https://fonts.cdnfonts.com/css/titillium-web" rel="stylesheet">
         <link href="<%=src%>/resource/animate.css" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
@@ -93,251 +93,216 @@
         <script type="text/javascript" src="<%=src%>/assets/soop/js/jquery.fancybox.min.js"></script>
         <script type="text/javascript" src="<%=src%>/assets/soop/js/fancy.js"></script>
     </head>
-    <body class="kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed">
-        <div class="kt-grid kt-grid--hor kt-grid--root">
-            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                        <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-                            <div class="kt-portlet kt-portlet--mobile">
 
+    <body class="d-flex flex-column min-vh-100">
 
-                                <div class="kt-portlet__head">
-                                    <div class="kt-portlet__head-label">
-                                        <h3 class="kt-portlet__head-title">
-                                            Modello 0 - Pre-Iscrizione Allievo: <b><%=a.getCognome()%> <%=a.getNome()%> (<%=a.getCodicefiscale()%>)</b>
-                                        </h3>
-                                    </div>
-                                </div>
-                                <%if (presentemod0 == null) {%>
-                                <div class="kt-portlet__body">
-                                    <div class="row col-md-12">
-                                        <div class="form-group col-md-3">
-                                            <label class="kt-font-danger kt-font-boldest">Cognome</label>
-                                            <label><%=a.getCognome()%></label>
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label class="kt-font-danger kt-font-boldest">Nome</label>
-                                            <label><%=a.getNome()%></label>
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label class="kt-font-danger kt-font-boldest">Data di Nascita</label>
-                                            <label><%=Utility.sdfITA.format(a.getDatanascita())%></label>
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label class="kt-font-danger kt-font-boldest">Codice Fiscale</label>
-                                            <label><%=a.getCodicefiscale()%></label>
-                                        </div>
-                                    </div>
-                                    <div class="row col-md-12">
-                                        <hr>
-                                    </div>
-                                    <div class="row col-md-12">
-                                        <h4>COLLOQUIO-INTERVISTA</h4>
-                                    </div>
+        <main class="container-fluid my-4">
 
-                                    <form method="POST" action="<%=request.getContextPath()%>/OperazioniMicro">
-                                        <input type="hidden" name="type" value="salvamodello0" />
-                                        <input type="hidden" name="idallievo" value="<%=a.getId()%>" />
-
-                                        <div class="row col-md-12">
-                                            <div class="form-group col-md-3">
-                                                <label class="kt-font-danger kt-font-boldest">DATA COLLOQUIO</label>
-                                                <label><%=Utility.sdfITA.format(new Date())%></label>
-                                            </div>
-                                            <div class="form-group col-md-3">
-                                                <label class="kt-font-danger kt-font-boldest">SIGLA OPERATORE ENM</label>
-                                                <label><%=us.getSiglaenm()%></label>
-                                            </div>
-                                        </div> 
-                                        <div class="row col-md-12">
-                                            <div class="form-group col-md-6">
-                                                <label class="kt-font-info kt-font-boldest">Modalità di svolgimento del colloquio: </label>
-                                                <select class="form-control kt-select2-general" id="tos_m0_modalitacolloquio" name="tos_m0_modalitacolloquio"  style="width: 100%" required>
-                                                    <option value="">Seleziona Risposta</option>
-                                                    <option value="1">IN PRESENZA</option>
-                                                    <option value="2">TELEFONICO</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label class="kt-font-info kt-font-boldest">Come definirebbe il suo grado di conoscenza delle finalità e dei contenuti del percorso formativo YISU?</label>
-                                                <select class="form-control kt-select2-general" id="tos_m0_gradoconoscenza" name="tos_m0_gradoconoscenza"  style="width: 100%" required>
-                                                    <option value="">Seleziona Risposta</option>
-                                                    <option value="1">ALTO</option>
-                                                    <option value="2">MEDIO</option>
-                                                    <option value="3">SCARSO</option>
-                                                    <option value="4">NULLO</option>
-                                                </select>
-                                            </div>
-                                        </div> 
-                                        <div class="row col-md-12">
-                                            <div class="form-group col-md-6">
-                                                <label class="kt-font-info kt-font-boldest">Attraverso quale principale canale è venuto a conoscenza del progetto YISU Toscana?</label>
-                                                <select class="form-control kt-select2-general" id="tos_m0_canaleconoscenza" name="tos_m0_canaleconoscenza"  style="width: 100%" required>
-                                                    <option value="">Seleziona Risposta</option>
-                                                    <%for (Canale c1 : canalecon) {%>
-                                                    <option value="<%=c1.getId()%>"><%=c1.getDescrizione()%></option>
-                                                    <%}%>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label class="kt-font-info kt-font-boldest">Per quale principale motivazione ha scelto di frequentare YISU-Toscana?</label>
-                                                <select class="form-control kt-select2-general" id="tos_m0_motivazione" name="tos_m0_motivazione"  style="width: 100%"required>
-                                                    <option value="">Seleziona Risposta</option>
-                                                    <%for (Motivazione c1 : motiv) {%>
-                                                    <option value="<%=c1.getId()%>"><%=c1.getDescrizione()%></option>
-                                                    <%}%>
-                                                </select>
-                                            </div>
-                                        </div> 
-                                        <div class="row col-md-12">
-                                            <div class="form-group col-md-6">
-                                                <label class="kt-font-info kt-font-boldest">Quanto ritiene possa essere utile il percorso YISU per il lavoro che vorrebbe svolgere?</label>
-                                                <select class="form-control kt-select2-general" id="tos_m0_utilita" name="tos_m0_utilita"  style="width: 100%" required>
-                                                    <option value="">Seleziona Risposta</option>
-                                                    <option value="1">PER NULLA UTILE</option>
-                                                    <option value="2">POCO UTILE</option>
-                                                    <option value="3">UTILE</option>
-                                                    <option value="4">ABBASTANZA UTILE</option>
-                                                    <option value="5">MOLTO UTILE</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label class="kt-font-info kt-font-boldest">Cosa si aspetta soprattutto frequentando YES I START UP?</label>
-                                                <select class="form-control kt-select2-general" id="tos_m0_aspettative" name="tos_m0_aspettative"  style="width: 100%" required>
-                                                    <option value="">Seleziona Risposta</option>
-                                                    <%for (Aspettative c1 : aspettat) {%>
-                                                    <option value="<%=c1.getId()%>"><%=c1.getDescrizione()%></option>
-                                                    <%}%>
-                                                </select>
-                                            </div>
-                                        </div> 
-                                        <div class="row col-md-12">
-                                            <div class="form-group col-md-6">
-                                                <label class="kt-font-info kt-font-boldest">Quanto è matura l’idea di impresa/attività che potrà realizzare a seguito del percorso formativo?</label>
-                                                <select class="form-control kt-select2-general" id="tos_m0_maturazione" name="tos_m0_maturazione"  style="width: 100%" required>
-                                                    <option value="">Seleziona Risposta</option>
-                                                    <%for (MaturazioneIdea c1 : matidea) {%>
-                                                    <option value="<%=c1.getId()%>"><%=c1.getDescrizione()%></option>
-                                                    <%}%>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label class="kt-font-info kt-font-boldest">Indirizzo email (da confermare)</label>
-                                                <input class="form-control" name="tos_mail" id="tos_mail" value="<%=a.getEmail()%>" />
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row col-md-12">
-                                            <div class="form-group col-md-6">
-                                                <label class="kt-font-info kt-font-boldest">Conferma la sua volontà di frequentare il percorso YISU?</label>
-                                                <select class="form-control kt-select2-general" id="tos_m0_volonta" name="tos_m0_volonta"  style="width: 100%" onchange="return changesino();" required>
-                                                    <option value="">Seleziona Risposta</option>
-                                                    <option value="1">SI</option>
-                                                    <option value="0">NO</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row col-md-12" id="div_volontasi">
-                                            <div class="form-group col-md-6">
-                                                <label class="kt-font-info kt-font-boldest">Con quale Soggetto Esecutore vorrebbe realizzare il percorso?</label>
-                                                <select class="form-control kt-select2-general" id="soggetto" name="soggetto"  style="width: 100%">
-                                                    <%for (SoggettiAttuatori c1 : salist) {%>
-                                                    <option value="<%=c1.getId()%>"><%=c1.getRagionesociale()%> <%=e.getProvinceSediFormazione(c1)%></option>
-                                                    <%}%>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label class="kt-font-info kt-font-boldest">È consapevole che la mancata partecipazione alle giornate formative (1 o 2 gg di assenza) senza giustificato motivo può determinare la perdita e/o la decurtazione delle indennità eventualmente percepite?</label>
-                                                <select class="form-control kt-select2-general" id="tos_m0_consapevole" name="tos_m0_consapevole"  style="width: 100%">
-                                                    <option value="0">Inapplicabile, non percepisco alcuna indennità</option>
-                                                    <option value="1">SI</option>
-                                                    <option value="2">NO</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row col-md-12" id="div_volontano">
-                                            <div class="form-group col-md-6">
-                                                <label class="kt-font-info kt-font-boldest">Se NO, Perché?</label>
-                                                <select class="form-control kt-select2-general" id="tos_m0_noperche" name="tos_m0_noperche"  style="width: 100%" onchange="return changealtro();">
-                                                    <%for (MotivazioneNO c1 : motivno) {%>
-                                                    <option value="<%=c1.getId()%>"><%=c1.getDescrizione()%></option>
-                                                    <%}%>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-6" id="div_altrospec">
-                                                <label class="kt-font-info kt-font-boldest">Specificare Altro:</label>
-                                                <input class="form-control" name="tos_m0_noperchealtro" id="tos_m0_noperchealtro" autocomplete="off">
-                                            </div>
-                                        </div>
-                                        <div class="row col-md-12">
-                                            <label class="kt-font-info kt-font-boldest">Note ENM</label>
-                                            <textarea class="form-control" name="tos_m0_note" id="tos_m0_note" autocomplete="off"></textarea>
-                                        </div>
-
-
-
-                                        <div class="kt-portlet__foot" style="padding-left: 10px;">
-                                            <div class="kt-form__actions">
-                                                <div class="form-group col-xl-3 col-lg-6">
-                                                    <button type="submit" class="btn btn-primary" 
-                                                            style="font-family: Poppins"><i class="fa fa-save"></i> SALVA DATI</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <%} else {%>
-                                <div class="kt-portlet__foot" style="padding-left: 10px;">
-                                    <div class="kt-form__actions row col-md-12">
-                                        <div class="form-group col-md-3">
-                                            <form action="<%=request.getContextPath()%>/OperazioniGeneral" method="POST" target="_blank">
-
-                                                <input type="hidden" name="type" value="onlyDownload" />
-                                                <input type="hidden" name="path" value="<%=presentemod0.getPath()%>" />
-                                                <button type="submit" class="btn btn-success" 
-                                                        style="font-family: Poppins"><i class="fa fa-file-pdf"></i> SCARICA MODELLO 0</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="kt-form__actions row col-md-12">
-                                        <div class="form-group col-md-3">
-                                            <form action="<%=request.getContextPath()%>/OperazioniGeneral" method="POST">
-                                                <input type="hidden" name="type" value="sendmailModello0" />
-                                                <input type="hidden" name="idallievo" value="<%=a.getId()%>" />
-                                                <input type="hidden" name="maildest" value="<%=a.getEmail()%>" />
-                                                <input type="hidden" name="path" value="<%=presentemod0.getPath()%>" />
-                                                <button type="submit" class="btn btn-primary" 
-                                                        style="font-family: Poppins"><i class="fa fa-file-pdf"></i> INVIA MODELLO 0 TRAMITE MAIL AL DISCENTE</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <%}%>
-                                <%if (Utility.getRequestValue(request, "esito").equals("OK")) {%>
-                                <div class="row col-md-12 alert alert-success">
-                                    OPERAZIONE COMPLETATA CON SUCCESSO!
-                                </div>
-                                <%}%>
-                                <%if (Utility.getRequestValue(request, "esito").equals("KO")) {%>
-                                <div class="row col-md-12 alert alert-danger">
-                                    ERRORE DURANTE L'OPERAZIONE! RIPROVARE.
-                                </div>
-                                <%}%>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h5 class="mb-0">
+                                    Modello 0 - Pre-Iscrizione Allievo: 
+                                    <b><%=a.getCognome()%> <%=a.getNome()%> (<%=a.getCodicefiscale()%>)</b>
+                                </h5>
                             </div>
 
+                            <% if (presentemod0 == null) {%>
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col-md-3"><strong>Cognome:</strong> <%=a.getCognome()%></div>
+                                    <div class="col-md-3"><strong>Nome:</strong> <%=a.getNome()%></div>
+                                    <div class="col-md-3"><strong>Data di Nascita:</strong> <%=Utility.sdfITA.format(a.getDatanascita())%></div>
+                                    <div class="col-md-3"><strong>Codice Fiscale:</strong> <%=a.getCodicefiscale()%></div>
+                                </div>
+                                <hr>
+                                <h6>COLLOQUIO-INTERVISTA</h6>
+
+                                <form method="POST" action="<%=request.getContextPath()%>/OperazioniMicro">
+                                    <input type="hidden" name="type" value="salvamodello0" />
+                                    <input type="hidden" name="idallievo" value="<%=a.getId()%>" />
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-3"><strong>DATA COLLOQUIO:</strong> <%=Utility.sdfITA.format(new Date())%></div>
+                                        <div class="col-md-3"><strong>SIGLA OPERATORE ENM:</strong> <%=us.getSiglaenm()%></div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Modalità di svolgimento del colloquio</label>
+                                            <select class="form-select" name="tos_m0_modalitacolloquio" required>
+                                                <option value="">Seleziona Risposta</option>
+                                                <option value="1">IN PRESENZA</option>
+                                                <option value="2">TELEFONICO</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Grado di conoscenza del percorso YISU</label>
+                                            <select class="form-select" name="tos_m0_gradoconoscenza" required>
+                                                <option value="">Seleziona Risposta</option>
+                                                <option value="1">ALTO</option>
+                                                <option value="2">MEDIO</option>
+                                                <option value="3">SCARSO</option>
+                                                <option value="4">NULLO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Attraverso quale canale è venuto a conoscenza del progetto?</label>
+                                            <select class="form-select" name="tos_m0_canaleconoscenza" required>
+                                                <option value="">Seleziona Risposta</option>
+                                                <% for (Canale c1 : canalecon) {%>
+                                                <option value="<%=c1.getId()%>"><%=c1.getDescrizione()%></option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Motivazione principale a frequentare YISU-Toscana</label>
+                                            <select class="form-select" name="tos_m0_motivazione" required>
+                                                <option value="">Seleziona Risposta</option>
+                                                <% for (Motivazione c1 : motiv) {%>
+                                                <option value="<%=c1.getId()%>"><%=c1.getDescrizione()%></option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Quanto ritiene utile il percorso YISU?</label>
+                                            <select class="form-select" name="tos_m0_utilita" required>
+                                                <option value="">Seleziona Risposta</option>
+                                                <option value="1">PER NULLA UTILE</option>
+                                                <option value="2">POCO UTILE</option>
+                                                <option value="3">UTILE</option>
+                                                <option value="4">ABBASTANZA UTILE</option>
+                                                <option value="5">MOLTO UTILE</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Cosa si aspetta frequentando YISU?</label>
+                                            <select class="form-select" name="tos_m0_aspettative" required>
+                                                <option value="">Seleziona Risposta</option>
+                                                <% for (Aspettative c1 : aspettat) {%>
+                                                <option value="<%=c1.getId()%>"><%=c1.getDescrizione()%></option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Maturazione idea di impresa/attività</label>
+                                            <select class="form-select" name="tos_m0_maturazione" required>
+                                                <option value="">Seleziona Risposta</option>
+                                                <% for (MaturazioneIdea c1 : matidea) {%>
+                                                <option value="<%=c1.getId()%>"><%=c1.getDescrizione()%></option>
+                                                <% }%>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Indirizzo email</label>
+                                            <input class="form-control" name="tos_mail" value="<%=a.getEmail()%>" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Conferma volontà di frequentare YISU</label>
+                                            <select class="form-select" name="tos_m0_volonta" onchange="return changesino();" required>
+                                                <option value="">Seleziona Risposta</option>
+                                                <option value="1">SI</option>
+                                                <option value="0">NO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3" id="div_volontasi">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Soggetto Esecutore</label>
+                                            <select class="form-select" name="soggetto">
+                                                <% for (SoggettiAttuatori c1 : salist) {%>
+                                                <option value="<%=c1.getId()%>"><%=c1.getRagionesociale()%> <%=e.getProvinceSediFormazione(c1)%></option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Consapevole delle assenze?</label>
+                                            <select class="form-select" name="tos_m0_consapevole">
+                                                <option value="0">Inapplicabile</option>
+                                                <option value="1">SI</option>
+                                                <option value="2">NO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3" id="div_volontano">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Se NO, perché?</label>
+                                            <select class="form-select" name="tos_m0_noperche" onchange="return changealtro();">
+                                                <% for (MotivazioneNO c1 : motivno) {%>
+                                                <option value="<%=c1.getId()%>"><%=c1.getDescrizione()%></option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6" id="div_altrospec">
+                                            <label class="form-label">Specificare Altro:</label>
+                                            <input class="form-control" name="tos_m0_noperchealtro" autocomplete="off">
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Note ENM</label>
+                                        <textarea class="form-control" name="tos_m0_note" autocomplete="off"></textarea>
+                                    </div>
+
+                                    <div class="d-flex justify-content-start">
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> SALVA DATI</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <% } else {%>
+                            <div class="card-body d-flex flex-column gap-2">
+                                <form action="<%=request.getContextPath()%>/OperazioniGeneral" method="POST" target="_blank">
+                                    <input type="hidden" name="type" value="onlyDownload" />
+                                    <input type="hidden" name="path" value="<%=presentemod0.getPath()%>" />
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-file-pdf"></i> SCARICA MODELLO 0</button>
+                                </form>
+
+                                <form action="<%=request.getContextPath()%>/OperazioniGeneral" method="POST">
+                                    <input type="hidden" name="type" value="sendmailModello0" />
+                                    <input type="hidden" name="idallievo" value="<%=a.getId()%>" />
+                                    <input type="hidden" name="maildest" value="<%=a.getEmail()%>" />
+                                    <input type="hidden" name="path" value="<%=presentemod0.getPath()%>" />
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-file-pdf"></i> INVIA MODELLO 0 AL DISCENTE</button>
+                                </form>
+                            </div>
+                            <% } %>
+
+                            <% if (Utility.getRequestValue(request, "esito").equals("OK")) { %>
+                            <div class="alert alert-success m-3">OPERAZIONE COMPLETATA CON SUCCESSO!</div>
+                            <% } %>
+                            <% if (Utility.getRequestValue(request, "esito").equals("KO")) { %>
+                            <div class="alert alert-danger m-3">ERRORE DURANTE L'OPERAZIONE! RIPROVARE.</div>
+                            <% } %>
                         </div>
-                    </div>	
+                    </div>
                 </div>
             </div>
-        </div>
+
+
+        </main> 
         <%e.close();%>
         <div id="kt_scrolltop"style="background-color: #0059b3" class="kt-scrolltop">
             <i class="fa fa-arrow-up"></i>
         </div>
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/popper.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
@@ -355,65 +320,65 @@
         <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/bootstrap-datepicker.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
         <script type="text/javascript">
-                                                    var KTAppOptions = {
-                                                        "colors": {
-                                                            "state": {
-                                                                "brand": "#5d78ff",
-                                                                "dark": "#282a3c",
-                                                                "light": "#ffffff",
-                                                                "primary": "#5867dd",
-                                                                "success": "#34bfa3",
-                                                                "info": "#36a3f7",
-                                                                "warning": "#ffb822"
-                                                            },
-                                                            "base": {
-                                                                "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                                                                "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                                                            }
-                                                        }
-                                                    };
-                                                    function changesino() {
+                                var KTAppOptions = {
+                                    "colors": {
+                                        "state": {
+                                            "brand": "#5d78ff",
+                                            "dark": "#282a3c",
+                                            "light": "#ffffff",
+                                            "primary": "#5867dd",
+                                            "success": "#34bfa3",
+                                            "info": "#36a3f7",
+                                            "warning": "#ffb822"
+                                        },
+                                        "base": {
+                                            "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                                            "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                                        }
+                                    }
+                                };
+                                function changesino() {
 
-                                                        try {
-                                                            var sino = $('#tos_m0_volonta').val();
-                                                            if (sino === "") {
-                                                                document.getElementById("div_volontasi").style.display = "none";
-                                                                document.getElementById("div_volontano").style.display = "none";
+                                    try {
+                                        var sino = $('#tos_m0_volonta').val();
+                                        if (sino === "") {
+                                            document.getElementById("div_volontasi").style.display = "none";
+                                            document.getElementById("div_volontano").style.display = "none";
 
-                                                            } else if (sino === "1") {
-                                                                document.getElementById("div_volontasi").style.display = "";
-                                                                document.getElementById("div_volontano").style.display = "none";
-                                                            } else {
-                                                                document.getElementById("div_volontasi").style.display = "none";
-                                                                document.getElementById("div_volontano").style.display = "";
+                                        } else if (sino === "1") {
+                                            document.getElementById("div_volontasi").style.display = "";
+                                            document.getElementById("div_volontano").style.display = "none";
+                                        } else {
+                                            document.getElementById("div_volontasi").style.display = "none";
+                                            document.getElementById("div_volontano").style.display = "";
 
-                                                            }
-                                                        } catch (e) {
-                                                            console.error(e);
-                                                        }
-
-
+                                        }
+                                    } catch (e) {
+                                        console.error(e);
+                                    }
 
 
-                                                    }
-                                                    function changealtro() {
 
-                                                        try {
-                                                            var noper = $('#tos_m0_noperche').val();
-                                                            if (noper === "7") {
-                                                                document.getElementById("div_altrospec").style.display = "";
-                                                            } else {
-                                                                document.getElementById("div_altrospec").style.display = "none";
-                                                            }
-                                                        } catch (e) {
-                                                            console.error(e);
-                                                        }
-                                                    }
 
-                                                    jQuery(document).ready(function () {
-                                                        changesino();
-                                                        changealtro();
-                                                    });
+                                }
+                                function changealtro() {
+
+                                    try {
+                                        var noper = $('#tos_m0_noperche').val();
+                                        if (noper === "7") {
+                                            document.getElementById("div_altrospec").style.display = "";
+                                        } else {
+                                            document.getElementById("div_altrospec").style.display = "none";
+                                        }
+                                    } catch (e) {
+                                        console.error(e);
+                                    }
+                                }
+
+                                jQuery(document).ready(function () {
+                                    changesino();
+                                    changealtro();
+                                });
         </script>
     </body>
 </html>

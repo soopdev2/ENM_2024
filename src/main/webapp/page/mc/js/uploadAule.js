@@ -9,7 +9,7 @@ $('#regione').on('change', function (e) {
     $("#provincia").empty();
     $("#comune").empty();
     $("#comune").append('<option value="-">. . .</option>');
-    if ($('#regione').val() != '-') {
+    if ($('#regione').val() !== '-') {
         startBlockUILoad("#provincia_div");
         $("#provincia").append('<option value="-">Seleziona Provincia</option>');
         $.get(context + '/Login?type=getProvincia&regione=' + $('#regione').val(), function (resp) {
@@ -26,7 +26,7 @@ $('#regione').on('change', function (e) {
 
 $('#provincia').on('change', function (e) {
     $("#comune").empty();
-    if ($('#provincia').val() != '-') {
+    if ($('#provincia').val() !== '-') {
         startBlockUILoad("#comune_div");
         $("#comune").append('<option value="-">Seleziona Comune</option>');
         $.get(context + '/Login?type=getComune&provincia=' + $('#provincia').val(), function (resp) {
@@ -43,7 +43,7 @@ $('#provincia').on('change', function (e) {
 function ctrlForm() {
     var err = false;
     err = checkObblFields() ? true : err;
-    if ($('#email').val() != '') {
+    if ($('#email').val() !== '') {
         err = checkEmail($('#email')) ? true : err;
     }
     return err ? false : true;

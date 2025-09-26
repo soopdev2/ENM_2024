@@ -60,99 +60,80 @@
         <link href="<%=src%>/assets/demo/default/skins/header/menu/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/brand/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="Bootstrap2024/assets/css/global.css"/>
+        <link rel="stylesheet" href="../../Bootstrap2024/assets/css/bootstrap.min.css"/>
         <link href="https://fonts.cdnfonts.com/css/titillium-web" rel="stylesheet">
 
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
         <style>
             .ui-datepicker-other-month.ui-state-disabled:not(.my_class) span{
-                color: red;    
+                color: red;
             }
         </style>
     </head>
-    <body class="kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed">
+
+    <body class="d-flex flex-column min-vh-100">
+
+
+        <%@ include file="../../Bootstrap2024/index/index_SoggettoAttuatore/Header_soggettoAttuatore.jsp"%>
+        <%@ include file="../../Bootstrap2024/index/menu/menuMc.jsp"%>
         <%@ include file="menu/head1.jsp"%>
-        <div class="kt-grid kt-grid--hor kt-grid--root">
-            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-                <%@ include file="menu/menu.jsp"%>
-                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
-                    <%@ include file="menu/head.jsp"%>
-                    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                        <div class="kt-subheader   kt-grid__item" id="kt_subheader">
-                            <div class="kt-subheader   kt-grid__item" id="kt_subheader">
-                                <div class="kt-subheader__main">
-                                    <h3 class="kt-subheader__title">CAD</h3>
-                                    <span class="kt-subheader__separator kt-subheader__separator--v"></span>
-                                    <a class="kt-subheader__breadcrumbs-link">Crea Utente CPI</a>
-                                </div>
+        <%@ include file="menu/head.jsp"%>
+
+
+        <main class="container-fluid my-4">
+
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card mb-3">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Crea Utente CPI</h5>
+                                <a href="#" class="btn btn-sm btn-light" data-bs-toggle="collapse" data-bs-target="#formCpiBody" aria-expanded="true">
+                                    <i class="la la-angle-down"></i>
+                                </a>
                             </div>
-                        </div>
-                        <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="kt-portlet" id="kt_portlet" data-ktportlet="true"><!--io-background-->
-                                        <div class="kt-portlet__head">
-                                            <div class="kt-portlet__head-label">
-                                                <h3 class="kt-portlet__head-title" >
-                                                    Crea Utente CPI :
-                                                </h3>
-                                            </div>
-                                            <div class="kt-portlet__head-toolbar">
-                                                <div class="kt-portlet__head-group">
-                                                    <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down" id="toggle_search"></i></a>
-                                                </div>
-                                            </div>
+                            <div class="card-body collapse show" id="formCpiBody">
+                                <form id="kt_form" action="<%=request.getContextPath()%>/OperazioniMicro?type=addCpiUser" method="post" accept-charset="ISO-8859-1">
+                                    <div class="row g-3">
+                                        <div class="col-xl-4 col-lg-6">
+                                            <label for="nome" class="form-label">Nome <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control obbligatory" name="nome" id="nome">
                                         </div>
-                                        <div class="kt-portlet__body">
-                                            <form id="kt_form" action="<%=request.getContextPath()%>/OperazioniMicro?type=addCpiUser" class="kt-form kt-form--label-right" accept-charset="ISO-8859-1" method="post">
-                                                <div class="form-group row">
-                                                    <div class="col-xl-4 col-lg-6">
-                                                        <label>Nome</label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                        <input class="form-control obbligatory" name="nome">
-                                                    </div>
-                                                    <div class="col-xl-4 col-lg-6">
-                                                        <label>Cognome</label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                        <input class="form-control obbligatory" name="cognome">
-                                                    </div>
-                                                    <div class="col-xl-4 col-lg-6">
-                                                        <label>Email</label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                        <input class="form-control obbligatory" id="email" name="email">
-                                                    </div>
-                                                    <div class="col-xl-4 col-lg-6">
-                                                        <label>CPI </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                        <div class="select-div" id="cpi_div">
-                                                            <select class="form-control kt-select2-general obbligatory" id="cpi" name="cpi">
-                                                                <option value="-">Seleziona CPI</option>
-                                                                <%for (CPI c : cpi) {%>
-                                                                <option value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
-                                                                <%}%>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <label class="kt-font-danger">* Campi obbligatori</label>
-                                            </form>
+                                        <div class="col-xl-4 col-lg-6">
+                                            <label for="cognome" class="form-label">Cognome <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control obbligatory" name="cognome" id="cognome">
                                         </div>
-                                        <div class="kt-portlet__foot">
-                                            <div class="kt-form__actions">
-                                                <div class="row">
-                                                    <div class="offset-lg-6 col-lg-6 kt-align-right">
-                                                        <a id="submit" href="javascript:void(0);" class="btn btn-primary"><font color='white'>Salva</font></a>
-                                                        <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-warning"><font color='white'>Reset</font></a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="col-xl-4 col-lg-6">
+                                            <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                            <input type="email" class="form-control obbligatory" name="email" id="email">
+                                        </div>
+                                        <div class="col-xl-4 col-lg-6">
+                                            <label for="cpi" class="form-label">CPI <span class="text-danger">*</span></label>
+                                            <select class="form-select obbligatory" id="cpi" name="cpi">
+                                                <option value="-">Seleziona CPI</option>
+                                                <% for (CPI c : cpi) {%>
+                                                <option value="<%=c.getId()%>"><%=c.getDescrizione()%></option>
+                                                <% }%>
+                                            </select>
                                         </div>
                                     </div>
-                                </div>
+                                    <small class="text-danger mt-2 d-block">* Campi obbligatori</small>
+                                    <div class="mt-3 d-flex justify-content-end gap-2">
+                                        <button type="submit" class="btn btn-primary">Salva</button>
+                                        <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-warning">Reset</a>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
-                    <%@ include file="menu/footer.jsp"%>
                 </div>
             </div>
-        </div>
-                <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
+
+        </main>
+        <%@include file="../../Bootstrap2024/index/login/Footer_login.jsp" %>
+
+        <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
             <i class="fa fa-arrow-up"></i>
         </div>
 
@@ -164,8 +145,8 @@
         </form>        
         <!--begin:: Global Mandatory Vendors -->
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/popper.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>

@@ -12,7 +12,7 @@ function getConversation() {
         type: "GET",
         url: context + "/QuerySA?type=getConversationSA",
         success: function (resp) {
-            if (resp != null && resp != "") {
+            if (resp !== null && resp !== "") {
                 var json = JSON.parse(resp);
                 setConversation(json);
             }
@@ -28,7 +28,7 @@ function setConversation(json) {
         $("#answers").append(mittente
                 .replace("@testo", j.domanda)
                 .replace("@data", formattedDate(new Date(j.date_ask))));
-        if (j.risposta != null) {
+        if (j.risposta !== null) {
             $("#answers").append(destinatario
                     .replace("@testo", j.risposta)
                     .replace("@data", formattedDate(new Date(j.date_answer))));
@@ -71,7 +71,7 @@ function ctrlForm() {
 }
 
 jQuery(document).ready(function () {
-    $("#answers").css({"min-height": ($("#kt_content").height() * 0.3) + "px", "max-height": ($("#kt_content").height() * 0.75) + "px"})
+    $("#answers").css({"min-height": ($("#kt_content").height() * 0.3) + "px", "max-height": ($("#kt_content").height() * 0.75) + "px"});
     $('.kt-scroll').each(function () {
         const ps = new PerfectScrollbar($(this)[0]);
     });
@@ -80,7 +80,7 @@ jQuery(document).ready(function () {
 });//
 
 function pressEnter(e) {
-    if (e.keyCode == 13) {
+    if (e.keyCode === 13) {
         sendAsk();
         return false;
     }

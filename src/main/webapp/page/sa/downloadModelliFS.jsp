@@ -56,86 +56,93 @@
     <body>
         <%@ include file="menu/head1.jsp"%>
         <%@ include file="../../Bootstrap2024/index/index_SoggettoAttuatore/Header_soggettoAttuatore.jsp"%>
-        <div class="kt-grid kt-grid--hor kt-grid--root">
-            <%@ include file="../../Bootstrap2024/index/menu/menuAtt.jsp"%>
-            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
-                    <%@ include file="menu/head.jsp"%>
-                    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                        <div class="kt-subheader   kt-grid__item" id="kt_subheader">
-                            <div class="kt-subheader   kt-grid__item" id="kt_subheader">
-                                <div class="kt-subheader__main">
-                                    <h3 class="kt-subheader__title">Materiale didattico</h3>
-                                    <span class="kt-subheader__separator kt-subheader__separator--v"></span>
-                                    <a class="kt-subheader__breadcrumbs-link">Modelli</a>
-                                </div>
-                            </div>
+        <%@ include file="../../Bootstrap2024/index/menu/menuAtt.jsp"%>
+        <%@ include file="menu/head.jsp"%>
+
+
+
+    <body class="d-flex flex-column min-vh-100">
+
+
+        <main class="flex-grow-1 container-fluid px-4">
+
+            <!-- intestazione sezione -->
+            <div class="it-page-sections-container my-3">
+                <div class="it-page-section">
+                    <div class="it-header-title d-flex align-items-center justify-content-between">
+                        <div>
+                            <h1 class="h3">Materiale didattico</h1>
+                            <span class="text-muted ms-2">Modelli</span>
                         </div>
-                        <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="kt-portlet" id="kt_portlet" data-ktportlet="true">
-                                        <div class="kt-portlet__head">
-                                            <div class="kt-portlet__head-label col-lg-8">
-                                                <div class="col-lg-4">
-                                                    <h3 class="kt-portlet__head-title text" >
-                                                        Risultati :
-                                                    </h3>
-                                                </div>
-                                            </div>
-                                            <div class="kt-portlet__head-toolbar">
-                                                <div class="kt-portlet__head-group">
-                                                    <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down" id="toggle_search"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="kt-portlet__body">
-                                            <%@ include file="../all/modelli.jsp"%>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <%@ include file="../../Bootstrap2024/index/login/Footer_login.jsp"%>
                     </div>
                 </div>
             </div>
-        </div>
-        <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
-            <i class="fa fa-arrow-up"></i>
-        </div>
-        <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/sticky-js/dist/sticky.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/sweetalert2/dist/sweetalert2.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/app/bundle/app.bundle.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/soop/js/utility.js" type="text/javascript"></script>
-        <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            var KTAppOptions = {
-                "colors": {
-                    "state": {
-                        "brand": "#5d78ff",
-                        "dark": "#282a3c",
-                        "light": "#ffffff",
-                        "primary": "#5867dd",
-                        "success": "#34bfa3",
-                        "info": "#36a3f7",
-                        "warning": "#ffb822"
-                    },
-                    "base": {
-                        "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                        "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                    }
+
+            <!-- contenuto principale -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card shadow-sm border-0 rounded-3">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h3 class="h5 mb-0">Risultati:</h3>
+                            <button class="btn btn-sm btn-outline-secondary" 
+                                    type="button" 
+                                    data-bs-toggle="collapse" 
+                                    data-bs-target="#collapseSearch" 
+                                    aria-expanded="true" 
+                                    aria-controls="collapseSearch">
+                                <span class="visually-hidden">Mostra/Nascondi ricerca</span>
+                                <i class="it-expand"></i>
+                            </button>
+                        </div>
+                        <div class="card-body collapse show" id="collapseSearch">
+                            <%@ include file="../all/modelli.jsp"%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <%@ include file="../../Bootstrap2024/index/login/Footer_login.jsp"%>
+
+
+
+
+
+    <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
+        <i class="fa fa-arrow-up"></i>
+    </div>
+    <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/vendors/general/sticky-js/dist/sticky.min.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/vendors/general/sweetalert2/dist/sweetalert2.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/app/bundle/app.bundle.js" type="text/javascript"></script>
+    <script src="<%=src%>/assets/soop/js/utility.js" type="text/javascript"></script>
+    <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var KTAppOptions = {
+            "colors": {
+                "state": {
+                    "brand": "#5d78ff",
+                    "dark": "#282a3c",
+                    "light": "#ffffff",
+                    "primary": "#5867dd",
+                    "success": "#34bfa3",
+                    "info": "#36a3f7",
+                    "warning": "#ffb822"
+                },
+                "base": {
+                    "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                    "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
                 }
-            };
-        </script>
-    </body>
+            }
+        };
+    </script>
+</body>
 </html>
 <%
         }

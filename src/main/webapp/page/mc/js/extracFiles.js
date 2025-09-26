@@ -66,7 +66,7 @@
                         columns: [
                             {data: 'timestamp', className: 'text-center'},
                             {data: 'path', className: 'text-center'},
-                            {data: 'progetti', className: 'text-center'},
+                            {data: 'progetti', className: 'text-center'}
                         ],
                         drawCallback: function () {
                             $('[data-toggle="kt-tooltip"]').tooltip();
@@ -85,7 +85,7 @@
                                 targets: 1,
                                 render: function (data, type, row, meta) {
                                     return "<a data-container='body' data-toggle='kt-tooltip' data-placement='top' title='Scarica' href='" + context + "/OperazioniGeneral?type=downloadDoc&path=" + data + "'><u><b>" + data.substring(data.lastIndexOf("/") + 1) + "</b><u></a>";
-                                },
+                                }
                             }, {
                                 targets: 2,
                                 type: 'text-center',
@@ -101,15 +101,15 @@
                                         }
                                     });
                                     return cips;
-                                },
-                            },
+                                }
+                            }
                         ]
                     }).columns.adjust();
                 };
                 return {
                     init: function () {
                         initTable1();
-                    },
+                    }
                 };
             }();
 

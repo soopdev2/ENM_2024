@@ -24,7 +24,7 @@ function modifyDocId(id, estensione, mime_type) {
         },
         onOpen: function () {
             $('#file').change(function (e) {
-                if (e.target.files.length != 0)
+                if (e.target.files.length !== 0)
                     //$('#label_file').html(e.target.files[0].name);
                     if (e.target.files[0].name.length > 30)
                         $('#label_doc').html(e.target.files[0].name.substring(0, 30) + "...");
@@ -46,7 +46,7 @@ function modifyDocId(id, estensione, mime_type) {
             } else {
                 return false;
             }
-        },
+        }
     }).then((result) => {
         if (result.value) {
             showLoad();
@@ -98,7 +98,7 @@ function modifyDoc(id, estensione, mime_type) {
         },
         onOpen: function () {
             $('#file').change(function (e) {
-                if (e.target.files.length != 0)
+                if (e.target.files.length !== 0)
                     //$('#label_file').html(e.target.files[0].name);
                     if (e.target.files[0].name.length > 30)
                         $('#label_doc').html(e.target.files[0].name.substring(0, 30) + "...");
@@ -120,7 +120,7 @@ function modifyDoc(id, estensione, mime_type) {
             } else {
                 return false;
             }
-        },
+        }
     }).then((result) => {
         if (result.value) {
             showLoad();
@@ -172,7 +172,7 @@ function uploadDoc(idallievo, id_tipoDoc, estensione, mime_type) {
         },
         onOpen: function () {
             $('#file').change(function (e) {
-                if (e.target.files.length != 0)
+                if (e.target.files.length !== 0)
                     //$('#label_file').html(e.target.files[0].name);
                     if (e.target.files[0].name.length > 30)
                         $('#label_doc').html(e.target.files[0].name.substring(0, 30) + "...");
@@ -194,7 +194,7 @@ function uploadDoc(idallievo, id_tipoDoc, estensione, mime_type) {
             } else {
                 return false;
             }
-        },
+        }
     }).then((result) => {
         if (result.value) {
             showLoad();

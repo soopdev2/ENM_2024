@@ -112,7 +112,7 @@ var KTDatatablesDataSourceAjaxServer = function () {
     return {
         init: function () {
             initTable1();
-        },
+        }
     };
 }();
 jQuery(document).ready(function () {
@@ -144,7 +144,7 @@ function validateAula(id, statusdest) {
         confirmButtonClass: "btn btn-io",
         width: '750px',
         customClass: {
-            popup: 'animated bounceInUp',
+            popup: 'animated bounceInUp'
         }
     }).then((result) => {
         if (result.value) {
@@ -167,7 +167,7 @@ function rejectAula(id) {
         confirmButtonClass: "btn btn-io",
         width: '750px',
         customClass: {
-            popup: 'animated bounceInUp',
+            popup: 'animated bounceInUp'
         }
     }).then((result) => {
         if (result.value) {
@@ -320,7 +320,7 @@ var KTDatatablesDataSourceAjaxServer = function () {
     return {
         init: function () {
             initTable1();
-        },
+        }
     };
 }();
 
@@ -353,7 +353,7 @@ function validateAula(id, statusdest) {
         confirmButtonClass: "btn btn-io",
         width: '750px',
         customClass: {
-            popup: 'animated bounceInUp',
+            popup: 'animated bounceInUp'
         }
     }).then((result) => {
         if (result.value) {
@@ -377,7 +377,7 @@ function rejectAula(id) {
         confirmButtonClass: "btn btn-io",
         width: '750px',
         customClass: {
-            popup: 'animated bounceInUp',
+            popup: 'animated bounceInUp'
         }
     }).then((result) => {
         if (result.value) {
