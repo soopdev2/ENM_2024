@@ -81,9 +81,12 @@
             }
         </style>
     </head>
+
+
+
     <body>
-        <%@ include file="menu/head1.jsp"%>
         <%@ include file="../../Bootstrap2024/index/index_SoggettoAttuatore/Header_soggettoAttuatore.jsp"%>
+        <%@ include file="menu/head1.jsp"%>
         <%@ include file="../../Bootstrap2024/index/menu/menuAtt.jsp"%>
         <%@ include file="menu/head.jsp"%>
 
@@ -93,83 +96,99 @@
             <div class="kt-spinner kt-spinner--io"></div>
         </div>
 
-        <main class="container-fluid my-4">
-            <!-- Intestazione -->
-            <div class="mb-3">
-                <h3>Progetti Formativi</h3>
-                <span class="text-muted">Cerca</span>
-            </div>
+        <main>
 
-            <!-- Box Ricerca -->
-            <div class="card shadow-sm mb-4" id="kt_portlet" data-ktportlet="true">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h3 class="card-title m-0">Cerca :</h3>
-                    <div class="card-toolbar">
-                        <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md">
-                            <i class="la la-angle-down" id="toggle_search"></i>
-                        </a>
+            <div class="container-fluid" id="kt_wrapper">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex align-items-center mb-3">
+                            <h3 class="me-2">Progetti Formativi</h3>
+                            <span class="vr me-2"></span>
+                            <a href="#">Cerca</a>
+                        </div>
                     </div>
                 </div>
 
-                <form action="" class="card-body p-3" onsubmit="refresh(); return false;" method="post" accept-charset="ISO-8859-1">
-                    <div class="row g-3">
-                        <div class="col-lg-3">
-                            <label for="cip" class="form-label">CIP</label>
-                            <input type="text" class="form-control" value="<%=icip%>" name="cip" id="cip" autocomplete="off">
-                        </div>
-                        <div class="col-lg-3">
-                            <label for="stato" class="form-label">Stato</label>
-                            <div class="dropdown bootstrap-select form-control kt-" id="stato_div" style="padding: 0; height: 35px;">
-                                <select class="form-control kt-select2-general" id="stato" name="stato" style="width: 100%;">
-                                    <option value="-">Seleziona Stato</option>
-                                    <%for (StatiPrg i : stati) {%>
-                                    <option value="<%=i.getTipo()%>"><%=i.getDescrizione()%></option>
-                                    <%}%>
-                                </select>
+                <!-- Form di ricerca -->
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="card" id="kt_portlet">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Cerca :</h5>
+                                <button class="btn btn-sm btn-icon btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#searchBody" aria-expanded="true">
+                                    <i class="la la-angle-down" id="toggle_search"></i>
+                                </button>
+                            </div>
+                            <div class="collapse show" id="searchBody">
+                                <form class="card-body" onsubmit="refresh();return false;" accept-charset="ISO-8859-1" method="post">
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3">
+                                            <label for="cip" class="form-label">CIP</label>
+                                            <input type="text" class="form-control" value="<%=icip%>" name="cip" id="cip" autocomplete="off">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="stato" class="form-label">Stato</label>
+                                            <select class="form-select" id="stato" name="stato" style="width: 100%">
+                                                <option value="-">Seleziona Stato</option>
+                                                <%for (StatiPrg i : stati) {%>
+                                                <option value="<%=i.getTipo()%>"><%=i.getDescrizione()%></option>
+                                                <%}%>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <a href="javascript:void(0);" onclick="refresh();" class="btn btn-primary me-2">Cerca</a>
+                                        <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-warning">Reset</a>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
-
-                    <div class="d-flex justify-content-end mt-4">
-                        <a onclick="refresh();" href="javascript:void(0);" class="btn btn-primary me-2"><font color="white">Cerca</font></a>
-                        <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-warning"><font color="white">Reset</font></a>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Risultati -->
-            <div class="card shadow-sm" id="kt_portlet" data-ktportlet="true">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h3 class="card-title m-0">Risultati :</h3>
-                    <div class="card-toolbar">
-                        <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md">
-                            <i class="la la-angle-down" id="toggle_search"></i>
-                        </a>
-                    </div>
                 </div>
 
-                <div class="card-body table-responsive kt-scroll-x">
-                    <table class="table table-striped table-bordered text-center" id="kt_table_1" style="width:100%;">
-                        <thead class="table-light">
-                            <tr>
-                                <th class="text-uppercase">Azioni</th>
-                                <th class="text-uppercase">ID</th>
-                                <th class="text-uppercase">Data Inizio</th>
-                                <th class="text-uppercase">Data Fine</th>
-                                <th class="text-uppercase">CIP</th>
-                                <th class="text-uppercase">Allievi</th>
-                                <th class="text-uppercase">Stato</th>
-                                <th class="text-uppercase">Motivo Errore</th>
-                                <th class="text-uppercase">Errore O Verificare</th>
-                            </tr>
-                        </thead>
-                    </table>
+                <!-- Risultati -->
+                <div class="row" id="offsetresult">
+                    <div class="col-12">
+                        <div class="card" id="kt_portlet">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Risultati :</h5>
+                                <button class="btn btn-sm btn-icon btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#resultBody" aria-expanded="true">
+                                    <i class="la la-angle-down" id="toggle_search"></i>
+                                </button>
+                            </div>
+                            <div class="card-body collapse show" id="resultBody">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered" id="kt_table_1" style="width:100%">
+                                        <thead>
+                                            <tr class="text-center text-uppercase">
+                                                <th>Azioni</th>
+                                                <th>ID</th>
+                                                <th>Data Inizio</th>
+                                                <th>Data Fine</th>
+                                                <th>CIP</th>
+                                                <th>Allievi</th>
+                                                <th>Stato</th>
+                                                <th>Motivo Errore</th>
+                                                <th>Errore O Verificare</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Riempito via JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-        </main>
+
+
+
+
+        </main>       
         <%@ include file="../../Bootstrap2024/index/login/Footer_login.jsp"%>
-
 
 
 
@@ -177,14 +196,13 @@
             <i class="fa fa-arrow-up"></i>
         </div>
         <!--start:Modal-->
-
-        <!-- Allievi Modal -->
-        <div class="modal fade" id="allievi_table" tabindex="-1" aria-labelledby="Allievi Progetto Formativo" aria-hidden="true">
-            <div class="modal-dialog modal-fullscreen modal-dialog-centered">
-                <div class="modal-content text-center">
+        <div class="modal fade" id="allievi_table" tabindex="-1" role="dialog" aria-labelledby="Allievi Progetto Formativo" aria-hidden="true">
+            <div class="modal-dialog modal-full modal-dialog-centered" role="document">
+                <div class="modal-content center">
                     <div class="modal-header">
-                        <h5 class="modal-title">Allievi Progetto</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title" id="exampleModalLabel">Allievi Progetto</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        </button>
                     </div>
                     <div class="modal-body">
                         <div class="kt-scroll" style="max-height: 750px; min-height: 750px;">
@@ -205,42 +223,39 @@
                 </div>
             </div>
         </div>
-
-        <!-- Documenti Modal -->
-        <div class="modal fade" id="doc_modal" tabindex="-1" aria-labelledby="Documenti" aria-hidden="true">
-            <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal fade" id="doc_modal" tabindex="-1" role="dialog" aria-labelledby="Documenti" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Documenti</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title" id="exampleModalLabel">Documenti</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        </button>
                     </div>
                     <div class="modal-body">
-                        <div class="text-center">
+                        <div style="text-align: center;">
                             <div class="kt-scroll row col-12" id="prg_docs" style="max-height: 750px;"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Registro Aula Modal -->
-        <div class="modal fade" id="register_modal" tabindex="-1" aria-labelledby="Registro Aula" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal fade" id="register_modal" tabindex="-1" role="dialog" aria-labelledby="Registro Aula" aria-hidden="true"> 
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Registro Aula</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title" id="exampleModalLabel">Registro Aula</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        </button>
                     </div>
                     <div class="modal-body kt-scroll" style="max-height: 500px;">
-                        <div class="row col-12" id="register_docs_modal"></div>
+                        <div class="row col-12" id="register_docs_modal">
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <!--end::Modal-->
-
-
         <script src="<%=src%>/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/jquery/dist/jquery.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
@@ -269,23 +284,23 @@
                 data-demoversion="<%=Utility.demoversion%>"
         type="text/javascript"></script>
         <script type="text/javascript">
-                            var KTAppOptions = {
-                                "colors": {
-                                    "state": {
-                                        "brand": "#5d78ff",
-                                        "dark": "#282a3c",
-                                        "light": "#ffffff",
-                                        "primary": "#5867dd",
-                                        "success": "#34bfa3",
-                                        "info": "#36a3f7",
-                                        "warning": "#ffb822"
-                                    },
-                                    "base": {
-                                        "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                                        "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                                var KTAppOptions = {
+                                    "colors": {
+                                        "state": {
+                                            "brand": "#5d78ff",
+                                            "dark": "#282a3c",
+                                            "light": "#ffffff",
+                                            "primary": "#5867dd",
+                                            "success": "#34bfa3",
+                                            "info": "#36a3f7",
+                                            "warning": "#ffb822"
+                                        },
+                                        "base": {
+                                            "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                                            "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                                        }
                                     }
-                                }
-                            };
+                                };
 
         </script>
 

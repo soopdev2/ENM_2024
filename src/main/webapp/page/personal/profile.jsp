@@ -21,10 +21,10 @@
         if (!Action.isVisibile(type_, pageName_)) {
             response.sendRedirect(request.getContextPath() + "/page_403.jsp");
         } else {
-        String src = Utility.checkAttribute(session, "src");
-        Entity e = new Entity();
-        List<Item> regioni = e.listaRegioni();
-        e.close();
+            String src = Utility.checkAttribute(session, "src");
+            Entity e = new Entity();
+            List<Item> regioni = e.listaRegioni();
+            e.close();
 %>
 <html>
     <head>
@@ -123,11 +123,11 @@
                                                 <div class="kt-portlet__head-label">
                                                     <h3 class="kt-portlet__head-title kt-font-io">
                                                         <i class="flaticon2-user"></i><label data-toggle="popover-hover" data-content="<h5>Username: <%=us.getUsername()%></h5>">  Profilo | <b><%=us.getSoggettoAttuatore().getRagionesociale()%></b></label>&nbsp;&nbsp;&nbsp;
-                                                        <% if (us.getSoggettoAttuatore().getProtocollo() == null) {%>
+                                                            <% if (us.getSoggettoAttuatore().getProtocollo() == null) {%>
                                                         <a data-toggle="popover-hover" data-content="<h5>Soggetto Esecutore in attesa di accreditamento</h5>" ><i class="flaticon2-correct kt-font-io-n"></i></a>
-                                                        <%} else {%>
+                                                            <%} else {%>
                                                         <a data-toggle="popover-hover" data-content="<h5>Soggetto Esecutore accreditato</h5>" ><i class="flaticon2-correct kt-font-success"></i></a>
-                                                        <%}%>
+                                                            <%}%>
                                                     </h3>
                                                 </div>
                                             </div>
@@ -742,4 +742,5 @@
         </script>
     </body>
 </html>
-<%}//}%>
+<%}
+    }%>
