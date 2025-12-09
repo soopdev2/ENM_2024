@@ -51,7 +51,7 @@ public class Action {
     public static boolean isVisibile(String gruppo, String page) {//(tipo, pagina)
 
         Database db = new Database(false);
-        if (db.getC() == null) {
+        if (db.getEm()== null) {
             return false;
         }
 
@@ -89,7 +89,7 @@ public class Action {
             return 0;
         }
         Database db = new Database(false);
-        if (db.getC() == null) {
+        if (db.getEm() == null) {
             return 0;
         }
         int c = db.countPregresso();
@@ -100,7 +100,7 @@ public class Action {
     public static List<FadCalendar> calendarioFAD(String id) {
         List<FadCalendar> out = new ArrayList<>();
         Database db = new Database(false);
-        if (db.getC() == null) {
+        if (db.getEm() == null) {
             return out;
         }
         out = db.calendarioFAD(id);
@@ -110,7 +110,7 @@ public class Action {
 
     public static String linkFAD() {
         Database db = new Database(false);
-        if (db.getC() == null) {
+        if (db.getEm() == null) {
             return "https://accreditamento.diventaimprenditore.eu/fad_neet/";
         }
         String out = db.getPathtemp("linkfad");

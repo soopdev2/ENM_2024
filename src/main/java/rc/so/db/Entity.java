@@ -65,10 +65,8 @@ import static org.apache.commons.io.FilenameUtils.separatorsToSystem;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.joda.time.DateTime;
-import org.mindrot.jbcrypt.BCrypt;
 import rc.so.domain.Presenze_Lezioni;
 import rc.so.domain.Presenze_Lezioni_Allievi;
-import static rc.so.util.Utility.convBcrypt;
 
 /**
  *

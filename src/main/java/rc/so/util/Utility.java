@@ -60,7 +60,6 @@ import static java.lang.Math.toRadians;
 import java.math.BigDecimal;
 import static java.math.BigDecimal.ROUND_HALF_DOWN;
 import java.math.RoundingMode;
-import java.security.MessageDigest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -109,8 +108,6 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import jakarta.servlet.http.HttpSession;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import org.mindrot.jbcrypt.BCrypt;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
@@ -1286,38 +1283,45 @@ public class Utility {
 
     private static int getIdAllievo(Database db, String nome, String cognome, int idpr) {
         try {
-            String sql = "SELECT idallievi FROM allievi WHERE nome = ? AND cognome = ? AND idprogetti_formativi = ? AND id_statopartecipazione = ? ORDER BY idallievi DESC LIMIT 1";
-            try (PreparedStatement ps = db.getC().prepareStatement(sql)) {
-                ps.setString(1, nome);
-                ps.setString(2, cognome);
-                ps.setInt(3, idpr);
-                ps.setString(4, "01");
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    return rs.getInt(1);
-                }
+            List<Integer> results = db.getEm().createQuery(
+                    "SELECT a.id FROM Allievi a "
+                    + "WHERE a.nome = :nome AND a.cognome = :cognome "
+                    + "AND a.progetto.id = :idpr AND a.statopartecipazione.id = '01' "
+                    + "ORDER BY a.id DESC", Integer.class)
+                    .setParameter("nome", nome)
+                    .setParameter("cognome", cognome)
+                    .setParameter("idpr", idpr)
+                    .setMaxResults(1)
+                    .getResultList();
+
+            if (!results.isEmpty()) {
+                return results.get(0);
             }
         } catch (Exception ex) {
-            insertTR("E", "SERVICE", estraiEccezione(ex));
+            db.insertTR("E", "SERVICE", estraiEccezione(ex));
         }
         return 0;
     }
 
     private static int getIdDocente(Database db, String nome, String cognome, int idsa) {
         try {
-            String sql = "SELECT iddocenti FROM docenti WHERE nome = ? AND cognome = ? AND idsoggetti_attuatori = ? AND stato = ? ORDER BY iddocenti DESC LIMIT 1";
-            try (PreparedStatement ps = db.getC().prepareStatement(sql)) {
-                ps.setString(1, nome);
-                ps.setString(2, cognome);
-                ps.setInt(3, idsa);
-                ps.setString(4, "A");
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    return rs.getInt(1);
-                }
+           // prendo l'Entity associata al Database
+            List<Integer> results = db.getEm().createQuery(
+                    "SELECT d.id FROM Docenti d "
+                    + "WHERE d.nome = :nome AND d.cognome = :cognome "
+                    + "AND d.soggetto.id = :idsa AND d.stato = 'A' "
+                    + "ORDER BY d.id DESC", Integer.class)
+                    .setParameter("nome", nome)
+                    .setParameter("cognome", cognome)
+                    .setParameter("idsa", idsa)
+                    .setMaxResults(1)
+                    .getResultList();
+
+            if (!results.isEmpty()) {
+                return results.get(0);
             }
         } catch (Exception ex) {
-            insertTR("E", "SERVICE", estraiEccezione(ex));
+            db.insertTR("E", "SERVICE", estraiEccezione(ex));
         }
         return 0;
     }

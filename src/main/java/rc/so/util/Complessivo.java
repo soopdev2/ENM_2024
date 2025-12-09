@@ -26,6 +26,8 @@ import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.AreaBreakType;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
+import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import static rc.so.db.Action.insertTR;
 import rc.so.db.Database;
 import rc.so.domain.User;
@@ -40,8 +42,10 @@ import static rc.so.util.Utility.sanitizeFile;
 import static rc.so.util.Utility.timestamp;
 import static rc.so.util.Utility.timestampITAcomplete;
 import java.io.File;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +53,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
+import rc.so.domain.DocumentiPrg;
+import rc.so.domain.ProgettiFormativi;
+import rc.so.domain.TipoDoc;
 
 /**
  *
@@ -99,38 +106,22 @@ public class Complessivo {
                 List<Registro_completo> registro = new ArrayList<>();
                 Table table = new Table(UnitValue.createPercentArray(8)).useAllAvailableWidth();
                 try {
+
                     String day = cal.getGiorno();
-                    String sql = "SELECT * FROM registro_completo WHERE idprogetti_formativi = " + idpr
-                            + " AND data = '" + day
-                            + "' AND fase='A' ORDER BY ruolo DESC,cognome ASC,nome ASC";
-                    try (Statement st = db1.getC().createStatement(); ResultSet rs = st.executeQuery(sql)) {
-                        while (rs.next()) {
-                            Registro_completo rc = new Registro_completo(
-                                    rs.getInt(1),
-                                    rs.getInt(2),
-                                    rs.getInt(3),
-                                    rs.getString(4),
-                                    new DateTime(rs.getDate(5).getTime()),
-                                    rs.getString(6),
-                                    rs.getInt(7),
-                                    rs.getString(8),
-                                    rs.getString(9),
-                                    rs.getLong(10),
-                                    rs.getString(11),
-                                    rs.getString(12),
-                                    rs.getInt(13),
-                                    rs.getString(14),
-                                    rs.getString(15),
-                                    rs.getString(16),
-                                    rs.getString(17),
-                                    rs.getString(18),
-                                    rs.getString(19),
-                                    rs.getLong(20),
-                                    rs.getLong(21),
-                                    rs.getInt(23));
-                            registro.add(rc);
-                        }
-                    }
+
+                    // stessa logica e stesso SQL, ma usiamo l'EntityManager
+                    String jpql = "SELECT r FROM Registro_completo r "
+                            + "WHERE r.idprogetti_formativi = :idpr "
+                            + "AND r.data = :day "
+                            + "AND r.fase = 'A' "
+                            + "ORDER BY r.ruolo DESC, r.cognome ASC, r.nome ASC";
+
+                    TypedQuery<Registro_completo> query = db1.getEm()
+                            .createQuery(jpql, Registro_completo.class)
+                            .setParameter("idpr", idpr)
+                            .setParameter("day", java.sql.Date.valueOf(day));
+
+                    registro = query.getResultList();
 
                     Cell cell0 = new Cell(1, 8);
                     cell0.add(new Paragraph("YES I START UP – Formazione per l'Avvio d'Impresa").addStyle(bold));
@@ -326,34 +317,13 @@ public class Complessivo {
                             + " AND data = '" + day
                             + "' AND fase='B' AND gruppofaseb = '" + cal.getGruppo()
                             + "' ORDER BY ruolo DESC,cognome ASC,nome ASC";
-                    try (Statement st = db1.getC().createStatement(); ResultSet rs = st.executeQuery(sql)) {
-                        while (rs.next()) {
-                            Registro_completo rc = new Registro_completo(
-                                    rs.getInt(1),
-                                    rs.getInt(2),
-                                    rs.getInt(3),
-                                    rs.getString(4),
-                                    new DateTime(rs.getDate(5).getTime()),
-                                    rs.getString(6),
-                                    rs.getInt(7),
-                                    rs.getString(8),
-                                    rs.getString(9),
-                                    rs.getLong(10),
-                                    rs.getString(11),
-                                    rs.getString(12),
-                                    rs.getInt(13),
-                                    rs.getString(14),
-                                    rs.getString(15),
-                                    rs.getString(16),
-                                    rs.getString(17),
-                                    rs.getString(18),
-                                    rs.getString(19),
-                                    rs.getLong(20),
-                                    rs.getLong(21),
-                                    rs.getInt(23));
-                            registro.add(rc);
-                        }
-                    }
+
+                    TypedQuery<Registro_completo> query = db1.getEm()
+                            .createQuery(sql, Registro_completo.class)
+                            .setParameter("idpr", idpr)
+                            .setParameter("day", java.sql.Date.valueOf(day));
+
+                    registro = query.getResultList();
 
                     Cell cell0 = new Cell(1, 8);
                     cell0.add(new Paragraph("YES I START UP – Formazione per l'Avvio d'Impresa").addStyle(bold));
@@ -551,7 +521,6 @@ public class Complessivo {
                     printbarcode(barcode, pdfDoc1, true, add);
                 }
 
-                
                 out0.deleteOnExit();
 
                 File pdf_final = new File(path_destinazione + File.separator + "Registro Complessivo_" + now1 + ".pdf");
@@ -562,48 +531,52 @@ public class Complessivo {
                     out1S.deleteOnExit();
                     if (save) {
                         Database db3 = new Database(false);
-                        String sql = "SELECT iddocumenti_progetti FROM documenti_progetti WHERE idprogetto = " + idpr
-                                + " AND tipo = 33";
-                        try (Statement st = db3.getC().createStatement(); ResultSet rs = st.executeQuery(sql)) {
-                            if (rs.next()) {
-                                String upd = "UPDATE documenti_progetti SET path = ? WHERE iddocumenti_progetti = ?";
-                                try (PreparedStatement ps = db3.getC().prepareStatement(upd)) {
-                                    ps.setString(1, pdf_final.getPath());
-                                    ps.setInt(2, rs.getInt(1));
-                                    ps.executeUpdate();
-                                }
+                        try {
+                            String jpql = "SELECT d FROM DocumentiPrg d WHERE d.progetto.id = :idprogetto AND d.tipo.id = 33";
+                            TypedQuery<DocumentiPrg> query = db3.getEm()
+                                    .createQuery(jpql, DocumentiPrg.class)
+                                    .setParameter("idprogetto", idpr);
+
+                            List<DocumentiPrg> results = query.getResultList();
+
+                            db3.getEm().getTransaction().begin();
+
+                            if (!results.isEmpty()) {
+                                // Documento esistente → aggiorno path
+                                DocumentiPrg doc1 = results.get(0);
+                                doc1.setPath(pdf_final.getPath());
+                                db3.getEm().merge(doc1);
                             } else {
-                                String ins = "INSERT INTO documenti_progetti (path,idprogetto,tipo) VALUES (?,?,?)";
-                                try (PreparedStatement ps1 = db3.getC().prepareStatement(ins)) {
-                                    ps1.setString(1, pdf_final.getPath());
-                                    ps1.setInt(2, idpr);
-                                    ps1.setInt(3, 33);
-                                    ps1.execute();
-                                }
+                                // Nessun documento → inserisco nuovo
+                                DocumentiPrg newDoc = new DocumentiPrg();
+                                newDoc.setPath(pdf_final.getPath());
+
+                                ProgettiFormativi progettoEntity = db3.getEm().find(ProgettiFormativi.class, idpr);
+                                newDoc.setProgetto(progettoEntity);
+
+                                TipoDoc tipoEntity = db3.getEm().find(TipoDoc.class, 33);
+                                newDoc.setTipo(tipoEntity);
+                                newDoc.setDeleted(0);
+                                db3.getEm().persist(newDoc);
                             }
 
-                            //OLD CODE
-                            //if (rs.next()) {
-                            //try (Statement st1 = db3.getC().createStatement()) {
-                            //String upd = "UPDATE documenti_progetti SET path = '" + pdf_final.getPath() + "' WHERE iddocumenti_progetti = "
-                            //+ rs.getInt(1);
-                            //}
-                            //}
-                            //}else { String ins = "INSERT INTO documenti_progetti (path,idprogetto,tipo) VALUES (?,?,?)"; 
-                            //try (PreparedStatement ps1 = db3.getC().prepareStatement(ins))
-                            //{ ps1.setString(1, pdf_final.getPath()); ps1.setInt(2, idpr); ps1.setInt(3, 33); ps1.execute();
-                            //} 
-                            //}
-                            //}
+                            db3.getEm().getTransaction().commit();
+
+                        } catch (Exception ex) {
+                            if (db3.getEm().getTransaction().isActive()) {
+                                db3.getEm().getTransaction().rollback();
+                            }
+                            insertTR("E", "SERVICE", estraiEccezione(ex));
+                        } finally {
+                            db3.closeDB();
                         }
-                        db3.closeDB();
                     }
+
                     return pdf_final;
                 }
-
             }
 
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             insertTR("E", "SERVICE", estraiEccezione(ex));
         }
 
@@ -611,21 +584,22 @@ public class Complessivo {
     }
 
     public File registro_complessivo(int idpr, String host, boolean save) {
-
         List<File> temp = new ArrayList<>();
         Database db = new Database(false);
         try {
             String sql = "SELECT * FROM documenti_progetti WHERE idprogetto = " + idpr
                     + " AND tipo IN (29,32) AND deleted=0 ORDER BY tipo";
-            try (Statement st = db.getC().createStatement(); ResultSet rs = st.executeQuery(sql)) {
-                while (rs.next()) {
-                    String path = rs.getString("path");
 
-                    File t1 = new File(path.replace("..", "").replace("\\", "").replace("/", ""));
-                    File sanitizeFile = sanitizeFile(t1);
-                    if (checkPDF(sanitizeFile)) {
-                        temp.add(t1);
-                    }
+            Query query = db.getEm().createNativeQuery(sql, DocumentiPrg.class);
+            List<DocumentiPrg> results = query.getResultList();
+
+            for (DocumentiPrg rs : results) {
+                String path = rs.getPath();
+
+                File t1 = new File(path.replace("..", "").replace("\\", "").replace("/", ""));
+                File sanitizeFile = sanitizeFile(t1);
+                if (checkPDF(sanitizeFile)) {
+                    temp.add(t1);
                 }
             }
 
@@ -640,7 +614,6 @@ public class Complessivo {
                     } catch (Exception ex) {
                         insertTR("E", "SERVICE", estraiEccezione(ex));
                     }
-
                 });
             }
 

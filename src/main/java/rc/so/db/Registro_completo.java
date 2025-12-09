@@ -14,6 +14,7 @@ import org.joda.time.DateTime;
  *
  * @author rcosco
  */
+
 public class Registro_completo {
 
     int id, idprogetti_formativi, idsoggetti_attuatori;

@@ -70,6 +70,7 @@
         <link href="<%=src%>/assets/vendors/custom/vendors/flaticon/flaticon.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/vendors/custom/vendors/flaticon2/flaticon.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/vendors/custom/vendors/fontawesome5/css/all.min.css" rel="stylesheet" type="text/css" />
+        <link href="../../Bootstrap2024/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
         <!--end:: Global Optional Vendors -->
 
@@ -84,6 +85,7 @@
         <link href="<%=src%>/assets/demo/default/skins/header/menu/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/brand/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
+        <link href="../../Bootstrap2024/assets/js/popper.js" rel="stylesheet" type="text/css" />
 
         <link href="<%=src%>/resource/animate.css" rel="stylesheet" type="text/css"/>
         <!--end::Layout Skins -->
@@ -101,233 +103,223 @@
             }
         </style>
     </head>
-    <body class="kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed">
-        <!-- begin:: Page -->
-        <div class="kt-grid kt-grid--hor kt-grid--root">
-            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
-                <!-- end:: Aside -->
-                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                    <!-- begin:: Footer -->
-                    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-                        <!-- begin:: Content Head -->
-                        <!-- end:: Content Head -->
-                        <!-- begin:: Content -->
-                        <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-                            <div class="kt-portlet kt-portlet--mobile">
 
-                                <div class="kt-portlet__body">
-                                    <form class="kt-form" id="kt_form" action="<%=request.getContextPath()%>/OperazioniSA?type=updtProfile" style="padding-top: 0;"  method="post" enctype="multipart/form-data">
-                                        <!--begin:: Widgets/Best Sellers-->
-                                        <div class="kt-portlet__head">
-                                            <div class="kt-portlet__head kt-portlet__head--noborder">
-                                                <div class="kt-portlet__head-label">
-                                                    <h3 class="kt-portlet__head-title kt-font-io">
-                                                        <i class="flaticon2-user"></i><label data-toggle="popover-hover" data-content="<h5>Username: <%=us.getUsername()%></h5>">  Profilo | <b><%=us.getSoggettoAttuatore().getRagionesociale()%></b></label>&nbsp;&nbsp;&nbsp;
-                                                            <% if (us.getSoggettoAttuatore().getProtocollo() == null) {%>
-                                                        <a data-toggle="popover-hover" data-content="<h5>Soggetto Esecutore in attesa di accreditamento</h5>" ><i class="flaticon2-correct kt-font-io-n"></i></a>
-                                                            <%} else {%>
-                                                        <a data-toggle="popover-hover" data-content="<h5>Soggetto Esecutore accreditato</h5>" ><i class="flaticon2-correct kt-font-success"></i></a>
-                                                            <%}%>
-                                                    </h3>
-                                                </div>
-                                            </div>
-                                            <div class="kt-portlet__head-toolbar">
-                                                <ul class="nav nav-pills nav-pills-sm nav-pills-label nav-pills-bold" role="tablist">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" id="tab1" data-toggle="tab" href="#kt_widget5_tab1_content" role="tab">
-                                                            Soggetto Esecutore
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" id="tab2" data-toggle="tab" href="#kt_widget5_tab2_content"  role="tab">
-                                                            Amministratore Delegato / Unico
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" id="tab3" data-toggle="tab" href="#kt_widget5_tab3_content" role="tab">
-                                                            Referente
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="kt-portlet__body">
-                                            <div class="tab-content">
-                                                <div class="tab-pane" id="kt_widget5_tab1_content" aria-expanded="true">
-                                                    <div class="col-md-12 col-sm-12">
-                                                        <div class="kt-section kt-section--space-md">
-                                                            <div class="form-group form-group-sm row">
-                                                                <div class="col-md-5">
-                                                                    <h5>Soggetto Esecutore</h5><h6><%if (us.getSoggettoAttuatore().getProtocollo() != null) {%>
-                                                                        Numero Protocollo:<i> <%=us.getSoggettoAttuatore().getProtocollo()%></i>
-                                                                        <%}%></h6>
-                                                                    <br>
-                                                                    <div class="form-group">
-                                                                        <label>Ragione Sociale </label>
-                                                                        <input class="form-control" type="text" style="border: 1px solid #656cff;background-color: #f7f8fa;" readonly id="ragionesociale" name="ragionesociale" value="<%=us.getSoggettoAttuatore().getRagionesociale()%>">
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label>Partita IVA </label>
-                                                                        <input class="form-control" type="text" style="border: 1px solid #656cff;background-color: #f7f8fa;" readonly value="<%=us.getSoggettoAttuatore().getPiva() == null ? "" : us.getSoggettoAttuatore().getPiva()%>" name="piva" id="piva" onkeypress="return isNumber(event);"  >
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label>Codice Fiscale </label>
-                                                                        <input class="form-control" type="text" style="border: 1px solid #656cff;background-color: #f7f8fa;" readonly value="<%=us.getSoggettoAttuatore().getCodicefiscale() == null ? "" : us.getSoggettoAttuatore().getCodicefiscale()%>" name="cf" id="cf"   >
-                                                                    </div>
-                                                                    <br>
-                                                                    <h6>Contatti</h6><br>
-                                                                    <div class="form-group ">
-                                                                        <label>Email </label> <label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <input type="text" class="form-control" id="email" name="email" value="<%=us.getSoggettoAttuatore().getEmail()%>">
-                                                                    </div>
-                                                                    <div class="form-group ">
-                                                                        <label>Posta Elettronica Certificata (PEC) </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <input type="text" class="form-control" id="pec" name="pec" value="<%=us.getSoggettoAttuatore().getPec()%>">
-                                                                    </div>
-                                                                    <div class="form-group ">
-                                                                        <label>Telefono </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <input type="text" class="form-control" id="telefono_sa" name="telefono_sa" value="<%=us.getSoggettoAttuatore().getTelefono_sa()%>">
-                                                                    </div>
-                                                                    <div class="form-group ">
-                                                                        <label>Cellulare </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <input type="text" class="form-control" id="cell_sa" name="cell_sa" value="<%=us.getSoggettoAttuatore().getCell_sa()%>">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-5">
 
-                                                                    <h6>Indirizzo Sede Legale</h6><br>
-                                                                    <div class="form-group ">
-                                                                        <label>Indirizzo </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <input type="text" class="form-control" id="indirizzo" name="indirizzo" value="<%=us.getSoggettoAttuatore().getIndirizzo()%>">
-                                                                        <label>Cap </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <input type="text" class="form-control" id="cap" name="cap" value="<%=us.getSoggettoAttuatore().getCap()%>" onkeypress="return isNumber(event);">
-                                                                    </div>
-                                                                    <div class="form-group ">
-                                                                        <label>Regione </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <div class="dropdown bootstrap-select form-control kt-" id="regione_div" style="padding: 0;height: 35px;">
-                                                                            <select class="form-control kt-select2-general" id="regione" name="regione"  style="width: 100%">
-                                                                                <option value="-">Seleziona Regione</option>
-                                                                                <%for (Item i : regioni) {
-                                                                                        if (i.getValue().equals(us.getSoggettoAttuatore().getComune().getRegione())) {%>
-                                                                                <option value="<%=i.getValue()%>" selected><%=i.getDesc()%></option>
-                                                                                <%} else {%>
-                                                                                <option value="<%=i.getValue()%>"><%=i.getDesc()%></option>
-                                                                                <%}
-                                                                                    }%>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group ">
-                                                                        <label>Provincia </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <div class="dropdown bootstrap-select form-control kt-" id="provincia_div" style="padding: 0;height: 35px;">
-                                                                            <select class="form-control kt-select2-general" id="provincia" name="provincia"  style="width: 100%;">
-                                                                                <option value="-">Seleziona Provincia</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group ">
-                                                                        <label>Comune </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <div class="dropdown bootstrap-select form-control kt-" id="comune_div" style="padding: 0;height: 35px;">
-                                                                            <select class="form-control kt-select2-general" id="comune" name="comune"  style="width: 100%;">
-                                                                                <option value="-">Seleziona Comune</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!--<div class="col-md-2 kt-align-right">
-                                                                    <a id="submit_change" titolo="aggiorna" class="btn btn-io" style="font-family: Poppins"><i class="flaticon2-accept"></i> Aggiorna</a>
-                                                                </div>-->
-                                                            </div>
-                                                        </div>
+    <body class="d-flex flex-column min-vh-100"><!-- begin:: Page -->
+
+
+        <main class="flex-grow-1 container-fluid px-4">
+
+
+            <div class="container-fluid" id="kt_wrapper">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <form id="kt_form" action="<%=request.getContextPath()%>/OperazioniSA?type=updtProfile" method="post" enctype="multipart/form-data">
+
+                                    <!-- HEADER -->
+                                    <div class="card-header d-flex justify-content-between align-items-center border-0 px-0 pb-3">
+                                        <h3 class="h5 mb-0 text-primary">
+                                            <i class="flaticon2-user"></i>
+                                            <label data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="<h5>Username: <%=us.getUsername()%></h5>">
+                                                Profilo | <b><%=us.getSoggettoAttuatore().getRagionesociale()%></b>
+                                            </label>
+                                            &nbsp;&nbsp;&nbsp;
+                                            <% if (us.getSoggettoAttuatore().getProtocollo() == null) { %>
+                                            <a data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="<h5>Soggetto Esecutore in attesa di accreditamento</h5>">
+                                                <i class="flaticon2-correct text-danger"></i>
+                                            </a>
+                                            <% } else { %>
+                                            <a data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="<h5>Soggetto Esecutore accreditato</h5>">
+                                                <i class="flaticon2-correct text-success"></i>
+                                            </a>
+                                            <% } %>
+                                        </h3>
+
+                                        <!-- TABS -->
+                                        <ul class="nav nav-pills" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="tab1" data-bs-toggle="tab" href="#kt_widget5_tab1_content" role="tab">Soggetto Esecutore</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="tab2" data-bs-toggle="tab" href="#kt_widget5_tab2_content" role="tab">Amministratore Delegato / Unico</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="tab3" data-bs-toggle="tab" href="#kt_widget5_tab3_content" role="tab">Referente</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- TAB CONTENT -->
+                                    <div class="tab-content mt-3">
+
+                                        <!-- SOGGETTO ESECUTORE -->
+                                        <div class="tab-pane fade show active" id="kt_widget5_tab1_content" role="tabpanel">
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <h5>Soggetto Esecutore</h5>
+                                                    <h6>
+                                                        <% if (us.getSoggettoAttuatore().getProtocollo() != null) {%>
+                                                        Numero Protocollo: <i><%=us.getSoggettoAttuatore().getProtocollo()%></i>
+                                                        <% }%>
+                                                    </h6>
+                                                    <hr>
+
+                                                    <div class="mb-3">
+                                                        <label for="ragionesociale" class="form-label">Ragione Sociale</label>
+                                                        <input class="form-control" type="text" readonly id="ragionesociale" name="ragionesociale"
+                                                               value="<%=us.getSoggettoAttuatore().getRagionesociale()%>">
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="piva" class="form-label">Partita IVA</label>
+                                                        <input class="form-control" type="text" readonly id="piva" name="piva"
+                                                               value="<%=us.getSoggettoAttuatore().getPiva() == null ? "" : us.getSoggettoAttuatore().getPiva()%>">
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="cf" class="form-label">Codice Fiscale</label>
+                                                        <input class="form-control" type="text" readonly id="cf" name="cf"
+                                                               value="<%=us.getSoggettoAttuatore().getCodicefiscale() == null ? "" : us.getSoggettoAttuatore().getCodicefiscale()%>">
+                                                    </div>
+
+                                                    <h6>Contatti</h6>
+                                                    <div class="mb-3">
+                                                        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="email" name="email" value="<%=us.getSoggettoAttuatore().getEmail()%>">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="pec" class="form-label">PEC <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="pec" name="pec" value="<%=us.getSoggettoAttuatore().getPec()%>">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="telefono_sa" class="form-label">Telefono <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="telefono_sa" name="telefono_sa" value="<%=us.getSoggettoAttuatore().getTelefono_sa()%>">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="cell_sa" class="form-label">Cellulare <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="cell_sa" name="cell_sa" value="<%=us.getSoggettoAttuatore().getCell_sa()%>">
                                                     </div>
                                                 </div>
-                                                <div class="tab-pane" id="kt_widget5_tab2_content">
-                                                    <div class="col-md-12 col-sm-12">
-                                                        <div class="kt-section kt-section--space-md">
-                                                            <div class="form-group form-group-sm row">
-                                                                <div class="col-md-5">
-                                                                    <h5>Amministratore Delegato / Unico</h5><br>
-                                                                    <div class="form-group ">
-                                                                        <label>Nome </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <input type="text" class="form-control" id="nome" name="nome" value="<%=us.getSoggettoAttuatore().getNome()%>">
-                                                                    </div>
-                                                                    <div class="form-group ">
-                                                                        <label>Cognome </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <input type="text" class="form-control" id="cognome" name="cognome" value="<%=us.getSoggettoAttuatore().getCognome()%>">
-                                                                    </div>
-                                                                    <div class="form-group ">
-                                                                        <label>Data Nascita </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <input type="text" class="form-control" value="<%=new SimpleDateFormat("dd/MM/yyyy").format(us.getSoggettoAttuatore().getDatanascita())%>" name="datanascita" id="kt_datepicker_4_2"/>
-                                                                    </div>
-                                                                    <div class="form-group ">
-                                                                        <label>Numero Documento </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <input class="form-control " type="text" value="<%=us.getSoggettoAttuatore().getNro_documento()%>" name="nrodocumento" id="nrodocumento" >
-                                                                    </div>
-                                                                    <div class="form-group ">
-                                                                        <label>Scadenza Documento </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <input type="text" class="form-control" value="<%=new SimpleDateFormat("dd/MM/yyyy").format(us.getSoggettoAttuatore().getScadenza())%>" name="scadenza" data-start="+0d" id="kt_datepicker_4_3"/>
-                                                                    </div>
-                                                                    <div class="form-group ">
-                                                                        <label>Documento </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <div class="custom-file">
-                                                                            <input type="hidden" name="cartaidpath" value="<%=us.getSoggettoAttuatore().getCartaid()%>" />
-                                                                            <input type="hidden" name="id" value="<%=us.getSoggettoAttuatore().getId()%>" />
-                                                                            <input type="file" class="custom-file-input" accept="application/pdf" name="cartaid" id="cartaid">
-                                                                            <label class="custom-file-label selected" id='label_file' style="background-color: #f3f3f3!important;color: #a7abc3!important;">Carta ID</label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-5">
-                                                                    <div class="form-group form-group-sm row" id="div_preview"></div>
-                                                                </div>
-                                                                <!--<div class="col-md-2 kt-align-right">
-                                                                    <a id="submit_change" titolo="aggiorna" class="btn btn-io" style="font-family: Poppins"><i class="flaticon2-accept"></i> Aggiorna</a>
-                                                                </div>-->
-                                                            </div>
-                                                        </div>
+
+                                                <div class="col-md-5">
+                                                    <h6>Indirizzo Sede Legale</h6>
+                                                    <div class="mb-3">
+                                                        <label for="indirizzo" class="form-label">Indirizzo <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="indirizzo" name="indirizzo" value="<%=us.getSoggettoAttuatore().getIndirizzo()%>">
                                                     </div>
-                                                </div>
-                                                <div class="tab-pane" id="kt_widget5_tab3_content">
-                                                    <div class="col-md-12 col-sm-12">
-                                                        <div class="kt-section kt-section--space-md">
-                                                            <div class="form-group form-group-sm row">
-                                                                <div class="col-md-5">
-                                                                    <h5>Referente </h5><br>
-                                                                    <div class="form-group ">
-                                                                        <label>Nome </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <input type="text" class="form-control" id="nome_ref" name="nome_ref" value="<%=us.getSoggettoAttuatore().getNome_refente()%>">
-                                                                    </div>
-                                                                    <div class="form-group ">
-                                                                        <label>Telefono </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <input type="text" class="form-control" value="<%=us.getSoggettoAttuatore().getTelefono_referente()%>" name="tel_ref" id="tel_ref" onkeypress="return isNumber(event);"/>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-5">
-                                                                    <h5>&nbsp;</h5><br>
-                                                                    <div class="form-group ">
-                                                                        <label>Cognome </label><label class="kt-font-danger kt-font-boldest">*</label>
-                                                                        <input type="text" class="form-control" id="cognome_ref" name="cognome_ref" value="<%=us.getSoggettoAttuatore().getCognome_referente()%>">
-                                                                    </div>
-                                                                </div>
-                                                                <!--<div class="col-md-2 kt-align-right">
-                                                                    <a id="submit_change" titolo="aggiorna" class="btn btn-io" style="font-family: Poppins"><i class="flaticon2-accept"></i> Aggiorna</a>
-                                                                </div>-->
-                                                            </div>
-                                                        </div>
+                                                    <div class="mb-3">
+                                                        <label for="cap" class="form-label">CAP <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="cap" name="cap" value="<%=us.getSoggettoAttuatore().getCap()%>">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="regione" class="form-label">Regione <span class="text-danger">*</span></label>
+                                                        <select class="form-select" id="regione" name="regione">
+                                                            <option value="-">Seleziona Regione</option>
+                                                            <% for (Item i : regioni) {
+                                                                    if (i.getValue().equals(us.getSoggettoAttuatore().getComune().getRegione())) {%>
+                                                            <option value="<%=i.getValue()%>" selected><%=i.getDesc()%></option>
+                                                            <% } else {%>
+                                                            <option value="<%=i.getValue()%>"><%=i.getDesc()%></option>
+                                                            <% }
+                                                                }%>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="provincia" class="form-label">Provincia <span class="text-danger">*</span></label>
+                                                        <select class="form-select" id="provincia" name="provincia">
+                                                            <option value="-">Seleziona Provincia</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="comune" class="form-label">Comune <span class="text-danger">*</span></label>
+                                                        <select class="form-select" id="comune" name="comune">
+                                                            <option value="-">Seleziona Comune</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--end:: Widgets/Best Sellers-->
-                                    </form>     
-                                </div>
+
+                                        <!-- AMMINISTRATORE -->
+                                        <div class="tab-pane fade" id="kt_widget5_tab2_content" role="tabpanel">
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <h5>Amministratore Delegato / Unico</h5>
+                                                    <div class="mb-3">
+                                                        <label for="nome" class="form-label">Nome <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="nome" name="nome" value="<%=us.getSoggettoAttuatore().getNome()%>">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="cognome" class="form-label">Cognome <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="cognome" name="cognome" value="<%=us.getSoggettoAttuatore().getCognome()%>">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="kt_datepicker_4_2" class="form-label">Data Nascita <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="kt_datepicker_4_2" name="datanascita"
+                                                               value="<%=new SimpleDateFormat("dd/MM/yyyy").format(us.getSoggettoAttuatore().getDatanascita())%>">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="nrodocumento" class="form-label">Numero Documento <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="nrodocumento" name="nrodocumento"
+                                                               value="<%=us.getSoggettoAttuatore().getNro_documento()%>">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="kt_datepicker_4_3" class="form-label">Scadenza Documento <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="kt_datepicker_4_3" name="scadenza"
+                                                               value="<%=new SimpleDateFormat("dd/MM/yyyy").format(us.getSoggettoAttuatore().getScadenza())%>">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Documento <span class="text-danger">*</span></label>
+                                                        <input type="hidden" name="cartaidpath" value="<%=us.getSoggettoAttuatore().getCartaid()%>">
+                                                        <input type="hidden" name="id" value="<%=us.getSoggettoAttuatore().getId()%>">
+                                                        <input type="file" class="form-control" accept="application/pdf" name="cartaid" id="cartaid">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div id="div_preview"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- REFERENTE -->
+                                        <div class="tab-pane fade" id="kt_widget5_tab3_content" role="tabpanel">
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <h5>Referente</h5>
+                                                    <div class="mb-3">
+                                                        <label for="nome_ref" class="form-label">Nome <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="nome_ref" name="nome_ref" value="<%=us.getSoggettoAttuatore().getNome_refente()%>">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="tel_ref" class="form-label">Telefono <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="tel_ref" name="tel_ref"
+                                                               value="<%=us.getSoggettoAttuatore().getTelefono_referente()%>">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="mb-3">
+                                                        <label for="cognome_ref" class="form-label">Cognome <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="cognome_ref" name="cognome_ref"
+                                                               value="<%=us.getSoggettoAttuatore().getCognome_referente()%>">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div> <!-- end tab-content -->
+
+                                </form>
                             </div>
                         </div>
-                    </div>	
+                    </div>
                 </div>
-                <!-- end:: Content -->
             </div>
-        </div>
+
+
+
+        </main>
 
         <!-- end:: Page -->
 
@@ -343,8 +335,7 @@
 
         <!--begin:: Global Mandatory Vendors -->
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
@@ -373,23 +364,23 @@
         <script src="<%=src%>/assets/soop/js/utility.js" type="text/javascript"></script>
         <!--DATERANGEPICKER -->
         <script type="text/javascript">
-                                                                            var KTAppOptions = {
-                                                                                "colors": {
-                                                                                    "state": {
-                                                                                        "brand": "#5d78ff",
-                                                                                        "dark": "#282a3c",
-                                                                                        "light": "#ffffff",
-                                                                                        "primary": "#5867dd",
-                                                                                        "success": "#34bfa3",
-                                                                                        "info": "#36a3f7",
-                                                                                        "warning": "#ffb822"
-                                                                                    },
-                                                                                    "base": {
-                                                                                        "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                                                                                        "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                                                                                    }
-                                                                                }
-                                                                            };
+            var KTAppOptions = {
+                "colors": {
+                    "state": {
+                        "brand": "#5d78ff",
+                        "dark": "#282a3c",
+                        "light": "#ffffff",
+                        "primary": "#5867dd",
+                        "success": "#34bfa3",
+                        "info": "#36a3f7",
+                        "warning": "#ffb822"
+                    },
+                    "base": {
+                        "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                        "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                    }
+                }
+            };
         </script>
 
         <script>

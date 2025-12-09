@@ -5,6 +5,7 @@
  */
 package rc.so.util;
 
+import jakarta.persistence.TypedQuery;
 import static rc.so.db.Action.insertTR;
 import rc.so.db.Database;
 import static rc.so.util.Utility.estraiEccezione;
@@ -42,37 +43,28 @@ public class FaseB {
 
             Database db1 = new Database(false);
 
-            String sql1 = "SELECT lc.lezione,lm.giorno,lm.orario_start,lm.orario_end,lm.id_docente,ud.codice,lc.ore,lm.gruppo_faseB FROM lezioni_modelli lm, modelli_progetti mp, lezione_calendario lc, unita_didattiche ud "
-                    + " WHERE mp.id_modello=lm.id_modelli_progetto AND lc.id_lezionecalendario=lm.id_lezionecalendario AND ud.codice=lc.codice_ud "
-                    + " AND mp.id_progettoformativo=" + idpr + " AND ud.fase = 'Fase B' ORDER BY lm.gruppo_faseB,lc.lezione,lm.orario_start";
-            
-            
-            try (Statement st1 = db1.getC().createStatement(); ResultSet rs1 = st1.executeQuery(sql1)) {
+            // JPQL equivalente alla tua query originale
+            String jpql = "SELECT new Lezione(lc.lezione, lm.id_docente, lm.giorno, lm.orario_start, lm.orario_end, "
+                    + "ud.codice, lc.ore, lm.gruppo_faseB, '') "
+                    + "FROM LezioniModelli lm "
+                    + "JOIN lm.modelloProgetto mp "
+                    + "JOIN lm.lezioneCalendario lc "
+                    + "JOIN lc.unitaDidattica ud "
+                    + "WHERE mp.progetto.id = :idpr AND ud.fase = 'Fase B' "
+                    + "ORDER BY lm.gruppoFaseB, lc.lezione, lm.orarioStart";
 
-                while (rs1.next()) {
-                    calendartemp.add(new Lezione(rs1.getInt("lc.lezione"),
-                            rs1.getInt("lm.id_docente"),
-                            rs1.getString("lm.giorno"), rs1.getString("lm.orario_start"), rs1.getString("lm.orario_end"),
-                            rs1.getString("ud.codice"), rs1.getString("lc.ore"), rs1.getInt("lm.gruppo_faseB"), ""));
-                }
+            TypedQuery<Lezione> query = db1.getEm().createQuery(jpql, Lezione.class)
+                    .setParameter("idpr", idpr);
 
-            }
+            calendartemp = query.getResultList();
+
             db1.closeDB();
 
+            // Logica di unione lezioni e calcolo ore rimane invariata
             for (int i = 0; i < calendartemp.size(); i++) {
                 Lezione cal = calendartemp.get(i);
-                Lezione cal2;
-                try {
-                    cal2 = calendartemp.get(i + 1);
-                } catch (Exception e) {
-                    cal2 = null;
-                }
-                Lezione cal3;
-                try {
-                    cal3 = calendartemp.get(i - 1);
-                } catch (Exception e) {
-                    cal3 = null;
-                }
+                Lezione cal2 = (i + 1 < calendartemp.size()) ? calendartemp.get(i + 1) : null;
+                Lezione cal3 = (i - 1 >= 0) ? calendartemp.get(i - 1) : null;
 
                 boolean hasnext = cal2 != null;
                 if (hasnext) {
@@ -106,7 +98,6 @@ public class FaseB {
                         }
                     }
                 }
-
             }
 
         } catch (Exception ex) {

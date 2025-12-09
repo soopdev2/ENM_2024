@@ -8,7 +8,6 @@ package rc.so.servlet;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.util.concurrent.AtomicDouble;
 import com.google.gson.JsonObject;
-import rc.so.cf.DataPanel;
 import rc.so.db.Action;
 import static rc.so.db.Action.insertTR;
 import rc.so.db.Database;
@@ -20,7 +19,6 @@ import rc.so.domain.CPI;
 import rc.so.domain.Canale;
 import rc.so.domain.Comuni;
 import rc.so.domain.Condizione_Lavorativa;
-import rc.so.domain.Condizione_Mercato;
 import rc.so.domain.Docenti;
 import rc.so.domain.DocumentiPrg;
 import rc.so.domain.Documenti_Allievi;
@@ -85,9 +83,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
 import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -97,6 +93,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import java.sql.SQLException;
+import java.text.ParseException;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -996,7 +994,7 @@ public class OperazioniSA extends HttpServlet {
                         e.merge(p);
                         modello2OK = true;
                     }
-                } catch (Exception ex) {
+                } catch (ServletException | IOException ex) {
                     insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
                     modello2OK = false;
                     erroremodello2OK = "MODELLO 2 ERRATO. " + ex.getMessage() + ". CONTROLLARE.";
@@ -1028,7 +1026,7 @@ public class OperazioniSA extends HttpServlet {
                 }
                 resp.addProperty("result", true);
             }
-        } catch (Exception ex) {
+        } catch (NumberFormatException | ParseException ex) {
             e.rollBack();
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
             resp.addProperty("result", false);
@@ -1090,7 +1088,7 @@ public class OperazioniSA extends HttpServlet {
                         new DateTime(), true);
             }
             e.close();
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
         }
 
@@ -1145,7 +1143,7 @@ public class OperazioniSA extends HttpServlet {
                     downloadFile = new File(mod.getPath());
                 }
                 e.close();
-            } catch (Exception ex) {
+            } catch (NumberFormatException ex) {
                 insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
             }
         }
@@ -1192,7 +1190,7 @@ public class OperazioniSA extends HttpServlet {
                         us.getSoggettoAttuatore(),
                         pf, m6, new DateTime(), true);
             }
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
         }
 
@@ -1263,7 +1261,7 @@ public class OperazioniSA extends HttpServlet {
             }
             e.close();
 
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
         }
 
@@ -1329,7 +1327,7 @@ public class OperazioniSA extends HttpServlet {
                 }
             }
             e.close();
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
         }
 
@@ -1464,7 +1462,7 @@ public class OperazioniSA extends HttpServlet {
                 resp.addProperty("message", "Errore: non &egrave; stato possibile aggiornare le informazioni dell'allievo.<br>Il seguente codice fiscale gi&agrave; già presente");
             }
 
-        } catch (Exception ex) {
+        } catch (NumberFormatException | ParseException ex) {
             e.insertTracking(null, "updateAllievo Errore: " + ex.getMessage());
             resp.addProperty("result", false);
             resp.addProperty("message", "Errore: non &egrave; stato possibile aggiornare le informazioni dell'allievo.<br>Riprovare, se l'errore persiste contattare l'assistenza");
@@ -1494,7 +1492,7 @@ public class OperazioniSA extends HttpServlet {
             e.commit();
 
             resp.addProperty("result", true);
-        } catch (Exception ex) {
+        } catch (ServletException | IOException | NumberFormatException | ParseException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA updtCartaId: " + ex.getMessage());
             resp.addProperty("result", false);
             resp.addProperty("message", "Errore: non &egrave; stato possibile aggiornare il documento d'identità.");
@@ -1520,7 +1518,7 @@ public class OperazioniSA extends HttpServlet {
             e.commit();
             resp.addProperty("result", true);
             resp.addProperty("message", "Operazione effettuata con successo.");
-        } catch (Exception ex) {
+        } catch (ServletException | IOException | ParseException ex) {
             e.insertTracking(String.valueOf(us.getId()), "OperazioniSA updtCartaIdAd: " + ex.getMessage());
             resp.addProperty("result", false);
             resp.addProperty("message", "Errore: non &egrave; stato possibile aggiornare il documento d'identità.");
@@ -1556,7 +1554,7 @@ public class OperazioniSA extends HttpServlet {
             resp.addProperty("result", true);
             resp.addProperty("path", path);
             resp.addProperty("scadenza", d.getScadenza_doc().getTime());
-        } catch (Exception ex) {
+        } catch (IOException | NumberFormatException | ParseException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA uploadDocIdDocente: " + ex.getMessage());
             resp.addProperty("result", false);
             resp.addProperty("message", "Errore: non &egrave; stato possibile aggiornare il documento d'identità.");
@@ -1591,7 +1589,7 @@ public class OperazioniSA extends HttpServlet {
             e.commit();
             resp.addProperty("result", true);
             resp.addProperty("path", path);
-        } catch (Exception ex) {
+        } catch (IOException | NumberFormatException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA uploadCurriculumDocente: " + ex.getMessage());
             resp.addProperty("result", false);
             resp.addProperty("message", "Errore: non &egrave; stato possibile aggiornare il documento d'identità.");
@@ -1628,7 +1626,7 @@ public class OperazioniSA extends HttpServlet {
 
             e.commit();
             resp.addProperty("result", true);
-        } catch (Exception ex) {
+        } catch (IOException | NumberFormatException | ParseException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA uploadCurriculumDocente: " + ex.getMessage());
             resp.addProperty("result", false);
             resp.addProperty("message", "Errore: non &egrave; stato possibile aggiornare il documento d'identità.");
@@ -1748,7 +1746,7 @@ public class OperazioniSA extends HttpServlet {
             e.commit();
             resp.addProperty("result", true);
 
-        } catch (Exception ex) {
+        } catch (IOException | NumberFormatException ex) {
             e.rollBack();
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
             resp.addProperty("result", false);
@@ -1854,7 +1852,7 @@ public class OperazioniSA extends HttpServlet {
             e.commit();
 
             resp.addProperty("result", true);
-        } catch (Exception ex) {
+        } catch (NumberFormatException | ParseException ex) {
             e.rollBack();
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
             resp.addProperty("result", false);
@@ -1948,7 +1946,7 @@ public class OperazioniSA extends HttpServlet {
                 resp.addProperty("result", false);
                 resp.addProperty("message", "IMPOSSIBILE SALVARE DOCUMENTI DEL DOCENTE. RIPROVARE.");
             }
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             e.rollBack();
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
             resp.addProperty("result", false);
@@ -2031,7 +2029,7 @@ public class OperazioniSA extends HttpServlet {
             //e.persist(new Storico_Prg("Inviato a controllo", new Date(), p, p.getStato()));//storico progetto
             e.commit();
             resp.addProperty("result", true);
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             e.rollBack();
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
             resp.addProperty("result", false);
@@ -2148,7 +2146,7 @@ public class OperazioniSA extends HttpServlet {
             e.commit();
             resp.addProperty("result", true);
 
-        } catch (Exception ex) {
+        } catch (IOException | NumberFormatException | ParseException ex) {
             e.rollBack();
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
             resp.addProperty("result", false);
@@ -2245,7 +2243,7 @@ public class OperazioniSA extends HttpServlet {
             }
             e.commit();
             resp.addProperty("result", true);
-        } catch (Exception ex) {
+        } catch (IOException | NumberFormatException | ParseException ex) {
             e.rollBack();
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
             resp.addProperty("result", false);
@@ -2365,7 +2363,7 @@ public class OperazioniSA extends HttpServlet {
             e.commit();
             resp.addProperty("result", true);
 
-        } catch (Exception ex) {
+        } catch (IOException | NumberFormatException ex) {
             e.rollBack();
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
             resp.addProperty("result", false);
@@ -2407,7 +2405,7 @@ public class OperazioniSA extends HttpServlet {
 
             e.commit();
             resp.addProperty("result", true);
-        } catch (Exception ex) {
+        } catch (IOException | NumberFormatException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA modifyDocPrg_FaseB: " + ex.getMessage());
             resp.addProperty("result", false);
             resp.addProperty("message", "Errore: non &egrave; stato possibile aggiornare il documento.");
@@ -2533,7 +2531,7 @@ public class OperazioniSA extends HttpServlet {
 
             e.commit();
             resp.addProperty("result", true);
-        } catch (Exception ex) {
+        } catch (ServletException | IOException | NumberFormatException | ParseException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA uploadRegistrioAula: " + ex.getMessage());
             resp.addProperty("result", false);
             resp.addProperty("message", "Errore: non &egrave; stato possibile caricare il registro.");
@@ -2649,7 +2647,7 @@ public class OperazioniSA extends HttpServlet {
             e.persist(p);
             e.commit();
             resp.addProperty("result", true);
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA modifyRegistrioAula: " + ex.getMessage());
             resp.addProperty("result", false);
             resp.addProperty("message", "Errore: non &egrave; stato possibile modificare il registro.");
@@ -2811,7 +2809,7 @@ public class OperazioniSA extends HttpServlet {
                 resp.addProperty("result", false);
                 resp.addProperty("message", "Errore: non &egrave; stato possibile aggiornare la lezione.");
             }
-        } catch (Exception ex) {
+        } catch (NumberFormatException | ParseException ex) {
             e.rollBack();
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
             resp.addProperty("result", false);
@@ -2880,7 +2878,7 @@ public class OperazioniSA extends HttpServlet {
             }
             e.commit();
             resp.addProperty("result", true);
-        } catch (Exception ex) {
+        } catch (NumberFormatException | ParseException ex) {
             e.rollBack();
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
             resp.addProperty("result", false);
@@ -2935,7 +2933,7 @@ public class OperazioniSA extends HttpServlet {
 //                resp.addProperty("result", false);
 //                resp.addProperty("message", "ERRORE DURANTE LA CREAZIONE DEI GRUPPI. IMPOSSIBILE RAGGIUNGERE IL NUMERO MINIMO DI ALLIEVI. IL PROGETTO VERRA' RIGETTATO. CHIUDERE QUESTA FINESTRA E TORNARE ALL'ELENCO PROGETTI.");
 //            }
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             e.rollBack();
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
             resp.addProperty("result", false);
@@ -3144,7 +3142,7 @@ public class OperazioniSA extends HttpServlet {
                         }
                     }
                     d.setAttivita(list_attivita);
-                } catch (Exception ex) {
+                } catch (NumberFormatException | ParseException ex) {
                     e.rollBack();
                     resp.addProperty("result", false);
                     resp.addProperty("message", "RICHIESTA ACCREDITAMENTO DOCENTE ERRATA ERRORE NELLE ATTIVITA'. " + ex.getMessage() + ". CONTROLLARE.");
@@ -3188,7 +3186,7 @@ public class OperazioniSA extends HttpServlet {
                             resp.addProperty("message", erroreall1OK);
                         }
 
-                    } catch (Exception ex) {
+                    } catch (ServletException | IOException ex) {
                         e.rollBack();
                         resp.addProperty("result", false);
                         resp.addProperty("message", "RICHIESTA ACCREDITAMENTO DOCENTE ERRATA. " + ex.getMessage() + ". CONTROLLARE.");
@@ -3201,7 +3199,7 @@ public class OperazioniSA extends HttpServlet {
                     downloadFile = Pdf_new.ALLEGATOB1(richiesta_accr, e, us.getUsername(), d, new DateTime());
                     resp.addProperty("result", true);
                 }
-            } catch (Exception ex) {
+            } catch (ServletException | IOException | NumberFormatException | ParseException ex) {
                 e.insertTracking(String.valueOf(us.getId()), "OperazioniSA addDocente: " + ex.getMessage());
                 resp.addProperty("result", false);
                 resp.addProperty("message", "Errore: non &egrave; stato possibile aggiungere il docente.");
@@ -3308,7 +3306,7 @@ public class OperazioniSA extends HttpServlet {
             resp.addProperty("result", true);
             resp.addProperty("title", title);
             resp.addProperty("message", "Operazione effettuata con successo");
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA manageMembriStaff: " + ex.getMessage());
             resp.addProperty("result", false);
             resp.addProperty("title", "Errore");
@@ -3339,7 +3337,7 @@ public class OperazioniSA extends HttpServlet {
             e.merge(sm);
             e.commit();
             resp.addProperty("result", true);
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniMicro deleteMembroStaff: " + ex.getMessage());
             resp.addProperty("result", false);
             resp.addProperty("message", "Errore: non &egrave; stato possibile procedere con l'operazione.");
@@ -3438,7 +3436,7 @@ public class OperazioniSA extends HttpServlet {
                         mask.setTabella_valutazionefinale_val(request.getParameter("tab1"));
                         mask.setTabella_valutazionefinale_punteggio(parseDouble(request.getParameter("punteggio_tab1")));
                         mask.setTabella_valutazionefinale_totale(parseDouble(request.getParameter("valfinale_tab1")));
-                    } catch (Exception ex1) {
+                    } catch (IOException ex1) {
                         ok = false;
                         resp.addProperty("result", false);
                         resp.addProperty("message", "Errore: non &egrave; stato possibile rendicontare l'allievo.");
@@ -3552,7 +3550,7 @@ public class OperazioniSA extends HttpServlet {
             } else {
                 e.rollBack();
             }
-        } catch (Exception ex) {
+        } catch (ServletException | IOException | NumberFormatException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA rendicontaAllievo: " + ex.getMessage());
             resp.addProperty("result", false);
             resp.addProperty("message", "Errore: non &egrave; stato possibile rendicontare l'allievo.");
@@ -3615,7 +3613,7 @@ public class OperazioniSA extends HttpServlet {
                 resp.addProperty("result", false);
                 resp.addProperty("message", res);
             }
-        } catch (Exception ex) {
+        } catch (ServletException | IOException | NumberFormatException ex) {
             e.rollBack();
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
             resp.addProperty("result", false);
@@ -3648,7 +3646,7 @@ public class OperazioniSA extends HttpServlet {
             resp.addProperty("result", true);
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()),
                     "OperazioniSA Modifica MAIL docente: " + iddocente + " - " + email);
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()),
                     "ERRORE: OperazioniSA Modifica MAIL docente: " + ex.getMessage());
             resp.addProperty("result", false);
@@ -3762,7 +3760,7 @@ public class OperazioniSA extends HttpServlet {
                     e.persist(m5);
                     a.getDocumenti().add(m5);
                 }
-            } catch (Exception ex) {
+            } catch (IOException ex) {
                 modello5OK = false;
                 erroremodello5OK = "MODELLO 5 ERRATO. " + ex.getMessage() + ". CONTROLLARE.";
             }
@@ -3775,7 +3773,7 @@ public class OperazioniSA extends HttpServlet {
                 resp.addProperty("result", false);
                 resp.addProperty("message", erroremodello5OK);
             }
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA uploadM5Alunno: " + ex.getMessage());
             resp.addProperty("result", false);
             resp.addProperty("message", "Errore: non &egrave; stato possibilecaricare il modello 5.");
@@ -3810,7 +3808,7 @@ public class OperazioniSA extends HttpServlet {
                     new DateTime(), true);
             e.close();
 
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
         }
 
@@ -3915,7 +3913,7 @@ public class OperazioniSA extends HttpServlet {
                 resp.addProperty("message", erroreregistroOK);
             }
 
-        } catch (Exception ex) {
+        } catch (ServletException | IOException | NumberFormatException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA uploadRegistroComplessivo: " + ex.getMessage());
             resp.addProperty("result", false);
             resp.addProperty("message", "Errore: non &egrave; stato possibile caricare il registro complessivo.");
@@ -3968,7 +3966,7 @@ public class OperazioniSA extends HttpServlet {
             e.flush();
             e.commit();
             resp.addProperty("result", true);
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA uploadDichiarazioneM6: " + ex.getMessage());
             resp.addProperty("result", false);
         } finally {
@@ -3999,7 +3997,7 @@ public class OperazioniSA extends HttpServlet {
             e.commit();
 
             resp.addProperty("result", true);
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA abilitaModificaCalendarM3: " + ex.getMessage());
             resp.addProperty("result", false);
         } finally {
@@ -4029,7 +4027,7 @@ public class OperazioniSA extends HttpServlet {
             e.commit();
 
             resp.addProperty("result", true);
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA abilitaModificaCalendarM4: " + ex.getMessage());
             resp.addProperty("result", false);
         } finally {
@@ -4074,7 +4072,7 @@ public class OperazioniSA extends HttpServlet {
             e.commit();
 
             resp.addProperty("result", true);
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA deleteAllLessons: " + ex.getMessage());
             resp.addProperty("result", false);
         } finally {
@@ -4114,7 +4112,7 @@ public class OperazioniSA extends HttpServlet {
             e.commit();
 
             resp.addProperty("result", true);
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA abilitaModificaCalendarM3: " + ex.getMessage());
             resp.addProperty("result", false);
         } finally {
@@ -4160,7 +4158,7 @@ public class OperazioniSA extends HttpServlet {
             e.commit();
 
             resp.addProperty("result", true);
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA abilitaModificaCalendarM3: " + ex.getMessage());
             resp.addProperty("result", false);
         } finally {
@@ -4251,7 +4249,7 @@ public class OperazioniSA extends HttpServlet {
 
             }
             e.commit();
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
         } finally {
             e.close();
@@ -4287,7 +4285,7 @@ public class OperazioniSA extends HttpServlet {
             e.merge(pr);
             e.commit();
             resp.addProperty("result", true);
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA abilitaModificaCalendarM3: " + ex.getMessage());
             resp.addProperty("result", false);
         } finally {
@@ -4342,7 +4340,7 @@ public class OperazioniSA extends HttpServlet {
             e.commit();
             resp.addProperty("result", true);
 
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             e.insertTracking(String.valueOf(((User) request.getSession().getAttribute("user")).getId()), "OperazioniSA abilitaModificaCalendarM3: " + ex.getMessage());
             resp.addProperty("result", false);
         } finally {
@@ -4547,7 +4545,7 @@ public class OperazioniSA extends HttpServlet {
                 e.commit();
             }
 
-        } catch (Exception ex) {
+        } catch (NumberFormatException | ParseException ex) {
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
         } finally {
             e.close();
@@ -4705,7 +4703,7 @@ public class OperazioniSA extends HttpServlet {
                 }
             });
 
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
         }
         redirect(request, response, request.getContextPath() + "/page/sa/registroaula_edit.jsp?idpr="
@@ -4887,7 +4885,7 @@ public class OperazioniSA extends HttpServlet {
             } else {
                 redirect(request, response, request.getContextPath() + "/page/sa/calendar.jsp?idcalendar=" + idcalendar + "&esito=KO3");
             }
-        } catch (Exception ex) {
+        } catch (ServletException | IOException | NumberFormatException ex) {
             insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
             redirect(request, response, request.getContextPath() + "/page/sa/calendar.jsp?idcalendar=" + idcalendar + "&esito=KO4");
         }
@@ -4917,7 +4915,7 @@ public class OperazioniSA extends HttpServlet {
             try {
                 Long new_millisrend = Long.parseLong(up1[1]);
                 addstart.addAndGet(new_millisrend.doubleValue());
-            } catch (Exception ex) {
+            } catch (NumberFormatException ex) {
                 insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
             }
         });
@@ -4942,13 +4940,13 @@ public class OperazioniSA extends HttpServlet {
 
                 Database db = new Database(false);
 
-                try (Statement st = db.getC().createStatement()) {
+                try (Statement st = (Statement) db.getEm().createQuery(upd)) {
                     st.execute(upd);
                 }
                 db.closeDB();
 
 //                System.out.println(upd);
-            } catch (Exception ex) {
+            } catch (NumberFormatException | SQLException ex) {
                 insertTR("E", String.valueOf(((User) request.getSession().getAttribute("user")).getId()), estraiEccezione(ex));
             }
         });

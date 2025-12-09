@@ -91,7 +91,7 @@
                                             <label for="user">Username</label>
                                             <input type="text" class="form-control" id="user" name="username" autocomplete="off">
                                         </div>
-
+                                        <br>
                                         <div class="form-group mb-3">
                                             <label for="password">Password</label>
                                             <input type="password" class="form-control" id="password" name="password" autocomplete="off">
@@ -126,157 +126,157 @@
 
 
 
-    <!-- end:: Page -->
+        <!-- end:: Page -->
 
-    <!--begin:: Global Mandatory Vendors -->
-    <script src="assets/soop/js/utility.js" type="text/javascript"></script>
-    <script>
-                                function ctrlForm() {
-                                    var err = false;
-                                    var user = $("#user");
-                                    var pass = $("#password");
-                                    if (checkValue(user, false)) {
-                                        err = true;
-                                    }
-                                    if (checkValue(pass, false)) {
-                                        err = true;
-                                    }
-                                    if (err) {
-                                        $("#drop_login").trigger('click');
-                                        return false;
-                                    }
-                                    swal.fire({
-                                        title: 'Sto Accedendo...',
-                                        text: '',
-                                        onOpen: function () {
-                                            swal.showLoading();
-                                        }
-                                    });
-                                    return true;
-                                }
-    </script>
+        <!--begin:: Global Mandatory Vendors -->
+        <script src="assets/soop/js/utility.js" type="text/javascript"></script>
+        <script>
+                                            function ctrlForm() {
+                                                var err = false;
+                                                var user = $("#user");
+                                                var pass = $("#password");
+                                                if (checkValue(user, false)) {
+                                                    err = true;
+                                                }
+                                                if (checkValue(pass, false)) {
+                                                    err = true;
+                                                }
+                                                if (err) {
+                                                    $("#drop_login").trigger('click');
+                                                    return false;
+                                                }
+                                                swal.fire({
+                                                    title: 'Sto Accedendo...',
+                                                    text: '',
+                                                    onOpen: function () {
+                                                        swal.showLoading();
+                                                    }
+                                                });
+                                                return true;
+                                            }
+        </script>
 
-    <script>
-        var KTAppOptions = {
-            "colors": {
-                "state": {
-                    "brand": "#5d78ff",
-                    "dark": "#282a3c",
-                    "light": "#ffffff",
-                    "primary": "#5867dd",
-                    "success": "#34bfa3",
-                    "info": "#36a3f7",
-                    "warning": "#ffb822",
-                    "danger": "#fd3995"
-                },
-                "base": {
-                    "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                    "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                }
-            }
-        };
-    </script>
-
-
-    <script type="text/javascript" src="assets/soop/js/jquery.fancybox.min.js"></script>
-    <script type="text/javascript" src="assets/soop/js/fancy.js"></script>
-    <script src="assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-    <script src="assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
-    <script src="assets/soop/js/moment.min.js" type="text/javascript"></script>
-    <script src="assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
-    <script src="assets/vendors/general/jquery-form/dist/jquery.form.min.js" type="text/javascript"></script>
-    <script src="assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
-    <script src="assets/vendors/general/sticky-js/dist/sticky.min.js" type="text/javascript"></script>
-    <script src="assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
-    <script src="assets/vendors/general/sweetalert2/dist/sweetalert2.js" type="text/javascript"></script>
-    <script src="assets/app/custom/login/login-general.js" type="text/javascript"></script>
-    <script src="assets/app/bundle/app.bundle.js" type="text/javascript"></script>
-    <script src="assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>
-
-    <script type="text/javascript">
-        function ctrlEmail() {
-            var err = true;
-            var email = $('#email');
-            if (checkValue(email, false)) {
-                err = false;
-            }
-            return err;
-        }
-
-        $("#submit_pwd").on('click', function () {
-            if (ctrlEmail()) {
-                showLoad();
-                $('#kt_form_pwd').ajaxSubmit({
-                    error: function () {
-                        closeSwal();
-                        swal.fire({
-                            "title": 'Errore',
-                            "text": "Riprovare, se l'errore persiste contattare il servizio clienti",
-                            "type": "error",
-                            cancelButtonColor: "#3a2c7a",
-                            cancelButtonClass: "btn btn-io-n"
-                        });
+        <script>
+            var KTAppOptions = {
+                "colors": {
+                    "state": {
+                        "brand": "#5d78ff",
+                        "dark": "#282a3c",
+                        "light": "#ffffff",
+                        "primary": "#5867dd",
+                        "success": "#34bfa3",
+                        "info": "#36a3f7",
+                        "warning": "#ffb822",
+                        "danger": "#fd3995"
                     },
-                    success: function (resp) {
-                        var json = JSON.parse(resp);
-                        closeSwal();
-                        if (json.result) {
-                            swalSuccessReload("Password cambiata con successo!", "Hai ricevuto una mail al tuo indirizzo contenente la nuova password da modificare al prossimo accesso");
-                        } else {
-                            $('#email').attr("class", "form-control is-invalid");
+                    "base": {
+                        "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                        "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                    }
+                }
+            };
+        </script>
+
+
+        <script type="text/javascript" src="assets/soop/js/jquery.fancybox.min.js"></script>
+        <script type="text/javascript" src="assets/soop/js/fancy.js"></script>
+        <script src="assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
+        <script src="assets/vendors/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
+        <script src="assets/soop/js/moment.min.js" type="text/javascript"></script>
+        <script src="assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
+        <script src="assets/vendors/general/jquery-form/dist/jquery.form.min.js" type="text/javascript"></script>
+        <script src="assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
+        <script src="assets/vendors/general/sticky-js/dist/sticky.min.js" type="text/javascript"></script>
+        <script src="assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
+        <script src="assets/vendors/general/sweetalert2/dist/sweetalert2.js" type="text/javascript"></script>
+        <script src="assets/app/custom/login/login-general.js" type="text/javascript"></script>
+        <script src="assets/app/bundle/app.bundle.js" type="text/javascript"></script>
+        <script src="assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+            function ctrlEmail() {
+                var err = true;
+                var email = $('#email');
+                if (checkValue(email, false)) {
+                    err = false;
+                }
+                return err;
+            }
+
+            $("#submit_pwd").on('click', function () {
+                if (ctrlEmail()) {
+                    showLoad();
+                    $('#kt_form_pwd').ajaxSubmit({
+                        error: function () {
+                            closeSwal();
                             swal.fire({
-                                "title": '<h3><b>Errore!</b></h3>',
-                                "html": "<h5>" + json.messagge + "</h5>",
+                                "title": 'Errore',
+                                "text": "Riprovare, se l'errore persiste contattare il servizio clienti",
                                 "type": "error",
+                                cancelButtonColor: "#3a2c7a",
                                 cancelButtonClass: "btn btn-io-n"
                             });
+                        },
+                        success: function (resp) {
+                            var json = JSON.parse(resp);
+                            closeSwal();
+                            if (json.result) {
+                                swalSuccessReload("Password cambiata con successo!", "Hai ricevuto una mail al tuo indirizzo contenente la nuova password da modificare al prossimo accesso");
+                            } else {
+                                $('#email').attr("class", "form-control is-invalid");
+                                swal.fire({
+                                    "title": '<h3><b>Errore!</b></h3>',
+                                    "html": "<h5>" + json.messagge + "</h5>",
+                                    "type": "error",
+                                    cancelButtonClass: "btn btn-io-n"
+                                });
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
+            );
+        </script>
+
+        <script type="text/javascript">
+            <%  String esito = request.getParameter("esito");
+                if (esito == null) {
+                    esito = "";
+                } else if (esito.equals("KO")) {%>
+        swal.fire({
+            type: 'error',
+            title: 'Credenziali errate',
+            confirmButtonColor: '#363a90'
+        });
+            <%} else if (esito.equals("banned")) {%>
+        swal.fire({
+            type: 'error',
+            title: 'Utenza bloccata',
+            confirmButtonColor: '#363a90'
+        });
+            <%}%>
+
+        function clickLink(link, target) {
+            var a = document.createElement('a');
+            a.href = link;
+            a.target = target;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
         }
-        );
-    </script>
 
-    <script type="text/javascript">
-        <%  String esito = request.getParameter("esito");
-            if (esito == null) {
-                esito = "";
-            } else if (esito.equals("KO")) {%>
-            swal.fire({
-                type: 'error',
-                title: 'Credenziali errate',
-                confirmButtonColor: '#363a90'
-            });
-        <%} else if (esito.equals("banned")) {%>
-            swal.fire({
-                type: 'error',
-                title: 'Utenza bloccata',
-                confirmButtonColor: '#363a90'
-            });
-        <%}%>
-
-            function clickLink(link, target) {
-                var a = document.createElement('a');
-                a.href = link;
-                a.target = target;
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-            }
-
-            //$( document ).ready(function() {
+        //$( document ).ready(function() {
 //    alert(heidiDecode('676673756A6D6A7B7B621'));
 //});
 
 
 
-    </script>
+        </script>
 
 
 
-</body>
+    </body>
 
-<!-- end::Body -->
+    <!-- end::Body -->
 </html>
