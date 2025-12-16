@@ -119,10 +119,7 @@
                 </div>
             </div>
         </div>
-        <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
-            <i class="fa fa-arrow-up"></i>
-        </div>
-
+     
         <form target="_blank" id="goCAD" action="" method="POST" style="display: none">
             <input id="id" name="id">
             <input id="user" name="user">

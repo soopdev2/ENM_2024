@@ -77,7 +77,7 @@
         <link href="<%=src%>/assets/demo/default/skins/header/menu/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/brand/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
-        <link href="<%=src%>/assets/demo/default/base/style.bundle.css" rel="stylesheet" type="text/css" />
+        <!--link href="<%=src%>/assets/demo/default/base/style.bundle.css" rel="stylesheet" type="text/css" /-->
         <link href="<%=src%>/resource/custom.css" rel="stylesheet" type="text/css" />
         <link href="../../Bootstrap2024/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <script src="../../Bootstrap2024/assets/js/popper.js"></script>
@@ -294,9 +294,6 @@
 
 
 
-    <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
-        <i class="fa fa-arrow-up"></i>
-    </div>
     <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
     <script src="../../assets/soop/js/jquery-1.10.1.min.js" type="text/javascript"></script>
     <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>

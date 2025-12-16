@@ -130,10 +130,7 @@
         <%}%>
     </div>
 
-    <!-- Scroll Top -->
-    <div id="kt_scrolltop" class="position-fixed bottom-0 end-0 m-3">
-        <i class="fa fa-arrow-up"></i>
-    </div>
+
 
     <!-- Scripts JS esterni -->
     <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js"></script>

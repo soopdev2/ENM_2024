@@ -181,10 +181,6 @@
 
 
 
-
-        <div id="kt_scrolltop"style="background-color: #0059b3" class="kt-scrolltop">
-            <i class="fa fa-arrow-up"></i>
-        </div>
         <!--start:Modal-->
         <div class="modal fade" id="doc_modal" tabindex="-1" role="dialog" aria-labelledby="Documenti Allievo" aria-hidden="true">
             <div class="modal-dialog modal-xl modal-dialog-centered" role="document">

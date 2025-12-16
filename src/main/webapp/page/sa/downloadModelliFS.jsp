@@ -55,7 +55,9 @@
     </head>
     <body>
         <%@ include file="menu/head1.jsp"%>
+
         <%@ include file="../../Bootstrap2024/index/index_SoggettoAttuatore/Header_soggettoAttuatore.jsp"%>
+
         <%@ include file="../../Bootstrap2024/index/menu/menuAtt.jsp"%>
         <%@ include file="menu/head.jsp"%>
 
@@ -107,42 +109,37 @@
 
 
 
-
-
-    <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
-        <i class="fa fa-arrow-up"></i>
-    </div>
-    <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-    <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
-    <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
-    <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
-    <script src="<%=src%>/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
-    <script src="<%=src%>/assets/vendors/general/sticky-js/dist/sticky.min.js" type="text/javascript"></script>
-    <script src="<%=src%>/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
-    <script src="<%=src%>/assets/vendors/general/sweetalert2/dist/sweetalert2.js" type="text/javascript"></script>
-    <script src="<%=src%>/assets/app/bundle/app.bundle.js" type="text/javascript"></script>
-    <script src="<%=src%>/assets/soop/js/utility.js" type="text/javascript"></script>
-    <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        var KTAppOptions = {
-            "colors": {
-                "state": {
-                    "brand": "#5d78ff",
-                    "dark": "#282a3c",
-                    "light": "#ffffff",
-                    "primary": "#5867dd",
-                    "success": "#34bfa3",
-                    "info": "#36a3f7",
-                    "warning": "#ffb822"
-                },
-                "base": {
-                    "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                    "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+        <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
+        <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
+        <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
+        <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
+        <script src="<%=src%>/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
+        <script src="<%=src%>/assets/vendors/general/sticky-js/dist/sticky.min.js" type="text/javascript"></script>
+        <script src="<%=src%>/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
+        <script src="<%=src%>/assets/vendors/general/sweetalert2/dist/sweetalert2.js" type="text/javascript"></script>
+        <script src="<%=src%>/assets/app/bundle/app.bundle.js" type="text/javascript"></script>
+        <script src="<%=src%>/assets/soop/js/utility.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            var KTAppOptions = {
+                "colors": {
+                    "state": {
+                        "brand": "#5d78ff",
+                        "dark": "#282a3c",
+                        "light": "#ffffff",
+                        "primary": "#5867dd",
+                        "success": "#34bfa3",
+                        "info": "#36a3f7",
+                        "warning": "#ffb822"
+                    },
+                    "base": {
+                        "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                        "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                    }
                 }
-            }
-        };
-    </script>
-</body>
+            };
+        </script>
+    </body>
 </html>
 <%
         }

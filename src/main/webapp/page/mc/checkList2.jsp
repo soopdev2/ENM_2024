@@ -358,9 +358,7 @@
                 </div>
             </div>
         </div>
-        <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
-            <i class="fa fa-arrow-up"></i>
-        </div>
+       
                                                 
          <input type="hidden" id="context" value="<%=request.getContextPath()%>">
 

@@ -175,10 +175,6 @@
 
 
 
-        <!-- begin::Scrolltop -->
-        <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
-            <i class="fa fa-arrow-up"></i>
-        </div>
         <!--start:Modal-->
         <div class="modal fade" id="allievi_table" tabindex="-1" role="dialog" aria-labelledby="Allievi Progetto Formativo" aria-hidden="true" style="padding: 0!important;">
             <div class="modal-dialog modal-full modal-dialog-centered" role="document">

@@ -57,7 +57,7 @@
         <link href="assets/vendors/custom/vendors/flaticon/flaticon.css" rel="stylesheet" type="text/css" />
         <link href="assets/vendors/custom/vendors/flaticon2/flaticon.css" rel="stylesheet" type="text/css" />
         <link href="assets/vendors/custom/vendors/fontawesome5/css/all.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/demo/default/base/style.bundle.css" rel="stylesheet" type="text/css" />
+        <!--link href="assets/demo/default/base/style.bundle.css" rel="stylesheet" type="text/css" /-->
         <link href="resource/custom.css" rel="stylesheet" type="text/css" />
 
         <link rel="shortcut icon" href="assets/media/logos/favicon.ico" />

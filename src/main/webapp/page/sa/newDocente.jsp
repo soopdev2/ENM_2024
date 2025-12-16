@@ -50,7 +50,6 @@
         <meta name="description" content="Updates and statistics">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <script src="<%=src%>/resource/webfont.js"></script>
-        <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js"></script>
         <script>
             WebFont.load({
                 google: {
@@ -74,7 +73,7 @@
         <link href="<%=src%>/assets/vendors/custom/vendors/flaticon2/flaticon.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/vendors/custom/vendors/fontawesome5/css/all.min.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/resource/animate.css" rel="stylesheet" type="text/css"/>
-        <link href="<%=src%>/assets/demo/default/base/style.bundle.css" rel="stylesheet" type="text/css" />
+        <!--link href="<%=src%>/assets/demo/default/base/style.bundle.css" rel="stylesheet" type="text/css" /-->
         <link href="<%=src%>/resource/custom.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/header/base/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/header/menu/light.css" rel="stylesheet" type="text/css" />
@@ -133,7 +132,12 @@
 
     <body class="d-flex flex-column min-vh-100">
         <%@ include file="menu/head1.jsp"%>
-        <%@ include file="../../Bootstrap2024/index/index_SoggettoAttuatore/Header_soggettoAttuatore.jsp"%>
+
+        <div class="it-header-wrapper">
+
+            <%@ include file="../../Bootstrap2024/index/index_SoggettoAttuatore/Header_soggettoAttuatore.jsp"%>
+
+        </div>
         <%@ include file="../../Bootstrap2024/index/menu/menuAtt.jsp"%>
         <%@ include file="menu/head.jsp"%>
 
@@ -280,10 +284,6 @@
 
 
 
-
-        <div id="kt_scrolltop" style="background-color: #0059b3" style="background-color: #1d32a6" class="kt-scrolltop">
-            <i class="fa fa-arrow-up"></i>
-        </div>
         <!--begin:: Global Mandatory Vendors -->
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
@@ -296,6 +296,8 @@
         <script src="<%=src%>/assets/app/bundle/app.bundle.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/sweetalert2/dist/sweetalert2.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/utility.js" type="text/javascript"></script>
+        <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js"></script>
+
         <!-- this page -->
         <script src="<%=src%>/assets/vendors/general/select2/dist/select2.full.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/select2.js" type="text/javascript"></script>
@@ -304,26 +306,26 @@
         <script src="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
         <script id="newDocente" src="<%=src%>/page/sa/js/newDocente.js<%="?dummy=" + String.valueOf(new Date().getTime())%>" data-context="<%=request.getContextPath()%>" type="text/javascript"></script> 
         <script type="text/javascript">
-                                                var KTAppOptions = {
-                                                    "colors": {
-                                                        "state": {
-                                                            "brand": "#5d78ff",
-                                                            "dark": "#282a3c",
-                                                            "light": "#ffffff",
-                                                            "primary": "#5867dd",
-                                                            "success": "#34bfa3",
-                                                            "info": "#36a3f7",
-                                                            "warning": "#ffb822"
-                                                        },
-                                                        "base": {
-                                                            "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                                                            "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                                                        }
-                                                    }
-                                                };
+                                        var KTAppOptions = {
+                                            "colors": {
+                                                "state": {
+                                                    "brand": "#5d78ff",
+                                                    "dark": "#282a3c",
+                                                    "light": "#ffffff",
+                                                    "primary": "#5867dd",
+                                                    "success": "#34bfa3",
+                                                    "info": "#36a3f7",
+                                                    "warning": "#ffb822"
+                                                },
+                                                "base": {
+                                                    "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                                                    "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                                                }
+                                            }
+                                        };
         </script>
-        
-        
+
+
     </body>
 </html>
 <%

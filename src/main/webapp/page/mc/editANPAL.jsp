@@ -137,9 +137,6 @@
 
         </main>
 
-        <div id="kt_scrolltop"style="background-color: #0059b3" class="kt-scrolltop">
-            <i class="fa fa-arrow-up"></i>
-        </div>
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
         <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
         <script src="../../Bootstrap2024/assets/js/popper.js" type="text/javascript"></script>

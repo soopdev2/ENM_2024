@@ -1,11 +1,24 @@
 <!-- begin:: Header Mobile -->
-<div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
-    <div class="kt-header-mobile__logo">
+<!--
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top d-lg-none">
+    <div class="container-fluid">
 
+        <div class="navbar-brand">
+        </div>
+
+        <div class="d-flex ms-auto">
+
+            <button class="btn btn-outline-secondary me-2" id="asideMobileToggler">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <button class="btn btn-outline-secondary" id="topbarMobileToggler">
+                <i class="bi bi-three-dots"></i>
+            </button>
+
+        </div>
+        
     </div>
-    <div class="kt-header-mobile__toolbar">
-        <button class="kt-header-mobile__toggler kt-header-mobile__toggler--left" id="kt_aside_mobile_toggler"><span></span></button>
-        <button class="kt-header-mobile__topbar-toggler" id="kt_header_mobile_topbar_toggler"><i class="flaticon-more"></i></button>
-    </div>
-</div>
+</nav>
+-->
 <!-- end:: Header Mobile -->

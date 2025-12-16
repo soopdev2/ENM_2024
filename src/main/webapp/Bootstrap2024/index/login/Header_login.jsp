@@ -13,13 +13,7 @@
     </head>
     <body>
 
-        <header
-            class="it-header-wrapper it-header-sticky"
-            data-bs-toggle="sticky"
-            data-bs-position-type="fixed"
-            data-bs-sticky-class-name="is-sticky"
-            data-bs-target="#header-nav-wrapper"
-            >
+        <header>
             <div class="it-header-slim-wrapper">
                 <div class="container">
                     <div class="row">

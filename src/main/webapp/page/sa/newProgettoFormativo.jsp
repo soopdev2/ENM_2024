@@ -66,7 +66,6 @@
         <link href="<%=src%>/assets/vendors/general/select2/dist/css/select2.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/vendors/general/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" />
-        <link href="<%=src%>/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js   " rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/vendors/general/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/vendors/general/sweetalert2/dist/sweetalert2.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/vendors/custom/vendors/line-awesome/css/line-awesome.css" rel="stylesheet" type="text/css" />
@@ -96,6 +95,15 @@
             .offset-sm-1{
                 margin-left: 5%;
             }
+
+            .step-content {
+                display: none;
+            }
+
+            .step-content[data-ktwizard-state="current"] {
+                display: block;
+            }
+
         </style>
 
 
@@ -117,6 +125,7 @@
         <%if (fancy) {%>
         <%@ include file="menu/head1.jsp"%>
         <%@ include file="../../Bootstrap2024/index/index_SoggettoAttuatore/Header_soggettoAttuatore.jsp"%>
+
         <%@ include file="../../Bootstrap2024/index/menu/menuAtt.jsp"%>
         <%@ include file="menu/head.jsp"%>
 
@@ -140,32 +149,53 @@
                         <div class="card-header bg-white rounded-top">
                             <ul class="nav nav-pills card-header-pills" id="wizard-nav">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="#" data-ktwizard-type="step" data-ktwizard-state="current">
-                                        <i class="fa fa-pencil-alt me-1"></i> 1 - Informazioni generali
+                                    <a class="nav-link active"
+                                       href="javascript:void(0)"
+                                       data-ktwizard-type="step"
+                                       data-ktwizard-state="current">
+                                        <i class="fa fa-pencil-alt me-1"></i>
+                                        1 - Informazioni generali
                                     </a>
                                 </li>
+
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#" data-ktwizard-type="step">
-                                        <i class="flaticon-presentation-1 me-1"></i> 2 - Aula e Allievi
+                                    <a class="nav-link"
+                                       href="javascript:void(0)"
+                                       data-ktwizard-type="step">
+                                        <i class="flaticon-presentation-1 me-1"></i>
+                                        2 - Aula e Allievi
                                     </a>
                                 </li>
+
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#" data-ktwizard-type="step">
-                                        <i class="fa fa-chalkboard-teacher me-1"></i> 3 - Docente
+                                    <a class="nav-link"
+                                       href="javascript:void(0)"
+                                       data-ktwizard-type="step">
+                                        <i class="fa fa-chalkboard-teacher me-1"></i>
+                                        3 - Docente
                                     </a>
                                 </li>
+
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#" data-ktwizard-type="step">
-                                        <i class="fa fa-file-pdf me-1"></i> 4 - Documenti
+                                    <a class="nav-link"
+                                       href="javascript:void(0)"
+                                       data-ktwizard-type="step">
+                                        <i class="fa fa-file-pdf me-1"></i>
+                                        4 - Documenti
                                     </a>
                                 </li>
+
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#" data-ktwizard-type="step">
-                                        <i class="fa fa-list me-1"></i> 5 - Riepilogo
+                                    <a class="nav-link"
+                                       href="javascript:void(0)"
+                                       data-ktwizard-type="step">
+                                        <i class="fa fa-list me-1"></i>
+                                        5 - Riepilogo
                                     </a>
                                 </li>
                             </ul>
                         </div>
+
 
                         <div class="card-body kt-wizard-v1__wrapper">
                             <form id="kt_form" action="<%=request.getContextPath()%>/OperazioniSA?type=newProgettoFormativo"
@@ -305,18 +335,13 @@
 
 
 
-        <div id="kt_scrolltop" style="background-color: #0059b3" class="kt-scrolltop">
-            <i class="fa fa-arrow-up"></i>
-        </div>
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-        <script src="../../assets/soop/js/jquery-1.12.4.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/moment.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/sticky-js/dist/sticky.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/app/bundle/app.bundle.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/app/bundle/app.bundle.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/sweetalert2/dist/sweetalert2.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/app/custom/general/components/extended/blockui1.33.js" type="text/javascript"></script>
@@ -328,7 +353,7 @@
         <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/select2.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/bootstrap-daterangepicker.js" type="text/javascript"></script><!--usa questo per modificare daterangepicker-->
         <script src="<%=src%>/assets/vendors/general/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/app/custom/wizard/wizard-progetto.js" type="text/javascript"></script>
+        <!--script src="../../assets/app/custom/wizard/wizard-progetto.js" type="text/javascript"></script-->
         <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/bootstrap-datepicker.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
 
@@ -337,23 +362,23 @@
 
 
 
-                                    var KTAppOptions = {
-                                        "colors": {
-                                            "state": {
-                                                "brand": "#5d78ff",
-                                                "dark": "#282a3c",
-                                                "light": "#ffffff",
-                                                "primary": "#5867dd",
-                                                "success": "#34bfa3",
-                                                "info": "#36a3f7",
-                                                "warning": "#ffb822"
-                                            },
-                                            "base": {
-                                                "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                                                "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                                            }
-                                        }
-                                    };
+                                            var KTAppOptions = {
+                                                "colors": {
+                                                    "state": {
+                                                        "brand": "#5d78ff",
+                                                        "dark": "#282a3c",
+                                                        "light": "#ffffff",
+                                                        "primary": "#5867dd",
+                                                        "success": "#34bfa3",
+                                                        "info": "#36a3f7",
+                                                        "warning": "#ffb822"
+                                                    },
+                                                    "base": {
+                                                        "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                                                        "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                                                    }
+                                                }
+                                            };
         </script>
         <script>
             jQuery(document).ready(function () {
@@ -396,6 +421,33 @@
 
 
         </script>
+
+
+        <script>
+            jQuery(document).ready(function () {
+
+                var wizard = new KTWizard('kt_wizard_v1', {
+                    startStep: 1,
+                    clickableSteps: true
+                });
+
+                wizard.on('change', function (wizardObj) {
+
+                    $('.step-content').removeAttr('data-ktwizard-state');
+                    $('#step' + wizardObj.currentStep).attr('data-ktwizard-state', 'current');
+
+                    $('#wizard-nav .nav-link').removeClass('active');
+                    $('#wizard-nav .nav-link').eq(wizardObj.currentStep - 1).addClass('active');
+
+                    KTUtil.scrollTop();
+                });
+
+
+            });
+        </script>
+
+
+
     </body>
 </html>
 <%}
