@@ -19,7 +19,7 @@
 
         <!-- User Bar -->
         <div class="dropdown ms-auto">
-            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <a style="position: relative; top: -10px;" href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="me-2 d-none d-lg-inline">Ciao, <%=us.getUsername()%></span>
                 <span class="badge bg-primary rounded-circle fw-bold" style="width: 35px; height: 35px; display: flex; align-items: center; justify-content: center;">
                     <%=us.getUsername().substring(0, 1).toUpperCase()%>

@@ -199,7 +199,7 @@
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-6 mb-3">
                                             <div class="form-check form-switch">
-                                                <input type="checkbox" class="form-check-input" name="prv1" id="prv1" checked disabled />
+                                                <input type="checkbox" class="form-check-input" name="prv1" id="prv1" style="left:30px;"checked disabled />
                                                 <label class="form-check-label" for="prv1">
                                                     Autorizzazione Privacy 1 <span class="text-danger fw-bold">*</span> - <%=prv1%>
                                                 </label>

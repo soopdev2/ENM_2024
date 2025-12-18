@@ -30,15 +30,13 @@
                             <div class="col-12">
                                 <div class="it-header-center-content-wrapper">
                                     <div class="it-brand-wrapper">
-                                        <a href="">
-                                            <svg class="icon" aria-hidden="true">
-                                            <use href=""></use>
-                                            </svg>
-                                            <div class="it-brand-text">
-                                                <div class="it-brand-title"><h3 class="kt-login__title kt-font-io" style="font-size:2rem; color:white !important;"><b>YES I STARTUP - Regione Toscana</b></h3></div>
-                                                <!--<div class="it-brand-tagline d-none d-md-block">Uno dei tanti Comuni d'Italia</div>-->
-                                            </div>
-                                        </a>
+                                        <svg class="icon" aria-hidden="true">
+                                        <use href=""></use>
+                                        </svg>
+                                        <div class="it-brand-text">
+                                            <div class="it-brand-title"><h3 class="kt-login__title kt-font-io" style="font-size:2rem; color:white !important;"><b>YES I STARTUP - Regione Toscana</b></h3></div>
+                                            <!--<div class="it-brand-tagline d-none d-md-block">Uno dei tanti Comuni d'Italia</div>-->
+                                        </div>
                                     </div>
                                     <div class="it-right-zone">
                                         <!--<div class="it-socials d-none d-md-flex">

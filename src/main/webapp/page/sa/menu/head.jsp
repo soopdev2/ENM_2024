@@ -16,7 +16,7 @@
 
         <!-- Right user dropdown -->
         <div class="dropdown ms-auto">
-            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" 
+            <a style="position: relative; top:-10px;"href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" 
                id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="me-2">Ciao,</span>
                 <span class="fw-bold me-2"><%=us.getSoggettoAttuatore().getRagionesociale()%></span>
@@ -61,8 +61,5 @@
 </nav>
 
 <!-- Fancybox CSS/JS -->
-<link href="<%=src%>/assets/soop/css/jquery.fancybox.css" rel="stylesheet" type="text/css"/>
-<script src="<%=src%>/assets/soop/js/jquery-1.12.1.min.js"></script>
-<script src="<%=src%>/assets/soop/js/jquery.fancybox.js?v=2.1.5"></script>
-<script src="<%=src%>/assets/soop/js/fancy.js"></script>
+<script src="../../../assets/soop/js/fancy.js"></script>
 

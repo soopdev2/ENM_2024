@@ -7,6 +7,7 @@ package rc.so.db;
 
 import com.google.common.base.Splitter;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import rc.so.domain.Comuni;
@@ -325,15 +326,16 @@ public class Database {
         String path = "/mnt/mcn/test/temp/";
 
         try {
-            String sql = "SELECT url FROM path WHERE id = :id";
+            String sql = "SELECT url FROM path WHERE id = ?";
             Query q = e.getEm().createNativeQuery(sql);
-            q.setParameter("id", id);
+            q.setParameter(1, id);
 
             Object result = q.getSingleResult();
             if (result != null) {
                 path = result.toString();
             }
 
+        } catch (NoResultException ex) {
         } catch (Exception ex) {
             LOGAPP.log(Level.SEVERE, "Errore in getPathtemp", ex);
         } finally {
@@ -1104,7 +1106,7 @@ public class Database {
 
     public Map<Long, Long> OreRendicontabiliAlunni_faseA(int pf) {
         Map<Long, Long> result = new HashMap<>();
-        Entity e = new Entity(); 
+        Entity e = new Entity();
 
         try {
             String sql;

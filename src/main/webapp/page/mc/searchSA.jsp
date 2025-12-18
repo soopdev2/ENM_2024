@@ -1,4 +1,3 @@
-
 <%@page import="org.apache.commons.text.StringEscapeUtils"%>
 <%@page import="rc.so.util.Utility"%>
 <%@page import="rc.so.domain.EstensioniFile"%>
@@ -69,7 +68,6 @@
         <link href="<%=src%>/assets/demo/default/skins/brand/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
         <link href="../../Bootstrap2024/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="../../Bootstrap2024/assets/css/global.css"/>
         <link href="https://fonts.cdnfonts.com/css/titillium-web" rel="stylesheet">
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
         <script src="../../Bootstrap2024/assets/js/popper.js"></script>
@@ -85,8 +83,8 @@
     <body class="d-flex flex-column min-vh-100">
 
         <!-- begin:: Page -->
-        <%@ include file="menu/head1.jsp"%>
-        <%@ include file="../../Bootstrap2024/index/index_SoggettoAttuatore/Header_soggettoAttuatore.jsp"%>
+        <%@ include file="menu/head.jsp"%>
+        <%@ include file="../../Bootstrap2024/index/index_SoggettoAttuatore/Header_soggettoAttuatore.jsp"%> 
         <%@ include file="../../Bootstrap2024/index/menu/menuMc.jsp"%>
 
 
@@ -226,30 +224,30 @@
 
 
         <script type="text/javascript">
-                                                var KTAppOptions = {
-                                                    "colors": {
-                                                        "state": {
-                                                            "brand": "#5d78ff",
-                                                            "dark": "#282a3c",
-                                                            "light": "#ffffff",
-                                                            "primary": "#5867dd",
-                                                            "success": "#34bfa3",
-                                                            "info": "#36a3f7",
-                                                            "warning": "#ffb822"
-                                                        },
-                                                        "base": {
-                                                            "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                                                            "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                                                        }
+                                            var KTAppOptions = {
+                                                "colors": {
+                                                    "state": {
+                                                        "brand": "#5d78ff",
+                                                        "dark": "#282a3c",
+                                                        "light": "#ffffff",
+                                                        "primary": "#5867dd",
+                                                        "success": "#34bfa3",
+                                                        "info": "#36a3f7",
+                                                        "warning": "#ffb822"
+                                                    },
+                                                    "base": {
+                                                        "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                                                        "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
                                                     }
-                                                };
+                                                }
+                                            };
         </script>
 
         <script>
-        var contextPath = '<%=request.getContextPath()%>';
-        var tipoR = '<%=tipoR%>';
-        var extEstensione = '<%=ext.getEstensione()%>';
-        var extMimeType = '<%=ext.getMime_type()%>';
+            var contextPath = '<%=request.getContextPath()%>';
+            var tipoR = '<%=tipoR%>';
+            var extEstensione = '<%=ext.getEstensione()%>';
+            var extMimeType = '<%=ext.getMime_type()%>';
         </script>
 
         <script src="js/searchSAmicro.js"></script>
