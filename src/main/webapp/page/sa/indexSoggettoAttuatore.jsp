@@ -94,12 +94,9 @@
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
         <link href="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" />
         <link href="../../Bootstrap2024/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
 
 
-        <!-- Popper.js (necessario per dropdown, tooltip, popover) -->
-        <script src="../../Bootstrap2024/assets/js/popper.js"></script>
 
 
 
@@ -338,14 +335,10 @@
         <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/sticky-js/dist/sticky.min.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/app/bundle/app.bundle.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/sweetalert2/dist/sweetalert2.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/utility.js" type="text/javascript"></script>
         <script src="../../Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
 
-        <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/bootstrap-datepicker.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
         <!--end::Global Theme Bundle -->
         <!--begin::Page Vendors(used by this page) -->
 
@@ -370,11 +363,14 @@
                     }
                 }
             };
-            $('[data-toggle="popover-hover"]').popover({
-                html: true,
-                trigger: 'hover',
-                placement: 'right'
+            document.querySelectorAll('[data-bs-toggle="popover"]').forEach(el => {
+                new bootstrap.Popover(el, {
+                    trigger: 'hover',
+                    placement: 'right',
+                    html: true
+                });
             });
+
         </script>
         <script>
             $('.kt-scroll').each(function () {
@@ -518,7 +514,7 @@
 
 
 
-</body>
+    </body>
 
 
 

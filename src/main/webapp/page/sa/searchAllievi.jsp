@@ -61,7 +61,6 @@
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
         <!--<link href="<%=src%>/assets/vendors/general/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" />-->
         <link href="../../Bootstrap2024/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="../../Bootstrap2024/assets/css/global.css"/>
         <link href="https://fonts.cdnfonts.com/css/titillium-web" rel="stylesheet">
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
         <script src="../../Bootstrap2024/assets/js/popper.js"></script>
@@ -69,7 +68,6 @@
     </head>
     <body class="d-flex flex-column min-vh-100">
         <!-- begin:: Page -->
-        <%@ include file="menu/head1.jsp"%>
         <%@ include file="../../Bootstrap2024/index/index_SoggettoAttuatore/Header_soggettoAttuatore.jsp"%>
         <%@ include file="../../Bootstrap2024/index/menu/menuAtt.jsp"%>
         <%@ include file="menu/head.jsp"%>
@@ -191,7 +189,7 @@
         <script src="<%=src%>/assets/app/bundle/app.bundle.js" type="text/javascript"></script>
         <!--this page -->
         <script src="<%=src%>/assets/vendors/general/bootstrap-select/dist/js/bootstrap-select.js" type="text/javascript"></script>
-        <script src="<%=src%>/assets/vendors/general/select2/dist/js/select2.full.js" type="text/javascript"></script>
+        <script src="<%=src%>/assets/vendors/general/select2/dist/select2.full.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/app/custom/general/crud/forms/widgets/select2.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/soop/js/loadTable.js" type="text/javascript"></script>
@@ -217,6 +215,7 @@
                             }
                         };
         </script>
+        <script src="../../assets/soop/js/fancy.js"></script>
     </body>
 </html>
 <%

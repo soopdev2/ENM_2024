@@ -295,7 +295,6 @@
 
 
     <script src="<%=src%>/assets/soop/js/jquery-3.7.1.js" type="text/javascript"></script>
-    <script src="../../assets/soop/js/jquery-1.10.1.min.js" type="text/javascript"></script>
     <script src="<%=src%>/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js" type="text/javascript"></script>
     <script src="<%=src%>/assets/vendors/general/sticky-js/dist/sticky.min.js" type="text/javascript"></script>
     <script src="<%=src%>/assets/vendors/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>

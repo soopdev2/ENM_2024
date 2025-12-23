@@ -23,14 +23,15 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "stati_progetto")
 @NamedQueries(value = {
-    @NamedQuery(name = "statiPrg.Tipo", query = "SELECT sp FROM StatiPrg sp GROUP BY sp.tipo ORDER BY sp.ordine")
-    ,
-    @NamedQuery(name = "statiPrg.ByTipo", query = "SELECT sp FROM StatiPrg sp WHERE sp.tipo=:tipo")
-    ,
-    @NamedQuery(name = "statiPrg.ByDescrizione", query = "SELECT sp FROM StatiPrg sp WHERE sp.descrizione=:descrizione")
-    ,
-    @NamedQuery(name = "statiPrg.ByOrdinePocesso", query = "SELECT sp FROM StatiPrg sp WHERE sp.ordine_processo=:ordine")
-    ,
+    @NamedQuery(
+            name = "statiPrg.Tipo",
+            query = "SELECT sp FROM StatiPrg sp "
+            + "WHERE sp.id IN (SELECT MIN(sp2.id) FROM StatiPrg sp2 GROUP BY sp2.tipo) "
+            + "ORDER BY sp.ordine"
+    ),
+    @NamedQuery(name = "statiPrg.ByTipo", query = "SELECT sp FROM StatiPrg sp WHERE sp.tipo=:tipo"),
+    @NamedQuery(name = "statiPrg.ByDescrizione", query = "SELECT sp FROM StatiPrg sp WHERE sp.descrizione=:descrizione"),
+    @NamedQuery(name = "statiPrg.ByOrdinePocesso", query = "SELECT sp FROM StatiPrg sp WHERE sp.ordine_processo=:ordine"),
     @NamedQuery(name = "statiPrg.TipoR", query = "SELECT sp FROM StatiPrg sp ORDER BY sp.ordine")
 })
 public class StatiPrg implements Serializable {

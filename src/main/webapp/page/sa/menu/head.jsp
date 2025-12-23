@@ -61,5 +61,4 @@
 </nav>
 
 <!-- Fancybox CSS/JS -->
-<script src="../../../assets/soop/js/fancy.js"></script>
 

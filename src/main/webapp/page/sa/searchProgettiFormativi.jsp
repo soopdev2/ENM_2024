@@ -68,7 +68,6 @@
         <link href="<%=src%>/assets/demo/default/skins/aside/light.css" rel="stylesheet" type="text/css" />
         <link href="../../Bootstrap2024/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link rel="shortcut icon" href="<%=src%>/assets/media/logos/favicon.ico" />
-        <link rel="stylesheet" href="Bootstrap2024/assets/css/global.css"/>
         <link href="https://fonts.cdnfonts.com/css/titillium-web" rel="stylesheet">
         <script src="../../Bootstrap2024/assets/js/popper.js"></script>
         <!--end::countDown -->
@@ -86,171 +85,149 @@
 
     <body>
         <%@ include file="../../Bootstrap2024/index/index_SoggettoAttuatore/Header_soggettoAttuatore.jsp"%>
-        <%@ include file="menu/head1.jsp"%>
         <%@ include file="../../Bootstrap2024/index/menu/menuAtt.jsp"%>
         <%@ include file="menu/head.jsp"%>
 
-
-        <div class="kt-page-loader kt-page-loader--logo">
-            <img height="100" alt="Logo" src="<%=src%>/assets/media/logos/logo.png"/>
-            <div class="kt-spinner kt-spinner--io"></div>
-        </div>
-
-        <main>
-
-            <div class="container-fluid" id="kt_wrapper">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="d-flex align-items-center mb-3">
-                            <h3 class="me-2">Progetti Formativi</h3>
-                            <span class="vr me-2"></span>
-                            <a href="#">Cerca</a>
-                        </div>
-                    </div>
+        <main class="container-fluid py-4">
+            <!-- Page header -->
+            <div class="row mb-3">
+                <div class="col-12 d-flex align-items-center">
+                    <h3 class="me-2">Progetti Formativi</h3>
+                    <span class="vr me-2"></span>
+                    <a href="#">Cerca</a>
                 </div>
+            </div>
 
-                <!-- Form di ricerca -->
-                <div class="row mb-3">
-                    <div class="col-12">
-                        <div class="card" id="kt_portlet">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Cerca :</h5>
-                                <button class="btn btn-sm btn-icon btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#searchBody" aria-expanded="true">
-                                    <i class="la la-angle-down" id="toggle_search"></i>
-                                </button>
-                            </div>
-                            <div class="collapse show" id="searchBody">
-                                <form class="card-body" onsubmit="refresh();return false;" accept-charset="ISO-8859-1" method="post">
-                                    <div class="row mb-3">
-                                        <div class="col-lg-3">
-                                            <label for="cip" class="form-label">CIP</label>
-                                            <input type="text" class="form-control" value="<%=icip%>" name="cip" id="cip" autocomplete="off">
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <label for="stato" class="form-label">Stato</label>
-                                            <select class="form-select" id="stato" name="stato" style="width: 100%">
-                                                <option value="-">Seleziona Stato</option>
-                                                <%for (StatiPrg i : stati) {%>
-                                                <option value="<%=i.getTipo()%>"><%=i.getDescrizione()%></option>
-                                                <%}%>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-end">
-                                        <a href="javascript:void(0);" onclick="refresh();" class="btn btn-primary me-2">Cerca</a>
-                                        <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-warning">Reset</a>
-                                    </div>
-                                </form>
-                            </div>
+            <!-- Search Form -->
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="card" id="kt_portlet">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Cerca :</h5>
+                            <button class="btn btn-sm btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#searchBody" aria-expanded="true">
+                                <i class="la la-angle-down" id="toggle_search"></i>
+                            </button>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Risultati -->
-                <div class="row" id="offsetresult">
-                    <div class="col-12">
-                        <div class="card" id="kt_portlet">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Risultati :</h5>
-                                <button class="btn btn-sm btn-icon btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#resultBody" aria-expanded="true">
-                                    <i class="la la-angle-down" id="toggle_search"></i>
-                                </button>
-                            </div>
-                            <div class="card-body collapse show" id="resultBody">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered" id="kt_table_1" style="width:100%">
-                                        <thead>
-                                            <tr class="text-center text-uppercase">
-                                                <th>Azioni</th>
-                                                <th>ID</th>
-                                                <th>Data Inizio</th>
-                                                <th>Data Fine</th>
-                                                <th>CIP</th>
-                                                <th>Allievi</th>
-                                                <th>Stato</th>
-                                                <th>Motivo Errore</th>
-                                                <th>Errore O Verificare</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <!-- Riempito via JS -->
-                                        </tbody>
-                                    </table>
+                        <div class="collapse show" id="searchBody">
+                            <form class="card-body row g-3" onsubmit="refresh();return false;" method="post">
+                                <div class="col-lg-3">
+                                    <label for="cip" class="form-label">CIP</label>
+                                    <input type="text" class="form-control" value="<%=icip%>" name="cip" id="cip" autocomplete="off">
                                 </div>
+                                <div class="col-lg-3">
+                                    <label for="stato" class="form-label">Stato</label>
+                                    <select class="form-select" id="stato" name="stato">
+                                        <option value="-">Seleziona Stato</option>
+                                        <%for (StatiPrg i : stati) {%>
+                                        <option value="<%=i.getTipo()%>"><%=i.getDescrizione()%></option>
+                                        <%}%>
+                                    </select>
+                                </div>
+                                <div class="col-12 d-flex justify-content-end mt-2">
+                                    <a href="javascript:void(0);" onclick="refresh();" class="btn btn-primary me-2">Cerca</a>
+                                    <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-warning">Reset</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Risultati -->
+            <div class="row" id="offsetresult">
+                <div class="col-12">
+                    <div class="card" id="kt_portlet">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Risultati :</h5>
+                            <button class="btn btn-sm btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#resultBody" aria-expanded="true">
+                                <i class="la la-angle-down" id="toggle_search"></i>
+                            </button>
+                        </div>
+                        <div class="card-body collapse show" id="resultBody">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered" id="kt_table_1">
+                                    <thead class="text-center text-uppercase">
+                                        <tr>
+                                            <th>Azioni</th>
+                                            <th>ID</th>
+                                            <th>Data Inizio</th>
+                                            <th>Data Fine</th>
+                                            <th>CIP</th>
+                                            <th>Allievi</th>
+                                            <th>Stato</th>
+                                            <th>Motivo Errore</th>
+                                            <th>Errore O Verificare</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Riempito via JS -->
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-
-
-
-
-        </main>       
-        <%@ include file="../../Bootstrap2024/index/login/Footer_login.jsp"%>
-
-
-        <!--start:Modal-->
-        <div class="modal fade" id="allievi_table" tabindex="-1" role="dialog" aria-labelledby="Allievi Progetto Formativo" aria-hidden="true">
-            <div class="modal-dialog modal-full modal-dialog-centered" role="document">
-                <div class="modal-content center">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Allievi Progetto</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="kt-scroll" style="max-height: 750px; min-height: 750px;">
-                            <table class="table table-bordered" id="kt_table_allievi" style="width: 100%;">
-                                <thead>
-                                    <tr>
-                                        <th class="text-uppercase text-center">Azioni</th>
-                                        <th class="text-uppercase text-center">Nome</th>
-                                        <th class="text-uppercase text-center">Cognome</th>
-                                        <th class="text-uppercase text-center">Codice Fiscale</th>
-                                        <th class="text-uppercase text-center">Stato</th>
-                                        <th class="text-uppercase text-center">Motivazione</th>
-                                    </tr>
-                                </thead>
-                            </table>
+            <!-- Modals -->
+            <div class="modal fade" id="allievi_table" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-full modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Allievi Progetto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive kt-scroll" style="max-height: 750px;">
+                                <table class="table table-bordered" id="kt_table_allievi">
+                                    <thead>
+                                        <tr class="text-center text-uppercase">
+                                            <th>Azioni</th>
+                                            <th>Nome</th>
+                                            <th>Cognome</th>
+                                            <th>Codice Fiscale</th>
+                                            <th>Stato</th>
+                                            <th>Motivazione</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="modal fade" id="doc_modal" tabindex="-1" role="dialog" aria-labelledby="Documenti" aria-hidden="true">
-            <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Documenti</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div style="text-align: center;">
+
+            <div class="modal fade" id="doc_modal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-xl modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Documenti</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body text-center">
                             <div class="kt-scroll row col-12" id="prg_docs" style="max-height: 750px;"></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="modal fade" id="register_modal" tabindex="-1" role="dialog" aria-labelledby="Registro Aula" aria-hidden="true"> 
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Registro Aula</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        </button>
-                    </div>
-                    <div class="modal-body kt-scroll" style="max-height: 500px;">
-                        <div class="row col-12" id="register_docs_modal">
 
+            <div class="modal fade" id="register_modal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Registro Aula</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body kt-scroll" style="max-height: 500px;">
+                            <div class="row col-12" id="register_docs_modal"></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
+
+
+
         <!--end::Modal-->
         <script src="<%=src%>/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js" type="text/javascript"></script>
         <script src="<%=src%>/assets/vendors/general/jquery/dist/jquery.js" type="text/javascript"></script>
