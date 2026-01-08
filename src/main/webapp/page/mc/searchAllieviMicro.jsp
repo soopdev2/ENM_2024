@@ -142,6 +142,8 @@
             </div>
 
             <!-- Risultati -->
+            <div id="offsetresult"></div>
+
             <div class="row">
                 <div class="col-12">
                     <div class="card shadow-sm">

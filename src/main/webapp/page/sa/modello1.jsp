@@ -260,7 +260,8 @@
                                             <label class="form-label"><%=t.getDescrizione()%>
                                                 <%=t.getObbligatorio() == 1 ? "<span id='label_doc_" + t.getId() + "' class='text-danger fw-bold'>*</span>" : ""%>
                                             </label>
-                                            <input type="file" 
+                                            <input style=""
+                                                   type="file" 
                                                    <%=t.getObbligatorio() == 1 ? "tipo='obbligatory'" : ""%>
                                                    class="form-control"
                                                    accept="<%=t.getMimetype()%>" 
@@ -273,7 +274,7 @@
 
                                 <!-- Footer -->
                                 <div class="card-footer text-start">
-                                    <a id="submit_change" href="javascript:void(0);" class="btn btn-primary">
+                                    <a id="submit_change" href="javascript:void(0);" style="position:relative; left:-11px;" class="btn btn-primary">
                                         <i class="flaticon2-plus-1"></i> Aggiungi
                                     </a>
                                 </div>

@@ -75,6 +75,8 @@
             .kt-section__title {
                 font-size: 1.2rem!important;
             }
+
+          
         </style>
 
 
@@ -149,7 +151,7 @@
                                     <!-- Pulsanti -->
                                     <div class="col-12 text-end mt-3">
                                         <a href="javascript:void(0);" onclick="refresh();" class="btn btn-primary">Cerca</a>
-                                        <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-warning">Reset</a>
+                                        <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-secondary">Reset</a>
                                     </div>
 
                                 </form>

@@ -128,7 +128,7 @@
                                     </div>
                                     <div class="col-12 text-end mt-3">
                                         <a onclick="refresh();" class="btn btn-primary">Cerca</a>
-                                        <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-warning">Reset</a>
+                                        <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-secondary">Reset</a>
                                     </div>
                                 </form>
                             </div>
@@ -138,6 +138,7 @@
             </div>
 
             <!-- Risultati -->
+            <div id="offsetresult"></div>
             <div class="row mt-4">
                 <div class="col-12">
                     <div class="card shadow-sm">
@@ -147,7 +148,7 @@
                                 <i class="it-expand"></i>
                             </button>
                         </div>
-                        <div class="collapse show" id="collapseResults">
+                        <div class="collapse show" id="collapseResults" >
                             <div class="card-body table-responsive">
                                 <table class="table table-striped table-bordered table-hover text-center" id="kt_table_1" style="width:100%">
                                     <thead class="text-uppercase">

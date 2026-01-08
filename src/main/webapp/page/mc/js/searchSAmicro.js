@@ -78,8 +78,8 @@ function upDoc(id, fdata) {
 
 function refresh() {
     $("#toolbar").css("display", "none");
-    $('html, body').animate({scrollTop: $('#offsetresult').offset().top}, 500);
-    load_table($('#kt_table_1'), context + '/QueryMicro?type=searchSA&ragionesociale=' + $('#ragionesociale').val()
+    $('html, body').animate({scrollTop: $('#kt_table_1').offset().top}, 500);
+    load_table($('#kt_table_1'), contextPath  + '/QueryMicro?type=searchSA&ragionesociale=' + $('#ragionesociale').val()
             + '&protocollo=' + $('#protocollo').val() + '&piva=' + $('#piva').val() + '&cf=' + $('#cf').val() + '&protocollare='
             + $('input[name=protocollare]:checked').val() + '&nome=' + $('#nome').val() + '&cognome=' + $('#cognome').val());
 }

@@ -110,7 +110,7 @@ var KTDatatablesDataSourceAjaxServer = function () {
                                     option += '<a class="dropdown-item kt-font-dark" href="javascript:void(0);" onclick="simulafaseB(' + row.id +
                                             ')"> SIMULA lezioni Fase B &nbsp;<i class="fa fa-angle-double-right kt-font-dark" style="margin-top:-2px"></i></a>';
                                 }
-                            
+
                             } else if (row.stato.id === "F") {
                                 option += '<a class="dropdown-item fancyBoxReload" href="modello4.jsp?id=' + row.id + '"><i class="fa fa-calendar-check"></i> Visualizza Calendario Modello 4</a>';
                                 option += '<a class="dropdown-item" href="concludiPrg.jsp?id=' + row.id + '"><i class="fa fa-angle-double-right"></i> Concludi Progetto</a>';
@@ -140,7 +140,7 @@ var KTDatatablesDataSourceAjaxServer = function () {
                         option += '</div></div>';
                         return option;
                     }
-                },{
+                }, {
                     targets: 2,
                     type: 'date-it',
                     render: function (data, type, row, meta) {
@@ -167,11 +167,10 @@ var KTDatatablesDataSourceAjaxServer = function () {
         }
     };
 }();
-
 function refresh() {
     $('html, body').animate({scrollTop: $('#offsetresult').offset().top}, 500);
     load_table($('#kt_table_1'), context + '/QuerySA?type=searchProgetti&cip=' + $('#cip').val()
-            + '&stato=' + $('#stato').val(), );
+            + '&stato=' + $('#stato').val());
 }
 
 function reload() {

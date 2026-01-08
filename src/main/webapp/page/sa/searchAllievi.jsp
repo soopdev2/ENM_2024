@@ -117,7 +117,7 @@
                             <a onclick="refresh();" href="javascript:void(0);" class="btn btn-primary me-2">
                                 <i class="bi bi-search"></i> Cerca
                             </a>
-                            <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-warning">
+                            <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-secondary">
                                 <i class="bi bi-arrow-counterclockwise"></i> Reset
                             </a>
                         </div>

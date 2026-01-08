@@ -75,7 +75,7 @@ var KTDatatablesDataSourceAjaxServer = function () {
                                 + '</button>'
                                 + '<div class="dropdown-menu dropdown-menu-left">';
                         option += '<a class="fancyBoxFullReload dropdown-item" href="modello0anagr.jsp?id=' +
-                                            row.id + '"><i class="fa fa-user"></i> Anagrafica Allievo</a>';
+                                row.id + '"><i class="fa fa-user"></i> Anagrafica Allievo</a>';
                         option += '<a class="dropdown-item" href="javascript:void(0);" onclick="swalDocumentAllievo(' + row.id + ')"><i class="fa fa-file-alt"></i> Visualizza Documenti</a>';
 //                        option += '<a class="dropdown-item fancyBoxAntoRef" href="' + context + '/redirect.jsp?page=page/sa/updtAllievo.jsp?id=' + row.id + '"><i class="fa fa-user-edit"></i> Scheda Allievo</a>'
                         if (row.progetto !== null) {
@@ -208,9 +208,18 @@ jQuery(document).ready(function () {
 function refresh() {
     $("#toolbar").css("display", "none");
     $('html, body').animate({scrollTop: $('#offsetresult').offset().top}, 500);
-    load_table($('#kt_table_1'), context + '/QuerySA?type=searchAllievi&nome=' + $('#nome').val()
-            + '&cognome=' + $('#cognome').val() + '&cf=' + $('#cf').val() + '&stato=' + $('input[name=stato]:checked').val() + '&cpi=' + $('#cpi').val());
+
+    load_table(
+            $('#kt_table_1'),
+            context + '/QuerySA?type=searchAllievi'
+            + '&nome=' + $('#nome').val()
+            + '&cognome=' + $('#cognome').val()
+            + '&cf=' + $('#cf').val()
+            + '&stato=' + $('input[name="stato"]').val()
+            + '&cpi=' + $('input[name="cpi"]').val()
+            );
 }
+
 
 function reload() {
     reload_table($('#kt_table_1'));

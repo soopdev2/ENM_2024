@@ -125,11 +125,22 @@ jQuery(document).ready(function () {
         const ps = new PerfectScrollbar($(this)[0], {suppressScrollY: true});
     });
 });
+
 function refresh() {
-    $('html, body').animate({scrollTop: $('#offsetresult').offset().top}, 500);
-    load_table($('#kt_table_1'), context + '/QueryMicro?type=searchDocenti&soggettoattuatore=' + $('#soggettoattuatore').val()
-            + '&cf=' + $('#cf').val() + '&nome=' + $('#nome').val() + '&cognome=' + $('#cognome').val());
+    var off = $('#offsetresult');
+    if (off.length) {
+        $('html, body').animate({scrollTop: off.offset().top}, 500);
+    }
+
+    load_table($('#kt_table_1'),
+            context + '/QueryMicro?type=searchDocenti'
+            + '&cf=' + $('#cf').val()
+            + '&nome=' + $('#nome').val()
+            + '&cognome=' + $('#cognome').val()
+            );
+
 }
+
 
 function reload() {
     $('html, body').animate({scrollTop: $('#offsetresult').offset().top}, 500);

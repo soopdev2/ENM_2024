@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
-var context = document.getElementById("context");
+var context = document.getElementById("context").value;
 
 $('#regione').on('change', function (e) {
     $("#provincia").empty();
@@ -15,7 +15,7 @@ $('#regione').on('change', function (e) {
         $.get(context + '/Login?type=getProvincia&regione=' + $('#regione').val(), function (resp) {
             var json = JSON.parse(resp);
             for (var i = 0; i < json.length; i++) {
-                $("#provincia").text('<option value="' + json[i].value + '">' + json[i].desc + '</option>');
+                $("#provincia").append('<option value="' + json[i].value + '">' + json[i].desc + '</option>');
             }
             stopBlockUI("#provincia_div");
         });
@@ -32,7 +32,7 @@ $('#provincia').on('change', function (e) {
         $.get(context + '/Login?type=getComune&provincia=' + $('#provincia').val(), function (resp) {
             var json = JSON.parse(resp);
             for (var i = 0; i < json.length; i++) {
-                $("#comune").text('<option value="' + json[i].value + '">' + json[i].desc + '</option>');
+                $("#comune").append('<option value="' + json[i].value + '">' + json[i].desc + '</option>');
             }
             stopBlockUI("#comune_div");
         });
@@ -131,10 +131,21 @@ jQuery(document).ready(function () {
 
 function refresh() {
     $("#toolbar").css("display", "none");
-    $('html, body').animate({scrollTop: $('#offsetresult').offset().top}, 500);
-    load_table($('#kt_table_1'), context + '/QueryMicro?type=searchSedi&referente=' + $('#referente').val() + "&regione=" + $('#regione').val()
-            + "&provincia=" + $('#provincia').val() + "&comune=" + $('#comune').val(), );
+
+    var off = $('#offsetresult');
+    if (off.length) {
+        $('html, body').animate({scrollTop: off.offset().top}, 500);
+    }
+
+    load_table(
+            $('#kt_table_1'),
+            context + '/QueryMicro?type=searchSedi&referente=' + $('#referente').val()
+            + "&regione=" + $('#regione').val()
+            + "&provincia=" + $('#provincia').val()
+            + "&comune=" + $('#comune').val()
+            );
 }
+
 
 
 

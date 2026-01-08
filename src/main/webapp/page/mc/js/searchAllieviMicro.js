@@ -130,10 +130,13 @@ jQuery(document).ready(function () {
     });
 });
 function refresh() {
-    $('html, body').animate({scrollTop: $('#offsetresult').offset().top}, 500);
+    if ($('#offsetresult').length) {
+        $('html, body').animate({scrollTop: $('#offsetresult').offset().top}, 500);
+    }
+
     load_table($('#kt_table_1'), context + '/QueryMicro?type=searchAllievo&soggettoattuatore=' + $('#soggettoattuatore').val()
-            + '&cf=' + $('#cf').val() + '&nome=' + $('#nome').val() + '&cognome=' + $('#cognome').val()
-            + '&cpi=' + $('#cpi').val() + '&pregresso=0');
+        + '&cf=' + $('#cf').val() + '&nome=' + $('#nome').val() + '&cognome=' + $('#cognome').val()
+        + '&cpi=' + $('#cpi').val() + '&pregresso=0');
 }
 
 function reload() {

@@ -178,7 +178,7 @@
                                         <div class="row">
                                             <div class="col-lg-6 offset-lg-6 text-end">
                                                 <a href="javascript:void(0);" onclick="refresh();" class="btn btn-primary text-white">Cerca</a>
-                                                <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-warning text-white">Reset</a>
+                                                <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-secondary text-white">Reset</a>
                                             </div>
                                         </div>
                                     </div>

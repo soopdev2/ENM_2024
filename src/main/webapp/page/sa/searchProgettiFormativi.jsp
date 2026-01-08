@@ -125,7 +125,7 @@
                                 </div>
                                 <div class="col-12 d-flex justify-content-end mt-2">
                                     <a href="javascript:void(0);" onclick="refresh();" class="btn btn-primary me-2">Cerca</a>
-                                    <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-warning">Reset</a>
+                                    <a href="<%=StringEscapeUtils.escapeHtml4(pageName_)%>" class="btn btn-secondary">Reset</a>
                                 </div>
                             </form>
                         </div>
@@ -134,7 +134,8 @@
             </div>
 
             <!-- Risultati -->
-            <div class="row" id="offsetresult">
+            <div id="offsetresult"></div>
+            <div class="row">
                 <div class="col-12">
                     <div class="card" id="kt_portlet">
                         <div class="card-header d-flex justify-content-between align-items-center">

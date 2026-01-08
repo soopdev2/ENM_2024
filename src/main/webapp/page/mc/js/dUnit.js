@@ -97,9 +97,13 @@ jQuery(document).ready(function () {
 });
 
 function refresh() {
-    $('html, body').animate({scrollTop: $('#offsetresult').offset().top}, 500);
+    var offsetEl = $('#offsetresult');
+    if (offsetEl.length) { // esiste
+        $('html, body').animate({scrollTop: offsetEl.offset().top}, 500);
+    }
     load_table($('#kt_table_1'), context + '/QueryMicro?type=searchUnitaDidattiche&codiceud=' + $('#codiceud').val() + '&fase=' + $('#fase').val());
 }
+
 
 function reload() {
     $('html, body').animate({scrollTop: $('#offsetresult').offset().top}, 500);

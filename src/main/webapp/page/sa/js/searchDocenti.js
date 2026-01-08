@@ -125,11 +125,18 @@ jQuery(document).ready(function () {
 
 function refresh() {
     $("#toolbar").css("display", "none");
-    $('html, body').animate({scrollTop: $('#offsetresult').offset().top}, 500);
-    load_table($('#kt_table_1'), contextPath + '/QuerySA?type=searchDocenti&soggettoattuatore=' + $('#soggettoattuatore').val()
-            + '&cf=' + $('#cf').val() + '&nome=' + $('#nome').val() + '&cognome=' + $('#cognome').val(), );
-}
 
+    const target = $('#offsetresult');
+    if (target.length) {
+        $('html, body').animate({scrollTop: target.offset().top}, 500);
+    }
+
+    load_table(
+            $('#kt_table_1'),
+            contextPath + '/QuerySA?type=searchDocenti&soggettoattuatore=' + $('#soggettoattuatore').val()
+            + '&cf=' + $('#cf').val() + '&nome=' + $('#nome').val() + '&cognome=' + $('#cognome').val()
+            );
+}
 
 
 function modifyMail(id, result) {
