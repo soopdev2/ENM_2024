@@ -47,8 +47,8 @@
         <link href="assets/vendors/custom/vendors/fontawesome5/css/all.min.css" rel="stylesheet" type="text/css" />
         <link href="resource/animate.css" rel="stylesheet" type="text/css"/>
         <link href="resource/faq.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="Bootstrap2024/assets/css/bootstrap.min.css"/>
         <!----->
-        <link href="assets/demo/default/base/style.bundle.css" rel="stylesheet" type="text/css" />
         <link href="resource/custom.css" rel="stylesheet" type="text/css" />
         <link href="assets/demo/default/skins/header/base/light.css" rel="stylesheet" type="text/css" />
         <link href="assets/demo/default/skins/header/menu/light.css" rel="stylesheet" type="text/css" />
@@ -83,7 +83,7 @@
                 <!-- Torna indietro -->
                 <div class="row justify-content-start w-100 mb-3 px-3">
                     <div class="col-auto">
-                        <a href="login.jsp" class="text-decoration-none">&larr; torna indietro</a>
+                        <a href="login.jsp" style="position: relative; left:380px;"  class="text-decoration-none">&larr; torna indietro</a>
                     </div>
                 </div>
 
@@ -118,7 +118,6 @@
 
         <!-- Scripts -->
         <script src="assets/soop/js/jquery-3.7.1.js"></script>
-        <script src="assets/vendors/general/popper.js/dist/umd/popper.js"></script>
         <script src="assets/vendors/general/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="assets/vendors/general/js-cookie/src/js.cookie.js"></script>
         <script src="assets/soop/js/moment.min.js"></script>
@@ -131,27 +130,27 @@
         <script src="assets/vendors/general/jquery-validation/dist/additional-methods.js"></script>
         <script src="assets/vendors/custom/components/vendors/jquery-validation/init.js"></script>
         <script src="assets/vendors/general/sweetalert2/dist/sweetalert2.js"></script>
+        <script src="Bootstrap2024/assets/js/bootstrap-italia.bundle.min.js" type="text/javascript"></script>
         <script src="assets/soop/js/utility.js"></script>
-        <script src="assets/app/bundle/app.bundle.js"></script>
         <script type="text/javascript">
-                var KTAppOptions = {
-                    "colors": {
-                        "state": {
-                            "brand": "#5d78ff",
-                            "dark": "#282a3c",
-                            "light": "#ffffff",
-                            "primary": "#5867dd",
-                            "success": "#34bfa3",
-                            "info": "#36a3f7",
-                            "warning": "#ffb822",
-                            "danger": "#fd3995"
-                        },
-                        "base": {
-                            "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
-                            "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
-                        }
+            var KTAppOptions = {
+                "colors": {
+                    "state": {
+                        "brand": "#5d78ff",
+                        "dark": "#282a3c",
+                        "light": "#ffffff",
+                        "primary": "#5867dd",
+                        "success": "#34bfa3",
+                        "info": "#36a3f7",
+                        "warning": "#ffb822",
+                        "danger": "#fd3995"
+                    },
+                    "base": {
+                        "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                        "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
                     }
-                };
+                }
+            };
         </script>
     </body>
 

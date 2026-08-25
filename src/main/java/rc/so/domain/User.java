@@ -47,6 +47,8 @@ public class User implements Serializable {
     private String password;
     @Column(name = "email")
     private String email;
+    @Column(name = "cf")
+    private String cf;
     @Column(name = "stato")
     private int stato = 2;
     @Column(name = "tipo")
@@ -112,6 +114,16 @@ public class User implements Serializable {
     public void setStato(int stato) {
         this.stato = stato;
     }
+
+    public String getCf() {
+        return cf;
+    }
+
+    public void setCf(String cf) {
+        this.cf = cf;
+    }
+    
+    
 
     public int getTipo() {
         return tipo;

@@ -52,6 +52,10 @@
         <servlet-name>ExternalLogin</servlet-name>
         <servlet-class>rc.so.servlet.ExternalLogin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Spid</servlet-name>
+        <servlet-class>rc.so.servlet.Spid</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>ExternalLogin</servlet-name>
         <url-pattern>/ExternalLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Spid</servlet-name>
+        <url-pattern>/Spid</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
